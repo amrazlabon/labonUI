@@ -1,0 +1,113 @@
+import { ImagePath } from "@/Constant";
+import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
+import { CommonTableProp } from "@/Types/TableType";
+import { Card, Col, Row, Table } from "reactstrap";
+
+
+export const PatientInformation = () => {
+  return (
+    <Col md='6'>
+
+      <TableHeadOptions/>
+    </Col>
+  )
+
+
+}
+
+export default PatientInformation;
+
+
+const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, size, hover, headClass, headRowClass, headData, children }) => {
+  return (
+    <div className={`table-responsive theme-scrollbar ${tableClass ? tableClass : ""}`}>
+      <Table striped={strip} hover={hover} size={size}>
+        {caption && <caption>{caption}</caption>}
+        <thead className={headClass}>
+          <tr className={headRowClass}>
+            {headData.map((head) => (
+              <th key={head.id} scope="col">
+                {head.head}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{children}</tbody>
+      </Table>
+     </div>
+  );
+};
+
+export const TableHeadOptions=()=> {
+    // TableHeadOptions=()=> {
+  
+      const TableHeadOptionBody = [
+        {
+          id: 1,
+          firstName: "Vasudevan Ramachandran",
+          lastName: "Father",
+          userName: "5 tests done so far",
+          time: "No upcoming tests"
+        },
+        {
+          id: 2,
+          firstName: "HDL Cholesterol",
+          lastName: "Mother",
+          userName: "5 tests done so far",
+          time: "No upcoming tests"
+        },
+        {
+          id: 3,
+          firstName: "LDL Cholesterol",
+          lastName: "Sister",
+          userName: "5 tests done so far",
+          time: "No upcoming tests"
+        },
+      ];
+  
+    return (
+      <Col sm="">
+        <Card>
+          {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
+          <Row className="card-block">
+            <Col sm="12" lg="12" xl="12">
+              <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
+                {TableHeadOptionBody.map((data) => (
+                  <tr key={data.id}>
+                    <th scope="row">{data.id}</th>
+                    <td>
+          <img style={{height:'4rem', margin:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+          {/* {data.lastName} */}
+                      </td>
+                    <td>
+                    <div style={{display : 'grid'}}>
+                      <h3>
+                        {data.firstName}
+                      </h3>
+                      <p style={{marginTop:'1rem'}}>
+  
+                      {data.lastName}
+                      </p>
+                      <p>
+  
+                      {data.userName}
+                      </p>
+                      <p>
+  
+                      {data.time}
+                      </p>
+                    </div>
+                    </td>
+                    <td>
+                      <i className={`icon-arrow-right`}></i>
+                      {/* {data.userName} */}
+                      </td>
+                  </tr>
+                ))}
+              </CommonTable>
+            </Col>
+          </Row>
+        </Card>
+      </Col>
+    );
+  }

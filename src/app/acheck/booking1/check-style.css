@@ -1,0 +1,116 @@
+/* .row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin: auto;
+  padding: 10px;
+} */
+
+.column {
+  flex: 1 0 22%; /* Ensure four cards fit in a row */
+  max-width: 22%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #F2EAF9;
+
+}
+
+/* For smaller screens, adjust the column width */
+@media (max-width: 1200px) {
+  .column {
+      flex: 1 0 24%; /* Adjust for slightly narrower screens */
+      max-width: 24%;
+  }
+}
+
+@media (max-width: 900px) {
+  .column {
+      flex: 1 1 48%; /* Two cards per row */
+      max-width: 48%;
+  }
+}
+
+@media (max-width: 600px) {
+  .column {
+      flex: 1 1 98%; /* Single card per row */
+      max-width: 98%;
+  }
+}
+  .bar-start{
+    border-top-left-radius:30px ;
+    border-bottom-left-radius:30px ;
+  }
+
+  .checklist {
+    list-style-type: none; /* Remove default list style */
+    padding-left: 0; /* Remove default padding */
+}
+
+.checklist li {
+    position: relative; /* Position relative to place the tick mark */
+    padding-left: 25px; /* Space for the tick mark */
+    margin-bottom: 10px; /* Space between list items */
+}
+
+.checklist li::before {
+    content: '✔'; /* Unicode for check mark */
+    color: green; /* Green color for the tick mark */
+    position: absolute; /* Position the tick mark */
+    left: 0; /* Align tick mark to the left */
+    top: 0; /* Align tick mark to the top */
+    font-size: 1.2em; /* Adjust tick mark size */
+    line-height: 1em; /* Adjust tick mark line height */
+}
+
+.accordion {
+  width: 100%;
+  /* max-width: 600px; */
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-header {
+  background: #fff;
+  padding: 15px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-header:hover {
+  background: #f9f9f9;
+}
+
+.accordion-content {
+  display: none;
+  padding: 15px;
+  background: #f9f9f9;
+}
+
+.accordion-content p {
+  margin: 0;
+}
+
+  

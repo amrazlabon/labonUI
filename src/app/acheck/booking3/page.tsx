@@ -1,0 +1,143 @@
+'use client'
+import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row } from "reactstrap";
+// import BasicCard from "./BasicCard";
+// import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
+import { useCallback, useState } from "react";
+import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
+// import BasicCard from "./BasicCard";
+import Calendar from "react-calendar";
+import { ImagePath } from "@/Constant";
+import BasicCard from "./BasicCard";
+import Link from "next/link";
+// import NavComponent from "./NavComponent";
+// import CustomHorizontalWizard from ".";
+
+// import OpenModalMofi from ".";
+
+const TestTime = () => {
+  const [activeTab, setActiveTab] = useState<number | undefined>(1);
+  const callback = useCallback((tab: number | undefined) => {
+        setActiveTab(tab);
+      }, []);
+      
+    return (
+    <Col md='6' >
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '1rem'}}>
+      <div className="mb-2" style={{height:'13rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+      <h1 className="text-white ml-4 mt-4" style={{margin:'2rem'}}>Home Visit Booking</h1>
+<p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p>
+<h1 className="text-white ml-4 " style={{marginLeft:'2rem', }}>1,100.00</h1>
+</div>
+      {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
+
+{/* <div> */}
+<h1 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Select a Suitable Time</h1>
+
+<BasicCard/>
+<div style={{display:'flex'}}>
+
+<p style={{fontWeight:'600',fontSize:'16px'}}>Morning </p><span style={{color:'#65C466'}}> (Recommended)</span>
+</div>
+<IconsRadio/>
+                                    
+{/* </div> */}
+
+{/* <CustomHorizontalWizard differentId heading="Custom vertical wizard" horizontalWizardClass="vertical-options vertical-variations" firstXl={3} secondXl={9} /> */}
+
+{/* <CardBody>
+          <div className={`horizontal-wizard-wrapper vertical-options`}>
+            <Row className="g-3">
+              <Col xl={firstXl} xs={xs} className="main-horizontal-header">
+                <NavComponent callbackActive={callback} activeTab={activeTab} />
+              </Col>
+              <Col xl={secondXl} xs={xs}>
+                <CustomHorizontalWizardFormTabContent activeTab={activeTab} callbackActive={callback} differentId={differentId}/>
+              </Col>
+            </Row>
+          </div>
+        </CardBody> */}
+{/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
+
+<Col sm="12">
+<Link href={'/acheck/booking4'}>
+                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Add Patient Details</Button>
+</Link>
+                </Col>
+        <div>
+            {/* <OpenModalMofi/> */}
+        </div>
+        </Card>
+        </Col>
+    )
+}
+
+export default TestTime;
+
+
+
+export const IconsRadio = () => {
+
+  const CustomRadioListData = [
+    {
+      id: 1,
+      icon: "Gender - Male.png",
+      text: "8:00 AM",
+      defaultChecked: true,
+    },
+    {
+      id: 2,
+      icon: "Gender - Female.png",
+      text: "8:30 AM",
+    },
+    {
+      id: 3,
+      icon: "Gender - Other.png",
+      text: "9:00 AM",
+    },
+    {
+      id: 1,
+      icon: "Gender - Male.png",
+      text: "9:30 AM",
+      defaultChecked: true,
+    },
+    {
+      id: 2,
+      icon: "Gender - Female.png",
+      text: "10:00 AM",
+    },
+    {
+      id: 3,
+      icon: "Gender - Other.png",
+      text: "10:30 AM",
+    },
+  ]
+  return (
+    <Col xl="12" sm="12" className="order-xl-0 order-sm-1">
+      <div className=" h-100 checkbox-checked">
+        {/* <h6 className="sub-title">{IconsRadios}</h6> */}
+        <div className="form-check radio radio-primary ps-0">
+          <ul className="radio-wrapper">
+            {/* <li className="p-1 pt-2 pb-2">
+              <Input id="radio-icon" className="d-block" type="radio" name="radio2"/>
+              <Label htmlFor="radio-icon" check>
+                <i className="fa fa-sliders"></i><span>Sliders</span>
+              </Label>
+            </li> */}
+            {CustomRadioListData.map(({ icon, id, text, defaultChecked }, index) => (
+              <li className="p-1 pt-2 pb-2" key={index}>
+                <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio" defaultChecked={defaultChecked} name="radio2" />
+                <Label htmlFor={`radio-${id}`} check>
+                {/* <img style={{ height: '100%', }} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" /> */}
+
+                  {/* <i className={`fa fa-${icon}`}></i> */}
+                  <span>{text}</span>
+                </Label>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </Col>
+  );
+};
+
