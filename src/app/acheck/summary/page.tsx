@@ -263,7 +263,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-export const TableHeadOptions=()=> {
+const TableHeadOptions=()=> {
 
   const TableHeadOptionBody = [
     {

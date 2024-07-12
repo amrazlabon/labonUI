@@ -212,7 +212,7 @@ const CommonFormGroup:React.FC<CommonFormGroupProp> = ({ labelClass, label, colS
 
 // export default FloatingForm;
 
-export const IconsRadio = () => {
+const IconsRadio = () => {
 
   const CustomRadioListData = [
     {
@@ -282,7 +282,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-export const TableHeadOptions=()=> {
+const TableHeadOptions=()=> {
   // TableHeadOptions=()=> {
 
     const TableHeadOptionBody = [

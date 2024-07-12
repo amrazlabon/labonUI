@@ -75,7 +75,7 @@ export default TestTime;
 
 
 
-export const IconsRadio = () => {
+const IconsRadio = () => {
 
   const CustomRadioListData = [
     {

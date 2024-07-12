@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^40.1.0",
@@ -20,6 +21,7 @@
     "@fullcalendar/react": "^6.1.9",
     "@fullcalendar/timegrid": "^6.1.9",
     "@fullcalendar/web-component": "^6.1.9",
+    "@nextui-org/react": "^2.4.2",
     "@react-google-maps/api": "^2.19.2",
     "@reactour/tour": "^3.5.0",
     "@reduxjs/toolkit": "^1.9.5",
@@ -36,7 +38,7 @@
     "@types/react-vertical-timeline-component": "^3.3.3",
     "accept-language": "^3.0.18",
     "apexcharts": "^3.43.0",
-    "axios": "^1.5.1",
+    "axios": "^1.7.2",
     "body-scroll-lock": "^4.0.0-beta.0",
     "bootstrap": "^5.3.1",
     "chart.js": "^4.4.0",

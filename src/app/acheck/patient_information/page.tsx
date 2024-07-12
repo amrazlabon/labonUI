@@ -4,7 +4,7 @@ import { CommonTableProp } from "@/Types/TableType";
 import { Card, Col, Row, Table } from "reactstrap";
 
 
-export const PatientInformation = () => {
+const PatientInformation = () => {
   return (
     <Col md='6'>
 
@@ -38,7 +38,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-export const TableHeadOptions=()=> {
+const TableHeadOptions=()=> {
     // TableHeadOptions=()=> {
   
       const TableHeadOptionBody = [
