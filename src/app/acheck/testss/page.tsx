@@ -45,23 +45,23 @@ const Tests = () => {
       
     return (
     <Col md='6'>
-      <Card style={{backgroundColor:'#F5F5F5'}}>
-      <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
+      <h1 className="text-black ml-4 mt-4 " style={{margin:'24px', textAlign : 'left' }}>Tests</h1>
 
 
 <BasicCard/>
 
 
-<div className="btn-group">
+{/* <div className="btn-group">
   <button className={"test-btn"}>Tests</button>
   <button className={"package-btn"}>Packages</button>
-</div>
+</div> */}
 {/* <svg className='search-bg svg-color' >
       <use href={`/assets/svg/icon-sprite.svg#search`}></use>
     </svg> */}
 <Input style={{padding:'10px',width:'100%',borderRadius:'15px',marginTop:'1rem' , marginBottom : '2rem'}} name="twitterUrl" value={''} type="url" placeholder={'Search'} />
   <Link href={'/acheck/booking1'}>
-<div className="gap-2" style={{display : 'flex'}}>
+<div className="gap-4" style={{display : 'flex'}}>
 
 {CustomTestListData.map(({ icon, id, text, defaultChecked }, index) => (
   

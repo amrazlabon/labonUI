@@ -1,17 +1,20 @@
 import { ImagePath } from "@/Constant";
 import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import { CommonTableProp } from "@/Types/TableType";
-import { Card, Col, Row, Table } from "reactstrap";
+import { Card, CardBody, Col, Row, Table } from "reactstrap";
+import './patient-details.css'
 
 
-const PatientInformation = () => {
+const BookingInformation = () => {
   return (
     <Col md='6'>
+      <h1 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>My Booking Information</h1>
+<BasicCard/>
 
-<div className="mb-2" style={{height:'8rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-<h1 className="text-white ml-4 mt-4" style={{margin:'2rem'}}>My Contacts</h1>
+      <div className="btn-group">
+  <button className={"test-btn"}>Upcoming</button>
+  <button className={"package-btn"}>Completed</button>
 </div>
-
       <TableHeadOptions/>
     </Col>
   )
@@ -19,7 +22,7 @@ const PatientInformation = () => {
 
 }
 
-export default PatientInformation;
+export default BookingInformation;
 
 
 const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, size, hover, headClass, headRowClass, headData, children }) => {
@@ -115,3 +118,28 @@ const TableHeadOptions=()=> {
       </Col>
     );
   }
+
+  const BasicCard = () => {
+    const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
+    const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
+  
+    return (
+      <Col sm="12" xl="12">
+        <Card style={{backgroundColor : '#E5E5E5'}}>
+          {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
+          <CardBody>
+            <div style={{display : 'flex'}}>
+  
+          <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" />
+  
+            <p className="mb-0">
+            Click on a booking to view the details. You can reschedule an upcoming booking by going to the booking details.
+  
+              {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
+            </p>
+            </div>
+          </CardBody>
+        </Card>
+      </Col>
+    );
+  };

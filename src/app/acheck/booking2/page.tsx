@@ -21,21 +21,27 @@ const Tests = () => {
       
     return (
     <Col md='6' >
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '1rem'}}>
-      <div className="mb-2" style={{height:'13rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-      <h1 className="text-white ml-4 mt-4" style={{margin:'2rem'}}>Home Visit Booking</h1>
-<p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p>
-<h1 className="text-white ml-4 " style={{marginLeft:'2rem', }}>1,100.00</h1>
+      <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+<h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
+<div>
+  <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
+  <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2>
 </div>
+<div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
+</div>
+</div>
+<div>
+
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
 
 {/* <div> */}
-<h1 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Pick a Date</h1>
+<h1 className="text-black" style={{paddingBottom:'12px'}}>Pick a Date</h1>
 
 <BasicCard/>
 <DefaultCalendar/>
 
-<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '1rem', padding: '1rem' }}>
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '1rem', paddingBottom: '16px' }}>
                                         <p>
                                             <img style={{ height: '15px' }} className="img-fluid table-avtar" src={`${ImagePath}/Rectangle3.png`} alt="user image" />Selected Date
                                         </p>
@@ -53,27 +59,28 @@ const Tests = () => {
 
 {/* <CardBody>
           <div className={`horizontal-wizard-wrapper vertical-options`}>
-            <Row className="g-3">
-              <Col xl={firstXl} xs={xs} className="main-horizontal-header">
-                <NavComponent callbackActive={callback} activeTab={activeTab} />
-              </Col>
-              <Col xl={secondXl} xs={xs}>
-                <CustomHorizontalWizardFormTabContent activeTab={activeTab} callbackActive={callback} differentId={differentId}/>
-              </Col>
-            </Row>
+          <Row className="g-3">
+          <Col xl={firstXl} xs={xs} className="main-horizontal-header">
+          <NavComponent callbackActive={callback} activeTab={activeTab} />
+          </Col>
+          <Col xl={secondXl} xs={xs}>
+          <CustomHorizontalWizardFormTabContent activeTab={activeTab} callbackActive={callback} differentId={differentId}/>
+          </Col>
+          </Row>
           </div>
-        </CardBody> */}
+          </CardBody> */}
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
 <Col sm="12">
 <Link href={'/acheck/booking3'}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book Timings</Button>
+                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book Timings <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 </Link>
                 </Col>
         <div>
             {/* <OpenModalMofi/> */}
         </div>
         </Card>
+          </div>
         </Col>
     )
 }
@@ -85,7 +92,7 @@ const DefaultCalendar = () => {
   const date = `${dateValue.getDate()} - ${dateValue.getMonth() + 1} - ${dateValue.getFullYear()} `
 
   return (
-    <Col xl="12">
+    <Col xl="12" style={{paddingTop : '12px'}}>
       <Card>
         {/* <CommonCardHeader title={CalendarDefault}/> */}
         <CardBody className="card-wrapper">

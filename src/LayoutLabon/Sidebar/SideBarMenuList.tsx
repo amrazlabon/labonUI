@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/Redux/Hooks";
 import { Fragment, useState } from "react";
-import { MenuList } from "@/Data/Layout/Menu";
+import { MenuListLabon } from "@/Data/Layout/Menu";
 import { MenuItem } from "@/Types/LayoutTypes";
 import Menulist from "./Menulist";
 import { useTranslation } from "@/app/i18n/client";
@@ -14,8 +14,8 @@ const SidebarMenuList = () => {
 
   return (
     <>
-      {MenuList &&
-        MenuList.map((mainMenu: MenuItem, index) => (
+      {MenuListLabon &&
+        MenuListLabon.map((mainMenu: MenuItem, index) => (
           <Fragment key={index}>
             <li className={`sidebar-main-title ${shouldHideMenu(mainMenu) ? "d-none" : ""}`}>
               <div>

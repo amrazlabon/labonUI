@@ -16,7 +16,7 @@ export const SimpleAccordion = () => {
     <Col sm="12" xl="12">
       <Card className="basic-accordion">
         {/* <CommonCardHeader title={SimpleAccordions} span={AccordionData} /> */}
-        <CardBody>
+        <CardBody style={{padding : '0'}}>
           <Accordion open={open} toggle={toggle} className="dark-accordion">  
             <StaticAccordion />
             {AccordionList.map((data, index) => (

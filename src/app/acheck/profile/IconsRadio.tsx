@@ -28,7 +28,7 @@ export const IconsRadio = () => {
       <div className=" h-100 checkbox-checked">
         {/* <h6 className="sub-title">{IconsRadios}</h6> */}
         <div className="form-check radio radio-primary ps-0">
-          <ul className="radio-wrapper">
+          <ul className="radio-wrapper gap-4">
             {/* <li className="p-1 pt-2 pb-2">
               <Input id="radio-icon" className="d-block" type="radio" name="radio2"/>
               <Label htmlFor="radio-icon" check>
@@ -36,7 +36,7 @@ export const IconsRadio = () => {
               </Label>
             </li> */}
             {CustomRadioListData.map(({ icon, id, text, defaultChecked }, index) => (
-              <li className="p-1 pt-2 pb-2" key={index}>
+              <li className="p-1 pt-2 pb-2 mr-6" key={index}>
                 <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio" defaultChecked={defaultChecked} name="radio2" />
                 <Label htmlFor={`radio-${id}`} check>
                 <img style={{ height: '100%', }} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" />

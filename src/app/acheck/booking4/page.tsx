@@ -34,16 +34,20 @@ const PatientAdd = () => {
       
     return (
     <Col md='6' >
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '1rem'}}>
-      <div className="mb-2" style={{height:'13rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-      <h1 className="text-white ml-4 mt-4" style={{margin:'2rem'}}>Add Patient Details</h1>
-<p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p>
-<h1 className="text-white ml-4 " style={{marginLeft:'2rem', }}>1,100.00</h1>
+      <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+<h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
+<div>
+  <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
+  <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2>
 </div>
+<div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
+</div>
+</div>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px' , margin : '0'}}>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
 
 {/* <div> */}
-<h1 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Select a Suitable Time</h1>
+<h1 className="text-black" style={{paddingBottom:'24px'}}>Select a Suitable Time</h1>
 
 {/* <BasicCard/> */}
 {/* <div style={{display:'flex'}}>
@@ -71,7 +75,7 @@ const PatientAdd = () => {
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
 
-<div className="toggle-container">
+<div className="toggle-container" >
                 <label>Select from My Contacts</label>
                 <Label style={{marginLeft : '1rem'}} className="form-switch form-check-inline" check>
       <Input className={`switch-primary check-size`} type="checkbox" role="switch" defaultChecked={isSelectFromContacts} checked={isSelectFromContacts}
@@ -81,6 +85,7 @@ const PatientAdd = () => {
                 <label>Add New</label>
             </div>
 
+            </Card>
             {isSelectFromContacts ? <FloatingForm /> : <TableHeadOptions />}
 
             {/* <TableHeadOptions/>
@@ -96,7 +101,6 @@ const PatientAdd = () => {
         <div>
             {/* <OpenModalMofi/> */}
         </div>
-        </Card>
         </Col>
     )
 }
@@ -113,7 +117,7 @@ const FloatingForm = () => {
       
       <Card style={{backgroundColor:'#F5F5F5'}}>
         {/* <CommonCardHeader title={FormFloating} span={FloatingFormData} /> */}
-        <CardBody>
+        <CardBody style={{padding : '24px'}}>
           {/* <BasicCard/> */}
           <div className="">
             <Form className="floating-wrapper" onSubmit={(e)=>e.preventDefault()}>
@@ -124,7 +128,7 @@ const FloatingForm = () => {
                     <Label check>User ID</Label>
                   </FormGroup>
                 </Col> */}
-                <Col sm="12" className="mt-2">
+                <Col sm="12" className="mt-6 ">
                   <FormGroup floating>
                     <Input type="text" placeholder={PasswordFloatingPlaceholder} />
                     <Label check>Patient Name</Label>
@@ -151,30 +155,30 @@ const FloatingForm = () => {
                 <IconsRadio/>
                 
                 <Col sm="12">
-                  <FormGroup  floating className="mb-3">
+                  <FormGroup  floating className="mb-6 mt-3">
                     <Input type="text" placeholder={EmailFloatingPlaceholder} />
                     <Label check>Mobile</Label>
                   </FormGroup>
                 </Col>
-                <Col sm="12" className="mt-2">
+                <Col sm="12" className="mb-6">
                   <FormGroup floating>
                     <Input type="text" placeholder={PasswordFloatingPlaceholder} />
                     <Label check>Email</Label>
                   </FormGroup>
                 </Col>
                 <Col sm="6">
-                  <FormGroup  floating className="mb-3">
+                  <FormGroup  floating className="mb-6">
                     <Input type="text" placeholder={EmailFloatingPlaceholder} />
                     <Label check>Pincode</Label>
                   </FormGroup>
                 </Col>
-                <Col sm="12" className="mt-2">
+                <Col sm="12" className="mb-6">
                   <FormGroup floating>
                     <Input type="text" placeholder={PasswordFloatingPlaceholder} />
                     <Label check>Location</Label>
                   </FormGroup>
-                </Col><Col sm="12">
-                  <FormGroup  floating className="mb-3">
+                </Col><Col sm="12" className="mb-2">
+                  <FormGroup  floating className="mb-6">
                     <Input type="text" placeholder={EmailFloatingPlaceholder} />
                     <Label check>Address</Label>
                   </FormGroup>
@@ -187,7 +191,7 @@ const FloatingForm = () => {
                 </Col> */}
                 <Col sm="12">
                 <Link href={'/acheck/summary'}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Add Patient Details</Button>
+                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Add Patient Details <span><i className="fa fa-angle-right" style={{marginLeft: '24px'}}></i></span></Button>
                 </Link>
                 </Col>
               </Row>
@@ -237,7 +241,7 @@ const IconsRadio = () => {
       <div className=" h-100 checkbox-checked">
         {/* <h6 className="sub-title">{IconsRadios}</h6> */}
         <div className="form-check radio radio-primary ps-0">
-          <ul className="radio-wrapper">
+          <ul className="radio-wrapper gap-4">
             {/* <li className="p-1 pt-2 pb-2">
               <Input id="radio-icon" className="d-block" type="radio" name="radio2"/>
               <Label htmlFor="radio-icon" check>
@@ -267,7 +271,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
     <div className={`table-responsive theme-scrollbar ${tableClass ? tableClass : ""}`}>
       <Table striped={strip} hover={hover} size={size}>
         {caption && <caption>{caption}</caption>}
-        <thead className={headClass}>
+        {/* <thead className={headClass}>
           <tr className={headRowClass}>
             {headData.map((head) => (
               <th key={head.id} scope="col">
@@ -275,7 +279,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
               </th>
             ))}
           </tr>
-        </thead>
+        </thead> */}
         <tbody>{children}</tbody>
       </Table>
      </div>
@@ -310,7 +314,7 @@ const TableHeadOptions=()=> {
     ];
 
   return (
-    <Col sm="">
+    <Col sm="" style={{paddingRight : '24px' , paddingLeft : '24px'}}>
       <Card>
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
@@ -320,30 +324,30 @@ const TableHeadOptions=()=> {
                 <tr key={data.id}>
                   <th scope="row">{data.id}</th>
                   <td>
-        <img style={{height:'4rem', margin:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+        <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
         {/* {data.lastName} */}
                     </td>
                   <td>
                   <div style={{display : 'grid'}}>
-                    <h3>
+                    <h3 style={{paddingTop : '16px', margin : '0'}}>
                       {data.firstName}
                     </h3>
-                    <p style={{marginTop:'1rem'}}>
+                    <p style={{paddingTop : '8px' , margin : '0'}}>
 
                     {data.lastName}
                     </p>
-                    <p>
+                    <p style={{paddingTop : '8px', margin : '0'}}> 
 
                     {data.userName}
                     </p>
-                    <p>
+                    <p style={{paddingTop : '8px', margin : '0'}}>
 
                     {data.time}
                     </p>
                   </div>
                   </td>
                   <td>
-                    <i className={`icon-arrow-right`}></i>
+                    <i className='fa fa-angle-right'></i>
                     {/* {data.userName} */}
                     </td>
                 </tr>
