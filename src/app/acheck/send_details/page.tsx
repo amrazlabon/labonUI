@@ -14,7 +14,7 @@ const SendDetails = () => {
   };
 
     return(
-        <Col md='6'>
+        <Col md='6' style={{padding : '24px'}}>
             <div className=" login-dark">
                     <div className="text-center">
 
@@ -26,7 +26,7 @@ const SendDetails = () => {
                         <p>Would you like to send the booking details to the patient’s <br />email sudha.radhakrishnan@gmail.com, so they <br />also have the information with them?</p>
                         </div>
 
-                        <div style={{marginLeft : '8rem'}} className="toggle-container">
+                        <div style={{marginLeft : '0' , placeContent : 'center'}} className="toggle-container">
                 <label>Select from My Contacts</label>
                 <Label style={{marginLeft : '1rem'}} className="form-switch form-check-inline" check>
       <Input className={`switch-primary check-size`} type="checkbox" role="switch" defaultChecked={isSelectFromContacts} checked={isSelectFromContacts}

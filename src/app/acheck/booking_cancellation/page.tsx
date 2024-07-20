@@ -28,22 +28,20 @@ const BookingCancellation = () => {
       
     return (
     <Col md='6' >
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '1rem'}}>
-      <div className="mb-2" style={{height:'13rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-      <h1 className="text-white ml-4 mt-4" style={{margin:'2rem'}}>Cancel Booking</h1>
-<p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p>
-<div style={{display : 'flex'}}>
-<h1 className="text-white ml-4 " style={{marginLeft:'2rem', }}>1,100.00</h1>
-
-            {/* <div > */}
-                    {/* <button style={?{ color: 'white', width: '50%', height: '3rem', padding: '12px 0px 12px 0px', backgroundColor: '#AE7FD1', border: 'none', borderRadius: '5px' , marginLeft :'4rem' }}>Add to Cart <span><i style={{marginLeft : '2rem'}} className={`icon-arrow-right`}></i></span></button> */}
-            {/* </div> */}
-                </div>
+      <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+<h1 className="text-white" style={{padding:'24px', margin: '0'}}>Cancel Booking</h1>
+<div>
+  <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
+  <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2>
+</div>
+<div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
+</div>
 </div>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
 <h2>Cancellation Breakup</h2>
 <div>
-<CardBody>
+{/* <CardBody> */}
             <Table className="table-wrapper table-responsive theme-scrollbar" borderless>
               <tbody>
                 {/* <tr>
@@ -61,7 +59,7 @@ const BookingCancellation = () => {
                 </tr>
               </tbody>
             </Table>
-          </CardBody>
+          {/* </CardBody> */}
 </div>
 
 
@@ -70,18 +68,18 @@ const BookingCancellation = () => {
 
 <BasicCard/>
 
-<h1 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Booking Details</h1>
+<h1 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Booking Details</h1>
 
 
 <div>
-<h2 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Patient Details</h2>
+<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Patient Details</h2>
 
 <BasicCardProfile/>
   
 </div>
 
 <div>
-<h2 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Location</h2>
+<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Location</h2>
 <BasicMap/>
 <BasicCardProfileMap/>
 </div>
@@ -110,8 +108,8 @@ const BookingCancellation = () => {
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
 <Col sm="12">
-<Link href={'/acheck/send_details'}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Confirm Booking Cancellation</Button>
+<Link href={'/acheck/b_cancel'}>
+                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Confirm Booking Cancellation<span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 </Link>
                 </Col>
         <div>
@@ -185,10 +183,10 @@ const BasicCardProfileMap = () => {
 
 <div style={{display : 'grid'}}>
 
-          <h1 className="mb-4">
+          <h2 className="mb-0" style={{paddingBottom : '24px'}}>
 Home Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </h1>
+          </h2>
           {/* <h1 className="mb-0"> */}
 {/* Ramakrishnan */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
@@ -212,7 +210,6 @@ Home Address
     </Col>
   );
 };
-
 const BasicCardProfile = () => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
@@ -222,31 +219,77 @@ const BasicCardProfile = () => {
       <Card style={{backgroundColor : ''}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
-          <div className="gap-4" style={{display : 'flex'}}>
+
+        <div className="gap-4" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '24px'}}>
+  <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
+    {/* <img
+      style={{ height: '7rem', margin: '0' , width : '100%' , padding : '24px'}}
+      className="img-fluid table-avtar"
+      src={`${ImagePath}/ProfileIcon.png`}
+      alt="user image"
+    /> */}
+      {/* <h1 className="text-black" style={{margin:'0', paddingTop : '0', textAlign : 'left'}}>1,100.00</h1> */}
+      {/* <div> */}
+  {/* <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
+  <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2> */}
+{/* </div> */}
+<img style={{height:'7rem', margin:'0 '}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+
+  </div>
+  <div style={{ flex: 1, display: 'flex', justifyContent: 'center' ,paddingRight : '24px'}}>
+    {/* <button
+      style={{
+        color: 'white',
+        width: '800%',
+        height: '3rem',
+        padding: '12px 0px',
+        backgroundColor: '#AE7FD1',
+        border: 'none',
+        borderRadius: '5px',
+      }}
+    >
+      Upload Selfie &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {'>'}
+    </button> */}
+                  {/* <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book a Home Visit </Button> */}
+                  <div style={{display : 'grid'}}>
+
+<h1 style={{margin:'0', paddingTop : '0'}}>
+Sudha
+  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
+</h1>
+<h1 style={{margin:'0', paddingTop : '10px'}}>
+Ramakrishnan
+  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
+</h1>
+<p style={{margin:'0', paddingTop : '16px'}}>
+Your Mother
+  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
+</p>
+</div>
+  </div>
+</div>
+
+          {/* <div className="gap-4" style={{display : 'flex'}}> */}
 
         {/* <img style={{height:'5rem'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" /> */}
-        <img style={{height:'7rem', margin:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+        {/* <img style={{height:'7rem', margin:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" /> */}
 
-<div style={{display : 'grid'}}>
+{/* <div style={{display : 'grid'}}>
 
           <h1 className="mb-0">
-Sudha
+Sudha */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </h1>
-          {/* <h1 className="mb-0">
+          {/* </h1>
+          <h1 className="mb-0">
 Ramakrishnan */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </h1> */}
+          {/* </h1>
           <p className="mb-0">
-Your Mother
+Female, 36 Years */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </p>
-          <p className="mb-0">
-2 tests done so far
-            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </p>
-</div>
-          </div>
+          {/* </p>
+</div> */}
+          {/* </div> */}
         </CardBody>
       </Card>
     </Col>

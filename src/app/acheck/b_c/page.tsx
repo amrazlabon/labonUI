@@ -21,7 +21,7 @@ const BookingConfirmation = () => {
     return (
         // <Container fluid className="p-3">
 
-            <Col md="6" className="p-3">
+            <Col md="6" style={{padding : '24px'}}>
                 <div className=" login-dark">
                     <div className="text-center">
 
@@ -41,8 +41,10 @@ const BookingConfirmation = () => {
                     <p>We don’t see the patient details saved. Would <br /> you like to save it for future use?</p>
                     </div>
 
-                    <Col sm="12">
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#426770' , color :'white' , marginTop : '4rem' , borderRadius : '50px'}} color="">Yes</Button>
+                    <Col sm="12" style={{paddingTop : '24px'}}>
+        <Link href={''}>
+                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white', }} color="">Yes <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+        </Link>
                 </Col>
                 <p className="text-center mt-4">Dashboard</p>
   {/* <button className={"test-btn"}>Dashboard</button> */}

@@ -12,7 +12,7 @@ export const Profile = () => {
   const router = useRouter();
   const LogOutUser = () => {
     Cookies.remove("mofi_token");
-    router.push("/auth/login");
+    router.push("/acheck/profile");
   };
 
   return (
@@ -29,7 +29,7 @@ export const Profile = () => {
       <ul className="profile-dropdown onhover-show-div">
         {UserProfileData.map((item, index) => (
           <li key={index}>
-            <Link href={`/${i18LangStatus}/${item.link}`}>{item.icon}<span>{item.title} </span></Link>
+            <Link href={`/${item.link}`}>{item.icon}<span>{item.title} </span></Link>
           </li>
         ))}
         <li onClick={LogOutUser}><Link href={Href}scroll={false} ><LogOut /><span>{Logout} </span></Link></li>

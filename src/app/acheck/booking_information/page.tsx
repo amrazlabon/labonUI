@@ -3,19 +3,22 @@ import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/Bas
 import { CommonTableProp } from "@/Types/TableType";
 import { Card, CardBody, Col, Row, Table } from "reactstrap";
 import './patient-details.css'
+import Link from "next/link";
 
 
 const BookingInformation = () => {
   return (
-    <Col md='6'>
-      <h1 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>My Booking Information</h1>
+    <Col md='6' style={{padding : '24px'}}>
+      <h1 className="text-black ml-4 mt-4" style={{margin:'0' , paddingBottom : '24px'}}>My Booking Information</h1>
 <BasicCard/>
 
-      <div className="btn-group">
-  <button className={"test-btn"}>Upcoming</button>
-  <button className={"package-btn"}>Completed</button>
-</div>
+    {/* <div className="btn-group">
+<button className={"test-btn"}>Upcoming</button>
+<button className={"package-btn"}>Completed</button>
+</div> */}
+<Link href={'/acheck/test_details'}>
       <TableHeadOptions/>
+</Link>
     </Col>
   )
 
@@ -30,7 +33,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
     <div className={`table-responsive theme-scrollbar ${tableClass ? tableClass : ""}`}>
       <Table striped={strip} hover={hover} size={size}>
         {caption && <caption>{caption}</caption>}
-        <thead className={headClass}>
+        {/* <thead className={headClass}>
           <tr className={headRowClass}>
             {headData.map((head) => (
               <th key={head.id} scope="col">
@@ -38,7 +41,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
               </th>
             ))}
           </tr>
-        </thead>
+        </thead> */}
         <tbody>{children}</tbody>
       </Table>
      </div>
@@ -46,78 +49,78 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
 };
 
 const TableHeadOptions=()=> {
-    // TableHeadOptions=()=> {
-  
-      const TableHeadOptionBody = [
-        {
-          id: 1,
-          firstName: "Vasudevan Ramachandran",
-          lastName: "Father",
-          userName: "5 tests done so far",
-          time: "No upcoming tests"
-        },
-        {
-          id: 2,
-          firstName: "HDL Cholesterol",
-          lastName: "Mother",
-          userName: "5 tests done so far",
-          time: "No upcoming tests"
-        },
-        {
-          id: 3,
-          firstName: "LDL Cholesterol",
-          lastName: "Sister",
-          userName: "5 tests done so far",
-          time: "No upcoming tests"
-        },
-      ];
-  
-    return (
-      <Col sm="">
-        <Card>
-          {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
-          <Row className="card-block">
-            <Col sm="12" lg="12" xl="12">
-              <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-                {TableHeadOptionBody.map((data) => (
-                  <tr key={data.id}>
-                    <th scope="row">{data.id}</th>
-                    <td>
-          <img style={{height:'4rem', margin:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
-          {/* {data.lastName} */}
-                      </td>
-                    <td>
-                    <div style={{display : 'grid'}}>
-                      <h3>
-                        {data.firstName}
-                      </h3>
-                      <p style={{marginTop:'1rem'}}>
-  
-                      {data.lastName}
-                      </p>
-                      <p>
-  
-                      {data.userName}
-                      </p>
-                      <p>
-  
-                      {data.time}
-                      </p>
-                    </div>
+  // TableHeadOptions=()=> {
+
+    const TableHeadOptionBody = [
+      {
+        id: 1,
+        firstName: "Vasudevan Ramachandran",
+        lastName: "Father",
+        userName: "5 tests done so far",
+        time: "No upcoming tests"
+      },
+      {
+        id: 2,
+        firstName: "HDL Cholesterol",
+        lastName: "Mother",
+        userName: "5 tests done so far",
+        time: "No upcoming tests"
+      },
+      {
+        id: 3,
+        firstName: "LDL Cholesterol",
+        lastName: "Sister",
+        userName: "5 tests done so far",
+        time: "No upcoming tests"
+      },
+    ];
+
+  return (
+    <Col sm="">
+      <Card>
+        {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
+        <Row className="card-block">
+          <Col sm="12" lg="12" xl="12">
+            <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
+              {TableHeadOptionBody.map((data) => (
+                <tr key={data.id}>
+                  <th scope="row">{data.id}</th>
+                  <td>
+        <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+        {/* {data.lastName} */}
                     </td>
-                    <td>
-                      <i className={`icon-arrow-right`}></i>
-                      {/* {data.userName} */}
-                      </td>
-                  </tr>
-                ))}
-              </CommonTable>
-            </Col>
-          </Row>
-        </Card>
-      </Col>
-    );
-  }
+                  <td>
+                  <div style={{display : 'grid'}}>
+                    <h3>
+                      {data.firstName}
+                    </h3>
+                    <p style={{marginTop:'1rem'}}>
+
+                    {data.lastName}
+                    </p>
+                    <p>
+
+                    {data.userName}
+                    </p>
+                    <p>
+
+                    {data.time}
+                    </p>
+                  </div>
+                  </td>
+                  <td>
+                    <i className={`icon-arrow-right`}></i>
+                    {/* {data.userName} */}
+                    </td>
+                </tr>
+              ))}
+            </CommonTable>
+          </Col>
+        </Row>
+      </Card>
+    </Col>
+  );
+}
 
   const BasicCard = () => {
     const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";

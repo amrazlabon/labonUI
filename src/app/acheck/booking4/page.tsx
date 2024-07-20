@@ -117,7 +117,7 @@ const FloatingForm = () => {
       
       <Card style={{backgroundColor:'#F5F5F5'}}>
         {/* <CommonCardHeader title={FormFloating} span={FloatingFormData} /> */}
-        <CardBody style={{padding : '24px'}}>
+        <CardBody style={{padding : '0'}}>
           {/* <BasicCard/> */}
           <div className="">
             <Form className="floating-wrapper" onSubmit={(e)=>e.preventDefault()}>

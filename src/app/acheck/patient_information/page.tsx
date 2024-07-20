@@ -1,18 +1,28 @@
+'use client'
 import { ImagePath } from "@/Constant";
 import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import { CommonTableProp } from "@/Types/TableType";
+import Link from "next/link";
 import { Card, Col, Row, Table } from "reactstrap";
 
 
 const PatientInformation = () => {
   return (
-    <Col md='6'>
+    <Col md='6' >
 
-<div className="mb-2" style={{height:'8rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-<h1 className="text-white ml-4 mt-4" style={{margin:'2rem'}}>My Contacts</h1>
+<div style={{padding : '0', height:'6rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+<h1 className="text-white" style={{padding:'24px', margin: '0'}}>My Contacts</h1>
+<div style={{padding : '0', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
+</div>
+</div>
+<div style={{padding : '24px'}}>
+
+<Link href={'/acheck/patient_details'}>
+      <TableHeadOptions/>
+</Link>
 </div>
 
-      <TableHeadOptions/>
+
     </Col>
   )
 
@@ -27,7 +37,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
     <div className={`table-responsive theme-scrollbar ${tableClass ? tableClass : ""}`}>
       <Table striped={strip} hover={hover} size={size}>
         {caption && <caption>{caption}</caption>}
-        <thead className={headClass}>
+        {/* <thead className={headClass}>
           <tr className={headRowClass}>
             {headData.map((head) => (
               <th key={head.id} scope="col">
@@ -35,7 +45,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
               </th>
             ))}
           </tr>
-        </thead>
+        </thead> */}
         <tbody>{children}</tbody>
       </Table>
      </div>
@@ -43,75 +53,75 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
 };
 
 const TableHeadOptions=()=> {
-    // TableHeadOptions=()=> {
-  
-      const TableHeadOptionBody = [
-        {
-          id: 1,
-          firstName: "Vasudevan Ramachandran",
-          lastName: "Father",
-          userName: "5 tests done so far",
-          time: "No upcoming tests"
-        },
-        {
-          id: 2,
-          firstName: "HDL Cholesterol",
-          lastName: "Mother",
-          userName: "5 tests done so far",
-          time: "No upcoming tests"
-        },
-        {
-          id: 3,
-          firstName: "LDL Cholesterol",
-          lastName: "Sister",
-          userName: "5 tests done so far",
-          time: "No upcoming tests"
-        },
-      ];
-  
-    return (
-      <Col sm="">
-        <Card>
-          {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
-          <Row className="card-block">
-            <Col sm="12" lg="12" xl="12">
-              <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-                {TableHeadOptionBody.map((data) => (
-                  <tr key={data.id}>
-                    <th scope="row">{data.id}</th>
-                    <td>
-          <img style={{height:'4rem', margin:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
-          {/* {data.lastName} */}
-                      </td>
-                    <td>
-                    <div style={{display : 'grid'}}>
-                      <h3>
-                        {data.firstName}
-                      </h3>
-                      <p style={{marginTop:'1rem'}}>
-  
-                      {data.lastName}
-                      </p>
-                      <p>
-  
-                      {data.userName}
-                      </p>
-                      <p>
-  
-                      {data.time}
-                      </p>
-                    </div>
+  // TableHeadOptions=()=> {
+
+    const TableHeadOptionBody = [
+      {
+        id: 1,
+        firstName: "Vasudevan Ramachandran",
+        lastName: "Father",
+        userName: "5 tests done so far",
+        time: "No upcoming tests"
+      },
+      {
+        id: 2,
+        firstName: "HDL Cholesterol",
+        lastName: "Mother",
+        userName: "5 tests done so far",
+        time: "No upcoming tests"
+      },
+      {
+        id: 3,
+        firstName: "LDL Cholesterol",
+        lastName: "Sister",
+        userName: "5 tests done so far",
+        time: "No upcoming tests"
+      },
+    ];
+
+  return (
+    <Col sm="">
+      <Card>
+        {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
+        <Row className="card-block">
+          <Col sm="12" lg="12" xl="12">
+            <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
+              {TableHeadOptionBody.map((data) => (
+                <tr key={data.id}>
+                  <th scope="row">{data.id}</th>
+                  <td>
+        <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+        {/* {data.lastName} */}
                     </td>
-                    <td>
-                      <i className={`icon-arrow-right`}></i>
-                      {/* {data.userName} */}
-                      </td>
-                  </tr>
-                ))}
-              </CommonTable>
-            </Col>
-          </Row>
-        </Card>
-      </Col>
-    );
-  }
+                  <td>
+                  <div style={{display : 'grid'}}>
+                    <h3>
+                      {data.firstName}
+                    </h3>
+                    <p style={{marginTop:'1rem'}}>
+
+                    {data.lastName}
+                    </p>
+                    <p>
+
+                    {data.userName}
+                    </p>
+                    <p>
+
+                    {data.time}
+                    </p>
+                  </div>
+                  </td>
+                  <td>
+                    <i className={`icon-arrow-right`}></i>
+                    {/* {data.userName} */}
+                    </td>
+                </tr>
+              ))}
+            </CommonTable>
+          </Col>
+        </Row>
+      </Card>
+    </Col>
+  );
+}

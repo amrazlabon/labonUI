@@ -29,9 +29,9 @@ const PatientDetails = () => {
       
     return (
     <Col md='6' >
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '1rem'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
       {/* <div className="mb-2" style={{height:'8rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}> */}
-      <h1 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Test ID</h1>
+      <h1 className="text-black " style={{paddingBottom:'24px'}}>Test ID</h1>
 {/* <p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p> */}
 {/* <div style={{display : 'flex'}}>
 <h1 className="text-white ml-4 " style={{marginLeft:'2rem', }}>1,100.00</h1> */}
@@ -57,20 +57,20 @@ const PatientDetails = () => {
 </div>
 
 <div>
-<h2 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Location</h2>
+<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Location</h2>
 <BasicMap/>
 <BasicCardProfileMap/>
 </div>
                                     
 {/* </div> */}
 <div>
-<h2 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Booking History</h2>
+<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Booking History</h2>
 {/* <TableHeadOptions/> */}
 
 {/* <h1>Test Booking and Invoice</h1> */}
-<h2>Tests in this Booking</h2>
+<h4 className="text-black ml-4 mt-4">Tests in this Booking</h4>
 <div>
-<CardBody>
+{/* <CardBody> */}
             <Table className="table-wrapper table-responsive theme-scrollbar" borderless>
               <tbody>
                 {/* <tr>
@@ -88,7 +88,7 @@ const PatientDetails = () => {
                 </tr>
               </tbody>
             </Table>
-          </CardBody>
+          {/* </CardBody> */}
 </div>
 </div>
 {/* <CustomHorizontalWizard differentId heading="Custom vertical wizard" horizontalWizardClass="vertical-options vertical-variations" firstXl={3} secondXl={9} /> */}
@@ -108,15 +108,21 @@ const PatientDetails = () => {
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
 <Col sm="12">
-<Link href={'/acheck/send_details'}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Reschedule Booking</Button>
+<Link href={'/acheck/booking2'}>
+                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Reschedule Booking <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+</Link>
+                </Col>
+
+                <Col sm="12">
+<Link href={'/acheck/booking_cancellation'}>
+                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Cancel Booking <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 </Link>
                 </Col>
                 <p className="text-center mt-4">Dashboard</p>
 
-        <div>
+        {/* <div> */}
             {/* <OpenModalMofi/> */}
-        </div>
+        {/* </div> */}
         </Card>
         </Col>
     )
@@ -185,10 +191,10 @@ const BasicCardProfileMap = () => {
 
 <div style={{display : 'grid'}}>
 
-          <h1 className="mb-4">
+          <h2 className="mb-0" style={{paddingBottom : '24px'}}>
 Home Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </h1>
+          </h2>
           {/* <h1 className="mb-0"> */}
 {/* Ramakrishnan */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}

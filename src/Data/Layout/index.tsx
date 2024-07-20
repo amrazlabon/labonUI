@@ -102,6 +102,16 @@ export const UserProfileData = [
     title: "Settings",
     link:"users/edit_profile",
   },
+  {
+    icon: <FileText />,
+    title: "Contact Info",
+    link:"acheck/patient_information",
+  },
+  {
+    icon: <FileText />,
+    title: "Booking Info",
+    link:"acheck/booking_information",
+  },
 ];
 
 export const LanguagesData = [
