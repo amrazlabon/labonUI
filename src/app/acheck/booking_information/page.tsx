@@ -54,24 +54,24 @@ const TableHeadOptions=()=> {
     const TableHeadOptionBody = [
       {
         id: 1,
-        firstName: "Vasudevan Ramachandran",
-        lastName: "Father",
-        userName: "5 tests done so far",
-        time: "No upcoming tests"
+        firstName: "25/07/2024",
+        lastName: "2 Tests",
+        userName: "Vasudevan Ramachandran",
+        time: "07:00 AM"
       },
       {
         id: 2,
-        firstName: "HDL Cholesterol",
-        lastName: "Mother",
-        userName: "5 tests done so far",
-        time: "No upcoming tests"
+        firstName: "28/07/2024",
+        lastName: "2 Tests",
+        userName: "Swathi Ramachandran",
+        time: "07:00 AM"
       },
       {
         id: 3,
-        firstName: "LDL Cholesterol",
-        lastName: "Sister",
-        userName: "5 tests done so far",
-        time: "No upcoming tests"
+        firstName: "29/07/2024",
+        lastName: "2 Tests",
+        userName: "Myself",
+        time: "07:00 AM"
       },
     ];
 
@@ -91,9 +91,9 @@ const TableHeadOptions=()=> {
                     </td>
                   <td>
                   <div style={{display : 'grid'}}>
-                    <h3>
+                    <h4>
                       {data.firstName}
-                    </h3>
+                    </h4>
                     <p style={{marginTop:'1rem'}}>
 
                     {data.lastName}
@@ -109,7 +109,7 @@ const TableHeadOptions=()=> {
                   </div>
                   </td>
                   <td>
-                    <i className={`icon-arrow-right`}></i>
+                    <i className={`fa fa-angle-right`}></i>
                     {/* {data.userName} */}
                     </td>
                 </tr>

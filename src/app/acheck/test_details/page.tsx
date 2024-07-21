@@ -31,7 +31,7 @@ const PatientDetails = () => {
     <Col md='6' >
       <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
       {/* <div className="mb-2" style={{height:'8rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}> */}
-      <h1 className="text-black " style={{paddingBottom:'24px'}}>Test ID</h1>
+      <h1 className="text-black " style={{paddingBottom:'24px'}}>LBNHVB0803202437</h1>
 {/* <p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p> */}
 {/* <div style={{display : 'flex'}}>
 <h1 className="text-white ml-4 " style={{marginLeft:'2rem', }}>1,100.00</h1> */}

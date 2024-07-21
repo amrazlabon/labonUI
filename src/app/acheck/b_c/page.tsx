@@ -66,7 +66,7 @@ const BookingConfirmation = () => {
 
 export default BookingConfirmation;
 
-const ColorsSchemes = ({ open, setOpen }) => {
+const ColorsSchemes = ( {open} : any, {setOpen} : any) => {
   
     return (
       <Col md="6">

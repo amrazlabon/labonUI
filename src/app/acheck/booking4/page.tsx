@@ -299,14 +299,14 @@ const TableHeadOptions=()=> {
       },
       {
         id: 2,
-        firstName: "HDL Cholesterol",
+        firstName: "Swathi Ramachandran",
         lastName: "Mother",
         userName: "5 tests done so far",
         time: "No upcoming tests"
       },
       {
         id: 3,
-        firstName: "LDL Cholesterol",
+        firstName: "Sowmya Ramachandran",
         lastName: "Sister",
         userName: "5 tests done so far",
         time: "No upcoming tests"
@@ -329,9 +329,9 @@ const TableHeadOptions=()=> {
                     </td>
                   <td>
                   <div style={{display : 'grid'}}>
-                    <h3 style={{paddingTop : '16px', margin : '0'}}>
+                    <h4 style={{paddingTop : '16px', margin : '0'}}>
                       {data.firstName}
-                    </h3>
+                    </h4>
                     <p style={{paddingTop : '8px' , margin : '0'}}>
 
                     {data.lastName}

@@ -376,9 +376,9 @@ const TableHeadOptions=()=> {
                   <th scope="row">{data.id}</th>
                   <td>
                   <div style={{display : 'grid'}}>
-                    <h3>
+                    <h4>
                       {data.firstName}
-                    </h3>
+                    </h4>
                     <p style={{margin:'0', paddingTop : '16px'}}>
 
                     {data.lastName}

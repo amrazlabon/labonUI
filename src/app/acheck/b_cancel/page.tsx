@@ -65,7 +65,7 @@ const BookingCancellationConfirm = () => {
 
 export default BookingCancellationConfirm;
 
-const ColorsSchemes = ({ open, setOpen }) => {
+const ColorsSchemes = ({open} : any, {setOpen} : any) => {
   
     return (
       <Col md="6">
