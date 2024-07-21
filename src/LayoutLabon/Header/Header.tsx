@@ -15,7 +15,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <Row className={`page-header ${toggleSidebar ? "close_icon" : ""}`} id="page-header">
+    <Row className={`page-header ${toggleSidebar ? "close_icon" : ""}`} id="page-header" style={{padding : '0' , margin : 0 , width : '100%'}}>
       <MobileView />
       {/* <BreadCrumbs /> */}
       <PageHeader />

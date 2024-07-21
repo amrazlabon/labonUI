@@ -9,14 +9,20 @@ export const HeaderLogo = () => {
   const { i18LangStatus } = useAppSelector((state) => state.langSlice);
 
   return (
-    <Col className="header-logo-wrapper p-0">
-      <div className="logo-wrapper">
+    // The logo is given for all without any dispatch use
+    // <Col className="header-logo-wrapper p-0">
+    <Col className=" p-0" style={{alignSelf : 'center'}}>
+      {/* <div className="logo-wrapper">
         <Link href={`/${i18LangStatus}/dashboard/default_dashboard`}>
           <img className="img-fluid" src={`${ImagePath}/logo/logo.png`} alt="" />
         </Link>
-      </div>
-      <div className="toggle-sidebar" onClick={()=>dispatch(handleResponsiveToggle())}>
-        <SVG className="stroke-icon sidebar-toggle status_toggle middle" iconId="toggle-icon" />
+      </div> */}
+      {/* <div className="toggle-sidebar" 
+      onClick={()=>dispatch(handleResponsiveToggle())}
+      > */}
+      <div>
+      <img className="img-fluid" style={{paddingLeft : '12px'}} src={`${ImagePath}/Logo.png`} alt="" />
+      {/* <SVG className="stroke-icon sidebar-toggle status_toggle middle" iconId="toggle-icon" /> */}
       </div>
     </Col>
   );

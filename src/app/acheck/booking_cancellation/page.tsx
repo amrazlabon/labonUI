@@ -14,7 +14,7 @@ import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
 import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import Link from "next/link";
-import { InvoiceFourData, InvoiceTableHeader } from "@/Data/Application/Ecommerce";
+import { InvoiceFourData, InvoiceFourDataLabon, InvoiceTableHeader, InvoiceTableHeaderLabon } from "@/Data/Application/Ecommerce";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
 
@@ -29,7 +29,7 @@ const BookingCancellation = () => {
     return (
     <Col md='6' >
       <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-<h1 className="text-white" style={{padding:'24px', margin: '0'}}>Cancel Booking</h1>
+<h1 className="text-white" style={{padding:'24px', margin: '0' }}>Cancel Booking</h1>
 <div>
   <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
   <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2>
@@ -419,7 +419,7 @@ const InvoiceFourTable = () => {
       <Table className="table-responsive" style={{ width: "100%", borderSpacing: 0 }}>
         <thead>
           <tr style={{ background: "#7A70BA" }}>
-            {InvoiceTableHeader.map((data, i) => (
+            {InvoiceTableHeaderLabon.map((data, i) => (
               <th style={{ border:"none", padding: "18px 15px", textAlign: data === Description ? "left" : "center", position: data === Description ? "relative" : undefined, borderTopLeftRadius: data === Description ? 10 : 0 }} key={i}>
                 <span style={{ color: "#fff", fontSize: 16, fontWeight: 600 }}>{data}</span>
               </th>
@@ -437,7 +437,7 @@ const InvoiceFourTable = () => {
 const InvoiceTableBody = () => {
   return (
     <>
-      {InvoiceFourData.map((data, i) => (
+      {InvoiceFourDataLabon.map((data, i) => (
         <tr key={i}>
           <td style={{ padding: 30 }}>
             <h4 style={{ fontWeight: 600, margin: "4px 0px", fontSize: 16, color: "#7A70BA" }}>{data.title}</h4>

@@ -10,10 +10,10 @@ const BasicCard = () => {
 
   
   return (
-    <Col xs='3' sm="3" md='4' xl="4">
-      <Card style={{backgroundColor : '#F2EAF9'}}>
+    <Col xs='3' sm="3" md='4' xl="4" >
+      <Card style={{backgroundColor : '#F2EAF9', padding : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
-        <CardBody>
+        <CardBody style={{padding : '10px'}}>
           <div>
 
         {/* <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" /> */}

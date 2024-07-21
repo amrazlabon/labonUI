@@ -18,12 +18,13 @@ export const Profile = () => {
   return (
     <li className="profile-nav onhover-dropdown px-0 py-0">
       <div className="d-flex profile-media align-items-center">
-        <img className="img-30" src={`${ImagePath}/dashboard/profile.png`} alt="" />
+        {/* <img className="img-30" src={`${ImagePath}/dashboard/profile.png`} alt="" /> */}
+        <i className="fa fa-bars" style={{marginRight : '8px' , padding : '4px 6px'}}></i>
         <div className="flex-grow-1">
-          <span>Alen Miller</span>
+          {/* <span>Alen Miller</span>
           <p className="mb-0 font-outfit">
             UI Designer<i className="fa fa-angle-down"></i>
-          </p>
+          </p> */}
         </div>
       </div>
       <ul className="profile-dropdown onhover-show-div">

@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { Button, Col, Container, Row } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Container, Row, Toast, ToastBody } from "reactstrap";
 import BorderBottom from "@/Components/BonusUi/CreativCard/BorderBottom";
 import UpcomingDatePicker from "@/Components/General/Dashboard/DefaultDashboard/UpcomingAppointments/UpcomingDatePicker";
 import ReactDatePicker from "react-datepicker";
@@ -18,10 +18,17 @@ const BookingCancellationConfirm = () => {
     //     setStartDate(start);
     //     setEndDate(end);
     //   };
+    const [open,setOpen] = useState(true)
+    useEffect(()=>{
+      setTimeout(()=>{
+        setOpen(false);
+      },10000)
+    },[])
     return (
         // <Container fluid className="p-3">
 
             <Col md="6" style={{padding : '24px'}}>
+                <ColorsSchemes open={open} setOpen={setOpen}/>
                 <div className=" login-dark">
                     <div className="text-center">
 
@@ -57,3 +64,25 @@ const BookingCancellationConfirm = () => {
 };
 
 export default BookingCancellationConfirm;
+
+const ColorsSchemes = ({ open, setOpen }) => {
+  
+    return (
+      <Col md="6">
+        <Card>
+          
+          {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}
+          {/* <CardBody className="toast-rtl colors-schemes"> */}
+            <Toast fade className="default-show-toast align-items-center text-light bg-success border-0" isOpen={open}>
+              <div className="d-flex justify-content-between align-items-center">
+        <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
+
+                <ToastBody>Your booking has been cancelled.</ToastBody>
+                {/* <Button close className="btn-close-white me-2 m-auto" onClick={() => setOpen(false)}></Button> */}
+              </div>
+            </Toast>
+          {/* </CardBody> */}
+        </Card>
+      </Col>
+    );
+  };

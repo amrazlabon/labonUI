@@ -104,12 +104,12 @@ export const UserProfileData = [
   },
   {
     icon: <FileText />,
-    title: "Contact Info",
+    title: "My Contact",
     link:"acheck/patient_information",
   },
   {
     icon: <FileText />,
-    title: "Booking Info",
+    title: "My Booking",
     link:"acheck/booking_information",
   },
 ];

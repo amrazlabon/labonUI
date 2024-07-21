@@ -17,7 +17,7 @@ import Link from "next/link";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
 import './buttonStyle.css'
-import { InvoiceTableHeader, InvoiceFourData } from "@/Data/Application/Ecommerce";
+import { InvoiceTableHeader, InvoiceFourData, InvoiceFourDataLabon, InvoiceTableHeaderLabon } from "@/Data/Application/Ecommerce";
 
 // import OpenModalMofi from ".";
 
@@ -118,7 +118,7 @@ const PatientDetails = () => {
                   <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Cancel Booking <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 </Link>
                 </Col>
-                <p className="text-center mt-4">Dashboard</p>
+                {/* <p className=" mt-4">Dashboard</p> */}
 
         {/* <div> */}
             {/* <OpenModalMofi/> */}
@@ -381,7 +381,7 @@ const InvoiceFourTable = () => {
       <Table className="table-responsive" style={{ width: "100%", borderSpacing: 0 }}>
         <thead>
           <tr style={{ background: "#7A70BA" }}>
-            {InvoiceTableHeader.map((data, i) => (
+            {InvoiceTableHeaderLabon.map((data, i) => (
               <th style={{ border:"none", padding: "18px 15px", textAlign: data === Description ? "left" : "center", position: data === Description ? "relative" : undefined, borderTopLeftRadius: data === Description ? 10 : 0 }} key={i}>
                 <span style={{ color: "#fff", fontSize: 16, fontWeight: 600 }}>{data}</span>
               </th>
@@ -399,7 +399,7 @@ const InvoiceFourTable = () => {
 const InvoiceTableBody = () => {
   return (
     <>
-      {InvoiceFourData.map((data, i) => (
+      {InvoiceFourDataLabon.map((data, i) => (
         <tr key={i}>
           <td style={{ padding: 30 }}>
             <h4 style={{ fontWeight: 600, margin: "4px 0px", fontSize: 16, color: "#7A70BA" }}>{data.title}</h4>

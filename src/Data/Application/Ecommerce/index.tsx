@@ -949,9 +949,9 @@ export const InvoiceFourDetails = [
   },
 ];
 
-export const InvoiceTableHeader = ["Description", "Subtotal"];
+export const InvoiceTableHeaderLabon = ["Description", "Subtotal"];
 // export const InvoiceTableHeader = ["Description", "Unite Price", "Quantity", "Subtotal"];
-export const InvoiceFourData = [
+export const InvoiceFourDataLabon = [
   {
     title: "Proposal & Brochure Design",
     detail: "Regular License",
@@ -978,6 +978,39 @@ export const InvoiceFourData = [
     detail: "Regular License",
     // price: "100",
     // quantity: "1",
+    total: "100",
+  },
+];
+
+export const InvoiceTableHeader = ["Description", "Unite Price", "Quantity", "Subtotal"];
+
+export const InvoiceFourData = [
+  {
+    title: "Proposal & Brochure Design",
+    detail: "Regular License",
+    price: "300",
+    quantity: "1",
+    total: "300",
+  },
+  {
+    title: "Web design and development",
+    detail: "Regular License",
+    price: "400",
+    quantity: "2",
+    total: "800",
+  },
+  {
+    title: "Logo & Brand  design",
+    detail: "Regular License",
+    price: "240",
+    quantity: "2",
+    total: "480",
+  },
+  {
+    title: "Stationary Design",
+    detail: "Regular License",
+    price: "100",
+    quantity: "1",
     total: "100",
   },
 ];
