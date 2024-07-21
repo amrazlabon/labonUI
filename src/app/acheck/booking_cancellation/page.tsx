@@ -39,8 +39,8 @@ const BookingCancellation = () => {
 </div>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
       <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
-<h2>Cancellation Breakup</h2>
-<div>
+<h2 className="text-black ml-4 mt-4" style={{paddingBottom : '12px'}}>Cancellation Breakup</h2>
+<div style={{paddingBottom : '24px'}}>
 {/* <CardBody> */}
             <Table className="table-wrapper table-responsive theme-scrollbar" borderless>
               <tbody>
@@ -415,7 +415,7 @@ const TableHeadOptions=()=> {
 
 const InvoiceFourTable = () => {
   return (
-    <td>
+    <td style={{padding : '0'}}>
       <Table className="table-responsive" style={{ width: "100%", borderSpacing: 0 }}>
         <thead>
           <tr style={{ background: "#7A70BA" }}>
@@ -443,12 +443,12 @@ const InvoiceTableBody = () => {
             <h4 style={{ fontWeight: 600, margin: "4px 0px", fontSize: 16, color: "#7A70BA" }}>{data.title}</h4>
             <span style={{ opacity: "0.8", fontSize: 16 }}>{data.detail}</span>
           </td>
-          <td style={{ width: "12%", textAlign: "center" }}>
+          {/* <td style={{ width: "12%", textAlign: "center" }}>
             <span style={{ opacity: "0.8" }}>${data.price}.00</span>
           </td>
           <td style={{ width: "12%", textAlign: "center" }}>
             <span style={{ opacity: "0.8" }}>{data.quantity}</span>
-          </td>
+          </td> */}
           <td style={{ width: "12%", textAlign: "center" }}>
             <span style={{ color: "#7A70BA", fontWeight: 600, opacity: "0.9" }}>${data.total}.00</span>
           </td>
@@ -460,15 +460,17 @@ const InvoiceTableBody = () => {
 
 const InvoiceTotal = () => {
   return (
-    <td>
-      <Table style={{ width: "100%" }}>
+    <td >
+      <Table style={{ width: "100%" , marginLeft : '6rem' }}>
         <tbody>
-          <tr style={{ display: "flex", justifyContent: "space-between", margin: "16px 0 24px 0", alignItems: "end" }}>
-            <td style={{ display: "flex", gap: 10 }}>
+          <tr 
+          //  style={{ display: "flex", justifyContent: "space-between", margin: "16px 0 24px 0", alignItems: "end" }}
+           >
+            {/* <td style={{ display: "flex", gap: 10 }}>
               <span style={{ color: "#7A70BA", fontSize: 16, fontWeight: 600 }}>{PaymentTeams} :</span>
               <span style={{ display: "block", lineHeight: "1.5", fontSize: 16, fontWeight: 400, width: "55%" }}>{"This denotes a payment credit for a full month's supply."}</span>
-            </td>
-            <td>
+            </td> */}
+            <td style={{padding : '0'}}>
               <InvoiceSubTotal />
             </td>
           </tr>
