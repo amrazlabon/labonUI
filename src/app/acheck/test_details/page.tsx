@@ -18,6 +18,7 @@ import Link from "next/link";
 // import CustomHorizontalWizard from ".";
 import './buttonStyle.css'
 import { InvoiceTableHeader, InvoiceFourData, InvoiceFourDataLabon, InvoiceTableHeaderLabon } from "@/Data/Application/Ecommerce";
+import { SimpleAccordion } from "./SimpleAccordion";
 
 // import OpenModalMofi from ".";
 
@@ -70,6 +71,8 @@ const PatientDetails = () => {
 {/* <h1>Test Booking and Invoice</h1> */}
 <h4 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Tests in this Booking</h4>
 <div>
+<SimpleAccordion />
+
 {/* <CardBody> */}
             <Table className="table-wrapper table-responsive theme-scrollbar" borderless>
               <tbody>
@@ -79,10 +82,10 @@ const PatientDetails = () => {
                 {/* <tr>
                   <InvoiceFourDetail />
                 </tr> */}
-                <tr>
+                {/* <tr>
                   <InvoiceFourTable />
                 </tr>
-                <tr style={{ height: 3, width: "100%", background: "linear-gradient(90deg, #7A70BA 20.61%, #0DA759 103.6%)", display: "block", marginTop: 6 }} />
+                <tr style={{ height: 3, width: "100%", background: "linear-gradient(90deg, #7A70BA 20.61%, #0DA759 103.6%)", display: "block", marginTop: 6 }} /> */}
                 <tr>
                   <InvoiceTotal />
                 </tr>
@@ -181,7 +184,7 @@ const BasicCardProfileMap = () => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : ''}}>
+      <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           {/* <div className="gap-4" style={{display : 'flex'}}> */}
@@ -267,10 +270,10 @@ const BasicMap = () => {
   
   return (
     <Col lg="" md="">
-      <Card>
-        <CommonCardHeader title={BasicDemoMap} />
-        <CardBody>
-          <div className="map-js-height overflow-hidden">
+      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0'}}>
+        {/* <CommonCardHeader title={BasicDemoMap} /> */}
+        <CardBody style={{padding : '0'}}>
+          <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
             <div id="gmap-simple" className="map-block">
               {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
             </div>
@@ -423,7 +426,7 @@ const InvoiceTableBody = () => {
 const InvoiceTotal = () => {
   return (
     <td >
-      <Table style={{ width: "100%" , marginLeft : '6rem' }}>
+      <Table style={{ width: "100%" , marginLeft : '0' }}>
         <tbody>
           <tr 
           //  style={{ display: "flex", justifyContent: "space-between", margin: "16px 0 24px 0", alignItems: "end" }}
@@ -445,25 +448,34 @@ const InvoiceTotal = () => {
 const InvoiceSubTotal = () => {
   return (
     <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
-      <li style={{ display: "flex", paddingBottom: 16 }}>
-        <span style={{ display: "block", width: 95 }}>{Subtotal} </span>
-        <span style={{ display: "block", width: 25 }}>:</span>
-        <span style={{ display: "block", width: 95, color: "#7A70BA", opacity: "0.9", fontWeight: 600 }} >$6100.00</span>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Subtotal}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$6100.00</span>
       </li>
-      <li style={{ display: "flex", paddingBottom: 16 }}>
-        <span style={{ display: "block", width: 95 }}>{Tax}</span>
-        <span style={{ display: "block", width: 25 }}> :</span>
-        <span style={{ display: "block", width: 95, color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$50.00</span>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Tax}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$50.00</span>
       </li>
-      <li style={{ display: "flex", paddingBottom: 20 }}>
-        <span style={{ display: "block", width: 95 }}>{Discount} </span>
-        <span style={{ display: "block", width: 25 }}> :</span>
-        <span style={{ display: "block", width: 95, color: "#7A70BA", opacity: "0.9", fontWeight: 600}} >$30.00</span>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$30.00</span>
       </li>
-      <li style={{ display: "flex", alignItems: "center" }}>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      {/* <li style={{ display: "flex", alignItems: "center" }}>
         <span style={{ display: "block", width: 95 }}>{TotalDue}</span>
         <span style={{ display: "block",color: "#7A70BA", opacity: "0.9", fontWeight: 600, padding: "12px 25px", borderRadius: 5, background: "rgba(122, 112, 186 , 0.1)", fontSize: 16}} >$6120.00</span>
+      </li> */}
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$30.00</span>
       </li>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
     </ul>
   );
 };

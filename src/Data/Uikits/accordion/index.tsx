@@ -14,7 +14,7 @@ export const AccordionList = [
   {
     id: "2",
     icon: true,
-    accordionHeaderClass: "bg-light-primary",
+    accordionHeaderClass: "bg-light-white",
     accordionHeading: "What is the use of web design?",
     spanClass: "txt-primary",
     bodyText: <div dangerouslySetInnerHTML={{ __html: SimpleAccordion2 }}></div>,
@@ -22,7 +22,7 @@ export const AccordionList = [
   {
     id: "3",
     icon: true,
-    accordionHeaderClass: "bg-light-primary",
+    accordionHeaderClass: "bg-light-white",
     accordionHeading: "What are the elements of web design?",
     spanClass: "txt-primary",
     bodyText: <div dangerouslySetInnerHTML={{ __html: SimpleAccordion3 }}></div>,

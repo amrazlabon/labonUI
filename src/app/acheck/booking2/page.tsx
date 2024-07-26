@@ -10,11 +10,15 @@ import { ImagePath } from "@/Constant";
 import Link from "next/link";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
+import './CalendarStyles.css';
+import { formatShortWeekday } from '@/utils/formatShortWeekday';
+// import { enUS } from 'date-fns/locale'; // Import the locale you need
 
 // import OpenModalMofi from ".";
 
 const Tests = () => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
+  // const [dateValue, setDateValue] = useState(new Date());
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
@@ -32,11 +36,11 @@ const Tests = () => {
 </div>
 <div>
 
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0px 24px 24px 24px' , }}>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
 
 {/* <div> */}
-<h1 className="text-black" style={{paddingBottom:'12px'}}>Pick a Date</h1>
+<h1 className="text-black" style={{paddingBottom:'12px' , marginTop : '0'}}>Pick a Date</h1>
 
 <BasicCard/>
 <DefaultCalendar/>
@@ -73,7 +77,7 @@ const Tests = () => {
 
 <Col sm="12">
 <Link href={'/acheck/booking3'}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book Timings <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+                  <Button className='btn-lg' style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book Timings <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 </Link>
                 </Col>
         <div>
@@ -91,21 +95,40 @@ const DefaultCalendar = () => {
   const [dateValue, setDateValue] = useState<Date>(new Date());
   const date = `${dateValue.getDate()} - ${dateValue.getMonth() + 1} - ${dateValue.getFullYear()} `
 
+  const todayDate = new Date();
   return (
-    <Col xl="12" style={{paddingTop : '12px'}}>
-      <Card>
+    <Col xl="12" style={{paddingTop : '24px'}}>
+      <Card style={{padding : '0'}}>
         {/* <CommonCardHeader title={CalendarDefault}/> */}
-        <CardBody className="card-wrapper">
+        <CardBody className="card-wrapper" style={{padding : '0'}}>
           <Row className="g-3">
-            <Col xs="12">
-              <InputGroup className="main-inline-calender">
-                <Input placeholder={`${dateValue.getDate()} - ${dateValue.getMonth() + 1} - ${dateValue.getFullYear()} `} className="mb-2 flatpickr-input" readOnly />
-                <Calendar onChange={(value) => setDateValue(value as Date)} value={dateValue} className="w-100" />
+            <Col xs="12" style={{padding : ''}}>
+              <InputGroup className="">
+                {/* <Input placeholder={`${dateValue.getDate()} - ${dateValue.getMonth() + 1} - ${dateValue.getFullYear()} `} className="mb-2 flatpickr-input" readOnly /> */}
+                <Calendar minDate={todayDate}
+        formatShortWeekday={(locale, date) => formatShortWeekday(date)}
+                tileDisabled={({ date }) => disableDates(date)} onChange={(value) => setDateValue(value as Date)} value={dateValue} className="w-100" />
               </InputGroup>
             </Col>
           </Row>
         </CardBody>
       </Card>
     </Col>
+  );
+};
+
+const disableDates = (date : any) => {
+  const disabledDates = [
+    new Date(2024, 6, 7), // Example date
+    new Date(2024, 6, 14), // Another example date
+    new Date(2024, 6, 21), // Another example date
+    new Date(2024, 6, 28), // Another example date
+  ];
+
+  return disabledDates.some(
+    (disabledDate) => 
+      date.getFullYear() === disabledDate.getFullYear() &&
+      date.getMonth() === disabledDate.getMonth() &&
+      date.getDate() === disabledDate.getDate()
   );
 };

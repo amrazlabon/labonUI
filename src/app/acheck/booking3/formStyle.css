@@ -1,0 +1,25 @@
+
+
+        .radio-wrapper li .form-check-input, .checkbox-wrapper li .form-check-input {
+border: 1px solid rgba(177, 143, 202, 1);
+background: transparent;
+/* background: rgba(242, 234, 249, 1); */
+}
+        
+        .radio-wrapper li label {
+            /* background: red; Background color */
+            padding: 10px;
+            background: rgba(242, 234, 249, 1);
+
+            border-radius: 4px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: black; /* Text color */
+          }
+
+          .boxstyle {
+            background: rgba(242, 234, 249, 1);
+
+          }

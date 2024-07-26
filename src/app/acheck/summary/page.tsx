@@ -6,7 +6,7 @@ import { useCallback, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
-import { BasicDemoMap, ImagePath } from "@/Constant";
+import { BasicDemoMap, Discount, ImagePath, Subtotal, Tax } from "@/Constant";
 import BasicCard from "./BasicCard";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { BasicCenter, BasicContainerStyle } from "@/Data/Miscellaneous/Maps";
@@ -14,6 +14,7 @@ import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
 import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import Link from "next/link";
+import { SimpleAccordion } from "./SimpleAccordion";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
 
@@ -91,7 +92,30 @@ const Summary = () => {
 {/* </div> */}
 <div>
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Selected Tests</h2>
-<TableHeadOptions/>
+{/* <TableHeadOptions/> */}
+<div>
+<SimpleAccordion />
+
+{/* <CardBody> */}
+            <Table className="table-wrapper table-responsive theme-scrollbar" borderless>
+              <tbody>
+                {/* <tr>
+                  <InvoiceFourHeader />
+                </tr> */}
+                {/* <tr>
+                  <InvoiceFourDetail />
+                </tr> */}
+                {/* <tr>
+                  <InvoiceFourTable />
+                </tr>
+                <tr style={{ height: 3, width: "100%", background: "linear-gradient(90deg, #7A70BA 20.61%, #0DA759 103.6%)", display: "block", marginTop: 6 }} /> */}
+                <tr>
+                  <InvoiceTotal />
+                </tr>
+              </tbody>
+            </Table>
+          {/* </CardBody> */}
+</div>
 </div>
 {/* <CustomHorizontalWizard differentId heading="Custom vertical wizard" horizontalWizardClass="vertical-options vertical-variations" firstXl={3} secondXl={9} /> */}
 
@@ -175,7 +199,7 @@ const BasicCardProfileMap = () => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : ''}}>
+      <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           {/* <div className="gap-4" style={{display : 'flex'}}> */}
@@ -307,10 +331,10 @@ const BasicMap = () => {
   
   return (
     <Col lg="" md="">
-      <Card>
-        <CommonCardHeader title={BasicDemoMap} />
-        <CardBody>
-          <div className="map-js-height overflow-hidden">
+      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0'}}>
+        {/* <CommonCardHeader title={BasicDemoMap} /> */}
+        <CardBody style={{padding : '0'}}>
+          <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
             <div id="gmap-simple" className="map-block">
               {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
             </div>
@@ -341,65 +365,62 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-const TableHeadOptions=()=> {
-
-  const TableHeadOptionBody = [
-    {
-      id: 1,
-      firstName: "LDL Cholesterol",
-      lastName: "Test short description here. It must be truncated after 70 characters max",
-      userName: "₹275.00",
-    },
-    {
-      id: 2,
-      firstName: "HDL Cholesterol",
-      lastName: "Test short description here. It must be truncated after 70 characters max",
-      userName: "₹275.00",
-    },
-    {
-      id: 3,
-      firstName: "LDL Cholesterol",
-      lastName: "Test short description here. It must be truncated after 70 characters max",
-      userName: "₹275.00",
-    },
-  ];
-
+const InvoiceTotal = () => {
   return (
-    <Col sm="">
-      <Card>
-        {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
-        <Row className="card-block">
-          <Col sm="12" lg="12" xl="12">
-            <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-              {TableHeadOptionBody.map((data) => (
-                <tr key={data.id}>
-                  <th scope="row">{data.id}</th>
-                  <td>
-                  <div style={{display : 'grid'}}>
-                    <h4>
-                      {data.firstName}
-                    </h4>
-                    <p style={{margin:'0', paddingTop : '16px'}}>
-
-                    {data.lastName}
-                    </p>
-                    <p style={{margin:'0', paddingTop : '16px'}}>
-
-                    {data.userName}
-                    </p>
-                  </div>
-                    </td>
-                  {/* <td>{data.lastName}</td>
-                  <td>{data.userName}</td> */}
-                </tr>
-              ))}
-            </CommonTable>
-          </Col>
-        </Row>
-      </Card>
-    </Col>
+    <td >
+      <Table style={{ width: "100%" , marginLeft : '0' }}>
+        <tbody>
+          <tr 
+          //  style={{ display: "flex", justifyContent: "space-between", margin: "16px 0 24px 0", alignItems: "end" }}
+           >
+            {/* <td style={{ display: "flex", gap: 10 }}>
+              <span style={{ color: "#7A70BA", fontSize: 16, fontWeight: 600 }}>{PaymentTeams} :</span>
+              <span style={{ display: "block", lineHeight: "1.5", fontSize: 16, fontWeight: 400, width: "55%" }}>{"This denotes a payment credit for a full month's supply."}</span>
+            </td> */}
+            <td style={{padding : '0'}}>
+              <InvoiceSubTotal />
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+    </td>
   );
-}
+};
+
+const InvoiceSubTotal = () => {
+  return (
+    <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Subtotal}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$6100.00</span>
+      </li>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Tax}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$50.00</span>
+      </li>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$30.00</span>
+      </li>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      {/* <li style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ display: "block", width: 95 }}>{TotalDue}</span>
+        <span style={{ display: "block",color: "#7A70BA", opacity: "0.9", fontWeight: 600, padding: "12px 25px", borderRadius: 5, background: "rgba(122, 112, 186 , 0.1)", fontSize: 16}} >$6120.00</span>
+      </li> */}
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$30.00</span>
+      </li>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+    </ul>
+  );
+};
 
 
 

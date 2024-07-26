@@ -73,7 +73,20 @@ const ColorsSchemes = ({open} : any, {setOpen} : any) => {
           
           {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}
           {/* <CardBody className="toast-rtl colors-schemes"> */}
-            <Toast fade className="default-show-toast align-items-center text-light bg-success border-0" isOpen={open}>
+            <Toast fade className="default-show-toast align-items-center text-light bg-success border-0" isOpen={open}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              zIndex: 1050,
+              margin: "0 auto",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            }}>
               <div className="d-flex justify-content-between align-items-center">
         <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
 

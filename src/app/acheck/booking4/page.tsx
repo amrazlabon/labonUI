@@ -191,7 +191,7 @@ const FloatingForm = () => {
                 </Col> */}
                 <Col sm="12">
                 <Link href={'/acheck/summary'}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Add Patient Details <span><i className="fa fa-angle-right" style={{marginLeft: '24px'}}></i></span></Button>
+                  <Button className="btn-lg" style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Summary <span><i className="fa fa-angle-right" style={{marginLeft: '24px'}}></i></span></Button>
                 </Link>
                 </Col>
               </Row>
@@ -322,7 +322,7 @@ const TableHeadOptions=()=> {
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
               {TableHeadOptionBody.map((data) => (
                 <tr key={data.id}>
-                  <th scope="row">{data.id}</th>
+                  {/* <th scope="row">{data.id}</th> */}
                   <td>
         <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
         {/* {data.lastName} */}

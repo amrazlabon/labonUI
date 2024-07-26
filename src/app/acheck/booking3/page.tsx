@@ -11,6 +11,7 @@ import BasicCard from "./BasicCard";
 import Link from "next/link";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
+import './formStyle.css';
 
 // import OpenModalMofi from ".";
 
@@ -32,10 +33,10 @@ const TestTime = () => {
 </div>
 </div>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0px 24px 24px 24px'}}>
 
 {/* <div> */}
-<h1 className="text-black" style={{margin:'0', paddingBottom : '24px'}}>Select a Suitable Time</h1>
+<h1 className="text-black" style={{margin:'0', paddingBottom : '24px' , marginTop : '0'}}>Select a Suitable Time</h1>
 
 <BasicCard/>
 <div style={{display:'flex'}}>
@@ -64,7 +65,7 @@ const TestTime = () => {
 
 <Col sm="12">
 <Link href={'/acheck/booking4'}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Add Patient Details <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+                  <Button className='btn-lg' style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Add Patient Details <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 </Link>
                 </Col>
         <div>
@@ -119,7 +120,7 @@ const IconsRadio = () => {
     <Col xl="12" sm="12" className="order-xl-0 order-sm-1">
       <div className=" h-100 checkbox-checked">
         {/* <h6 className="sub-title">{IconsRadios}</h6> */}
-        <div className="form-check radio radio-primary ps-0">
+        <div className="form-check radio-primary ps-0">
           <ul className="radio-wrapper">
             {/* <li className="p-1 pt-2 pb-2">
               <Input id="radio-icon" className="d-block" type="radio" name="radio2"/>
