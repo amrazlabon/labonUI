@@ -10,7 +10,7 @@ import { ImagePath } from "@/Constant";
 import Link from "next/link";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
-import './CalendarStyles.css';
+import './calendarStyles.css';
 import { formatShortWeekday } from '@/utils/formatShortWeekday';
 // import { enUS } from 'date-fns/locale'; // Import the locale you need
 
