@@ -20,45 +20,31 @@ import { SimpleAccordion } from "./SimpleAccordion";
 
 // import OpenModalMofi from ".";
 
-const Summary = () => {
+const Summary = ({profile , setProfile , setStepActive} : any) => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
+      const handleBookTimingsClick =() => {
+        setStepActive(4)
+      }
+      console.log("the profile value",profile);
+      
       
     return (
-    <Col md='6' >
-      <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+    <Col md='' >
+      {/* <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
 
 <div style={{ display: 'flex', alignItems: 'center' , paddingBottom : '24px'}}>
   <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
-    {/* <img
-      style={{ height: '7rem', margin: '0' , width : '100%' , padding : '24px'}}
-      className="img-fluid table-avtar"
-      src={`${ImagePath}/ProfileIcon.png`}
-      alt="user image"
-    /> */}
-      {/* <h1 className="text-black" style={{margin:'0', paddingTop : '0', textAlign : 'left'}}>1,100.00</h1> */}
+    
       <div>
   <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
   <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2>
 </div>
   </div>
   <div style={{ flex: 1, display: 'flex', justifyContent: 'center' ,paddingRight : '24px'}}>
-    {/* <button
-      style={{
-        color: 'white',
-        width: '800%',
-        height: '3rem',
-        padding: '12px 0px',
-        backgroundColor: '#AE7FD1',
-        border: 'none',
-        borderRadius: '5px',
-      }}
-    >
-      Upload Selfie &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {'>'}
-    </button> */}
                   <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Add To Cart</Button>
 
   </div>
@@ -66,10 +52,10 @@ const Summary = () => {
 
 <div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
-</div>
+</div> */}
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
 
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0'}}>
 {/* <div> */}
 <h1 className="text-black ml-4 mt-4" style={{paddingBottom:'16px'}}>Summary</h1>
 
@@ -78,7 +64,7 @@ const Summary = () => {
 <div>
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Patient Details</h2>
 
-<BasicCardProfile/>
+<BasicCardProfile profile={profile}/>
   
 </div>
 
@@ -87,7 +73,7 @@ const Summary = () => {
 <BasicMap/>
 <BasicCardProfileMap/>
 </div>
-<BasicCardSchedule/>
+<BasicCardSchedule profile={profile}/>
                                     
 {/* </div> */}
 <div>
@@ -148,7 +134,7 @@ const Summary = () => {
 
 export default Summary;
 
-const BasicCardSchedule = () => {
+const BasicCardSchedule = ({profile} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
@@ -170,7 +156,7 @@ Schedule
             <img style={{height:'3rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Calendar.png`} alt="user image" />
 
             <p className="mb-0 mt-3">
-27/04/2024
+{profile.date}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
             </div>
@@ -179,7 +165,7 @@ Schedule
             <img style={{height:'3rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
 
             <p className="mb-0 mt-3" >
-08:30 AM
+{profile.timeslot}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
             </div>
@@ -237,7 +223,7 @@ Home Address
   );
 };
 
-const BasicCardProfile = () => {
+const BasicCardProfile = ({profile} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
@@ -247,7 +233,7 @@ const BasicCardProfile = () => {
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
 
-        <div className="gap-4" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '24px'}}>
+        <div className="gap-2" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '0'}}>
   <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
     {/* <img
       style={{ height: '7rem', margin: '0' , width : '100%' , padding : '24px'}}
@@ -263,7 +249,7 @@ const BasicCardProfile = () => {
 <img style={{height:'7rem', margin:'0 '}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
 
   </div>
-  <div style={{ flex: 1, display: 'flex', justifyContent: 'center' ,paddingRight : '24px'}}>
+  <div style={{ flex: 2, display: 'flex', justifyContent: 'center' ,paddingRight : '0'}}>
     {/* <button
       style={{
         color: 'white',
@@ -280,18 +266,35 @@ const BasicCardProfile = () => {
                   {/* <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book a Home Visit </Button> */}
                   <div style={{display : 'grid'}}>
 
-<h1 style={{margin:'0', paddingTop : '0'}}>
-Sudha
+
+<h1 style={{margin:'0', paddingTop : '0' , paddingBottom : '10px'}}>
+{profile.name}
   {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
 </h1>
-<h1 style={{margin:'0', paddingTop : '10px'}}>
-Ramakrishnan
-  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-</h1>
-<p style={{margin:'0', paddingTop : '16px'}}>
-Female, 36 Years
-  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-</p>
+<div className="gap-2" style={{display : 'flex' , padding : '0'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Gender.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    {profile.gender} ({profile.age} Years)
+                    </p>
+                    </div>
+<div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    {profile.relation}
+                    </p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    {profile.tests} Tests done so far
+                    </p>
+                    </div>
 </div>
   </div>
 </div>
@@ -393,19 +396,19 @@ const InvoiceSubTotal = () => {
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" }}>{Subtotal}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$6100.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem'  }}>$6100.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" }}>{Tax}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$50.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>$50.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
+        <span style={{ display: "block", width: 95, textAlign: "left"  }}>{Discount}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$30.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>$30.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       {/* <li style={{ display: "flex", alignItems: "center" }}>
@@ -415,7 +418,7 @@ const InvoiceSubTotal = () => {
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$30.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 1000 ,paddingRight : '3rem'  }}>$30.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
     </ul>

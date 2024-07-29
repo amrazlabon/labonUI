@@ -16,16 +16,21 @@ import { formatShortWeekday } from '@/utils/formatShortWeekday';
 
 // import OpenModalMofi from ".";
 
-const Tests = () => {
+const Tests = ({profile , setProfile , setStepActive} : any) => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   // const [dateValue, setDateValue] = useState(new Date());
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
+      console.log("the date value", profile);
+  const [dateValue, setDateValue] = useState<Date>(profile?.date ? new Date() : new Date());
       
+  const handleBookTimingsClick =() => {
+    setStepActive(1)
+  }
     return (
-    <Col md='6' >
-      <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+    <Col md='' >
+      {/* <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
 <div>
   <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
@@ -33,17 +38,17 @@ const Tests = () => {
 </div>
 <div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
-</div>
+</div> */}
 <div>
 
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '0px 24px 24px 24px' , }}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0' , }}>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
 
 {/* <div> */}
 <h1 className="text-black" style={{paddingBottom:'12px' , marginTop : '0'}}>Pick a Date</h1>
 
 <BasicCard/>
-<DefaultCalendar/>
+<DefaultCalendar profile={profile} setProfile={setProfile} setStepActive={setStepActive} dateValue={dateValue} setDateValue={setDateValue}/>
 
 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '1rem', paddingBottom: '16px' }}>
                                         <p>
@@ -75,11 +80,9 @@ const Tests = () => {
           </CardBody> */}
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
-<Col sm="12">
-<Link href={'/acheck/booking3'}>
-                  <Button className='btn-lg' style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book Timings <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
-</Link>
-                </Col>
+{/* <Col sm="12">
+                  <Button onClick={handleBookTimingsClick} className='btn-lg' style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book Timings <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+                </Col> */}
         <div>
             {/* <OpenModalMofi/> */}
         </div>
@@ -91,10 +94,25 @@ const Tests = () => {
 
 export default Tests;
 
-const DefaultCalendar = () => {
-  const [dateValue, setDateValue] = useState<Date>(new Date());
-  const date = `${dateValue.getDate()} - ${dateValue.getMonth() + 1} - ${dateValue.getFullYear()} `
+const DefaultCalendar = ({profile , setProfile , setStepActive ,  dateValue, setDateValue }: any) => {
+  // const date = `${dateValue.getDate()} - ${dateValue.getMonth() + 1} - ${dateValue.getFullYear()} `
 
+  const formatDate = (date : any) => {
+    console.log("the date in the format date",date);
+    
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+  const handleDateChange = (value : any) => {
+    setDateValue(formatDate(value));
+    setProfile({
+      ...profile,
+      date: formatDate(value),
+    });
+    setStepActive(1)
+  };
   const todayDate = new Date();
   return (
     <Col xl="12" style={{paddingTop : '24px'}}>
@@ -105,9 +123,13 @@ const DefaultCalendar = () => {
             <Col xs="12" style={{padding : ''}}>
               <InputGroup className="">
                 {/* <Input placeholder={`${dateValue.getDate()} - ${dateValue.getMonth() + 1} - ${dateValue.getFullYear()} `} className="mb-2 flatpickr-input" readOnly /> */}
-                <Calendar minDate={todayDate}
+                <Calendar
+                //  minDate={todayDate}
         formatShortWeekday={(locale, date) => formatShortWeekday(date)}
-                tileDisabled={({ date }) => disableDates(date)} onChange={(value) => setDateValue(value as Date)} value={dateValue} className="w-100" />
+                // tileDisabled={({ date }) => disableDates(date)}
+                 onChange={handleDateChange}
+                  value={dateValue}
+                   className="w-100" />
               </InputGroup>
             </Col>
           </Row>

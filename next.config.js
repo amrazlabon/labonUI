@@ -5,7 +5,7 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "/acheck/profile",
+        destination: "/acheck/booking",
         // destination: "/auth/login",
         permanent: false,
       },

@@ -15,15 +15,29 @@ import './formStyle.css';
 
 // import OpenModalMofi from ".";
 
-const TestTime = () => {
+const TestTime = ({profile , setProfile , setStepActive} : any) => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
       
+      const handleBookTimingsClick =() => {
+        setStepActive(2)
+      }
+
+      const [selectedTime, setSelectedTime] = useState<string>(profile.timeslot ? profile.timeslot : '8:00 AM'); // State for selected time
+
+  const handleTimeChange = (time: string) => {
+    console.log("time",time)
+    setSelectedTime(time);
+    setProfile({
+      ...profile,
+      timeslot: time,
+    });
+  };
     return (
-    <Col md='6' >
-      <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+    <Col md='' >
+      {/* <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
 <div>
   <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
@@ -31,9 +45,9 @@ const TestTime = () => {
 </div>
 <div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
-</div>
+</div> */}
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '0px 24px 24px 24px'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0'}}>
 
 {/* <div> */}
 <h1 className="text-black" style={{margin:'0', paddingBottom : '24px' , marginTop : '0'}}>Select a Suitable Time</h1>
@@ -43,7 +57,7 @@ const TestTime = () => {
 
 <p style={{fontWeight:'600',fontSize:'16px'}}>Morning </p><span style={{color:'#65C466'}}> (Recommended)</span>
 </div>
-<IconsRadio/>
+<IconsRadio selectedTime={selectedTime} onTimeChange={handleTimeChange}/>
                                     
 {/* </div> */}
 
@@ -64,9 +78,9 @@ const TestTime = () => {
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
 <Col sm="12">
-<Link href={'/acheck/booking4'}>
-                  <Button className='btn-lg' style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Add Patient Details <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
-</Link>
+{/* <Link href={'/acheck/booking4'}> */}
+                  <Button onClick={handleBookTimingsClick} className='btn-lg' style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Add Patient Details <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+{/* </Link> */}
                 </Col>
         <div>
             {/* <OpenModalMofi/> */}
@@ -80,7 +94,7 @@ export default TestTime;
 
 
 
-const IconsRadio = () => {
+const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
 
   const CustomRadioListData = [
     {
@@ -130,7 +144,11 @@ const IconsRadio = () => {
             </li> */}
             {CustomRadioListData.map(({ icon, id, text, defaultChecked }, index) => (
               <li className="p-1 pt-2 pb-2" key={index}>
-                <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio" defaultChecked={defaultChecked} name="radio2" />
+                <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio"
+                //  defaultChecked={defaultChecked}
+                  name="radio2" value={text}
+                  // checked={selectedTime === text}
+                  onChange={() => onTimeChange(text)}/>
                 <Label htmlFor={`radio-${id}`} check>
                 {/* <img style={{ height: '100%', }} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" /> */}
 

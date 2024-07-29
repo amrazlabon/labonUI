@@ -12,7 +12,7 @@ import Link from "next/link";
 
 // import OpenModalMofi from ".";
 
-const Booking1 = () => {
+const Booking1 = ({profile , setProfile} : any) => {
 
   const CustomTestListData = [
     {

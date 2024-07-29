@@ -19,6 +19,7 @@ import Link from "next/link";
 import './buttonStyle.css'
 import { InvoiceTableHeader, InvoiceFourData, InvoiceFourDataLabon, InvoiceTableHeaderLabon } from "@/Data/Application/Ecommerce";
 import { SimpleAccordion } from "./SimpleAccordion";
+// import { SimpleAccordion } from "./SimpleAccordion";
 
 // import OpenModalMofi from ".";
 
@@ -111,7 +112,7 @@ const PatientDetails = () => {
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
 <Col sm="12">
-<Link href={'/acheck/booking2'}>
+<Link href={'/acheck/booking'}>
                   <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Reschedule Booking <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 </Link>
                 </Col>
@@ -451,19 +452,19 @@ const InvoiceSubTotal = () => {
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" }}>{Subtotal}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$6100.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem'  }}>$6100.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" }}>{Tax}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$50.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>$50.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
+        <span style={{ display: "block", width: 95, textAlign: "left"  }}>{Discount}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$30.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>$30.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       {/* <li style={{ display: "flex", alignItems: "center" }}>
@@ -473,7 +474,7 @@ const InvoiceSubTotal = () => {
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$30.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 1000 ,paddingRight : '3rem'  }}>$30.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
     </ul>

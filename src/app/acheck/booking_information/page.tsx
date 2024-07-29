@@ -2,8 +2,10 @@ import { ImagePath } from "@/Constant";
 import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import { CommonTableProp } from "@/Types/TableType";
 import { Card, CardBody, Col, Row, Table } from "reactstrap";
-import './patient-details.css'
+// import './patient-details.css'
 import Link from "next/link";
+// import { useBooking } from "./context";
+import router from "next/router";
 
 
 const BookingInformation = () => {
@@ -49,6 +51,13 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
 };
 
 const TableHeadOptions=()=> {
+
+  // const { setBookingData } = useBooking();
+
+  const handleRowClick = (data: any) => {
+    // setBookingData(data);
+    // router.push('/acheck/patient_details');
+  };
   // TableHeadOptions=()=> {
 
     const TableHeadOptionBody = [
@@ -56,60 +65,77 @@ const TableHeadOptions=()=> {
         id: 1,
         firstName: "25/07/2024",
         lastName: "2 Tests",
-        userName: "Vasudevan Ramachandran",
+        userName: "LBNHVB100420241",
         time: "07:00 AM"
       },
       {
         id: 2,
         firstName: "28/07/2024",
         lastName: "2 Tests",
-        userName: "Swathi Ramachandran",
+        userName: "LBNHVB100420241",
         time: "07:00 AM"
       },
       {
         id: 3,
         firstName: "29/07/2024",
         lastName: "2 Tests",
-        userName: "Myself",
+        userName: "LBNHVB100420241",
         time: "07:00 AM"
       },
     ];
 
   return (
-    <Col sm="">
-      <Card>
+    <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
+      <Card > 
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
           <Col sm="12" lg="12" xl="12">
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
               {TableHeadOptionBody.map((data) => (
                 <tr key={data.id}>
-                  <th scope="row">{data.id}</th>
+                  {/* <th scope="row">{data.id}</th> */}
                   <td>
         <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
         {/* {data.lastName} */}
                     </td>
                   <td>
                   <div style={{display : 'grid'}}>
-                    <h4>
+                    <h4 style={{paddingTop : '16px', margin : '0'}}>
                       {data.firstName}
                     </h4>
-                    <p style={{marginTop:'1rem'}}>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
 
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
                     {data.lastName}
                     </p>
-                    <p>
-
-                    {data.userName}
-                    </p>
-                    <p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}> 
 
                     {data.time}
                     </p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}>
+
+                    {data.userName}
+                    </p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
+                    <p style={{paddingTop : '0', margin : '0'}}>
+
+                    Status
+                    </p>
+                    </div>
                   </div>
                   </td>
                   <td>
-                    <i className={`fa fa-angle-right`}></i>
+                    <i className='fa fa-angle-right'></i>
                     {/* {data.userName} */}
                     </td>
                 </tr>

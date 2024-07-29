@@ -15,6 +15,7 @@ import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import Link from "next/link";
 import { InvoiceFourData, InvoiceFourDataLabon, InvoiceTableHeader, InvoiceTableHeaderLabon } from "@/Data/Application/Ecommerce";
+import { SimpleAccordion } from "./SimpleAccordion";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
 
@@ -42,6 +43,9 @@ const BookingCancellation = () => {
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom : '12px'}}>Cancellation Breakup</h2>
 <div style={{paddingBottom : '24px'}}>
 {/* <CardBody> */}
+<SimpleAccordion />
+
+{/* <CardBody> */}
             <Table className="table-wrapper table-responsive theme-scrollbar" borderless>
               <tbody>
                 {/* <tr>
@@ -50,10 +54,10 @@ const BookingCancellation = () => {
                 {/* <tr>
                   <InvoiceFourDetail />
                 </tr> */}
-                <tr>
+                {/* <tr>
                   <InvoiceFourTable />
                 </tr>
-                <tr style={{ height: 3, width: "100%", background: "linear-gradient(90deg, #7A70BA 20.61%, #0DA759 103.6%)", display: "block", marginTop: 6 }} />
+                <tr style={{ height: 3, width: "100%", background: "linear-gradient(90deg, #7A70BA 20.61%, #0DA759 103.6%)", display: "block", marginTop: 6 }} /> */}
                 <tr>
                   <InvoiceTotal />
                 </tr>
@@ -173,7 +177,7 @@ const BasicCardProfileMap = () => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : ''}}>
+      <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           {/* <div className="gap-4" style={{display : 'flex'}}> */}
@@ -210,6 +214,7 @@ Home Address
     </Col>
   );
 };
+
 const BasicCardProfile = () => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
@@ -220,7 +225,7 @@ const BasicCardProfile = () => {
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
 
-        <div className="gap-4" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '24px'}}>
+        <div className="gap-2" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '0'}}>
   <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
     {/* <img
       style={{ height: '7rem', margin: '0' , width : '100%' , padding : '24px'}}
@@ -236,7 +241,7 @@ const BasicCardProfile = () => {
 <img style={{height:'7rem', margin:'0 '}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
 
   </div>
-  <div style={{ flex: 1, display: 'flex', justifyContent: 'center' ,paddingRight : '24px'}}>
+  <div style={{ flex: 2, display: 'flex', justifyContent: 'center' ,paddingRight : '0'}}>
     {/* <button
       style={{
         color: 'white',
@@ -257,14 +262,34 @@ const BasicCardProfile = () => {
 Sudha
   {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
 </h1>
-<h1 style={{margin:'0', paddingTop : '10px'}}>
+<h1 style={{margin:'0', paddingTop : '10px' , paddingBottom : '10px'}}>
 Ramakrishnan
   {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
 </h1>
-<p style={{margin:'0', paddingTop : '16px'}}>
-Your Mother
-  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-</p>
+<div className="gap-2" style={{display : 'flex' , padding : '0'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Gender.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    Male (63 Years)
+                    </p>
+                    </div>
+<div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    Father
+                    </p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    2 Tests done so far
+                    </p>
+                    </div>
 </div>
   </div>
 </div>
@@ -304,10 +329,10 @@ const BasicMap = () => {
   
   return (
     <Col lg="" md="">
-      <Card>
-        <CommonCardHeader title={BasicDemoMap} />
-        <CardBody>
-          <div className="map-js-height overflow-hidden">
+      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0'}}>
+        {/* <CommonCardHeader title={BasicDemoMap} /> */}
+        <CardBody style={{padding : '0'}}>
+          <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
             <div id="gmap-simple" className="map-block">
               {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
             </div>
@@ -461,7 +486,7 @@ const InvoiceTableBody = () => {
 const InvoiceTotal = () => {
   return (
     <td >
-      <Table style={{ width: "100%" , marginLeft : '6rem' }}>
+      <Table style={{ width: "100%" , marginLeft : '0' }}>
         <tbody>
           <tr 
           //  style={{ display: "flex", justifyContent: "space-between", margin: "16px 0 24px 0", alignItems: "end" }}
@@ -483,27 +508,37 @@ const InvoiceTotal = () => {
 const InvoiceSubTotal = () => {
   return (
     <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
-      <li style={{ display: "flex", paddingBottom: 16 }}>
-        <span style={{ display: "block", width: 95 }}>{Subtotal} </span>
-        <span style={{ display: "block", width: 25 }}>:</span>
-        <span style={{ display: "block", width: 95, color: "#7A70BA", opacity: "0.9", fontWeight: 600 }} >$6100.00</span>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Subtotal}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem'  }}>$6100.00</span>
       </li>
-      <li style={{ display: "flex", paddingBottom: 16 }}>
-        <span style={{ display: "block", width: 95 }}>{Tax}</span>
-        <span style={{ display: "block", width: 25 }}> :</span>
-        <span style={{ display: "block", width: 95, color: "#7A70BA", opacity: "0.9", fontWeight: 600 }}>$50.00</span>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Tax}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>$50.00</span>
       </li>
-      <li style={{ display: "flex", paddingBottom: 20 }}>
-        <span style={{ display: "block", width: 95 }}>{Discount} </span>
-        <span style={{ display: "block", width: 25 }}> :</span>
-        <span style={{ display: "block", width: 95, color: "#7A70BA", opacity: "0.9", fontWeight: 600}} >$30.00</span>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left"  }}>{Discount}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>$30.00</span>
       </li>
-      <li style={{ display: "flex", alignItems: "center" }}>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      {/* <li style={{ display: "flex", alignItems: "center" }}>
         <span style={{ display: "block", width: 95 }}>{TotalDue}</span>
         <span style={{ display: "block",color: "#7A70BA", opacity: "0.9", fontWeight: 600, padding: "12px 25px", borderRadius: 5, background: "rgba(122, 112, 186 , 0.1)", fontSize: 16}} >$6120.00</span>
+      </li> */}
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
+        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 1000 ,paddingRight : '3rem'  }}>$30.00</span>
       </li>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
     </ul>
   );
 };
+
 
 

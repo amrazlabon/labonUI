@@ -18,23 +18,54 @@ import Link from "next/link";
 
 // import OpenModalMofi from ".";
 
-const PatientAdd = () => {
+const PatientAdd = ({profile , setProfile , setStepActive} : any) => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
 
       const [isSelectFromContacts, setIsSelectFromContacts] = useState(true);
+      
+      const [formData, setFormData] = useState({
+        name: profile.name ? profile.name : '',
+        dob: profile.dob ? profile.dob :'',
+        mobile: profile.mobile ? profile.mobile :'',
+        gender: profile.gender ? profile.gender :'',
+        email: profile.email ? profile.email :'',
+        pincode: profile.pincode ? profile.pincode :'',
+        location: profile.location ? profile.location :'',
+        address: profile.address ? profile.address :'',
+        age: profile.age ? profile.age :'',
+        // time: '8:00 AM', // default value for time
+      });
+      console.log("formdata",formData);
+    
+      const handleToggleChange = (event: any) => {
+        setIsSelectFromContacts(event.target.checked);
+      };
+    
+      const handleFormChange = (field: string, value: string) => {
+        setFormData({
+          ...formData,
+          [field]: value,
+        });
+        setProfile({
+          ...profile,
+          [field]: value,
+        });
+        
+        console.log("formdata",formData);
+        
+      };
 
-  const handleToggleChange = (event : any) => {
-    setIsSelectFromContacts(event.target.checked);
-  };
 
 
+
+  
       
     return (
-    <Col md='6' >
-      <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+    <Col md='' >
+      {/* <div style={{padding : '0', height:'11rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
 <div>
   <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
@@ -42,38 +73,12 @@ const PatientAdd = () => {
 </div>
 <div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
-</div>
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px' , margin : '0'}}>
+</div> */}
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0' , margin : '0'}}>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
 
 {/* <div> */}
 <h1 className="text-black" style={{paddingBottom:'24px'}}>Select a Suitable Time</h1>
-
-{/* <BasicCard/> */}
-{/* <div style={{display:'flex'}}>
-
-<p style={{fontWeight:'600',fontSize:'16px'}}>Morning </p><span style={{color:'#65C466'}}> (Recommended)</span>
-</div> */}
-{/* <IconsRadio/> */}
-                                    
-{/* </div> */}
-
-{/* <CustomHorizontalWizard differentId heading="Custom vertical wizard" horizontalWizardClass="vertical-options vertical-variations" firstXl={3} secondXl={9} /> */}
-
-{/* <CardBody>
-          <div className={`horizontal-wizard-wrapper vertical-options`}>
-            <Row className="g-3">
-              <Col xl={firstXl} xs={xs} className="main-horizontal-header">
-                <NavComponent callbackActive={callback} activeTab={activeTab} />
-              </Col>
-              <Col xl={secondXl} xs={xs}>
-                <CustomHorizontalWizardFormTabContent activeTab={activeTab} callbackActive={callback} differentId={differentId}/>
-              </Col>
-            </Row>
-          </div>
-        </CardBody> */}
-{/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
-
 
 <div className="toggle-container" >
                 <label>Select from My Contacts</label>
@@ -86,11 +91,10 @@ const PatientAdd = () => {
             </div>
 
             </Card>
-            {isSelectFromContacts ? <FloatingForm /> : <TableHeadOptions />}
+            {isSelectFromContacts ? <FloatingForm formData={formData} onFormChange={handleFormChange} setStepActive={setStepActive}/> : 
+            <TableHeadOptions profile={profile} setProfile={setProfile} setStepActive={setStepActive}/>}
 
-            {/* <TableHeadOptions/>
 
-            <FloatingForm/> */}
 
 
 
@@ -99,7 +103,6 @@ const PatientAdd = () => {
                   <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Add Patient Details</Button>
                 </Col> */}
         <div>
-            {/* <OpenModalMofi/> */}
         </div>
         </Col>
     )
@@ -107,7 +110,52 @@ const PatientAdd = () => {
 
 export default PatientAdd;
 
-const FloatingForm = () => {
+const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
+
+  const calculateAge = (dob: string) => {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+  
+    // Check if the birth date has not occurred yet this year
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+  
+    return age;
+  };
+
+  
+  const handleInputChange = (e: any) => {
+    console.log("the values of date change",e.target.name);
+    
+    const { name, value } = e.target;
+    if (name === 'dob') {
+      console.log("coming inside");
+      
+      const age = calculateAge(value);
+      console.log("the age",age);
+      
+      // onFormChange('age', age);
+      formData.age = age;
+    }
+    onFormChange(name, value);
+  };
+
+  const handleTimeChange = (gender: string) => {
+    onFormChange('gender', gender);
+  };
+
+  const handleBookTimingsClick =() => {
+    setStepActive(3)
+  }
+
+  const { name, dob, gender, pincode , mobile , email , location , address} = formData;
+
+  // Check if all required fields have values
+  const canShowSummaryButton = name && dob && gender && pincode && mobile && email && location && address;
+
   return (
     <Col>
 
@@ -115,85 +163,109 @@ const FloatingForm = () => {
       {/* background: linear-gradient(180deg, #522F62 0%, #9462B5 100%); */}
 
       
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '24px'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0'}}>
         {/* <CommonCardHeader title={FormFloating} span={FloatingFormData} /> */}
-        <CardBody style={{padding : '0'}}>
-          {/* <BasicCard/> */}
+        <CardBody style={{ padding: '0' }}>
           <div className="">
-            <Form className="floating-wrapper" onSubmit={(e)=>e.preventDefault()}>
+            <Form className="floating-wrapper" onSubmit={(e) => e.preventDefault()}>
               <Row className="g-3">
-                {/* <Col sm="12">
-                  <FormGroup  floating className="mb-3">
-                    <Input disabled type="text" placeholder={EmailFloatingPlaceholder} />
-                    <Label check>User ID</Label>
-                  </FormGroup>
-                </Col> */}
-                <Col sm="12" className="mt-6 ">
+                <Col sm="12" className="mt-6">
                   <FormGroup floating>
-                    <Input type="text" placeholder={PasswordFloatingPlaceholder} />
+                    <Input
+                      type="text"
+                      name="name"
+                      placeholder="Patient Name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                    />
                     <Label check>Patient Name</Label>
                   </FormGroup>
                 </Col>
-                <div className="gap-4" style={{display : 'flex'}}>
-
-                <Col sm="6" className="mt-2">
-                  {/* <FormGroup floating>
-                    <Input type="text" placeholder={PasswordFloatingPlaceholder} />
-                    <Label check>Name</Label>
-                    </FormGroup> */}
-          <CommonFormGroup inputType="date" label={BasicDate} colSm="12" inputClass="digits" defaultValue={FullDate} />
-                </Col>
-                
-                {/* <Col sm="2" className="mt-2 ">
-                  <FormGroup floating>
-                    <Input disabled type="number" placeholder={PasswordFloatingPlaceholder} />
-                    <Label check>Age</Label>
-                  </FormGroup>
-                </Col> */}
-                    </div>
-
-                <IconsRadio/>
-                
+                <div className="gap-4" style={{ display: 'flex' }}>
+                  <Col sm="6" className="mt-2">
+                    <FormGroup floating>
+                      <Input
+                        type="date"
+                        name="dob"
+                        // placeholder="Date"
+                        value={formData.dob}
+                        onChange={handleInputChange}
+                      />
+                      <Label check>Date</Label>
+                    </FormGroup>
+                  </Col>
+                </div>
+                <IconsRadio selectedTime={formData.gender} onTimeChange={handleTimeChange} />
                 <Col sm="12">
-                  <FormGroup  floating className="mb-6 mt-3">
-                    <Input type="text" placeholder={EmailFloatingPlaceholder} />
+                  <FormGroup floating className="mb-6 mt-3">
+                    <Input
+                      type="text"
+                      name="mobile"
+                      placeholder="Mobile"
+                      value={formData.mobile}
+                      onChange={handleInputChange}
+                    />
                     <Label check>Mobile</Label>
                   </FormGroup>
                 </Col>
                 <Col sm="12" className="mb-6">
                   <FormGroup floating>
-                    <Input type="text" placeholder={PasswordFloatingPlaceholder} />
+                    <Input
+                      type="text"
+                      name="email"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                    />
                     <Label check>Email</Label>
                   </FormGroup>
                 </Col>
                 <Col sm="6">
-                  <FormGroup  floating className="mb-6">
-                    <Input type="text" placeholder={EmailFloatingPlaceholder} />
+                  <FormGroup floating className="mb-6">
+                    <Input
+                      type="text"
+                      name="pincode"
+                      placeholder="Pincode"
+                      value={formData.pincode}
+                      onChange={handleInputChange}
+                    />
                     <Label check>Pincode</Label>
                   </FormGroup>
                 </Col>
                 <Col sm="12" className="mb-6">
                   <FormGroup floating>
-                    <Input type="text" placeholder={PasswordFloatingPlaceholder} />
+                    <Input
+                      type="text"
+                      name="location"
+                      placeholder="Location"
+                      value={formData.location}
+                      onChange={handleInputChange}
+                    />
                     <Label check>Location</Label>
                   </FormGroup>
-                </Col><Col sm="12" className="mb-2">
-                  <FormGroup  floating className="mb-6">
-                    <Input type="text" placeholder={EmailFloatingPlaceholder} />
+                </Col>
+                <Col sm="12" className="mb-2">
+                  <FormGroup floating className="mb-6">
+                    <Input
+                      type="text"
+                      name="address"
+                      placeholder="Address"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                    />
                     <Label check>Address</Label>
                   </FormGroup>
                 </Col>
-                {/* <Col sm="12" className="mt-0">
-                  <div className="form-check checkbox-checked">
-                    <Input id="gridCheck" type="checkbox" />
-                    <Label htmlFor="gridCheck" check>{CheckMeOut}</Label>
-                  </div>
-                </Col> */}
-                <Col sm="12">
-                <Link href={'/acheck/summary'}>
-                  <Button className="btn-lg" style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Summary <span><i className="fa fa-angle-right" style={{marginLeft: '24px'}}></i></span></Button>
-                </Link>
+                {canShowSummaryButton && (
+
+                  <Col sm="12">
+                  {/* <Link href={'/acheck/summary'}> */}
+                    <Button onClick={handleBookTimingsClick} className="btn-lg" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
+                      Summary <span><i className="fa fa-angle-right" style={{ marginLeft: '24px' }}></i></span>
+                    </Button>
+                  {/* </Link> */}
                 </Col>
+                )}
               </Row>
             </Form>
           </div>
@@ -216,24 +288,24 @@ const CommonFormGroup:React.FC<CommonFormGroupProp> = ({ labelClass, label, colS
 
 // export default FloatingForm;
 
-const IconsRadio = () => {
+const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
 
   const CustomRadioListData = [
     {
       id: 1,
       icon: "Gender - Male.png",
-      text: "Hidden",
+      text: "Male",
       defaultChecked: true,
     },
     {
       id: 2,
       icon: "Gender - Female.png",
-      text: "Folder",
+      text: "Female",
     },
     {
       id: 3,
       icon: "Gender - Other.png",
-      text: "Send",
+      text: "Other",
     },
   ]
   return (
@@ -250,7 +322,9 @@ const IconsRadio = () => {
             </li> */}
             {CustomRadioListData.map(({ icon, id, text, defaultChecked }, index) => (
               <li className="p-1 pt-2 pb-2" key={index}>
-                <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio" defaultChecked={defaultChecked} name="radio2" />
+                <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio" defaultChecked={defaultChecked} name="radio2" 
+                checked={selectedTime === text}
+                onChange={() => onTimeChange(text)}/>
                 <Label htmlFor={`radio-${id}`} check>
                 <img style={{ height: '100%', }} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" />
 
@@ -286,7 +360,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-const TableHeadOptions=()=> {
+const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
   // TableHeadOptions=()=> {
 
     const TableHeadOptionBody = [
@@ -313,15 +387,33 @@ const TableHeadOptions=()=> {
       },
     ];
 
+    const handleRowClick = (data: any) => {
+      setProfile({
+        ...profile,
+        name: data.firstName,
+        relation : data.lastName,
+        dob: '', // Add appropriate value or logic if needed
+        mobile: '', // Add appropriate value or logic if needed
+        gender: '', // Add appropriate value or logic if needed
+        email: '', // Add appropriate value or logic if needed
+        pincode: '', // Add appropriate value or logic if needed
+        location: '', // Add appropriate value or logic if needed
+        address: '', // Add appropriate value or logic if needed
+        age: '' // Add appropriate value or logic if needed
+      });
+      setStepActive(3)
+    };
+  
+
   return (
-    <Col sm="" style={{paddingRight : '24px' , paddingLeft : '24px'}}>
+    <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
       <Card>
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
           <Col sm="12" lg="12" xl="12">
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
               {TableHeadOptionBody.map((data) => (
-                <tr key={data.id}>
+                <tr style={{cursor : 'pointer'}} key={data.id} onClick={() => handleRowClick(data)}>
                   {/* <th scope="row">{data.id}</th> */}
                   <td>
         <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
@@ -332,18 +424,28 @@ const TableHeadOptions=()=> {
                     <h4 style={{paddingTop : '16px', margin : '0'}}>
                       {data.firstName}
                     </h4>
-                    <p style={{paddingTop : '8px' , margin : '0'}}>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
 
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
                     {data.lastName}
                     </p>
-                    <p style={{paddingTop : '8px', margin : '0'}}> 
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}> 
 
                     {data.userName}
                     </p>
-                    <p style={{paddingTop : '8px', margin : '0'}}>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}>
 
                     {data.time}
                     </p>
+                    </div>
                   </div>
                   </td>
                   <td>

@@ -80,7 +80,7 @@ const TableHeadOptions=()=> {
     ];
 
   return (
-    <Col sm="">
+    <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
       <Card>
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
@@ -88,32 +88,42 @@ const TableHeadOptions=()=> {
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
               {TableHeadOptionBody.map((data) => (
                 <tr key={data.id}>
-                  <th scope="row">{data.id}</th>
+                  {/* <th scope="row">{data.id}</th> */}
                   <td>
         <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
         {/* {data.lastName} */}
                     </td>
                   <td>
                   <div style={{display : 'grid'}}>
-                    <h4>
+                    <h4 style={{paddingTop : '16px', margin : '0'}}>
                       {data.firstName}
                     </h4>
-                    <p style={{marginTop:'1rem'}}>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
 
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
                     {data.lastName}
                     </p>
-                    <p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}> 
 
                     {data.userName}
                     </p>
-                    <p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}>
 
                     {data.time}
                     </p>
+                    </div>
                   </div>
                   </td>
                   <td>
-                    <i className={`fa fa-angle-right`}></i>
+                    <i className='fa fa-angle-right'></i>
                     {/* {data.userName} */}
                     </td>
                 </tr>

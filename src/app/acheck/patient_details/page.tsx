@@ -143,7 +143,7 @@ const BasicCardProfileMap = () => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : ''}}>
+      <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           {/* <div className="gap-4" style={{display : 'flex'}}> */}
@@ -191,7 +191,7 @@ const BasicCardProfile = () => {
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
 
-        <div className="gap-4" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '24px'}}>
+        <div className="gap-2" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '0'}}>
   <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
     {/* <img
       style={{ height: '7rem', margin: '0' , width : '100%' , padding : '24px'}}
@@ -207,7 +207,7 @@ const BasicCardProfile = () => {
 <img style={{height:'7rem', margin:'0 '}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
 
   </div>
-  <div style={{ flex: 1, display: 'flex', justifyContent: 'center' ,paddingRight : '24px'}}>
+  <div style={{ flex: 2, display: 'flex', justifyContent: 'center' ,paddingRight : '0'}}>
     {/* <button
       style={{
         color: 'white',
@@ -224,18 +224,31 @@ const BasicCardProfile = () => {
                   {/* <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book a Home Visit </Button> */}
                   <div style={{display : 'grid'}}>
 
-<h1 style={{margin:'0', paddingTop : '0'}}>
-Sudha
-  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-</h1>
-<h1 style={{margin:'0', paddingTop : '10px'}}>
-Ramakrishnan
-  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-</h1>
-<p style={{margin:'0', paddingTop : '16px'}}>
-Your Mother
-  {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-</p>
+
+                  <div className="gap-2" style={{display : 'flex' , padding : '0'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Gender.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    Male (63 Years)
+                    </p>
+                    </div>
+<div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    Father
+                    </p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
+                    2 Tests done so far
+                    </p>
+                    </div>
 </div>
   </div>
 </div>
@@ -275,10 +288,10 @@ const BasicMap = () => {
   
   return (
     <Col lg="" md="">
-      <Card>
-        <CommonCardHeader title={BasicDemoMap} />
-        <CardBody>
-          <div className="map-js-height overflow-hidden">
+      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0'}}>
+        {/* <CommonCardHeader title={BasicDemoMap} /> */}
+        <CardBody style={{padding : '0'}}>
+          <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
             <div id="gmap-simple" className="map-block">
               {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
             </div>
@@ -345,7 +358,7 @@ const TableHeadOptions=()=> {
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
               {TableHeadOptionBody.map((data) => (
                 <tr key={data.id}>
-                  <th scope="row">{data.id}</th>
+                  {/* <th scope="row">{data.id}</th> */}
                   <td>
         <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
         {/* {data.lastName} */}
@@ -355,18 +368,35 @@ const TableHeadOptions=()=> {
                     <h4 style={{paddingTop : '16px', margin : '0'}}>
                       {data.firstName}
                     </h4>
-                    <p style={{paddingTop : '8px' , margin : '0'}}>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
 
+                    <p style={{paddingTop : '0' , margin : '0'}}>
+                    
                     {data.lastName}
                     </p>
-                    <p style={{paddingTop : '8px', margin : '0'}}> 
-
-                    {data.userName}
-                    </p>
-                    <p style={{paddingTop : '8px', margin : '0'}}>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}> 
 
                     {data.time}
                     </p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}>
+
+                    {data.userName}
+                    </p>
+                    </div>
+                    <div className="gap-2" style={{display : 'flex'}}>
+                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
+                    <p style={{paddingTop : '0', margin : '0'}}>
+
+                    Status
+                    </p>
+                    </div>
                   </div>
                   </td>
                   <td>
