@@ -19,7 +19,7 @@ export const Profile = () => {
     <li className="profile-nav onhover-dropdown px-0 py-0">
       <div className="d-flex profile-media align-items-center">
         {/* <img className="img-30" src={`${ImagePath}/dashboard/profile.png`} alt="" /> */}
-        <i className="fa fa-bars" style={{marginRight : '8px' , padding : '4px 6px'}}></i>
+        <i className="fa fa-align-right" style={{marginRight : '8px' , padding : '4px 6px'}}></i>
         <div className="flex-grow-1">
           {/* <span>Alen Miller</span>
           <p className="mb-0 font-outfit">

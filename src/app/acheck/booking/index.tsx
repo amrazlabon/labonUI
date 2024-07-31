@@ -5,6 +5,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { StepConnector, stepConnectorClasses, StepIconProps, styled } from '@mui/material';
 // import { Check } from '@mui/icons-material';
+import { Col, Card, CardBody, Progress, Button } from "reactstrap";
 
 const QontoConnector = styled(StepConnector)(({ theme } : any) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -105,8 +106,85 @@ const Steppers = ({ stepActive, setStepActive }: any) => {
                     }
                 </Stepper>
             </Box>
+            {/* <ProgressWithNumberStepsCart stepActive={stepActive} setStepActive={setStepActive}/> */}
+
+
         </div>
     );
 }
 
 export default Steppers;
+
+
+
+const ProgressWithNumberStepsCart = ({ stepActive, setStepActive } : any) => {
+  return (
+    <Col xl="6">
+      <Card>
+        <CardBody className="mb-1">
+          <div className="position-relative m-3 progress-number">
+            {stepActive}
+            <Progress value={(stepActive + 1) * 25} className="progress-wrapper" />
+            <Button
+              size="sm"
+              color="primary"
+              className="position-absolute top-0 start-0 p-0 translate-middle rounded-circle txt-light"
+              onClick={() => setStepActive(0)}
+            >
+              1
+            </Button>
+            <DynamicProgressWithNumberSteps stepActive={stepActive} setStepActive={setStepActive} />
+          </div>
+        </CardBody>
+      </Card>
+    </Col>
+  );
+};
+
+const DynamicProgressWithNumberSteps = ({ stepActive, setStepActive } : any) => {
+  console.log("the step active value",stepActive);
+  
+  const ProgressNumberList = [
+    {
+      color: stepActive >= 0 ? 'primary' : 'transparent',
+      number: '0',
+      className: 'start-50 txt-light',
+      step: 0,
+    },
+    {
+      color: stepActive >= 1 ? 'primary' : 'transparent',
+      number: '1',
+      className: 'progress-btn start-100 txt-dark',
+      step: 1,
+    },
+    {
+      color: stepActive >= 2 ? 'primary' : 'transparent',
+      number: '2',
+      className: 'progress-btn start-150 txt-dark',
+      step: 2,
+    },
+    {
+      color: stepActive >= 3 ? 'primary' : 'transparent',
+      number: '3',
+      className: 'progress-btn start-150 txt-dark',
+      step: 3,
+    },
+  ];
+
+  return (
+    <>
+      {ProgressNumberList.map(({ color, number, className, step }, index) => (
+        <Button
+          size="sm"
+          color={color}
+          className={`position-absolute top-0 p-0 ${className} translate-middle rounded-circle`}
+          style={{ width: '2rem', height: '2rem' }}
+          // key={index}
+          onClick={() => setStepActive(step)}
+        >
+          {number}
+        </Button>
+      ))}
+    </>
+  );
+};
