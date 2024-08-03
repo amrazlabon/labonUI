@@ -42,6 +42,22 @@ interface FormValue {
     profileImage: string;
 }
 
+type Test = {
+    id: number;
+    test_name: string;
+    is_active: boolean;
+    questions: any;
+    price: string | null;
+  };
+
+  type Location = {
+    // id: number;
+    location: string;
+    address: string;
+    pincode: any;
+    nick_name: string | null;
+  };
+
 const Page = () => {
     
     const [stepActive, setStepActive] = useState<number>(0);
@@ -55,6 +71,10 @@ const Page = () => {
     // const userType = searchParams.get('type');
     const userTheme = searchParams.get('theme');
     const userThemeColor = searchParams.get('color');
+    
+    
+      const [selectedTests, setSelectedTests] = useState<Test[]>([]);
+        const [selectedAddress, setSelectedAddress] = useState<Location[]>([]);
     
     // const menuItems = userType === 'experience' ? StepsExperience : StepsFresher;
     const [profile, setProfile] = useState<FormValue>({
@@ -89,6 +109,15 @@ const Page = () => {
     
     console.log("the profile value in the stepper",profile);
     useEffect(() => {
+        const tests = sessionStorage.getItem('tests');
+    const address = sessionStorage.getItem('address');
+
+    if (tests) {
+      setSelectedTests(JSON.parse(tests));
+    }
+    if (address) {
+      setSelectedAddress(JSON.parse(address));
+    }
         // citiesAPI().then((cities: string[]) => {
         //     const uniqueCities = cities.filter((value, index, self) => self.indexOf(value) === index);
         //     setCities(uniqueCities);
@@ -112,8 +141,20 @@ const Page = () => {
   <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
     
       <div>
-  <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
-  <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2>
+  <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>{selectedTests.length === 0
+        ? 'Select Test'
+        : selectedTests.length === 1
+        ? selectedTests[0].test_name
+        : `${selectedTests[0].test_name} + ${selectedTests.length - 1}`}</p>
+  <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>
+    {/* 1100.00 */}
+    {selectedTests.length === 0
+                  ? 'Select Test'
+                  : selectedTests.length === 1
+                  ? `${selectedTests[0].price}`
+                  : `${selectedTests.reduce((total, test) => total + (test.price ? parseFloat(test.price) : 0), 0)}`
+                }
+    </h2>
 </div>
   </div>
   <div style={{ flex: 1, display: 'flex', justifyContent: 'center' ,paddingRight : '24px'}}>
@@ -121,11 +162,11 @@ const Page = () => {
                   {stepActive == 3 && 
                     <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Add To Cart</Button>
 }
-                    {profile.date && (
+                    {profile.date && (stepActive === 1 || stepActive === 2 || stepActive === 0) && (
 
                         <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Date : {profile.date}</p>
                     )}
-                    {profile.timeslot && (
+                    {profile.timeslot && (stepActive === 1 || stepActive === 2 || stepActive === 0) &&(
   <p className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>Time : {profile.timeslot}</p>
 )}
 </div>
@@ -147,6 +188,9 @@ const Page = () => {
                     setStepActive={setStepActive}
                     profile={profile}
                     setProfile={setProfile}
+                    selectedTests={selectedTests}
+                    selectedAddress={selectedAddress}
+
                     // cities={cities}
                     // education={education}
                     // experience={experience}

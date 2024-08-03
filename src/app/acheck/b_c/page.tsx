@@ -7,15 +7,24 @@ import ReactDatePicker from "react-datepicker";
 import { ImagePath } from "@/Constant";
 import Link from "next/link";
 import './buttonStyle.css'
+import { useModal } from "@/context/modalContext";
 // import { UserForm } from "./UserForm";
 
 const BookingConfirmation = () => {
-    const [open,setOpen] = useState(true)
+  const [bookingOrder, setBookingOrder] = useState<any>({});
+  const [open,setOpen] = useState(true)
     useEffect(()=>{
+      const bookingOrder = sessionStorage.getItem('booking_order');
+    if(bookingOrder) {
+      setBookingOrder(JSON.parse(bookingOrder))
+    }
       setTimeout(()=>{
         setOpen(false);
       },10000)
     },[])
+
+    // const { openModal } = useModal();
+
     // const [startDate, setStartDate] = useState<Date | null>(new Date());
     // const [endDate, setEndDate] = useState<Date | null>(null);
   
@@ -31,6 +40,7 @@ const BookingConfirmation = () => {
                 <ColorsSchemes open={open} setOpen={setOpen}/>
                 <div className=" login-dark">
                     <div className="text-center">
+                    {/* <button onClick={openModal}>Sign In</button> */}
 
 
                     <img style={{height:'35px'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
@@ -38,8 +48,8 @@ const BookingConfirmation = () => {
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}> */}
 
                         <p>Booking ID: LBNHVB-MRL-20241201-1-A</p>
-                        <h2>Hello Sudha!</h2>
-                        <p>You just booked a home test for<span className="text-bold">Sreedevi Ramachandran</span> . <br />The invoice has been emailed to you. Our phlebotomist assigned <br /> to collect blood samples will arrive at <br /> your location tentatively by <span className="font-bold">7:00 AM on 01/01/2024.</span> </p>
+                        <h2>Hello {bookingOrder.name}!</h2>
+                        <p>You just booked a home test for<span className="text-bold">{bookingOrder.name}</span> . <br />The invoice has been emailed to you. Our phlebotomist assigned <br /> to collect blood samples will arrive at <br /> your location tentatively by <span className="font-bold">{bookingOrder.timeslot} on {bookingOrder.date}.</span> </p>
                     {/* </div> */}
                     <br />
                     <p>In case you have any clarifications, <br /> please call us on the support number <br /> +91 9446061000. See you soon!</p>

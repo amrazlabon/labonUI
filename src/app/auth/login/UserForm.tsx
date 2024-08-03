@@ -18,16 +18,7 @@ export const UserForm = () => {
   const [password, setPassword] = useState("Test@123");
   const router = useRouter();
 
-  const formSubmitHandle = () => {
-    window.location.reload();
-    if (email == "test123@gmail.com" && password == "Test@123") {
-      Cookies.set("mofi_token", JSON.stringify(true));
-      router.push(`/acheck/profile`);
-      // toast.success("login successful");
-    } else {
-      alert("Please Enter Valid Email Or Password");
-    }
-  };
+  
 
   const notify = () => {
     console.log("if that is indie")
@@ -36,43 +27,43 @@ export const UserForm = () => {
       autoClose: 2000,
     });
   };
-  // const formSubmitHandle = async (event : any) => {
-  //   event.preventDefault();
-  //   console.log("inside");
+  const formSubmitHandle = async (event : any) => {
+    event.preventDefault();
+    console.log("inside");
     
-  //   try {
+    try {
 
-  //     const inputData = { personal_email : email }
-  //           const response = await axios.post('/api/login', inputData);
-  //           // const res = respose.data.result;
-  //           // setEducationData([...educationData, res])
-  //           // return response;
-  //     // const response = await fetch("http://0.0.0.0:37000/users/email", {
-  //     //   method: "POST",
-  //     //   headers: {
-  //     //     "Content-Type": "application/json",
-  //     //   },
-  //     //   body: JSON.stringify({ personal_email : email }),
-  //     // });
-  //     // console.log("response",response)
+      const inputData = { personal_email : email }
+            const response = await axios.post('/api/login', inputData);
+            // const res = respose.data.result;
+            // setEducationData([...educationData, res])
+            // return response;
+      // const response = await fetch("http://0.0.0.0:37000/users/email", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ personal_email : email }),
+      // });
+      // console.log("response",response)
 
-  //     // if (!response.ok) {
-  //     //   throw new Error("Network response was not ok");
-  //     // }
+      // if (!response.ok) {
+      //   throw new Error("Network response was not ok");
+      // }
 
-  //     // const data = await response.json();
+      // const data = await response.json();
 
-  //     if (response) {
-  //       Cookies.set("mofi_token", JSON.stringify(true));
-  //       router.push(`/10`);
-  //       toast.success("Login successful");
-  //     } else {
-  //       toast.error('data.message' || "Invalid email or password");
-  //     }
-  //   } catch (error) {
-  //     toast.error("An error occurred: " + error.message);
-  //   }
-  // };
+      if (response) {
+        Cookies.set("mofi_token", JSON.stringify(true));
+        router.push(`/10`);
+        toast.success("Login successful");
+      } else {
+        toast.error('data.message' || "Invalid email or password");
+      }
+    } catch (error) {
+      toast.error("An error occurred: " + error.message);
+    }
+  };
 
 
 

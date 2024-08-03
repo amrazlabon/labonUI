@@ -2,7 +2,7 @@
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row, Table } from "reactstrap";
 // import BasicCard from "./BasicCard";
 // import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
@@ -14,21 +14,43 @@ import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
 import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import Link from "next/link";
+import axios from "axios";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
 
 // import OpenModalMofi from ".";
 
 const PatientDetails = () => {
+  const [patientInformation , setPatientInformation] = useState<any>([])
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+        const booking_id = sessionStorage.getItem('booking_id');
+        if(booking_id){
+
+          const response = await axios.get('/api/patient_info_byId');
+          // setData(response.data);
+          console.log("the patient iformation of contacrs",response.data);
+          setPatientInformation(response.data)
+        }
+        } catch (error) {
+          // setError(error.message);
+        }
+      };
+    
+        fetchData();
+      }, []);
+    
       
     return (
     <Col md='6' >
       <div style={{padding : '0', height:'6rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-<h1 className="text-white" style={{padding:'24px', margin: '0'}}>Vasudevan Ramachandran</h1>
+<h1 className="text-white" style={{padding:'24px', margin: '0'}}>{patientInformation.first_name ? patientInformation.first_name : 'Vasudevan'}</h1>
 <div style={{padding : '0', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
 </div>
@@ -45,14 +67,14 @@ const PatientDetails = () => {
 <div>
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Contact Details</h2>
 
-<BasicCardProfile/>
+<BasicCardProfile patientInformation={patientInformation}/>
   
 </div>
 
 <div>
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Location</h2>
 <BasicMap/>
-<BasicCardProfileMap/>
+<BasicCardProfileMap patientInformation={patientInformation}/>
 </div>
 {/* <BasicCardSchedule/> */}
                                     
@@ -92,52 +114,9 @@ const PatientDetails = () => {
 
 export default PatientDetails;
 
-const BasicCardSchedule = () => {
-  const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
-  const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
-
-  return (
-    <Col sm="12" xl="12">
-      <Card style={{backgroundColor : '#E5E5E5'}}>
-        {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
-        <CardBody>
-          {/* <div style={{display : 'flex'}}> */}
-
-        {/* <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" /> */}
-
-        <h1 className="mb-0">
-Schedule
-            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </h1>
-          <div className="gap-4" style={{display : 'flex' , marginTop:'1rem'}}>
-            <div style={{display : 'flex'}}>
-            <img style={{height:'3rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Calendar.png`} alt="user image" />
-
-            <p className="mb-0 mt-3">
-27/04/2024
-            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </p>
-            </div>
-
-            <div style={{display : 'flex'}}>
-            <img style={{height:'3rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
-
-            <p className="mb-0 mt-3" >
-08:30 AM
-            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </p>
-            </div>
-
-          
-          
-          </div>
-        </CardBody>
-      </Card>
-    </Col>
-  );
-};
-
-const BasicCardProfileMap = () => {
+const BasicCardProfileMap = ({patientInformation} : any) => {
+  console.log("pateint information in the address",patientInformation);
+  
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
@@ -162,15 +141,18 @@ Home Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           {/* </h1> */}
           <p className="mb-0">
-          Suite No.123, Famous Building,
+            {patientInformation.address}
+          {/* Suite No.123, Famous Building, */}
                       {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
 
           <p className="mb-0">
-          Sample Street, Athirampuzha P.O,            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
+          {patientInformation.location}
+          {/* Sample Street, Athirampuzha P.O,            {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
           <p className="mb-0">
-          Kottayam - 686001, Kerala India.
+          {patientInformation.pincode}
+          {/* Kottayam - 686001, Kerala India. */}
           {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
 </div>
@@ -181,9 +163,10 @@ Home Address
   );
 };
 
-const BasicCardProfile = () => {
+const BasicCardProfile = ({patientInformation} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
+  console.log("pateint information in the profile",patientInformation);
 
   return (
     <Col sm="12" xl="12">
@@ -230,7 +213,7 @@ const BasicCardProfile = () => {
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    Male (63 Years)
+                    {patientInformation.gender} (63 Years)
                     </p>
                     </div>
 <div className="gap-2" style={{display : 'flex'}}>
@@ -238,7 +221,7 @@ const BasicCardProfile = () => {
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    Father
+                    {patientInformation.relation ? patientInformation.relation : 'Father'}
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex'}}>

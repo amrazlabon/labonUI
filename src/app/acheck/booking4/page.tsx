@@ -2,7 +2,7 @@
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row, Table } from "reactstrap";
 // import BasicCard from "./BasicCard";
 // import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
@@ -15,10 +15,11 @@ import { CommonFormGroupProp } from "@/Types/FormType";
 import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import Link from "next/link";
+import axios from "axios";
 
 // import OpenModalMofi from ".";
 
-const PatientAdd = ({profile , setProfile , setStepActive} : any) => {
+const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, selectedAddress} : any) => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
@@ -363,6 +364,22 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
 const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
   // TableHeadOptions=()=> {
 
+  const [patientInformation , setPatientInformation] = useState<any>([])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/patient_info');
+        // setData(response.data);
+        console.log("the patient iformation of contacrs",response.data);
+        setPatientInformation(response.data)
+      } catch (error) {
+        // setError(error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
     const TableHeadOptionBody = [
       {
         id: 1,
@@ -391,15 +408,15 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
       setProfile({
         ...profile,
         name: data.firstName,
-        relation : data.lastName,
-        dob: '', // Add appropriate value or logic if needed
-        mobile: '', // Add appropriate value or logic if needed
-        gender: '', // Add appropriate value or logic if needed
-        email: '', // Add appropriate value or logic if needed
-        pincode: '', // Add appropriate value or logic if needed
-        location: '', // Add appropriate value or logic if needed
-        address: '', // Add appropriate value or logic if needed
-        age: '' // Add appropriate value or logic if needed
+        relation : data.relation,
+        dob: data.dob, // Add appropriate value or logic if needed
+        mobile: data.mobile, // Add appropriate value or logic if needed
+        gender: data.gender, // Add appropriate value or logic if needed
+        email: data.email, // Add appropriate value or logic if needed
+        pincode: data.pincode, // Add appropriate value or logic if needed
+        location: data.location, // Add appropriate value or logic if needed
+        address: data.address, // Add appropriate value or logic if needed
+        age: data.age // Add appropriate value or logic if needed
       });
       setStepActive(3)
     };
@@ -411,50 +428,47 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
           <Col sm="12" lg="12" xl="12">
-            <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-              {TableHeadOptionBody.map((data) => (
-                <tr style={{cursor : 'pointer'}} key={data.id} onClick={() => handleRowClick(data)}>
-                  {/* <th scope="row">{data.id}</th> */}
-                  <td>
-        <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
-        {/* {data.lastName} */}
+          {patientInformation.length > 0 ? (
+              <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
+                {patientInformation.map((data: any) => (
+                  <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
+                    <td>
+                      <img style={{ height: '4rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
                     </td>
-                  <td>
-                  <div style={{display : 'grid'}}>
-                    <h4 style={{paddingTop : '16px', margin : '0'}}>
-                      {data.firstName}
-                    </h4>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
-
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    {data.lastName}
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}> 
-
-                    {data.userName}
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}>
-
-                    {data.time}
-                    </p>
-                    </div>
-                  </div>
-                  </td>
-                  <td>
-                    <i className='fa fa-angle-right'></i>
-                    {/* {data.userName} */}
+                    <td>
+                      <div style={{ display: 'grid' }}>
+                        <h4 style={{ paddingTop: '16px', margin: '0' }}>
+                          {data.first_name}
+                        </h4>
+                        <div className="gap-2" style={{ display: 'flex' }}>
+                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                          <p style={{ paddingTop: '0', margin: '0' }}>
+                            {data.relation}
+                          </p>
+                        </div>
+                        <div className="gap-2" style={{ display: 'flex' }}>
+                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+                          <p style={{ paddingTop: '0', margin: '0' }}>
+                            5 tests done so far
+                          </p>
+                        </div>
+                        <div className="gap-2" style={{ display: 'flex' }}>
+                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                          <p style={{ paddingTop: '0', margin: '0' }}>
+                            No upcoming tests
+                          </p>
+                        </div>
+                      </div>
                     </td>
-                </tr>
-              ))}
-            </CommonTable>
+                    <td>
+                      <i className="fa fa-angle-right"></i>
+                    </td>
+                  </tr>
+                ))}
+              </CommonTable>
+            ) : (
+              <p>There are no saved contacts</p>
+            )}
           </Col>
         </Row>
       </Card>

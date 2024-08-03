@@ -2,11 +2,55 @@
 import { ImagePath } from "@/Constant";
 import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import { CommonTableProp } from "@/Types/TableType";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Card, Col, Row, Table } from "reactstrap";
 
 
 const PatientInformation = () => {
+
+  const [patientInformation , setPatientInformation] = useState<any>([])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/patient_info');
+        // setData(response.data);
+        console.log("the patient iformation of contacrs",response.data);
+        setPatientInformation(response.data)
+      } catch (error) {
+        const TableHeadOptionBody = [
+          {
+            id: 1,
+            first_name: "Vasudevan Ramachandran",
+            relation: "Father",
+            userName: "5 tests done so far",
+            time: "No upcoming tests"
+          },
+          {
+            id: 2,
+            first_name: "Swathi Ramachandran",
+            relation: "Mother",
+            userName: "5 tests done so far",
+            time: "No upcoming tests"
+          },
+          {
+            id: 3,
+            first_name: "Sowmya Ramachandran",
+            relation: "Sister",
+            userName: "5 tests done so far",
+            time: "No upcoming tests"
+          },
+        ];
+        setPatientInformation(TableHeadOptionBody)
+        // setError(error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
   return (
     <Col md='6' >
 
@@ -18,7 +62,7 @@ const PatientInformation = () => {
 <div style={{padding : '24px'}}>
 
 <Link href={'/acheck/patient_details'}>
-      <TableHeadOptions/>
+      <TableHeadOptions patientInformation={patientInformation}/>
 </Link>
 </div>
 
@@ -52,8 +96,21 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-const TableHeadOptions=()=> {
+const TableHeadOptions=({patientInformation} : any)=> {
   // TableHeadOptions=()=> {
+  // const router = useRouter();
+
+  const handleRowClick = (data: any) => {
+    // router.push({
+    //   pathname: '/acheck/patient_details', 
+    //   query: {
+    //     b_id: data.id,
+    //   },
+    // });
+    sessionStorage.setItem('booking_id', JSON.stringify(data.id));
+
+    console.log("handle click in the patient information",data)
+  }
 
     const TableHeadOptionBody = [
       {
@@ -85,50 +142,47 @@ const TableHeadOptions=()=> {
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
           <Col sm="12" lg="12" xl="12">
-            <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-              {TableHeadOptionBody.map((data) => (
-                <tr key={data.id}>
-                  {/* <th scope="row">{data.id}</th> */}
-                  <td>
-        <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
-        {/* {data.lastName} */}
+          {patientInformation.length > 0 ? (
+              <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
+                {patientInformation.map((data: any) => (
+                  <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
+                    <td>
+                      <img style={{ height: '4rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
                     </td>
-                  <td>
-                  <div style={{display : 'grid'}}>
-                    <h4 style={{paddingTop : '16px', margin : '0'}}>
-                      {data.firstName}
-                    </h4>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
-
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    {data.lastName}
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}> 
-
-                    {data.userName}
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}>
-
-                    {data.time}
-                    </p>
-                    </div>
-                  </div>
-                  </td>
-                  <td>
-                    <i className='fa fa-angle-right'></i>
-                    {/* {data.userName} */}
+                    <td>
+                      <div style={{ display: 'grid' }}>
+                        <h4 style={{ paddingTop: '16px', margin: '0' }}>
+                          {data.first_name}
+                        </h4>
+                        <div className="gap-2" style={{ display: 'flex' }}>
+                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                          <p style={{ paddingTop: '0', margin: '0' }}>
+                            {data.relation}
+                          </p>
+                        </div>
+                        <div className="gap-2" style={{ display: 'flex' }}>
+                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+                          <p style={{ paddingTop: '0', margin: '0' }}>
+                            5 tests done so far
+                          </p>
+                        </div>
+                        <div className="gap-2" style={{ display: 'flex' }}>
+                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                          <p style={{ paddingTop: '0', margin: '0' }}>
+                            No upcoming tests
+                          </p>
+                        </div>
+                      </div>
                     </td>
-                </tr>
-              ))}
-            </CommonTable>
+                    <td>
+                      <i className="fa fa-angle-right"></i>
+                    </td>
+                  </tr>
+                ))}
+              </CommonTable>
+            ) : (
+              <p>There are no saved contacts</p>
+            )}
           </Col>
         </Row>
       </Card>

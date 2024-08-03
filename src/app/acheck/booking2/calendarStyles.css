@@ -18,5 +18,22 @@
   background: rgba(0, 0, 0, 0.1);
 
 }
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+  text-decoration: none;
 
+  font-weight: 700;
+}
+/* span {
+  display: inline-block;
+  color: #004984;
+  font-size: 16px;
+  font-weight: 700;
+} */
 
+.bg-white {
+  --bs-bg-opacity: 0;
+  background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+}

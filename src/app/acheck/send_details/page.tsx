@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Input, Label , Button} from "reactstrap"
 import './style.css'
 import Link from "next/link";
@@ -8,10 +8,18 @@ import Link from "next/link";
 
 const SendDetails = () => {
     const [isSelectFromContacts, setIsSelectFromContacts] = useState(true);
+    const [bookingOrder, setBookingOrder] = useState<any>({});
 
   const handleToggleChange = (event : any) => {
     setIsSelectFromContacts(event.target.checked);
   };
+
+  useEffect(() => {
+    const bookingOrder = sessionStorage.getItem('booking_order');
+    if(bookingOrder) {
+      setBookingOrder(JSON.parse(bookingOrder))
+    }
+  } , [] )
 
     return(
         <Col md='6' style={{padding : '24px'}}>
@@ -23,17 +31,17 @@ const SendDetails = () => {
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}>
                     <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" /> */}
 
-                        <p>Would you like to send the booking details to the patient’s <br />email sudha.radhakrishnan@gmail.com, so they <br />also have the information with them?</p>
+                        <p>Would you like to send the booking details to the patient’s <br />email {bookingOrder.email}, so they <br />also have the information with them?</p>
                         </div>
 
                         <div style={{marginLeft : '0' , placeContent : 'center'}} className="toggle-container">
-                <label>Select from My Contacts</label>
+                <label>Do Not Send</label>
                 <Label style={{marginLeft : '1rem'}} className="form-switch form-check-inline" check>
       <Input className={`switch-primary check-size`} type="checkbox" role="switch" defaultChecked={isSelectFromContacts} checked={isSelectFromContacts}
             onChange={handleToggleChange}
  disabled={false}/>
     </Label>
-                <label>Add New</label>
+                <label>Send</label>
             </div>
                         {/* <div className="">
                 <label>Select from My Contacts</label>

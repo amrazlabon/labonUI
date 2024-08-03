@@ -16,7 +16,7 @@ import PatientAdd from '../booking4/page';
 import Summary from '../summary/page';
 
 
-const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, cities, category, education, experience, salary }: any) => {
+const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selectedTests, selectedAddress, education, experience, salary }: any) => {
 
     const searchParams = useSearchParams();
     // const userType = searchParams.get('type');
@@ -62,6 +62,8 @@ const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, cities,
                                 setProfile={setProfile}
                                 // cities={cities}
                                 setStepActive={setStepActive}
+                                selectedTests={selectedTests}
+                    selectedAddress={selectedAddress}
                                 // menuItems={menuItems}
                                 // updateData={updateData}
                                 // update={update}
@@ -71,6 +73,8 @@ const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, cities,
                                 profile={profile}
                                 setProfile={setProfile}
                                 setStepActive={setStepActive}
+                                selectedTests={selectedTests}
+                    selectedAddress={selectedAddress}
                                 // cities={cities}
                                 // education={education}
                                 // updateData={updateData}
@@ -118,6 +122,8 @@ const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, cities,
                                     profile={profile}
                                     setProfile={setProfile}
                                     setStepActive={setStepActive}
+                                    selectedTests={selectedTests}
+                    selectedAddress={selectedAddress}
                                     // menuItems={menuItems}
                                     // cities={cities}
                                     // updateData={updateData}
@@ -130,6 +136,8 @@ const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, cities,
                                         profile={profile}
                                         setProfile={setProfile}
                                         setStepActive={setStepActive}
+                                        selectedTests={selectedTests}
+                    selectedAddress={selectedAddress}
                                         // menuItems={menuItems}
                                         // cities={cities}
                                         // updateData={updateData}

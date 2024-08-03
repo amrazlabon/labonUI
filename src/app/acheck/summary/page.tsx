@@ -19,12 +19,13 @@ import CommonModal from "@/Components/UiKits/Modal/Common/CommonModal";
 import { ChevronsRight } from "react-feather";
 import { FullScreenData } from "@/Data/Uikits/modal";
 import './basicStyles.css'
+import axios from "axios";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
 
 // import OpenModalMofi from ".";
 
-const Summary = ({profile , setProfile , setStepActive} : any) => {
+const Summary = ({profile , setProfile , setStepActive , selectedTests, selectedAddress} : any) => {
 
   const [fullScreen, setFullScreen] = useState(false);
   const fullScreenToggle = () => setFullScreen(!fullScreen);
@@ -38,11 +39,14 @@ const Summary = ({profile , setProfile , setStepActive} : any) => {
       }
       console.log("the profile value",profile);
       
+      const handleAddToCartClick = () => {
+        setFullScreen(true); // or false, depending on what you want to do
+      };
       
     return (
     <Col md='' >
 
-      <FullScreenModal isOpen={fullScreen} toggle={fullScreenToggle}/>
+      <FullScreenModal isOpen={fullScreen} toggle={fullScreenToggle} selectedTests={selectedTests} profile={profile}/>
       {/* <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
 
@@ -90,7 +94,7 @@ const Summary = ({profile , setProfile , setStepActive} : any) => {
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Selected Tests</h2>
 {/* <TableHeadOptions/> */}
 <div>
-<SimpleAccordion />
+<SimpleAccordion selectedTests={selectedTests}/>
 
 {/* <CardBody> */}
             <Table className="table-wrapper table-responsive theme-scrollbar" borderless>
@@ -106,7 +110,7 @@ const Summary = ({profile , setProfile , setStepActive} : any) => {
                 </tr>
                 <tr style={{ height: 3, width: "100%", background: "linear-gradient(90deg, #7A70BA 20.61%, #0DA759 103.6%)", display: "block", marginTop: 6 }} /> */}
                 <tr>
-                  <InvoiceTotal />
+                  <InvoiceTotal selectedTests={selectedTests}/>
                 </tr>
               </tbody>
             </Table>
@@ -131,7 +135,7 @@ const Summary = ({profile , setProfile , setStepActive} : any) => {
 
 <Col sm="12">
 {/* <Link href={'/acheck/send_details'}> */}
-                  <Button onClick={setFullScreen} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Add To Cart<span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+                  <Button onClick={handleAddToCartClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} >Add To Cart<span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 {/* </Link> */}
                 </Col>
         <div>
@@ -309,7 +313,8 @@ const BasicMap = () => {
   );
 };
 
-const InvoiceTotal = () => {
+const InvoiceTotal = ({selectedTests} : any) => {
+  
   return (
     <td >
       <Table style={{ width: "100%" , marginLeft : '0' }}>
@@ -322,7 +327,7 @@ const InvoiceTotal = () => {
               <span style={{ display: "block", lineHeight: "1.5", fontSize: 16, fontWeight: 400, width: "55%" }}>{"This denotes a payment credit for a full month's supply."}</span>
             </td> */}
             <td style={{padding : '0'}}>
-              <InvoiceSubTotal />
+              <InvoiceSubTotal selectedTests={selectedTests}/>
             </td>
           </tr>
         </tbody>
@@ -331,25 +336,29 @@ const InvoiceTotal = () => {
   );
 };
 
-const InvoiceSubTotal = () => {
+const InvoiceSubTotal = ({selectedTests} : any) => {
+
+  const totalPrice = selectedTests.reduce((total : any, test : any) => {
+    return total + (test.price ? parseFloat(test.price) : 0);
+  }, 0);
   return (
     <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" }}>{Subtotal}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem'  }}>$6100.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem'  }}>{totalPrice}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Tax}</span>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>GST (18%)</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>$50.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>{totalPrice *0.18}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left"  }}>{Discount}</span>
+        <span style={{ display: "block", width: 95, textAlign: "left"  }}>Convinience Fee</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>$30.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>100.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       {/* <li style={{ display: "flex", alignItems: "center" }}>
@@ -357,9 +366,9 @@ const InvoiceSubTotal = () => {
         <span style={{ display: "block",color: "#7A70BA", opacity: "0.9", fontWeight: 600, padding: "12px 25px", borderRadius: 5, background: "rgba(122, 112, 186 , 0.1)", fontSize: 16}} >$6120.00</span>
       </li> */}
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Discount}</span>
+        <span style={{ display: "block", width: 95, textAlign: "left" }}>Total</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 1000 ,paddingRight : '3rem'  }}>$30.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 1000 ,paddingRight : '3rem'  }}>{totalPrice + (totalPrice * 0.18) + 100}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
     </ul>
@@ -368,10 +377,35 @@ const InvoiceSubTotal = () => {
 
 
 
-const FullScreenModal = ({isOpen , toggle} : any) => {
+const FullScreenModal = ({isOpen , toggle , selectedTests , profile} : any) => {
   // const [fullScreen, setFullScreen] = useState(false);
   // const fullScreenToggle = () => setFullScreen(!fullScreen);
 
+  console.log("profile values",profile);
+  
+  const handleBookingClick = async () => {
+    try {
+      const reqBody = {
+        user_id:1,
+    labsub_id:1,
+    test_id:1,
+    timeslot_id:1,
+    name : profile.name,
+    pincode : profile.pincode,
+    location: profile.location,
+    address : profile.address,
+    email : profile.email,
+    mobile : profile.mobile
+      }
+      const response = await axios.post('/api/orders',reqBody);
+      // setSavedAddresses(response.data);
+      console.log("Saved addresses: where dont know", response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+    sessionStorage.setItem('booking_order', JSON.stringify(profile));
+    // sessionStorage.setItem('address', JSON.stringify(selectedAddress));
+  };
   return (
     <>
       {/* <Button color="secondary" onClick={toggle}>{FullScreenModals}</Button> */}
@@ -384,7 +418,7 @@ const FullScreenModal = ({isOpen , toggle} : any) => {
         <img style={{height:'4rem', margin:'0 '}} className="img-fluid table-avtar" src={`${ImagePath}/Icon.png`} alt="user image" />
 
           <span className="fs-5">My Shopping cart</span>
-          <p>1 Item</p>
+          <p>{selectedTests.length} Item</p>
           </div>
         </ModalHeader>
         <ModalBody className="dark-modal">
@@ -401,13 +435,13 @@ const FullScreenModal = ({isOpen , toggle} : any) => {
             <p className="modal-padding-space">{text}</p>
           </Fragment>
         ))} */}
-        <TableHeadOptions/>
-        <InvoiceTotal/>
+        <TableHeadOptions selectedTests={selectedTests}/>
+        <InvoiceTotal selectedTests={selectedTests}/>
 
 <p>Transportation is charged etxra. Minimum charge for Transportation is 100. You can pay Transportation fee at the time of sample collection.</p>
         <Col sm="12">
 <Link href={'/acheck/send_details'}>
-                  <Button  style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Confirm Booking
+                  <Button onClick={handleBookingClick}  style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Confirm Booking
                     {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
                     </Button>
 </Link>
@@ -438,7 +472,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-const TableHeadOptions=()=> {
+const TableHeadOptions=({selectedTests} : any)=> {
   // TableHeadOptions=()=> {
 
     const TableHeadOptionBody = [
@@ -465,7 +499,7 @@ const TableHeadOptions=()=> {
         <Row className="card-block">
           <Col sm="12" lg="12" xl="12">
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-              {TableHeadOptionBody.map((data) => (
+              {selectedTests.map((data : any) => (
                 <tr key={data.id}>
                   {/* <th scope="row">{data.id}</th> */}
                   <td>
@@ -475,21 +509,21 @@ const TableHeadOptions=()=> {
                   <td>
                   <div style={{display : 'grid'}}>
                     <h4 style={{paddingTop : '16px', margin : '0'}}>
-                      {data.firstName}
+                      {data.test_name}
                     </h4>
                     <div className="gap-2" style={{display : 'flex'}}>
                     {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" /> */}
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {data.lastName}
+                    {data.id}
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex'}}>
                     {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" /> */}
                     <p style={{paddingTop : '0', margin : '0'}}> 
 
-                    {data.userName}
+                    {data.price}
                     </p>
                     </div>
                     {/* <div className="gap-2" style={{display : 'flex'}}>

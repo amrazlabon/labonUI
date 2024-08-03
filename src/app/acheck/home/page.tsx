@@ -2,7 +2,7 @@
 import { CheckedCheckbox, CheckMeOut, ClickOut, Close, DefaultCheck, Defaultcheckboxes, Email, ExtraLargeModals, Height, ImagePath, MofiLogin, Password, SaveChanges, SignIn, WebDesign, Width } from "@/Constant";
 import { Fragment, useEffect, useState } from "react";
 // import { Col } from "reactstrap";
-import { Card, CardBody, Col, Row, Button , FormGroup, Table , Field, Form , Input , Label , Modal, ModalBody, ModalFooter} from 'reactstrap';
+import { Card, CardBody, Col, Row, Button , FormGroup, Table , Form , Input , Label , Modal, ModalBody, ModalFooter, Toast, ToastBody} from 'reactstrap';
 
 import './homestyle.css'
 import { FaCheckCircle } from "react-icons/fa";
@@ -17,8 +17,31 @@ import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { BasicCenter, BasicContainerStyle } from "@/Data/Miscellaneous/Maps";
+import axios from "axios";
 
+
+type Test = {
+    id: number;
+    test_name: string;
+    is_active: boolean;
+    questions: any;
+    price: string | null;
+  };
+
+  type Location = {
+    // id: number;
+    location: string;
+    address: string;
+    pincode: any;
+    nick_name: string | null;
+  };
+
+//   const [selectedTests, setSelectedTests] = useState<Test[]>([]);
+//     const [selectedAddress, setSelectedAddress] = useState<Location[]>([]);
 const home = () => {
+    const [open,setOpen] = useState(false)
+    const [toasterContent,setToasterContent] = useState('')
+    const [toasterColorContent,setToasterColorContent] = useState('')
 
     const [extraLargeScreen, setExtraLargeScreen] = useState(false);
     const extraLargeScreenToggle = () => setExtraLargeScreen(!extraLargeScreen);
@@ -26,6 +49,42 @@ const home = () => {
     const [extraLargeScreenLocation, setExtraLargeScreenLocation] = useState(false);
     const extraLargeScreenToggleLocation = () => setExtraLargeScreenLocation(!extraLargeScreenLocation);
 
+      
+    const [selectedTests, setSelectedTests] = useState<any>([]);
+    const [selectedAddress, setSelectedAddress] = useState<Location[]>([]);
+    console.log("the selected test in the home page",selectedAddress);
+    
+    const handleBookingClick = () => {
+        sessionStorage.setItem('tests', JSON.stringify(selectedTests));
+        sessionStorage.setItem('address', JSON.stringify(selectedAddress));
+      };
+
+      const selectTest = () => {
+        extraLargeScreenToggle()
+        // sessionStorage.setItem('tests', JSON.stringify(selectedTests));
+        // sessionStorage.setItem('address', JSON.stringify(selectedAddress));
+      };
+
+      const selectLocation = () => {
+        if(selectedTests.length === 0){
+            setOpen(true)
+            setToasterContent('Select Test to Continue')
+            setToasterColorContent('warning')
+            setTimeout(()=>{
+                setOpen(false);
+            },10000)
+
+        }
+        else{
+
+            extraLargeScreenToggleLocation()
+        }
+        // sessionStorage.setItem('tests', JSON.stringify(selectedTests));
+        // sessionStorage.setItem('address', JSON.stringify(selectedAddress));
+      };
+
+
+    
 
     // const [startDate, setStartDate] = useState<Date | null>(new Date());
     // const [endDate, setEndDate] = useState<Date | null>(null);
@@ -39,15 +98,16 @@ const home = () => {
         // <Container fluid className="p-3">
         
         <Col md="6" style={{ padding: '0' }}>
-            <ModalTwo/>
+            {/* <ModalTwo/> */}
+            <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
 
             <div style={{ background: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)', height: '16rem', alignContent: 'end' }}>
                 <img className="w-100" src={`${ImagePath}/home.png`} alt="user" />
 
             </div>
 
-            <Card style={{ maxWidth: '390px', margin: '20px auto' }}>
-      <CardBody>
+            <Card style={{ maxWidth: 'auto', margin: '0' , padding : '0' }}>
+      <CardBody style={{padding : '0'}}>
       <div className="btn-group">
   <button className={"test-btn"}>Book a Home Visit</button>
   <button className={"package-btn"}>Integrate Solutions</button>
@@ -56,31 +116,56 @@ const home = () => {
         <p style={{ textAlign: 'center' }}>Integrate Solution</p> */}
         <Row style={{ marginTop: '20px' }}>
           <Col xs="2" style={{ textAlign: 'center', padding: '0' }}>
+          {selectedTests.length === 0 ? 
+            <FaCheckCircle style={{ color: 'red' }} /> : 
             <FaCheckCircle style={{ color: 'green' }} />
+          }
           </Col>
           <Col xs="10">
-            <p style={{ margin: '0' }} onClick={extraLargeScreenToggle}>LDL Cholesterol +2</p>
+            <p style={{ margin: '0' , cursor : 'pointer'}} onClick={selectTest}>
+            {selectedTests.length === 0
+        ? 'Select Test'
+        : selectedTests.length === 1
+        ? selectedTests[0].test_name
+        : `${selectedTests[0].test_name} + ${selectedTests.length - 1}`}
+
+            </p>
           </Col>
         </Row>
         <hr />
         <Row>
           <Col xs="2" style={{ textAlign: 'center', padding: '0' }}>
-            <FaCheckCircle style={{ color: 'green' }} />
+          {selectedAddress.length != 0 ? 
+
+          <FaCheckCircle style={{ color: 'green' }} /> : 
+          <FaCheckCircle style={{ color: 'red' }} /> 
+
+          }
           </Col>
           <Col xs="10">
-            <p style={{ margin: '0' }} onClick={extraLargeScreenToggleLocation}>Flat No.1A, Skyline Bell Whether, Kurishupalli...</p>
+            <p style={{ margin: '0' , cursor : 'pointer'}} onClick={selectLocation}>
+                {
+                    selectedAddress.length != 0 ? selectedAddress[0].address + selectedAddress[0].location + selectedAddress[0].pincode
+ : "Select Location"                }
+                {/* Flat No.1A, Skyline Bell Whether, Kurishupalli.. */}
+                </p>
           </Col>
         </Row>
         <Link href={'/acheck/booking'}>
 
-        <Button style={{ width: '100%', marginTop: '20px' }} color="primary">
+        <Button className="btnStyless" onClick={handleBookingClick} style={{ width: '90%', marginTop: '20px', marginLeft : '20px' }} color="primary">
           Book A Blood Test At Home
+          <span className="">
+          <i style={{marginLeft : '2rem'}} className="fa fa-angle-right"></i>
+
+          </span>
         </Button>
+        
         </Link>
       </CardBody>
     </Card>
-    <ExtraLargeModal isOpen={extraLargeScreen} toggle={extraLargeScreenToggle} />
-    <ExtraLargeModalLocation isOpen={extraLargeScreenLocation} toggle={extraLargeScreenToggleLocation} />
+    <ExtraLargeModal isOpen={extraLargeScreen} toggle={extraLargeScreenToggle} selectedTests={selectedTests}  setSelectedTests={setSelectedTests}/>
+    <ExtraLargeModalLocation isOpen={extraLargeScreenLocation} toggle={extraLargeScreenToggleLocation} setSelectedAddress={setSelectedAddress}/>
 
             <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '1rem' }}>
                 <div>
@@ -234,89 +319,256 @@ const home = () => {
 
 export default home;
 
-export const DefaultChecks = () => {
-    return (
-      <Col sm="6" xl="4">
-        <div className="card-wrapper checkbox-checked">
-          {/* <h6 className="sub-title">{DefaultCheck}</h6> */}
-          <div className="form-check">
-            <Input id="flexCheckDefault" type="checkbox" />
-            <Label htmlFor="flexCheckDefault" check>
-            <div style={{display : 'grid'}}>
+// import React, { useState } from 'react';
+// import { Col, Input, Label, Button } from 'reactstrap';
 
+const DefaultChecks = ({ data  , selectedTests ,  setSelectedTests , toggle} : any) => {
+  const [selectedTestData, setSelectedTestData] = useState([]);
 
-<div className="gap-2" style={{display : 'flex' , padding : '0'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+  const handleCheckboxChange = (index : any) => {
+    const selectedData = selectedTestData.map((index : any) => data[index]);
 
-                    <h2 style={{margin:'0', paddingTop : '0' , paddingBottom : '10px'}}>
-Test Name
-</h2>
-                    </div>
-<div className="gap-2" style={{display : 'flex'}}>
-                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" /> */}
+    setSelectedTestData((prevSelected : any) => {
+      if (prevSelected.includes(index)) {
+        return prevSelected.filter((i : any) => i !== index);
+      } else {
+        return [...prevSelected, index];
+      }
+    });
+  };
 
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    Test Label
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" /> */}
+  const handleSelectTestsClick = () => {
+    const selectedData = selectedTestData.map((index : any) => data[index]);
+    console.log('Selected tests data:', selectedData);
+    setSelectedTests(selectedData)
+    toggle();
+    // Perform further actions with selectedData
+  };
 
-                    <h3 style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    2200.00
-                    </h3>
-                    </div>
-</div>
-                {/* {Defaultcheckboxes} */}
-                </Label>
-          </div>
-          <div className="form-check">
-            <Input id="flexCheckChecked" type="checkbox" defaultChecked />
-            <Label htmlFor="flexCheckChecked" check>
-        {/* {CheckedCheckbox} */}
-        <div style={{display : 'grid'}}>
-
-
-<div className="gap-2" style={{display : 'flex' , padding : '0'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
-
-                    <h2 style={{margin:'0', paddingTop : '0' , paddingBottom : '10px'}}>
-Test Name
-</h2>
-                    </div>
-<div className="gap-2" style={{display : 'flex'}}>
-                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" /> */}
-
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    Test Label
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" /> */}
-
-                    <h3 style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    2200.00
-                    </h3>
-                    </div>
-</div>
+  return (
+    <Col sm="6" xl="4">
+      <div className="card-wrapper checkbox-checked">
+        {data.map((test : any, index : any) => (
+          <div key={index} className="form-check">
+            <Input
+              id={`flexCheckDefault-${index}`}
+              type="checkbox"
+              onChange={() => handleCheckboxChange(index)}
+            //   checked={selectedTestData.includes(index)}
+            />
+            <Label htmlFor={`flexCheckDefault-${index}`} check>
+              <div style={{ display: 'grid' }}>
+                <div className="gap-2" style={{ display: 'flex', padding: '0' }}>
+                  <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="test image" />
+                  <h2 style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' }}>
+                    {test.test_name}
+                  </h2>
+                </div>
+                <div className="gap-2" style={{ display: 'flex' }}>
+                  <p style={{ paddingTop: '0', margin: '0' }}>
+                    {test.label}
+                  </p>
+                </div>
+                <div className="gap-2" style={{ display: 'flex' }}>
+                  <h3 style={{ paddingTop: '0', margin: '0' }}>
+                    {test.price ? test.price : 'N/A'}
+                  </h3>
+                </div>
+              </div>
             </Label>
           </div>
+        ))}
+      </div>
+      {selectedTestData.length != 0 && 
+      <Col sm="12">
+        <Button
+          onClick={handleSelectTestsClick}
+          className="btn-lg"
+          style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }}
+          color=""
+          >
+          Select Tests
+        </Button>
+      </Col>
+        }
+    </Col>
+  );
+};
+
+const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
+    const [selectedTest, setSelectedTest] = useState<number | null>(null);
+  
+    const [open,setOpen] = useState(false)
+    const [toasterContent,setToasterContent] = useState('')
+    const [toasterColorContent,setToasterColorContent] = useState('')
+    const handleRadioChange = (index: number) => {
+      setSelectedTest(index);
+    };
+  
+    const handleSelectTestsClick = () => {
+      if (selectedTest !== null) {
+        const selectedTestData = savedAddresses[selectedTest];
+        console.log('Selected test data:', selectedTestData);
+        setSelectedAddress([selectedTestData])
+        // setToasterContent('All Good, Continue Booking')
+        // setToasterColorContent('success')
+        // setOpen(true)
+        // setTimeout(()=>{
+        //     setOpen(false);
+        //   },10000)
+          toggle();
+        //   setSelectedAddress([])
+        // Add logic to handle the selected test data
+      }
+    };
+  
+    return (
+      <Col sm="6" xl="4">
+            <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
+            <div className="card-wrapper checkbox-checked">
+          {savedAddresses.map((test: any, index: any) => (
+            <div key={index} className="form-check">
+              <Input
+                id={`flexRadioDefault-${index}`}
+                type="radio"
+                name="testRadio"
+                onChange={() => handleRadioChange(index)}
+                checked={selectedTest === index}
+              />
+              <Label htmlFor={`flexRadioDefault-${index}`} check>
+                <div style={{ display: 'grid' }}>
+                  <div className="gap-2" style={{ display: 'flex', padding: '0' }}>
+                    <h2 style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' }}>
+                      {test.address}
+                    </h2>
+                  </div>
+                  <div className="gap-2" style={{ display: 'flex' }}>
+                    <img style={{ height: '3rem', margin: '0' }} className="img-fluid table-avtar" src={`${ImagePath}/Package.png`} alt="test image" />
+                    <div style={{display : 'grid'}}>
+
+                    <p style={{ paddingTop: '0', margin: '0' }}>
+                      {test.location}
+                    </p>
+                    <p style={{ paddingTop: '0', margin: '0' }}>
+                      {test.pincode ? test.pincode : 'N/A'}
+                    </p>
+                    </div>
+                  </div>
+                  {/* <div className="gap-2" style={{ display: 'flex' }}>
+                  </div> */}
+                </div>
+              </Label>
+            </div>
+          ))}
         </div>
+        <Col sm="12">
+          <Button
+            onClick={handleSelectTestsClick}
+            className="btn-lg"
+            style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }}
+            color=""
+          >
+            Select Test
+          </Button>
+        </Col>
       </Col>
     );
   };
-
-  const ExtraLargeModal = ({ isOpen, toggle } : any) => {
   
+
+
+
+  const ExtraLargeModal = ({ isOpen, toggle , selectedTests,  setSelectedTests} : any) => {
+  
+    const [data, setData] = useState<any>(null);
+  const [error, setError] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('/api/tests');
+            setData(response.data);
+            console.log("the test data",response.data);
+            
+          } catch (error) {
+            const data = [{
+                id : 1,
+                test_name : 'Glucose',
+                label : 'Glucose Test',
+                price : '250'
+                
+            },
+            {
+                id : 2,
+                test_name : 'Cholesterol',
+                label : 'Glucose Test',
+                price : '250'
+                
+            },
+            {
+                id : 3,
+                test_name : 'HDL',
+                label : 'Glucose Test',
+                price : '250'
+                
+            }]
+            setData(data)
+            setError(error.message);
+          }
+        };
+    
+        fetchData();
+      }, []);
+
+
+    
+      const handleSearchInputChange = async (event : any) => {
+        const term = event.target.value;
+        try {
+            // const response = await axios.get(term ? `http://0.0.0.0:37000/tests/letter/${term}` : '/api/tests');
+            const response = await axios.post('/api/tests', {term});
+            console.log("the searchrespose data",response.data)
+            setData(response.data);
+          } catch (error) {
+            const data = [{
+                id : 1,
+                test_name : 'Glucose',
+                label : 'Glucose Test',
+                price : '250'
+                
+            },
+            {
+                id : 2,
+                test_name : 'Cholesterol',
+                label : 'Glucose Test',
+                price : '250'
+                
+            },
+            {
+                id : 3,
+                test_name : 'HDL',
+                label : 'Glucose Test',
+                price : '250'
+                
+            }]
+            setData(data)
+            setError(error.message);
+          }
+        // setSearchTerm(term);
+        // fetchData(term);
+      };
     return (
       <>
         {/* <Button color="info"  onClick={toggle}>{ExtraLargeModals}</Button> */}
         <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Test">
-<Input style={{padding:'10px',width:'100%',borderRadius:'15px',marginTop:'1rem' , marginBottom : '2rem'}} name="twitterUrl" value={''} type="url" placeholder={'Search'} />
+{/* <Input style={{padding:'10px',width:'100%',borderRadius:'15px',marginTop:'1rem' , marginBottom : '2rem'}} name="twitterUrl" value={''} type="url" placeholder={'Search'} /> */}
+<Input
+          style={{ padding: '10px', width: '100%', borderRadius: '15px', marginTop: '1rem', marginBottom: '2rem' }}
+          name="search"
+        //   value={searchTerm}
+          type="text"
+          placeholder="Search"
+          onChange={handleSearchInputChange}
+        />
 <p style={{paddingTop : '0' , margin : '0'}}>
                     
                     Example : If you want to search for Cholesterol, type Cholesterol and enter.
@@ -325,7 +577,7 @@ Test Name
 All Tests
 </h2>
 
-            <DefaultChecks/>
+            <DefaultChecks data={data} selectedTests={selectedTests} setSelectedTests={setSelectedTests} toggle={toggle}/>
           {/* <div className="large-modal-header"><ChevronsRight /><h5 className="f-w-600">{WebDesign}</h5></div>
           <p className="modal-padding-space">We build specialised websites for companies, list them on digital directories, and set up a sales funnel to boost ROI.</p>
           {FullScreenData.map(({ title, text }, index) => (
@@ -334,26 +586,61 @@ All Tests
               <p className="modal-padding-space">{text}</p>
             </Fragment>
           ))} */}
-          <Col sm="12">
-                  {/* <Link href={'/acheck/booking'}> */}
-                    <Button
-                    //  onClick={handleBookTimingsClick} 
-                     className="btn-lg" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
-                      Select Tests
-                       {/* <span><i className="fa fa-angle-right" style={{ marginLeft: '24px' }}></i></span> */}
-                    </Button>
-                  {/* </Link> */}
-                </Col>
         </CommonModal>
       </>
     );
   };
 
-  const ExtraLargeModalLocation = ({ isOpen, toggle } : any) => {
+  const ExtraLargeModalLocation = ({ isOpen, toggle , setSelectedAddress } : any) => {
 
     const [selectedOption, setSelectedOption] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace this with actual authentication logic
+  const [savedAddresses, setSavedAddresses] = useState<any>([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+      const userId = sessionStorage.getItem('user_id');
+      if(userId){
+        setIsLoggedIn(true)
+      }
+      const response = await axios.get('/api/booking');
+        setSavedAddresses(response.data);
+        console.log("Saved addresses: where dont know", response.data);
+      } catch (error) {
+        const data = [{
+            id : 1,
+            pincode : '678907',
+            location : 'Test Location',
+            address : 'Test Address',
+            nick_name : 'Home'
+            
+        },
+        {
+            id : 2,
+            pincode : '678907',
+            location : 'Test Location',
+            address : 'Test Address',
+            nick_name : 'Home'
+            
+        },
+        {
+            id : 3,
+            pincode : '678907',
+            location : 'Test Location',
+            address : 'Test Address',
+            nick_name : 'Home'
+            
+        },]
+        setSavedAddresses(data)
+        console.error("Error fetching data:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
@@ -364,6 +651,21 @@ All Tests
     setShowForm(true);
   };
 
+  const handleFormSubmit = (formData: any) => {
+    console.log("Form Data:", formData);
+    setSelectedAddress([formData])
+    setSelectedOption('')
+    // setShowForm(false)
+    // setIsLoggedIn(false)
+    toggle();
+    // Handle form submission logic here, e.g., send form data to the server
+  };
+  const signInButton = () => {
+    sessionStorage.setItem('user_id', JSON.stringify(1));
+    setIsLoggedIn(true)
+
+  }
+
   const renderContent = () => {
     if (selectedOption === "add") {
       if (showForm) {
@@ -371,17 +673,7 @@ All Tests
           <div>
             <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Current Location</h2>
 
-<FloatingForm/>
-            {/* <h5>Add New Address</h5>
-            <Row className="g-3">
-              <Col md="12">
-                <Label htmlFor="address">Address</Label>
-                <Input type="text" id="address" placeholder="Enter your address" />
-              </Col>
-              <Col md="12">
-                <Button color="primary" className="mt-3">Save Address</Button>
-              </Col>
-            </Row> */}
+<FloatingForm onSubmit={handleFormSubmit} />
           </div>
         );
       } else {
@@ -395,11 +687,6 @@ All Tests
           <Button onClick={handleContinueClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Continue
             {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
             </Button>
-
-            {/* <h5>Add New Address</h5>
-            <img style={{height:'35px'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" /> */}
-            {/* <img src="path/to/your/image.jpg" alt="Add Address" style={{ width: '100%', marginBottom: '1rem' }} /> */}
-            {/* <Button color="primary" onClick={handleContinueClick}>Continue</Button> */}
           </div>
         );
       }
@@ -415,21 +702,32 @@ All Tests
     else {
       return (
         <div>
-          <p style={{ paddingTop: '0', margin: '0' }} onClick={() => handleOptionClick("add")}>
+          <p style={{ paddingTop: '0', margin: '0'  ,cursor : 'pointer'}} onClick={() => handleOptionClick("add")}>
             Add new Address.
           </p>
+          <div className="vertical-line"></div>
+          {/* <br />
+          <br />
+          <br /> */}
+          Or
+          {/* <br /><br /><br /> */}
+          <div className="vertical-line"></div>
+
           <p style={{ paddingTop: '0', margin: '0' }} >
             Select from saved Addresses.
           </p>
+          <br />
           {!isLoggedIn && (
             <>
-              <p style={{ paddingTop: '0', margin: '0' }}>You must sign in to display saved addresses.</p>
-              <h2 style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' }} onClick={() => setIsLoggedIn(true)}>Click here to sign in</h2>
+              <p style={{ paddingTop: '0', margin: '0' , color : 'red'}}>You must sign in to display saved addresses.</p>
+              <br />
+              <h2 style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' , cursor : 'pointer'}} onClick={signInButton}>Click here to <span style={{color : 'blue'}}>Sign in</span></h2>
             </>
           )}
           {isLoggedIn && (
             <>
-            <TableHeadOptions/>
+            <DefaultRadio savedAddresses={savedAddresses} setSelectedAddress={setSelectedAddress} toggle={toggle} />
+            {/* <TableHeadOptions savedAddresses={savedAddresses} /> */}
                    </>
           )}
         </div>
@@ -442,47 +740,7 @@ All Tests
         {/* <Button color="info"  onClick={toggle}>{ExtraLargeModals}</Button> */}
         <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Location">
         {renderContent()}
-        {/* <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    Add new Address.
-                    </p>
-
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    or.
-                    </p>
-
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    Select from saved Addresses.
-                    </p>
-
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    You must sign in to display saved addresses.
-                    </p>
-        <h2 style={{margin:'0', paddingTop : '0' , paddingBottom : '10px'}}>
-Click here to sign in
-</h2> */}
-
-            {/* <DefaultChecks/> */}
-          {/* <div className="large-modal-header"><ChevronsRight /><h5 className="f-w-600">{WebDesign}</h5></div>
-          <p className="modal-padding-space">We build specialised websites for companies, list them on digital directories, and set up a sales funnel to boost ROI.</p>
-          {FullScreenData.map(({ title, text }, index) => (
-            <Fragment key={index}>
-              <div className="large-modal-header"><ChevronsRight /><h5 className="f-w-600">{title}</h5></div>
-              <p className="modal-padding-space">{text}</p>
-            </Fragment>
-          ))} */}
           <Col sm="12">
-                  {/* <Link href={'/acheck/booking'}> */}
-                    {/* <Button
-                     onClick={handleBookTimingsClick} 
-                     className="btn-lg" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
-                      Select Tests
-                       <span><i className="fa fa-angle-right" style={{ marginLeft: '24px' }}></i></span>
-                    </Button> */}
-                  {/* </Link> */}
                 </Col>
         </CommonModal>
       </>
@@ -661,7 +919,7 @@ Click here to sign in
     );
   };
   
-  const TableHeadOptions=()=> {
+  const TableHeadOptions=({savedAddresses} : any)=> {
     // TableHeadOptions=()=> {
   
       const TableHeadOptionBody = [
@@ -767,59 +1025,104 @@ Click here to sign in
     );
   };
 
-  const FloatingForm = () => {
+  const FloatingForm = ({ onSubmit }: any) => {
+    const [formData, setFormData] = useState({
+        nick_name: '',
+      pincode: '',
+      location: '',
+      address: ''
+    });
+  
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+      });
+    };
+  
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      onSubmit(formData);
+    };
+  
     return (
       <Col md="6">
-  
-  
-        
-        <Card style={{backgroundColor:'#F5F5F5'}}>
-          {/* <CommonCardHeader title={FormFloating} span={FloatingFormData} /> */}
-          <CardBody style={{padding : '24px'}}>
-            <div className="">
-              <Form className="floating-wrapper" onSubmit={(e : any)=>e.preventDefault()}>
-                <Row className="g-3">
-                  <Col sm="12" className="mb-6">
-                    <FormGroup floating>
-                      <Input type="text" placeholder='{PasswordFloatingPlaceholder}' />
-                      <Label check>Name</Label>
-                    </FormGroup>
-                  </Col>
-                  <Col sm="6">
-                    <FormGroup  floating className="mb-6">
-                      <Input type="text" placeholder='{EmailFloatingPlaceholder}' />
-                      <Label check>Pincode</Label>
-                    </FormGroup>
-                  </Col>
-                  <Col sm="12" className="mt-6">
-                    <FormGroup floating>
-                      <Input type="text" placeholder='{PasswordFloatingPlaceholder}' />
-                      <Label check>Location</Label>
-                    </FormGroup>
-                  </Col><Col sm="12">
-                    <FormGroup  floating className="mb-6">
-                      <Input type="text" placeholder='{EmailFloatingPlaceholder}' />
-                      <Label check>Address</Label>
-                    </FormGroup>
-                  </Col>
-                  {/* <Col sm="12" className="mt-0">
-                    <div className="form-check checkbox-checked">
-                      <Input id="gridCheck" type="checkbox" />
-                      <Label htmlFor="gridCheck" check>{CheckMeOut}</Label>
-                    </div>
-                  </Col> */}
-                  <Col sm="12">
-                  {/* <Link href={'/acheck/testss'}> */}
-                    <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Save Address 
-                        {/* <span><i className="fa fa-save" style={{marginLeft: '24px'}}></i></span> */}
-                        </Button>
-                  {/* </Link> */}
-                  </Col>
-                </Row>
-              </Form>
-            </div>
+        <Card style={{ backgroundColor: '#F5F5F5' }}>
+          <CardBody style={{ padding: '24px' }}>
+            <Form className="floating-wrapper" onSubmit={handleSubmit}>
+              <Row className="g-3">
+                <Col sm="6">
+                  <FormGroup floating className="mb-6">
+                    <Input type="text" name="pincode" value={formData.pincode} onChange={handleChange} placeholder="Pincode" />
+                    <Label>Pincode</Label>
+                  </FormGroup>
+                </Col>
+                <Col sm="12" className="mt-6">
+                  <FormGroup floating>
+                    <Input type="text" name="location" value={formData.location} onChange={handleChange} placeholder="Location" />
+                    <Label>Location</Label>
+                  </FormGroup>
+                </Col>
+                <Col sm="12">
+                  <FormGroup floating className="mb-6">
+                    <Input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
+                    <Label>Address</Label>
+                  </FormGroup>
+                </Col>
+                <Col sm="12" className="mb-6">
+                  <FormGroup floating>
+                    <Input type="text" name="nick_name" value={formData.nick_name} onChange={handleChange} placeholder="Name" />
+                    <Label>Name</Label>
+                  </FormGroup>
+                </Col>
+                <Col sm="12">
+                  <Button type="submit" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
+                    Save Address
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
           </CardBody>
         </Card>
       </Col>
     );
   };
+
+
+  const ColorsSchemes = ( {open , setOpen , toasterContent , toasterColorContent} : any ) => {
+  
+    console.log("toaster content",toasterColorContent,toasterContent)
+    return (
+      <Col md="6">
+        <Card>
+            {/* {toasterColorContent} */}
+          
+          {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}
+          {/* <CardBody className="toast-rtl colors-schemes"> */}
+            <Toast fade className={`default-show-toast align-items-center text-light bg-${toasterColorContent} border-0`}
+             isOpen={open}
+             style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              zIndex: 1050,
+              margin: "0 auto",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            }}>
+              <div className="d-flex justify-content-between align-items-center">
+        <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
+        <ToastBody>{toasterContent}</ToastBody>
+                {/* <Button close className="btn-close-white me-2 m-auto" onClick={() => setOpen(false)}></Button> */}
+              </div>
+            </Toast>
+          {/* </CardBody> */}
+        </Card>
+      </Col>
+    );
+  };
+  

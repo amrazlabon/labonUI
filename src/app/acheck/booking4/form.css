@@ -111,3 +111,7 @@ input:checked + .slider:before {
     color: #888;
     cursor: not-allowed;
 }
+
+.radio .radio-wrapper li {
+    border: 1px #999999;
+}

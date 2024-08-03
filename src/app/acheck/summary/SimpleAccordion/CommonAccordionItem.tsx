@@ -10,11 +10,13 @@ const CommonAccordionItem = ({ item }) => {
         {/* <span className={item.spanClass}> */}
         <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
         {/* <span style={{ display: "block", width: 195, textAlign: "left" }}>{item.accordionHeading}</span> */}
-        <span style={{ display: "block", width: 195, textAlign: "left" }}>LDL Cholesterol</span>
+        <span style={{ display: "block", width: 195, textAlign: "left" }}>{item.test_name}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 95, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 }}>$6100.00</span>
+        <span style={{ display: "block", width: 95, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 }}>{item.price}</span>
       </div>
-        {item.icon && <ChevronDown className={`svg-color ${item.spanClass}`} />}
+        {/* {item.icon &&  */}
+        <ChevronDown className={`svg-color ${item.spanClass}`} />
+        {/* } */}
           {/* {item.accordionHeading} */}
           {/* </span> */}
       </AccordionHeader>

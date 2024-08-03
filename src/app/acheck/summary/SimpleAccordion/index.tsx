@@ -8,7 +8,7 @@ import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
 import { AccordionData, AccordionList } from "@/Data/Uikits/accordion";
 import CommonAccordionItem from "./CommonAccordionItem";
 
-export const SimpleAccordion = () => {
+export const SimpleAccordion = ({selectedTests} : any) => {
   const [open, setOpen] = useState("1");
   const toggle = (id) => (open === id ? setOpen() : setOpen(id));
 
@@ -19,7 +19,7 @@ export const SimpleAccordion = () => {
         <CardBody style={{padding : '0'}}>
           <Accordion open={open} toggle={toggle} className="dark-accordion">  
             {/* <StaticAccordion /> */}
-            {AccordionList.map((data, index) => (
+            {selectedTests.map((data, index) => (
               <CommonAccordionItem item={data} key={index} />
             ))}
           </Accordion>

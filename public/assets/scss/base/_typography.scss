@@ -2,10 +2,11 @@
     1.2 Typography CSS start
 ==========================**/
     //Custom css Start
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');    //Custom css Start
     body {
         font-size: $body-font-size;
         overflow-x: hidden;
-        font-family: $font-outfit, $font-serif;
+        font-family: "Inter", sans-serif;
         color: $theme-body-font-color;
         background-color: $main-body-color;
     }

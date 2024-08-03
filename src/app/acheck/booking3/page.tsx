@@ -15,7 +15,7 @@ import './formStyle.css';
 
 // import OpenModalMofi from ".";
 
-const TestTime = ({profile , setProfile , setStepActive} : any) => {
+const TestTime = ({profile , setProfile , setStepActive , selectedTests, selectedAddress} : any) => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);

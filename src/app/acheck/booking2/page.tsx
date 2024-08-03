@@ -16,7 +16,7 @@ import { formatShortWeekday } from '@/utils/formatShortWeekday';
 
 // import OpenModalMofi from ".";
 
-const Tests = ({profile , setProfile , setStepActive} : any) => {
+const Tests = ({profile , setProfile , setStepActive , selectedTests, selectedAddress} : any) => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   // const [dateValue, setDateValue] = useState(new Date());
   const callback = useCallback((tab: number | undefined) => {
