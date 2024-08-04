@@ -19,3 +19,25 @@ export async function POST(request: NextRequest){
     }
     
 }
+
+export async function GET(request: NextRequest){
+    try{
+        const { searchParams } = new URL(request.url);
+        const endpoint = searchParams.get('endpoint'); // Get the 'endpoint' query parameter
+        const id = searchParams.get('id');
+        console.log('request education=> ');
+        // const reqBody = await request.json();
+        // console.log('body ===============>', reqBody);
+        const response = await axios.post(`http://0.0.0.0:37000/users/${id}`);
+        console.log(response.data)
+        const res = NextResponse.json(response.data);
+        // console.log('back success ===> ', res);
+        return res;
+
+    } catch(error: any){
+        // console.log('errors => ', error.response);
+        
+        return NextResponse.json(error.response.data.errors)
+    }
+    
+}

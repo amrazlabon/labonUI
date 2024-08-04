@@ -115,3 +115,16 @@ input:checked + .slider:before {
 .radio .radio-wrapper li {
     border: 1px #999999;
 }
+
+.active-label {
+    font-weight: 600;
+    color: #000; /* Change this to the color you want when active */
+  }
+  
+  .inactive-label {
+    color: grey; /* Change this to the color you want when inactive */
+  }
+
+  /* .radio-wrapper li{ 
+    max-width: 50px;
+  } */

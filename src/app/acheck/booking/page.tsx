@@ -130,50 +130,54 @@ const Page = () => {
 
     return (
         <Col md='6' >
-      <div style={{padding : '0', height:'15rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+      <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+        <Col sm='6' mdd='6' lg='6'>
 <Steppers stepActive={stepActive} setStepActive={setStepActive} />
+        </Col>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
 {/* <div>
   <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
   <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2>
 </div> */}
-<div style={{ display: 'flex', alignItems: 'center' , paddingBottom : '24px'}}>
+<div style={{ display: 'flex', alignItems: 'center' , paddingBottom : '0'}}>
   <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
     
-      <div>
+  {selectedTests && (stepActive === 1 || stepActive === 2 || stepActive === 0) &&(<div>
   <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>{selectedTests.length === 0
-        ? 'Select Test'
+        ? 'Test'
         : selectedTests.length === 1
         ? selectedTests[0].test_name
         : `${selectedTests[0].test_name} + ${selectedTests.length - 1}`}</p>
-  <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>
+  <p className="text-white custom-font" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>
     {/* 1100.00 */}
+    <span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>
     {selectedTests.length === 0
-                  ? 'Select Test'
+                  ? '500'
                   : selectedTests.length === 1
                   ? `${selectedTests[0].price}`
                   : `${selectedTests.reduce((total, test) => total + (test.price ? parseFloat(test.price) : 0), 0)}`
-                }
-    </h2>
-</div>
+                }.00
+    </p>
+</div> )
+}
   </div>
-  <div style={{ flex: 1, display: 'flex', justifyContent: 'center' ,paddingRight : '24px'}}>
+  <div style={{ flex: 1, display: 'flex', justifyContent: 'bottom' ,paddingRight : '24px'}}>
       <div>
                   {stepActive == 3 && 
-                    <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Add To Cart</Button>
+                    <Button style={{height: '3rem', width :'12rem' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Add To Cart</Button>
 }
+                    {profile.timeslot && (stepActive === 1 || stepActive === 2 || stepActive === 0) &&(
+                        <p className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>Time : {profile.timeslot}</p>
+                    )}
                     {profile.date && (stepActive === 1 || stepActive === 2 || stepActive === 0) && (
 
-                        <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Date : {profile.date}</p>
+                        <p className="text-white" style={{paddingBottom:'0',paddingLeft : '24px', margin: '0'}}>Date : {profile.date}</p>
                     )}
-                    {profile.timeslot && (stepActive === 1 || stepActive === 2 || stepActive === 0) &&(
-  <p className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>Time : {profile.timeslot}</p>
-)}
 </div>
 
   </div>
 </div>
-<div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
+<div style={{marginTop : '16px', height:'24px', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
 </div>
         {/* <div className='p-10 '>

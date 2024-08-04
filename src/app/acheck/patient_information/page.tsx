@@ -15,7 +15,8 @@ const PatientInformation = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/patient_info');
+      const id = sessionStorage.getItem('user_id');
+      const response = await axios.get(`/api/patient_info?endpoint=user&id=${id}`);
         // setData(response.data);
         console.log("the patient iformation of contacrs",response.data);
         setPatientInformation(response.data)
@@ -59,7 +60,7 @@ const PatientInformation = () => {
 <div style={{padding : '0', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
 </div>
-<div style={{padding : '24px'}}>
+<div style={{padding : ' 0 24px 24px 24px'}}>
 
 <Link href={'/acheck/patient_details'}>
       <TableHeadOptions patientInformation={patientInformation}/>
@@ -107,7 +108,7 @@ const TableHeadOptions=({patientInformation} : any)=> {
     //     b_id: data.id,
     //   },
     // });
-    sessionStorage.setItem('booking_id', JSON.stringify(data.id));
+    sessionStorage.setItem('patient_id', JSON.stringify(data.id));
 
     console.log("handle click in the patient information",data)
   }
@@ -138,37 +139,37 @@ const TableHeadOptions=({patientInformation} : any)=> {
 
   return (
     <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
-      <Card>
+      <Card style={{boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
-          <Col sm="12" lg="12" xl="12">
+          <Col sm="12" lg="12" xl="12" style={{paddingLeft : '16px' , paddingRight : '16px'}}>
           {patientInformation.length > 0 ? (
               <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
                 {patientInformation.map((data: any) => (
                   <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
-                    <td>
-                      <img style={{ height: '4rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+                    <td style={{paddingTop : '0'}}>
+                      <img style={{ height: '3rem', margin: '0'  , borderRadius : '5px'}} className="img-fluid table-avatar" src={`${ImagePath}/Father.png`} alt="user image" />
                     </td>
                     <td>
                       <div style={{ display: 'grid' }}>
-                        <h4 style={{ paddingTop: '16px', margin: '0' }}>
+                        <p style={{ paddingTop: '0', margin: '0' , fontSize : '16px' , fontWeight : '600' }}>
                           {data.first_name}
-                        </h4>
-                        <div className="gap-2" style={{ display: 'flex' }}>
-                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
-                          <p style={{ paddingTop: '0', margin: '0' }}>
+                        </p>
+                        <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
+                          <img style={{ height: '1rem', margin: '0'  ,}} className="img-fluid table-avatar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                          <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' }}>
                             {data.relation}
                           </p>
                         </div>
-                        <div className="gap-2" style={{ display: 'flex' }}>
+                        <div className="gap-1" style={{ display: 'flex' , marginTop : '4px' }}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
-                          <p style={{ paddingTop: '0', margin: '0' }}>
+                          <p style={{ paddingTop: '0', margin: '0'  , fontSize : '14px'}}>
                             5 tests done so far
                           </p>
                         </div>
-                        <div className="gap-2" style={{ display: 'flex' }}>
+                        <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
-                          <p style={{ paddingTop: '0', margin: '0' }}>
+                          <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' , color  :'rgba(196, 107, 101, 1)' }}>
                             No upcoming tests
                           </p>
                         </div>

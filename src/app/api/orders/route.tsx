@@ -18,3 +18,37 @@ export async function POST(request: NextRequest){
     }
     
 }
+
+export async function GET(request: Request){
+    try{
+        // console.log('request education=> check ');
+        const { searchParams } = new URL(request.url);
+        const endpoint = searchParams.get('endpoint'); // Get the 'endpoint' query parameter
+        const id = searchParams.get('id'); // Get the 'id' query parameter
+
+        let response;
+        let res;
+        if(endpoint === 'user'){
+
+            response = await axios.get(`http://0.0.0.0:37000/orders/${endpoint}/${id}`);
+            console.log("tests data",response.data)
+            res = NextResponse.json(response.data);
+        }
+        else if(endpoint === 'per'){
+
+            response = await axios.get(`http://0.0.0.0:37000/orders/${endpoint}/${id}`);
+            console.log("tests data",response.data)
+            res = NextResponse.json(response.data);
+        }
+        // const reqBody = await request.json();
+        // console.log('body ===============>', reqBody);
+        // console.log('back success ===> ', res);
+        return res;
+
+    } catch(error: any){
+        // console.log('errors => ', error.response);
+        
+        return NextResponse.json(error.response.data.errors)
+    }
+    
+}

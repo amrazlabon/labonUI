@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
-import { BasicDate, EmailFloatingPlaceholder, FullDate, ImagePath, PasswordFloatingPlaceholder } from "@/Constant";
+import { BasicDate, EmailFloatingPlaceholder, FontWeight, FullDate, ImagePath, PasswordFloatingPlaceholder } from "@/Constant";
 // import BasicCard from "./BasicCard";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
@@ -75,20 +75,21 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
 <div style={{marginTop : '24px', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
 </div> */}
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '0' , margin : '0'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0' , margin : '0' , boxShadow : 'none'}}>
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
 
 {/* <div> */}
-<h1 className="text-black" style={{paddingBottom:'24px'}}>Select a Suitable Time</h1>
+<h1 className="text-black" style={{paddingBottom:'24px', margin : '0'}}>Add Patient Details</h1>
 
 <div className="toggle-container" >
-                <label>Select from My Contacts</label>
+                <label className={!isSelectFromContacts ? 'active-label' : 'inactive-label'}>
+                Select from My Contacts</label>
                 <Label style={{marginLeft : '1rem'}} className="form-switch form-check-inline" check>
       <Input className={`switch-primary check-size`} type="checkbox" role="switch" defaultChecked={isSelectFromContacts} checked={isSelectFromContacts}
             onChange={handleToggleChange}
  disabled={false}/>
     </Label>
-                <label>Add New</label>
+                <label className={isSelectFromContacts ? 'active-label' : 'inactive-label'}>Add New</label>
             </div>
 
             </Card>
@@ -164,7 +165,7 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
       {/* background: linear-gradient(180deg, #522F62 0%, #9462B5 100%); */}
 
       
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '0'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0', boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={FormFloating} span={FloatingFormData} /> */}
         <CardBody style={{ padding: '0' }}>
           <div className="">
@@ -182,7 +183,7 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
                     <Label check>Patient Name</Label>
                   </FormGroup>
                 </Col>
-                <div className="gap-4" style={{ display: 'flex' }}>
+                <div className="gap-4" style={{ display: 'flex' , margin : '0' }}>
                   <Col sm="6" className="mt-2">
                     <FormGroup floating>
                       <Input
@@ -322,12 +323,12 @@ const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
               </Label>
             </li> */}
             {CustomRadioListData.map(({ icon, id, text, defaultChecked }, index) => (
-              <li className="p-1 pt-2 pb-2" key={index}>
+              <li className="p-1 pt-2 pb-2" key={index} style={{maxWidth : '50px'}}>
                 <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio" defaultChecked={defaultChecked} name="radio2" 
                 checked={selectedTime === text}
                 onChange={() => onTimeChange(text)}/>
                 <Label htmlFor={`radio-${id}`} check>
-                <img style={{ height: '100%', }} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" />
+                <img style={{ height: '100%', margin : '0'}} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" />
 
                   {/* <i className={`fa fa-${icon}`}></i> */}
                   {/* <span>{text}</span> */}
@@ -365,6 +366,29 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
   // TableHeadOptions=()=> {
 
   const [patientInformation , setPatientInformation] = useState<any>([])
+  const TableHeadOptionBody = [
+    {
+      id: 1,
+      first_name: "Vasudevan Ramachandran",
+      relation: "Father",
+      userName: "5 tests done so far",
+      time: "No upcoming tests"
+    },
+    {
+      id: 2,
+      first_name: "Swathi Ramachandran",
+      relation: "Mother",
+      userName: "5 tests done so far",
+      time: "No upcoming tests"
+    },
+    {
+      id: 3,
+      first_name: "Sowmya Ramachandran",
+      relation: "Sister",
+      userName: "5 tests done so far",
+      time: "No upcoming tests"
+    },
+  ];
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -373,6 +397,7 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         console.log("the patient iformation of contacrs",response.data);
         setPatientInformation(response.data)
       } catch (error) {
+        setPatientInformation(TableHeadOptionBody)
         // setError(error.message);
       }
     };
@@ -380,29 +405,6 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
     fetchData();
   }, []);
 
-    const TableHeadOptionBody = [
-      {
-        id: 1,
-        firstName: "Vasudevan Ramachandran",
-        lastName: "Father",
-        userName: "5 tests done so far",
-        time: "No upcoming tests"
-      },
-      {
-        id: 2,
-        firstName: "Swathi Ramachandran",
-        lastName: "Mother",
-        userName: "5 tests done so far",
-        time: "No upcoming tests"
-      },
-      {
-        id: 3,
-        firstName: "Sowmya Ramachandran",
-        lastName: "Sister",
-        userName: "5 tests done so far",
-        time: "No upcoming tests"
-      },
-    ];
 
     const handleRowClick = (data: any) => {
       setProfile({
@@ -424,37 +426,37 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
 
   return (
     <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
-      <Card>
+      <Card style={{boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
-          <Col sm="12" lg="12" xl="12">
+          <Col sm="12" lg="12" xl="12" style={{paddingLeft : '16px' , paddingRight : '16px'}}>
           {patientInformation.length > 0 ? (
               <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
                 {patientInformation.map((data: any) => (
                   <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
-                    <td>
-                      <img style={{ height: '4rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+                    <td style={{paddingTop : '0'}}>
+                      <img style={{ height: '3rem', margin: '0'  , borderRadius : '5px'}} className="img-fluid table-avatar" src={`${ImagePath}/Father.png`} alt="user image" />
                     </td>
                     <td>
                       <div style={{ display: 'grid' }}>
-                        <h4 style={{ paddingTop: '16px', margin: '0' }}>
+                        <p style={{ paddingTop: '0', margin: '0' , fontSize : '16px' , fontWeight : '600' }}>
                           {data.first_name}
-                        </h4>
-                        <div className="gap-2" style={{ display: 'flex' }}>
-                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
-                          <p style={{ paddingTop: '0', margin: '0' }}>
+                        </p>
+                        <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
+                          <img style={{ height: '1rem', margin: '0'  ,}} className="img-fluid table-avatar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                          <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' }}>
                             {data.relation}
                           </p>
                         </div>
-                        <div className="gap-2" style={{ display: 'flex' }}>
+                        <div className="gap-1" style={{ display: 'flex' , marginTop : '4px' }}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
-                          <p style={{ paddingTop: '0', margin: '0' }}>
+                          <p style={{ paddingTop: '0', margin: '0'  , fontSize : '14px'}}>
                             5 tests done so far
                           </p>
                         </div>
-                        <div className="gap-2" style={{ display: 'flex' }}>
+                        <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
-                          <p style={{ paddingTop: '0', margin: '0' }}>
+                          <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' , color  :'rgba(196, 107, 101, 1)' }}>
                             No upcoming tests
                           </p>
                         </div>

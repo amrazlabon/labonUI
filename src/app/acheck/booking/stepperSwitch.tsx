@@ -14,6 +14,7 @@ import Tests from '../booking2/page';
 import TestTime from '../booking3/page';
 import PatientAdd from '../booking4/page';
 import Summary from '../summary/page';
+import './bookStyle.css'
 
 
 const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selectedTests, selectedAddress, education, experience, salary }: any) => {
@@ -51,7 +52,7 @@ const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selecte
     
 
     return (
-        <div className="col-span-1 bg-white p-4 shadow-md flex flex-col items-center justify-center rounded-lg">
+        <div className="col-span-1 bg-white flex flex-col items-center justify-center rounded-lg" style={{padding : '0 24px 24px 24px'}}>
             { 
             // !update ?
                 (() => {

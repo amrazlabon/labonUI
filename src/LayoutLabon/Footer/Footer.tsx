@@ -4,7 +4,7 @@ import { Col, Container, Row } from "reactstrap";
 
 const Footer = () => {
   return (
-    <footer className="footer" style={{margin : '0', backgroundColor : '#F5F5F5'}}>
+    <footer className="footer" style={{margin : '0', backgroundColor : '#F5F5F5', boxShadow : 'none'}}>
       <Container fluid>
         <Row>
           {/* <Col md="12" className="footer-copyright d-flex flex-wrap align-items-center justify-content-between"> */}

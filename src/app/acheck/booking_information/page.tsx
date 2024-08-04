@@ -1,3 +1,4 @@
+'use client'
 import { ImagePath } from "@/Constant";
 import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import { CommonTableProp } from "@/Types/TableType";
@@ -6,9 +7,34 @@ import { Card, CardBody, Col, Row, Table } from "reactstrap";
 import Link from "next/link";
 // import { useBooking } from "./context";
 import router from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 const BookingInformation = () => {
+  const [bookingInformation , setBookingInformation] = useState<any>([])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+    // const booking_id = sessionStorage.getItem('booking_id');
+    const user_id = sessionStorage.getItem('user_id');
+    if(user_id){
+
+
+      // const response = await axios.get(`/api/patient_info?endpoint=per&id=${booking_id}`);
+      const TestResponse = await axios.get(`/api/orders?endpoint=user&id=${user_id}`);
+      // setData(response.data);
+      console.log("the test iformation of contacrs",TestResponse.data);
+      // setPatientInformation(response.data)
+      setBookingInformation(TestResponse.data)
+    }
+    } catch (error) {
+      // setError(error.message);
+    }
+  };
+
+    fetchData();
+  }, []);
   return (
     <Col md='6' style={{padding : '24px'}}>
       <h1 className="text-black ml-4 mt-4" style={{margin:'0' , paddingBottom : '24px'}}>My Booking Information</h1>
@@ -19,7 +45,7 @@ const BookingInformation = () => {
 <button className={"package-btn"}>Completed</button>
 </div> */}
 <Link href={'/acheck/test_details'}>
-      <TableHeadOptions/>
+      <TableHeadOptions bookingInformation={bookingInformation}/>
 </Link>
     </Col>
   )
@@ -50,14 +76,21 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-const TableHeadOptions=()=> {
+const TableHeadOptions=({bookingInformation} : any)=> {
 
   // const { setBookingData } = useBooking();
 
   const handleRowClick = (data: any) => {
-    // setBookingData(data);
-    // router.push('/acheck/patient_details');
-  };
+    // router.push({
+    //   pathname: '/acheck/patient_details', 
+    //   query: {
+    //     b_id: data.id,
+    //   },
+    // });
+    sessionStorage.setItem('booked_test', JSON.stringify(data));
+
+    console.log("handle click in the patient information",data)
+  }
   // TableHeadOptions=()=> {
 
     const TableHeadOptionBody = [
@@ -91,8 +124,8 @@ const TableHeadOptions=()=> {
         <Row className="card-block">
           <Col sm="12" lg="12" xl="12">
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-              {TableHeadOptionBody.map((data) => (
-                <tr key={data.id}>
+              {bookingInformation.map((data : any) => (
+                <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
                   {/* <th scope="row">{data.id}</th> */}
                   <td>
         <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
@@ -101,28 +134,28 @@ const TableHeadOptions=()=> {
                   <td>
                   <div style={{display : 'grid'}}>
                     <h4 style={{paddingTop : '16px', margin : '0'}}>
-                      {data.firstName}
+                      {data.test_date}
                     </h4>
                     <div className="gap-2" style={{display : 'flex'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {data.lastName}
+                    {data.lastName}1 Test
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
                     <p style={{paddingTop : '0', margin : '0'}}> 
 
-                    {data.time}
+                    {data.timeslot_id}
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
                     <p style={{paddingTop : '0', margin : '0'}}>
 
-                    {data.userName}
+                    LBNHVB10042024{data.id}
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex'}}>

@@ -69,7 +69,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 </div> */}
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
 
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '0'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , padding : '0' , boxShadow : 'none' , margin : '0'}}>
 {/* <div> */}
 <h1 className="text-black ml-4 mt-4" style={{paddingBottom:'16px'}}>Summary</h1>
 
@@ -154,7 +154,7 @@ const BasicCardSchedule = ({profile} : any) => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : '#E5E5E5'}}>
+      <Card style={{backgroundColor : '#E5E5E5' , boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           {/* <div style={{display : 'flex'}}> */}
@@ -199,7 +199,7 @@ const BasicCardProfileMap = () => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0'}}>
+      <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0', boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           {/* <div className="gap-4" style={{display : 'flex'}}> */}
@@ -243,7 +243,7 @@ const BasicCardProfile = ({profile} : any) => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : ''}}>
+      <Card style={{backgroundColor : '' , boxShadow : 'none' , margin : '0'}}>
         <CardBody>
 
         <div className="gap-2" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '0'}}>
@@ -299,7 +299,7 @@ const BasicMap = () => {
   
   return (
     <Col lg="" md="">
-      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0'}}>
+      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0', boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={BasicDemoMap} /> */}
         <CardBody style={{padding : '0'}}>
           <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
@@ -494,7 +494,7 @@ const TableHeadOptions=({selectedTests} : any)=> {
 
   return (
     <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
-      <Card>
+      <Card style={{boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
           <Col sm="12" lg="12" xl="12">

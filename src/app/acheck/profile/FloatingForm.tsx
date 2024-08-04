@@ -49,7 +49,7 @@ const FloatingForm = () => {
       {/* background: linear-gradient(180deg, #522F62 0%, #9462B5 100%); */}
 
       
-      <Card style={{backgroundColor:'#F5F5F5'}}>
+      <Card style={{backgroundColor:'#F5F5F5' , boxShadow : 'none'}}>
         {/* <CommonCardHeader title={FormFloating} span={FloatingFormData} /> */}
         <CardBody style={{padding : '24px'}}>
           <BasicCard/>
