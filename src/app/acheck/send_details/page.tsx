@@ -26,22 +26,23 @@ const SendDetails = () => {
             <div className=" login-dark">
                     <div className="text-center">
 
+                    <p style={{fontSize : '24px' , fontWeight :'600' , marginBottom : '0' , textAlign : 'left'}}>Send Details to Patient</p>
 
-                    <h1 style={{fontWeight:'700'}}>Send Details to Patient</h1>
+                    {/* <h1 style={{fontWeight:'700'}}>Send Details to Patient</h1> */}
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}>
                     <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" /> */}
 
-                        <p>Would you like to send the booking details to the patient’s <br />email {bookingOrder.email}, so they <br />also have the information with them?</p>
+                        <p style={{paddingTop : '16px'}}>Would you like to send the booking details to the patient’s email <span style={{fontWeight : 'bold'}}>{bookingOrder.email ? bookingOrder.email : 'Sudha Radhakrishnan'}</span>, so they also have the information with them?</p>
                         </div>
 
-                        <div style={{marginLeft : '0' , placeContent : 'center'}} className="toggle-container">
-                <label>Do Not Send</label>
+                        <div  className="toggle-container">
+                <label className={!isSelectFromContacts ? 'active-label' : 'inactive-label'}>Do Not Send</label>
                 <Label style={{marginLeft : '1rem'}} className="form-switch form-check-inline" check>
       <Input className={`switch-primary check-size`} type="checkbox" role="switch" defaultChecked={isSelectFromContacts} checked={isSelectFromContacts}
             onChange={handleToggleChange}
  disabled={false}/>
     </Label>
-                <label>Send</label>
+                <label className={isSelectFromContacts ? 'active-label' : 'inactive-label'}>Send</label>
             </div>
                         {/* <div className="">
                 <label>Select from My Contacts</label>
@@ -54,7 +55,7 @@ const SendDetails = () => {
         
                         <Col sm="12">
                 <Link href={'/acheck/b_c'}>
-                  <Button style={{marginTop : '10rem' ,height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Confirm Booking</Button>
+                  <Button style={{marginTop : '8px' ,height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Confirm Booking</Button>
                 </Link>
                 </Col>
         </Col>

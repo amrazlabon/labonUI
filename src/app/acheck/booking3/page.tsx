@@ -52,11 +52,13 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
                                     
 
 {selectedTime && 
-<Col sm="12">
+
+<Col sm="12" >
 {/* <Link href={'/acheck/booking4'}> */}
-                  <Button ref={buttonRef}  onClick={handleBookTimingsClick} className='btn-lg' style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Add Patient Details <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+                  <Button  onClick={handleBookTimingsClick} className='btn-lg' style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Add Patient Details <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 {/* </Link> */}
                 </Col>
+// </div>
 }
         <div>
             {/* <OpenModalMofi/> */}

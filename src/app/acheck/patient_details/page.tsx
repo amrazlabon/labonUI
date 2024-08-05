@@ -28,6 +28,33 @@ const PatientDetails = () => {
         setActiveTab(tab);
       }, []);
 
+      const TableHeadOptionBody = [
+        {
+          id: 1,
+          test_date: "25/07/2024",
+          lastName: "2 Tests",
+          userName: "LBNHVB100420241",
+          name : "Vasudevan Radakrishnan",
+          timeslot_id: "07:00 AM"
+        },
+        {
+          id: 2,
+          test_date: "28/07/2024",
+          lastName: "2 Tests",
+          userName: "LBNHVB100420241",
+          name : "Swathi Radakrishnan",
+          timeslot_id: "07:00 AM"
+        },
+        {
+          id: 3,
+          test_date: "29/07/2024",
+          lastName: "2 Tests",
+          userName: "LBNHVB100420241",
+          name : "Vasudevan Radakrishnan",
+          timeslot_id: "07:00 AM"
+        },
+      ];
+
       useEffect(() => {
         const fetchData = async () => {
           try {
@@ -44,8 +71,10 @@ const PatientDetails = () => {
           setBookingInformation(TestResponse.data)
         }
         } catch (error) {
+          setBookingInformation(TableHeadOptionBody)
           // setError(error.message);
         }
+        setBookingInformation(TableHeadOptionBody)
       };
     
         fetchData();
@@ -55,11 +84,11 @@ const PatientDetails = () => {
     return (
     <Col md='6' >
       <div style={{padding : '0', height:'6rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)'}}>
-<h1 className="text-white" style={{padding:'24px', margin: '0'}}>{patientInformation.first_name ? patientInformation.first_name : 'Vasudevan'}</h1>
+<h1 className="text-white" style={{padding:'24px', margin: '0'}}>{patientInformation.first_name ? patientInformation.first_name : 'Vasudevan Radhakrishnan'}</h1>
 <div style={{padding : '0', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
 </div>
-            <Card style={{backgroundColor:'#F5F5F5' , padding : '24px' , boxShadow : 'none'}}>
+            <Card style={{backgroundColor:'#F5F5F5' , padding : '24px' , boxShadow : 'none' , margin : '0'}}>
                 {/* </div>
 </div> */}
       {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
@@ -70,22 +99,28 @@ const PatientDetails = () => {
 <BasicCard/> */}
 
 <div>
-<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Contact Details</h2>
-
+<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2 className="mb-0" style={{paddingBottom: '16px'}}>
+Contact Details
+            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
+          </h2>
+            <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
+</div>
 <BasicCardProfile patientInformation={patientInformation}/>
+  
   
 </div>
 
 <div>
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Location</h2>
 <BasicMap/>
-<BasicCardProfileMap patientInformation={patientInformation}/>
+<BasicCardProfileMap/>
 </div>
 {/* <BasicCardSchedule/> */}
                                     
 {/* </div> */}
 <div>
-<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Booking History</h2>
+<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'16px'}}>Booking History</h2>
 <Link href={'/acheck/test_details'}>
 <TableHeadOptions bookingInformation={bookingInformation}/>
 </Link>
@@ -108,7 +143,9 @@ const PatientDetails = () => {
 
 <Col sm="12">
 <Link href={'/acheck/home'}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Book a Home Test for this Contact <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+                  <Button className="btn-lg" style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Book a Home Test for this Contact
+                     {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
+                     </Button>
 </Link>
                 </Col>
         <div>
@@ -121,15 +158,13 @@ const PatientDetails = () => {
 
 export default PatientDetails;
 
-const BasicCardProfileMap = ({patientInformation} : any) => {
-  console.log("pateint information in the address",patientInformation);
-  
+const BasicCardProfileMap = () => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0'}}>
+      <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0', boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           {/* <div className="gap-4" style={{display : 'flex'}}> */}
@@ -139,27 +174,24 @@ const BasicCardProfileMap = ({patientInformation} : any) => {
 
 <div style={{display : 'grid'}}>
 
-          <h2 className="mb-0" style={{paddingBottom : '24px'}}>
+          <p className="mb-0" style={{paddingBottom : '8px' , fontSize : '16px', fontWeight : '600'}}>
 Home Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </h2>
+          </p>
           {/* <h1 className="mb-0"> */}
 {/* Ramakrishnan */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           {/* </h1> */}
           <p className="mb-0">
-            {patientInformation.address}
-          {/* Suite No.123, Famous Building, */}
+          Suite No.123, Famous Building,
                       {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </p>
+          {/* </p>
 
-          <p className="mb-0">
-          {patientInformation.location}
-          {/* Sample Street, Athirampuzha P.O,            {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </p>
-          <p className="mb-0">
-          {patientInformation.pincode}
-          {/* Kottayam - 686001, Kerala India. */}
+          <p className="mb-0"> */}
+          Sample Street, Athirampuzha P.O,            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
+          {/* </p>
+          <p className="mb-0"> */}
+          Kottayam - 686001, Kerala India.
           {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
 </div>
@@ -177,53 +209,30 @@ const BasicCardProfile = ({patientInformation} : any) => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : ''}}>
-        {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
+      <Card style={{backgroundColor : '' , boxShadow : 'none' , margin : '0'}}>
         <CardBody>
 
         <div className="gap-2" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '0'}}>
   <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
-    {/* <img
-      style={{ height: '7rem', margin: '0' , width : '100%' , padding : '24px'}}
-      className="img-fluid table-avtar"
-      src={`${ImagePath}/ProfileIcon.png`}
-      alt="user image"
-    /> */}
-      {/* <h1 className="text-black" style={{margin:'0', paddingTop : '0', textAlign : 'left'}}>1,100.00</h1> */}
-      {/* <div> */}
-  {/* <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
-  <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2> */}
-{/* </div> */}
-<img style={{height:'7rem', margin:'0 '}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+<img style={{height:'7rem', margin:'0 ' , borderRadius : '5px'}} className="img-fluid table-avtar" src={`${ImagePath}/Father.png`} alt="user image" />
 
   </div>
   <div style={{ flex: 2, display: 'flex', justifyContent: 'center' ,paddingRight : '0'}}>
-    {/* <button
-      style={{
-        color: 'white',
-        width: '800%',
-        height: '3rem',
-        padding: '12px 0px',
-        backgroundColor: '#AE7FD1',
-        border: 'none',
-        borderRadius: '5px',
-      }}
-    >
-      Upload Selfie &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {'>'}
-    </button> */}
-                  {/* <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Book a Home Visit </Button> */}
                   <div style={{display : 'grid'}}>
 
 
-                  <div className="gap-2" style={{display : 'flex' , padding : '0'}}>
+{/* <h1 style={{margin:'0', paddingTop : '0' , paddingBottom : '10px' , fontWeight : '600'}}>
+{profile.name ? profile.name : 'Vasudevan Ramachandran  '}
+</h1> */}
+<div className="gap-2" style={{display : 'flex' , padding : '0' , paddingBottom : '4px'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Gender.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {patientInformation.gender} (63 Years)
+                    {patientInformation.gender ? patientInformation.gender : 'Male'} ({patientInformation.age ? patientInformation.gender : '63'} Years)
                     </p>
                     </div>
-<div className="gap-2" style={{display : 'flex'}}>
+<div className="gap-2" style={{display : 'flex' , paddingBottom : '4px'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
@@ -231,39 +240,17 @@ const BasicCardProfile = ({patientInformation} : any) => {
                     {patientInformation.relation ? patientInformation.relation : 'Father'}
                     </p>
                     </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
+                    <div className="gap-2" style={{display : 'flex' , paddingBottom : '0'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    2 Tests done so far
+                    {patientInformation.tests ? patientInformation.tests : '0' } Tests done so far
                     </p>
                     </div>
 </div>
   </div>
 </div>
-
-          {/* <div className="gap-4" style={{display : 'flex'}}> */}
-
-        {/* <img style={{height:'5rem'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" /> */}
-        {/* <img style={{height:'7rem', margin:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" /> */}
-
-{/* <div style={{display : 'grid'}}>
-
-          <h1 className="mb-0">
-Sudha */}
-            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </h1>
-          <h1 className="mb-0">
-Ramakrishnan */}
-            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </h1>
-          <p className="mb-0">
-Female, 36 Years */}
-            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </p>
-</div> */}
-          {/* </div> */}
         </CardBody>
       </Card>
     </Col>
@@ -353,68 +340,73 @@ const TableHeadOptions=({bookingInformation} : any)=> {
       console.log("handle click in the patient information",data)
     }
 
-  return (
-    <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
-      <Card>
-        {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
-        <Row className="card-block">
-          <Col sm="12" lg="12" xl="12">
-            <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-              {bookingInformation.map((data : any) => (
-                <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
-                  {/* <th scope="row">{data.id}</th> */}
-                  <td>
-        <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
-        {/* {data.lastName} */}
+    return (
+      <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
+        <Card style={{boxShadow : 'none' , margin : '0'}}> 
+          {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
+          <Row className="card-block">
+            <Col sm="12" lg="12" xl="12" style={{paddingLeft : '16px' , paddingRight : '16px'}}>
+              <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
+                {bookingInformation.map((data : any) => (
+                  <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
+                    {/* <th scope="row">{data.id}</th> */}
+                    <td style={{paddingTop : '0'}}>
+          <img style={{height:'3rem', margin:'0' , borderRadius : '5px'}} className="img-fluid table-avtar" src={`${ImagePath}/ThumbnailTest.png`} alt="user image" />
+          {/* {data.lastName} */}
+                      </td>
+                    <td>
+                    <div style={{display : 'grid'}}>
+                    <p style={{ paddingTop: '0', margin: '0' , fontSize : '16px' , fontWeight : '600' }}>
+                            {data.test_date}
+                          </p>
+                      <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+  
+                      <p style={{paddingTop : '0' , margin : '0'}}>
+                      
+                      {data.lastName}1 Test
+                      </p>
+                      </div>
+                      <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                      <p style={{paddingTop : '0', margin : '0'}}> 
+  
+                      {data.timeslot_id}
+                      </p>
+                      </div>
+                      <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/VectorProfile.png`} alt="user image" />
+                      <p style={{paddingTop : '0', margin : '0'}}>
+  
+                      {data.name}
+                      </p>
+                      </div>
+                      <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
+                      <p style={{paddingTop : '0', margin : '0'}}>
+  
+                      LBNHVB10042024{data.id}
+                      </p>
+                      </div>
+                      <div className="gap-2" style={{display : 'flex', marginTop : '4px'}}>
+                      {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
+                      <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem' , margin : '0'}}>Upcoming</p>
+  
+                      </div>
+                    </div>
                     </td>
-                  <td>
-                  <div style={{display : 'grid'}}>
-                    <h4 style={{paddingTop : '16px', margin : '0'}}>
-                      {data.test_date}
-                    </h4>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
-
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    {data.lastName}1 Test
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}> 
-
-                    {data.timeslot_id}
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}>
-
-                    LBNHVB10042024{data.id}
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
-                    <p style={{paddingTop : '0', margin : '0'}}>
-
-                    Status
-                    </p>
-                    </div>
-                  </div>
-                  </td>
-                  <td>
-                    <i className='fa fa-angle-right'></i>
-                    {/* {data.userName} */}
-                    </td>
-                </tr>
-              ))}
-            </CommonTable>
-          </Col>
-        </Row>
-      </Card>
-    </Col>
-  );
+                    <td>
+                      <i className='fa fa-angle-right'></i>
+                      {/* {data.userName} */}
+                      </td>
+                  </tr>
+                ))}
+              </CommonTable>
+            </Col>
+          </Row>
+        </Card>
+      </Col>
+    );
 }
 
 

@@ -130,7 +130,7 @@ const Page = () => {
 
     return (
         <Col md='6' >
-      <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+      <div style={{padding : '0', height:'13.5rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
         <Col sm='6' mdd='6' lg='6'>
 <Steppers stepActive={stepActive} setStepActive={setStepActive} />
         </Col>
@@ -162,10 +162,10 @@ const Page = () => {
 }
   </div>
   <div style={{ flex: 1, display: 'flex', justifyContent: 'bottom' ,paddingRight : '24px'}}>
-      <div>
                   {stepActive == 3 && 
-                    <Button style={{height: '3rem', width :'12rem' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Add To Cart</Button>
+                    <Button className='btn-lg' style={{height: '3rem', width :'12rem' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '1.3rem'}} color="">Add To Cart</Button>
 }
+      <div style={{marginTop : '2rem'}}>
                     {profile.timeslot && (stepActive === 1 || stepActive === 2 || stepActive === 0) &&(
                         <p className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>Time : {profile.timeslot}</p>
                     )}

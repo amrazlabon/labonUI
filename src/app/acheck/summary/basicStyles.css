@@ -5,3 +5,27 @@
     margin: 0;
     margin-left: 7rem;
     }
+
+    .accordion-button:not(.collapsed) {
+        color: black;
+        font-weight: 600;
+        }
+
+        /* .accordion-item:not(.collapsed) {
+    background-color: #F5F5F5;
+            
+            } */
+
+        /* .accordion-item:not(.collapsed) {
+            background-color: black;
+            } */
+.accordion-body {
+
+    background-color: #F5F5F5;
+}
+
+/* .accordion-item:first-of-type > .accordion-collapse {
+
+    background-color: #F5F5F5;
+} */
+        

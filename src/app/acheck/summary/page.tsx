@@ -71,19 +71,26 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 
       <Card style={{backgroundColor:'#F5F5F5' , padding : '0' , boxShadow : 'none' , margin : '0'}}>
 {/* <div> */}
-<h1 className="text-black ml-4 mt-4" style={{paddingBottom:'16px'}}>Summary</h1>
+<h1 className="text-black " style={{paddingBottom:'16px' , margin : '0'}}>Summary</h1>
 
 <BasicCard/>
 
-<div>
-<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Patient Details</h2>
-
+<div style={{paddingBottom :'12px'}}>
+<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+  <h2 className="text-black ml-4 mt-3" style={{ paddingBottom: '16px' }}>Patient Details</h2>
+  <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
+</div>
 <BasicCardProfile profile={profile}/>
   
 </div>
 
-<div>
-<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Location</h2>
+<div style={{paddingBottom :'24px'}}>
+<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+  <h2 className="text-black ml-4 mt-3" style={{ paddingBottom: '16px' }}>Home Test Location</h2>
+  <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
+</div>
+
+
 <BasicMap/>
 <BasicCardProfileMap/>
 </div>
@@ -91,7 +98,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
                                     
 {/* </div> */}
 <div>
-<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Selected Tests</h2>
+<h2 className="text-black ml-4 mt-4" style={{paddingBottom:'16px'}}>Selected Tests</h2>
 {/* <TableHeadOptions/> */}
 <div>
 <SimpleAccordion selectedTests={selectedTests}/>
@@ -135,7 +142,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 
 <Col sm="12">
 {/* <Link href={'/acheck/send_details'}> */}
-                  <Button onClick={handleAddToCartClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} >Add To Cart<span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+                  <Button onClick={handleAddToCartClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="primary" className="btn-lg" >Add To Cart<span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
 {/* </Link> */}
                 </Col>
         <div>
@@ -154,31 +161,36 @@ const BasicCardSchedule = ({profile} : any) => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : '#E5E5E5' , boxShadow : 'none' , margin : '0'}}>
+      <Card style={{backgroundColor : '#E5E5E5' , boxShadow : 'none' , margin : '0' ,border: '1px solid rgba(0, 0, 0, 0.1)'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           {/* <div style={{display : 'flex'}}> */}
 
         {/* <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" /> */}
 
-        <h1 className="mb-0">
-Schedule
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2 className="mb-0" style={{paddingBottom: '8px'}}>
+Home Test Schedule
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </h1>
-          <div className="gap-4" style={{display : 'flex' , marginTop:'1rem'}}>
+          </h2>
+            <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
+</div>
+        
+          <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem'}}>Upcoming</p>
+          <div className="gap-4" style={{display : 'flex' , marginTop:'8px'}}>
             <div style={{display : 'flex'}}>
-            <img style={{height:'3rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Calendar.png`} alt="user image" />
+            <img style={{height:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Calendar.png`} alt="user image" />
 
-            <p className="mb-0 mt-3">
+            <p className="mb-0 mt-2">
 {profile.date}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
             </div>
 
             <div style={{display : 'flex'}}>
-            <img style={{height:'3rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
+            <img style={{height:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
 
-            <p className="mb-0 mt-3" >
+            <p className="mb-0 mt-2" >
 {profile.timeslot}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
@@ -209,10 +221,10 @@ const BasicCardProfileMap = () => {
 
 <div style={{display : 'grid'}}>
 
-          <h2 className="mb-0" style={{paddingBottom : '24px'}}>
+          <p className="mb-0" style={{paddingBottom : '8px' , fontSize : '16px', fontWeight : '600'}}>
 Home Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </h2>
+          </p>
           {/* <h1 className="mb-0"> */}
 {/* Ramakrishnan */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
@@ -220,12 +232,12 @@ Home Address
           <p className="mb-0">
           Suite No.123, Famous Building,
                       {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </p>
+          {/* </p>
 
-          <p className="mb-0">
+          <p className="mb-0"> */}
           Sample Street, Athirampuzha P.O,            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          </p>
-          <p className="mb-0">
+          {/* </p>
+          <p className="mb-0"> */}
           Kottayam - 686001, Kerala India.
           {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
@@ -248,38 +260,38 @@ const BasicCardProfile = ({profile} : any) => {
 
         <div className="gap-2" style={{ display: 'flex', alignItems: 'center' , paddingBottom : '0'}}>
   <div style={{ flex: 1, display: 'flex', justifyContent: '' }}>
-<img style={{height:'7rem', margin:'0 '}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+<img style={{height:'7rem', margin:'0 ' , borderRadius : '5px'}} className="img-fluid table-avtar" src={`${ImagePath}/Father.png`} alt="user image" />
 
   </div>
   <div style={{ flex: 2, display: 'flex', justifyContent: 'center' ,paddingRight : '0'}}>
                   <div style={{display : 'grid'}}>
 
 
-<h1 style={{margin:'0', paddingTop : '0' , paddingBottom : '10px'}}>
-{profile.name}
+<h1 style={{margin:'0', paddingTop : '0' , paddingBottom : '10px' , fontWeight : '600'}}>
+{profile.name ? profile.name : 'Vasudevan Ramachandran  '}
 </h1>
-<div className="gap-2" style={{display : 'flex' , padding : '0'}}>
+<div className="gap-2" style={{display : 'flex' , padding : '0' , paddingBottom : '4px'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Gender.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {profile.gender} ({profile.age} Years)
+                    {profile.gender ? profile.gender : 'Male'} ({profile.age ? profile.gender : '63'} Years)
                     </p>
                     </div>
-<div className="gap-2" style={{display : 'flex'}}>
+<div className="gap-2" style={{display : 'flex' , paddingBottom : '4px'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {profile.relation}
+                    {profile.relation ? profile.relation : 'Father'}
                     </p>
                     </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
+                    <div className="gap-2" style={{display : 'flex' , paddingBottom : '0'}}>
                     <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {profile.tests} Tests done so far
+                    {profile.tests ? profile.tests : '0' } Tests done so far
                     </p>
                     </div>
 </div>
@@ -343,33 +355,43 @@ const InvoiceSubTotal = ({selectedTests} : any) => {
   }, 0);
   return (
     <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" }}>{Subtotal}</span>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" , marginLeft : '12px' , color : 'grey'}}>{Subtotal}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem'  }}>{totalPrice}</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem'  }}><span style={{marginRight : '3px'}}><i className='fa fa-rupee'></i></span>{totalPrice}.00</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 16 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" }}>GST (18%)</span>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left", marginLeft : '12px' , color : 'grey'}}>GST (18%)</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>{totalPrice *0.18}</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice *0.18}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left"  }}>Convinience Fee</span>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left" , marginLeft : '12px', color : 'grey' }}>Convinience Fee</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '3rem' }}>100.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice * 0.07}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       {/* <li style={{ display: "flex", alignItems: "center" }}>
         <span style={{ display: "block", width: 95 }}>{TotalDue}</span>
         <span style={{ display: "block",color: "#7A70BA", opacity: "0.9", fontWeight: 600, padding: "12px 25px", borderRadius: 5, background: "rgba(122, 112, 186 , 0.1)", fontSize: 16}} >$6120.00</span>
       </li> */}
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 20 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" }}>Total</span>
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left", marginLeft : '12px' , fontWeight : '600' }}>Total</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 1000 ,paddingRight : '3rem'  }}>{totalPrice + (totalPrice * 0.18) + 100}</span>
+        
+        <div style={{display : 'grid'}}>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 , fontSize : '18px' ,paddingRight : '2rem'  }}> <span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice + (totalPrice * 0.18) + (totalPrice * 0.07)}
+        {/* <p style={{background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem' , margin : '0', marginRight : '0'}}>UnPaid</p> */}
+
+        </span>
+          {/* <p>hbsf</p>
+          <p>hbsf</p> */}
+        <p style={{display: "block" , background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '3rem'  , justifySelf: 'end' ,marginRight : '2rem' }}>Paid</p>
+        </div>
       </li>
+
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
     </ul>
   );

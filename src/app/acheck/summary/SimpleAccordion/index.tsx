@@ -14,7 +14,7 @@ export const SimpleAccordion = ({selectedTests} : any) => {
 
   return (
     <Col sm="12" xl="12">
-      <Card className="basic-accordion" style={{margin : '0'}}>
+      <Card className="basic-accordion" style={{margin : '0' , boxShadow : 'none'}}>
         {/* <CommonCardHeader title={SimpleAccordions} span={AccordionData} /> */}
         <CardBody style={{padding : '0'}}>
           <Accordion open={open} toggle={toggle} className="dark-accordion">  

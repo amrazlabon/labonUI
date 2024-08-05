@@ -43,28 +43,32 @@ const BookingConfirmation = () => {
                     {/* <button onClick={openModal}>Sign In</button> */}
 
 
-                    <img style={{height:'35px'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
+                    <img style={{height:'35px', paddingBottom : ''}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
                     <h1 style={{fontWeight:'700'}}>Booking Confirmed!</h1>
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}> */}
 
-                        <p>Booking ID: LBNHVB-MRL-20241201-1-A</p>
-                        <h2>Hello {bookingOrder.name}!</h2>
-                        <p>You just booked a home test for<span className="text-bold">{bookingOrder.name}</span> . <br />The invoice has been emailed to you. Our phlebotomist assigned <br /> to collect blood samples will arrive at <br /> your location tentatively by <span className="font-bold">{bookingOrder.timeslot} on {bookingOrder.date}.</span> </p>
-                    {/* </div> */}
+<p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0'}}>Hello {bookingOrder.name ? bookingOrder.name : 'Sudha'}!</p>
+                        {/* <h2>Hello {bookingOrder.name}!</h2> */}
+                        <p>
+                        You just booked a home test for <span style={{fontWeight : 'bold'}}> Sreedevi Ramachandran</span>. The invoice has been emailed to you. Our phlebotomist assigned to collect blood samples will arrive at your location tenatively byat <span style={{fontWeight : 'bold'}}>7:00 AM</span>  on <span style={{fontWeight : 'bold'}}>01/01/2024</span>.
+                        </p>
                     <br />
-                    <p>In case you have any clarifications, <br /> please call us on the support number <br /> +91 9446061000. See you soon!</p>
-                    <hr />
-                    <h2>Save this Data</h2>
-                    <p>We don’t see the patient details saved. Would <br /> you like to save it for future use?</p>
+                    <p style={{marginTop : '0' }}>In case you have any clarifications, please call us on the support number <span style={{fontWeight : 'bold'}}>+91 9446061000</span>. See you soon!</p>
+                    <div style={{borderBottomStyle : 'groove' , marginTop : '24px' , marginBottom : '24px'}}></div>
+                    {/* <h2>Save this Data</h2> */}
+<p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0' , textAlign : 'left'}}>Save this Date</p>
+
+                    <p style={{textAlign : 'left' , paddingTop : '12px'}}>We don’t see the patient details saved. Would <br /> you like to save it for future use?</p>
                     </div>
 
                     <Col sm="12" style={{paddingTop : '24px'}}>
         <Link href={''}>
-                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white', }} color="">Yes <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
+                  <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white', borderRadius : '50px' }} color="">Yes <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
         </Link>
                 </Col>
-                <p className="text-center mt-4">Dashboard</p>
-  {/* <button className={"test-btn"}>Dashboard</button> */}
+                <Link href={''}>
+                <p className="text-center" style={{paddingTop : '24px' , cursor : 'pointer'}}>Dashboard</p>
+                </Link>  {/* <button className={"test-btn"}>Dashboard</button> */}
                 
 
                 </div>
@@ -94,6 +98,7 @@ const ColorsSchemes = ( {open} : any, {setOpen} : any) => {
               zIndex: 1050,
               margin: "0 auto",
               width: "100%",
+              height : '4rem',
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

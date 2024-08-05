@@ -20,7 +20,10 @@
 }
 
 .current-date-tile {
-  font-weight: bold;
+  font-weight: 1000;
+  border-radius: 10px;
+  /* background:; */
+  background: rgba(179, 115, 228, 0.5);
 }
 
 /* .react-calendar__tile:disabled {

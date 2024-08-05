@@ -9,15 +9,15 @@ const BasicCard = () => {
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
   return (
-    <Col sm="12" xl="12">
-      <Card style={{backgroundColor : '#E5E5E5'}}>
+    <Col sm="12" xl="12" style={{paddingBottom : '8px'}}>
+      <Card style={{backgroundColor : '#E5E5E5' , boxShadow : 'none'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           <div style={{display : 'flex'}}>
 
-        <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" />
+        <img style={{height:'25px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" />
 
-          <p className="mb-0">
+          <p className="mb-0" style={{fontSize : '14px'}}>
           Click on the icon if there are any changes or you may confirm by clicking the Add to Cart button.
 
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}

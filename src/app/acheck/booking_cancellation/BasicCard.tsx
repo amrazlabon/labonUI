@@ -10,21 +10,22 @@ const BasicCard = () => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : '#E5E5E5'}}>
+      <Card style={{backgroundColor : '#E5E5E5', boxShadow : 'none' , margin : '0'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           <div style={{display : 'flex'}}>
 
-        <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" />
+        <img style={{height:'25px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" />
 
 <div>
 
-          <p className="mb-0">
+          <p className="mb-0" style={{fontSize : '14px'}}>
           25% of the sub total will be deducted as you are cancelling within 24 hours of the schedule.
 
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
-          <p className="mb-0">
+          <br />
+          <p className="mb-0" style={{fontSize : '14px'}}>
           The amount will be refunded back to your payment method within 7 business days.
 
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}

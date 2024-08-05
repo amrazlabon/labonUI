@@ -33,16 +33,16 @@ const BookingCancellationConfirm = () => {
                     <div className="text-center">
 
 
-                    <img style={{height:'35px'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
+                    <img style={{height:'35px', paddingBottom : ''}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
                     <h1 style={{fontWeight:'700'}}>Booking Cancelled!</h1>
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}> */}
 
-                        <p>Booking ID: LBNHVB-MRL-20241201-1-A</p>
-                        <h2>Hello Sudha!</h2>
-                        <p>You just booked a home test for<span className="text-bold">Sreedevi Ramachandran</span> . <br />The invoice has been emailed to you. Our phlebotomist assigned <br /> to collect blood samples will arrive at <br /> your location tentatively by <span className="font-bold">7:00 AM on 01/01/2024.</span> </p>
-                    {/* </div> */}
+<p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0'}}>Hello Sudha!</p>
+                        <p>
+                        Your booking for <span style={{fontWeight : 'bold'}}> Sreedevi Ramachandran</span> on <span style={{fontWeight : 'bold'}}>01/01/2024</span> at <span style={{fontWeight : 'bold'}}>7:00 AM</span> has been cancelled. You will be refunded <span style={{fontWeight : 'bold'}}>₹350.00</span>, within 7 business days, after deducting the cancellation charges.
+                        </p>
                     <br />
-                    <p>In case you have any clarifications, <br /> please call us on the support number <br /> +91 9446061000. See you soon!</p>
+                    <p style={{marginTop : '0'}}>In case you have any clarifications, please call us on the support number <span style={{fontWeight : 'bold'}}>+91 9446061000</span>. See you soon!</p>
                     {/* <hr />
                     <h2>Save this Data</h2>
                     <p>We don’t see the patient details saved. Would <br /> you like to save it for future use?</p> */}
@@ -51,7 +51,9 @@ const BookingCancellationConfirm = () => {
                     {/* <Col sm="12">
                   <Button style={{height: '3rem', width :'100%' , backgroundColor : '#426770' , color :'white' , marginTop : '4rem' , borderRadius : '50px'}} color="">Yes</Button>
                 </Col> */}
-                <p className="text-center" style={{paddingTop : '24px'}}>Dashboard</p>
+                <Link href={''}>
+                <p className="text-center" style={{paddingTop : '24px' , cursor : 'pointer'}}>Dashboard</p>
+                </Link>
   {/* <button className={"test-btn"}>Dashboard</button> */}
                 
 
@@ -83,6 +85,7 @@ const ColorsSchemes = ({open} : any, {setOpen} : any) => {
               margin: "0 auto",
               width: "100%",
               display: "flex",
+              height : '4rem',
               justifyContent: "center",
               alignItems: "center",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",

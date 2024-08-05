@@ -10,14 +10,14 @@ const BasicCard = () => {
 
   return (
     <Col sm="12" xl="12">
-      <Card style={{backgroundColor : '#E5E5E5'}}>
+      <Card style={{backgroundColor : '#E5E5E5' , boxShadow : 'none'}}>
         {/* <CommonCardHeader title={BasicCards} span={BasicCardData} /> */}
         <CardBody>
           <div style={{display : 'flex'}}>
 
-        <img style={{height:'15px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" />
+        <img style={{height:'25px'}} className="img-fluid table-avtar" src={`${ImagePath}/caution.png`} alt="user image" />
 
-          <p className="mb-0">
+          <p className="mb-0" style={{fontSize : '14px'}}>
           Fill in all the information so future bookings are easy.
 
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
