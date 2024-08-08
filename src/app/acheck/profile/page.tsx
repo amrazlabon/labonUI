@@ -8,6 +8,7 @@ import {  ImagePath } from "@/Constant";
 import Link from "next/link";
 import { useState } from "react";
 import './form.css'
+import DatePicker from "react-multi-date-picker";
 
 const FloatingForm = () => {
 
@@ -49,7 +50,20 @@ const FloatingForm = () => {
     setFormData({
       ...formData,
       [name]: value,
+      ...(name === 'dob' && { age: calculateAge(value) })
     });
+  };
+
+  const calculateAge = (dob: string) => {
+    if (!dob) return '';
+    const today = new Date();
+    const birthDate = new Date(dob);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age.toString();
   };
 
   const handleTimeChange = (gender: string) => {
@@ -147,6 +161,13 @@ const FloatingForm = () => {
                       <Label check>Date</Label>
                     </FormGroup>
                   </Col>
+
+                  {/* <DatePicker
+      selected={formData.dob}
+      onChange={(date) => setStartDate(date)}
+      dateFormat="yyyy/MM/dd"
+      className="form-control"
+    /> */}
 
                   <Col sm="2" className="mb-6 ">
                   <FormGroup floating>

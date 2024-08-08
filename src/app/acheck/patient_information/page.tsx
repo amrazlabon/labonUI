@@ -156,7 +156,7 @@ const TableHeadOptions=({patientInformation} : any)=> {
                           {data.first_name}
                         </p>
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
-                          <img style={{ height: '1rem', margin: '0'  ,}} className="img-fluid table-avatar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                          <img style={{ height: '1rem', margin: '0'  ,}} className="img-fluid table-avatar" src={`${ImagePath}/Icon-Relation.png`} alt="user image" />
                           <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' }}>
                             {data.relation}
                           </p>
@@ -168,7 +168,7 @@ const TableHeadOptions=({patientInformation} : any)=> {
                           </p>
                         </div>
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
-                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
                           <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' , color  :'rgba(196, 107, 101, 1)' }}>
                             No upcoming tests
                           </p>

@@ -55,8 +55,19 @@ const home = () => {
     console.log("the selected test in the home page",selectedAddress);
     
     const handleBookingClick = () => {
+      if(selectedTests.length === 0 || selectedAddress.length === 0){
+        setOpen(true)
+        setToasterContent('Select Test to Continue')
+        setToasterColorContent('warning')
+        setTimeout(()=>{
+            setOpen(false);
+        },10000)
+
+    }
+    else{
         sessionStorage.setItem('tests', JSON.stringify(selectedTests));
         sessionStorage.setItem('address', JSON.stringify(selectedAddress));
+    }
       };
 
       const selectTest = () => {
@@ -106,7 +117,7 @@ const home = () => {
 
             </div>
 
-            <Card style={{ maxWidth: 'auto', margin: '0' , padding : '0' }}>
+            <Card style={{ maxWidth: 'auto', margin: '0' , padding : '0', boxShadow : 'none' , borderRadius: '0' , backgroundColor : '#F5F5F5'}}>
       <CardBody style={{padding : '0'}}>
       <div className="btn-group">
   <button className={"test-btn"}>Book a Home Visit</button>
@@ -115,7 +126,7 @@ const home = () => {
         {/* <h5 style={{ textAlign: 'center' }}>Book a Home Visit</h5>
         <p style={{ textAlign: 'center' }}>Integrate Solution</p> */}
         <Row style={{ marginTop: '20px' }}>
-          <Col xs="2" style={{ textAlign: 'center', padding: '0' }}>
+          <Col xs="2" style={{ textAlign: 'center', paddingLeft: '2rem' }}>
           {selectedTests.length === 0 ? 
             <FaCheckCircle style={{ color: 'red' }} /> : 
             <FaCheckCircle style={{ color: 'green' }} />
@@ -132,9 +143,10 @@ const home = () => {
             </p>
           </Col>
         </Row>
-        <hr />
+      
+        < hr style={{    margin: '20px 30px 20px 65px',borderBlockStyle:'double'}} />
         <Row>
-          <Col xs="2" style={{ textAlign: 'center', padding: '0' }}>
+          <Col xs="2" style={{ textAlign: 'center', paddingLeft: '2rem' }}>
           {selectedAddress.length != 0 ? 
 
           <FaCheckCircle style={{ color: 'green' }} /> : 
@@ -145,7 +157,7 @@ const home = () => {
           <Col xs="10">
             <p style={{ margin: '0' , cursor : 'pointer'}} onClick={selectLocation}>
                 {
-                    selectedAddress.length != 0 ? selectedAddress[0].address + selectedAddress[0].location + selectedAddress[0].pincode
+                    selectedAddress.length != 0 ? selectedAddress[0].address +', ' + selectedAddress[0].location + ', ' + selectedAddress[0].pincode
  : "Select Location"                }
                 {/* Flat No.1A, Skyline Bell Whether, Kurishupalli.. */}
                 </p>
@@ -153,7 +165,7 @@ const home = () => {
         </Row>
         <Link href={'/acheck/booking'}>
 
-        <Button className="btnStyless" onClick={handleBookingClick} style={{ width: '90%', marginTop: '20px', marginLeft : '20px' }} color="primary">
+        <Button className="btnStyless" onClick={handleBookingClick} style={{ width: '90%', marginTop: '20px', marginLeft : '20px', color:'white'}} color="">
           Book A Blood Test At Home
           <span className="">
           <i style={{marginLeft : '2rem'}} className="fa fa-angle-right"></i>
@@ -167,7 +179,7 @@ const home = () => {
     <ExtraLargeModal isOpen={extraLargeScreen} toggle={extraLargeScreenToggle} selectedTests={selectedTests}  setSelectedTests={setSelectedTests}/>
     <ExtraLargeModalLocation isOpen={extraLargeScreenLocation} toggle={extraLargeScreenToggleLocation} setSelectedAddress={setSelectedAddress}/>
 
-            <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '1rem' }}>
+            <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '1fr 1fr',     margin: '2rem 1rem 0rem 1rem' }}>
                 <div>
 
                     <img style={{ position: 'absolute', zIndex: 2, height: '13rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/Phone.png`} alt="user" />
@@ -229,7 +241,7 @@ const home = () => {
             </div>
             <div style={{ background: '#533063', clipPath: 'polygon(0px 40px, 100% 0px, 100% 100%, 0px 100%)', paddingTop: '2rem' }}>
 
-                <p style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', lineHeight: '29.05px', padding: '24px' }}>
+                <p style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', lineHeight: '29.05px', padding: '24px' }}>
                     The smarter way to manage your home sample collections
                 </p>
                 <img className="img-fluid family" src={`${ImagePath}/Family.jpg`} alt="user" />
@@ -287,7 +299,7 @@ const home = () => {
                     <li>Book a Home Visit</li>
                     <li>Integrate Our Solution (Labs)</li>
                     <li>Find Tests</li>
-                    <li>About Us</li>
+                    <li style={{marginTop:'2rem'}}>About Us</li>
                     <li>Contact Us</li>
                     <li>Support</li>
                 </ul>
@@ -345,54 +357,63 @@ const DefaultChecks = ({ data  , selectedTests ,  setSelectedTests , toggle} : a
     // Perform further actions with selectedData
   };
 
+  const isDisabled = selectedTestData.length === 0;
+
   return (
-    <Col sm="6" xl="4">
-      <div className="card-wrapper checkbox-checked">
-        {data.map((test : any, index : any) => (
+    <Col sm="6" xl="4" style={{ padding: '0' }}>
+      <div className="card-wrapper checkbox-checked" style={{ padding: '0' }}>
+        {data.map((test: any, index: any) => (
           <div key={index} className="form-check">
             <Input
               id={`flexCheckDefault-${index}`}
               type="checkbox"
               onChange={() => handleCheckboxChange(index)}
-            //   checked={selectedTestData.includes(index)}
+              // checked={selectedTestData.includes(index)}
             />
             <Label htmlFor={`flexCheckDefault-${index}`} check>
               <div style={{ display: 'grid' }}>
-                <div className="gap-2" style={{ display: 'flex', padding: '0' }}>
-                  <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="test image" />
-                  <h2 style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' }}>
+                <div className="gap-3" style={{ display: 'flex', padding: '0' }}>
+                  <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="test image" />
+                  <p style={{ margin: '0', paddingTop: '0', paddingBottom: '0', fontStyle: '18px' }}>
                     {test.test_name}
-                  </h2>
+                  </p>
                 </div>
-                <div className="gap-2" style={{ display: 'flex' }}>
+                <div className="gap-3" style={{ display: 'flex' }}>
                   <p style={{ paddingTop: '0', margin: '0' }}>
                     {test.label}
                   </p>
                 </div>
-                <div className="gap-2" style={{ display: 'flex' }}>
-                  <h3 style={{ paddingTop: '0', margin: '0' }}>
-                    {test.price ? test.price : 'N/A'}
-                  </h3>
+                <div className="gap-3" style={{ display: 'flex' }}>
+                  <p style={{ display: "block", width: 125, textAlign: "left", color: "", opacity: "0.9", fontWeight: 600, fontSize: '18px', paddingRight: '2rem' }}>
+                    <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>
+                    {test.price ? test.price : 'N/A'}.00
+                  </p>
                 </div>
               </div>
             </Label>
           </div>
         ))}
       </div>
-      {selectedTestData.length != 0 && 
-      <Col sm="12">
+      <Col sm="12" style={{ padding: '0' }}>
         <Button
           onClick={handleSelectTestsClick}
-          className="btn-lg"
-          style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }}
+          className={`btn-lg ${isDisabled ? 'btn-disabled' : ''}`}
+          style={{
+            height: '3rem',
+            width: '100%',
+            backgroundColor: isDisabled ? '#D3D3D3' : '#AE7FD1',
+            color: isDisabled ? '#A9A9A9' : 'white',
+            cursor: isDisabled ? 'not-allowed' : 'pointer'
+          }}
           color=""
-          >
+          disabled={isDisabled}
+        >
           Select Tests
         </Button>
       </Col>
-        }
     </Col>
   );
+
 };
 
 const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
@@ -421,11 +442,12 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
         // Add logic to handle the selected test data
       }
     };
+    const isDisabled = selectedTest === null;
   
     return (
       <Col sm="6" xl="4">
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
-            <div className="card-wrapper checkbox-checked">
+            <div className="card-wrapper checkbox-checked" style={{padding : '0'}}>
           {savedAddresses.map((test: any, index: any) => (
             <div key={index} className="form-check">
               <Input
@@ -438,9 +460,9 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
               <Label htmlFor={`flexRadioDefault-${index}`} check>
                 <div style={{ display: 'grid' }}>
                   <div className="gap-2" style={{ display: 'flex', padding: '0' }}>
-                    <h2 style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' }}>
+                    <p style={{ margin: '0', paddingTop: '0', paddingBottom: '12px' , fontSize : '18px'}}>
                       {test.address}
-                    </h2>
+                    </p>
                   </div>
                   <div className="gap-2" style={{ display: 'flex' }}>
                     <img style={{ height: '3rem', margin: '0' }} className="img-fluid table-avtar" src={`${ImagePath}/Package.png`} alt="test image" />
@@ -461,15 +483,22 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
             </div>
           ))}
         </div>
-        <Col sm="12">
-          <Button
-            onClick={handleSelectTestsClick}
-            className="btn-lg"
-            style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }}
-            color=""
-          >
-            Select Test
-          </Button>
+        <Col sm="12" style={{paddingTop : '24px'}}>
+        <Button
+          onClick={handleSelectTestsClick}
+          className={`btn-lg ${isDisabled ? 'btn-disabled' : ''}`}
+          style={{
+            height: '3rem',
+            width: '100%',
+            backgroundColor: isDisabled ? '#D3D3D3' : '#AE7FD1',
+            color: isDisabled ? '#A9A9A9' : 'white',
+            cursor: isDisabled ? 'not-allowed' : 'pointer'
+          }}
+          color=""
+          disabled={isDisabled}
+        >
+          Select Address
+        </Button>
         </Col>
       </Col>
     );
@@ -493,14 +522,14 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
             const data = [{
                 id : 1,
                 test_name : 'Glucose',
-                label : 'Glucose Test',
+                label : 'This is test to check the value of Glucose',
                 price : '250'
                 
             },
             {
                 id : 2,
                 test_name : 'Cholesterol',
-                label : 'Glucose Test',
+                label : 'This is test to check the value of Cholesterol',
                 price : '250'
                 
             },
@@ -562,18 +591,18 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
         <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Test">
 {/* <Input style={{padding:'10px',width:'100%',borderRadius:'15px',marginTop:'1rem' , marginBottom : '2rem'}} name="twitterUrl" value={''} type="url" placeholder={'Search'} /> */}
 <Input
-          style={{ padding: '10px', width: '100%', borderRadius: '15px', marginTop: '1rem', marginBottom: '2rem' }}
+          style={{ padding: '10px', width: '100%', borderRadius: '15px', marginTop: '0', marginBottom: '24px' }}
           name="search"
         //   value={searchTerm}
           type="text"
           placeholder="Search"
           onChange={handleSearchInputChange}
         />
-<p style={{paddingTop : '0' , margin : '0'}}>
+<p style={{paddingTop : '0' , margin : '0',textAlign:'center'}}>
                     
-                    Example : If you want to search for Cholesterol, type Cholesterol and enter.
+                    Example : If you want to search for <span style={{fontWeight:'600'}}>Cholesterol</span>, type Cholesterol and enter.
                     </p>
-        <h2 style={{margin:'0', paddingTop : '0' , paddingBottom : '10px'}}>
+        <h2 style={{marginTop:'24px', paddingTop : '0' , paddingBottom : '16px',fontWeight:'800',marginLeft:'0'}}>
 All Tests
 </h2>
 
@@ -597,6 +626,7 @@ All Tests
   const [showForm, setShowForm] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace this with actual authentication logic
   const [savedAddresses, setSavedAddresses] = useState<any>([]);
+  const modalTitle = selectedOption === "add" ? "Add New Address" : "Select Location";
 
 
   useEffect(() => {
@@ -671,7 +701,7 @@ All Tests
       if (showForm) {
         return (
           <div>
-            <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Current Location</h2>
+            <h2 className="text-black ml-4" style={{paddingBottom:'16px'}}>Current Location</h2>
 
 <FloatingForm onSubmit={handleFormSubmit} />
           </div>
@@ -679,12 +709,12 @@ All Tests
       } else {
         return (
           <div>
-            <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Current Location</h2>
+            <h2 className="text-black ml-4" style={{paddingBottom:'24px'}}>Current Location</h2>
             <BasicMap/>
-            <p style={{ paddingTop: '0', margin: '0' }} >
+            <p style={{ paddingTop: '16px', margin: '0' }} >
             Map by default shows your current location       . If needed, you may drag the pointer      to the exact location and continue.
           </p>
-          <Button onClick={handleContinueClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Continue
+          <Button onClick={handleContinueClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Continue
             {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
             </Button>
           </div>
@@ -702,7 +732,7 @@ All Tests
     else {
       return (
         <div>
-          <p style={{ paddingTop: '0', margin: '0'  ,cursor : 'pointer'}} onClick={() => handleOptionClick("add")}>
+          <p style={{ paddingTop: '0', margin: '0'  ,cursor : 'pointer',color:'#1D0F8F'}} onClick={() => handleOptionClick("add")}>
             Add new Address.
           </p>
           <div className="vertical-line"></div>
@@ -713,15 +743,15 @@ All Tests
           {/* <br /><br /><br /> */}
           <div className="vertical-line"></div>
 
-          <p style={{ paddingTop: '0', margin: '0' }} >
+          <p style={{ paddingTop: '0', margin: '0', fontWeight:'600'}} >
             Select from saved Addresses.
           </p>
           <br />
           {!isLoggedIn && (
             <>
-              <p style={{ paddingTop: '0', margin: '0' , color : 'red'}}>You must sign in to display saved addresses.</p>
+              <p style={{ paddingTop: '0', margin: '0' , color : '#C46B65'}}>You must sign in to display saved addresses.</p>
               <br />
-              <h2 style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' , cursor : 'pointer'}} onClick={signInButton}>Click here to <span style={{color : 'blue'}}>Sign in</span></h2>
+              <p style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' , cursor : 'pointer',fontSize:"16px"}} onClick={signInButton}>Click here to <span style={{color : 'blue',fontWeight:'600'}}>Sign in</span></p>
             </>
           )}
           {isLoggedIn && (
@@ -738,7 +768,7 @@ All Tests
     return (
       <>
         {/* <Button color="info"  onClick={toggle}>{ExtraLargeModals}</Button> */}
-        <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Location">
+        <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle={modalTitle}>
         {renderContent()}
           <Col sm="12">
                 </Col>
@@ -948,7 +978,7 @@ All Tests
   
     return (
       <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
-        <Card>
+        <Card style={{boxShadow : 'none', margin : '0'}}>
           {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
           <Row className="card-block">
             <Col sm="12" lg="12" xl="12">
@@ -966,7 +996,7 @@ All Tests
                         {data.firstName}
                       </h4>
                       <div className="gap-2" style={{display : 'flex'}}>
-                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon-Relation.png`} alt="user image" />
   
                       <p style={{paddingTop : '0' , margin : '0'}}>
                       
@@ -974,7 +1004,7 @@ All Tests
                       </p>
                       </div>
                       <div className="gap-2" style={{display : 'flex'}}>
-                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Syringe.png`} alt="user image" />
                       <p style={{paddingTop : '0', margin : '0'}}> 
   
                       {data.userName}
@@ -1011,7 +1041,7 @@ All Tests
     
     return (
       <Col lg="" md="">
-        <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0'}}>
+        <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0', boxShadow : 'none'}}>
           {/* <CommonCardHeader title={BasicDemoMap} /> */}
           <CardBody style={{padding : '0'}}>
             <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
@@ -1044,11 +1074,15 @@ All Tests
       e.preventDefault();
       onSubmit(formData);
     };
+    
+    const {nick_name , pincode , location , address} = formData;
+
+    const canShowButton = nick_name && pincode && location && address;
   
     return (
       <Col md="6">
-        <Card style={{ backgroundColor: '#F5F5F5' }}>
-          <CardBody style={{ padding: '24px' }}>
+        {/* <Card style={{ backgroundColor: '#F5F5F5' , boxShadow : 'none', margin : '0' }}> */}
+          {/* <CardBody style={{ padding: '24px' }}> */}
             <Form className="floating-wrapper" onSubmit={handleSubmit}>
               <Row className="g-3">
                 <Col sm="6">
@@ -1057,33 +1091,37 @@ All Tests
                     <Label>Pincode</Label>
                   </FormGroup>
                 </Col>
+                <Col sm="12">
+                  <FormGroup floating className="mb-6">
+                    <Input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
+                    <Label>Address</Label>
+                    <p style={{margin : '0' , paddingTop : '8px' , color : 'GrayText'}}>Example: Flat No. 123, Building No. 123</p>
+                  </FormGroup>
+                </Col>
                 <Col sm="12" className="mt-6">
                   <FormGroup floating>
                     <Input type="text" name="location" value={formData.location} onChange={handleChange} placeholder="Location" />
                     <Label>Location</Label>
                   </FormGroup>
                 </Col>
-                <Col sm="12">
-                  <FormGroup floating className="mb-6">
-                    <Input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
-                    <Label>Address</Label>
-                  </FormGroup>
-                </Col>
                 <Col sm="12" className="mb-6">
                   <FormGroup floating>
                     <Input type="text" name="nick_name" value={formData.nick_name} onChange={handleChange} placeholder="Name" />
-                    <Label>Name</Label>
+                    <Label>Nick Name for the address</Label>
+                    <p style={{margin : '0' , paddingTop : '8px' , color : 'GrayText'}}>Example: Home</p>
                   </FormGroup>
                 </Col>
+                {canShowButton &&
                 <Col sm="12">
                   <Button type="submit" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
                     Save Address
                   </Button>
                 </Col>
+                }
               </Row>
             </Form>
-          </CardBody>
-        </Card>
+          {/* </CardBody>
+        </Card> */}
       </Col>
     );
   };
@@ -1094,7 +1132,7 @@ All Tests
     console.log("toaster content",toasterColorContent,toasterContent)
     return (
       <Col md="6">
-        <Card>
+        <Card style={{boxShadow : 'none', margin : '0'}}>
             {/* {toasterColorContent} */}
           
           {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}

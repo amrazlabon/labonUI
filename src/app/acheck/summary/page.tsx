@@ -77,7 +77,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 
 <div style={{paddingBottom :'12px'}}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-  <h2 className="text-black ml-4 mt-3" style={{ paddingBottom: '16px' }}>Patient Details</h2>
+  <h2 className="text-black ml-4" style={{ paddingBottom: '16px' }}>Patient Details</h2>
   <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
 </div>
 <BasicCardProfile profile={profile}/>
@@ -117,7 +117,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
                 </tr>
                 <tr style={{ height: 3, width: "100%", background: "linear-gradient(90deg, #7A70BA 20.61%, #0DA759 103.6%)", display: "block", marginTop: 6 }} /> */}
                 <tr>
-                  <InvoiceTotal selectedTests={selectedTests}/>
+                  <InvoiceTotal selectedTests={selectedTests} width={'100'}/>
                 </tr>
               </tbody>
             </Table>
@@ -279,7 +279,7 @@ const BasicCardProfile = ({profile} : any) => {
                     </p>
                     </div>
 <div className="gap-2" style={{display : 'flex' , paddingBottom : '4px'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon-Relation.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
@@ -287,7 +287,7 @@ const BasicCardProfile = ({profile} : any) => {
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex' , paddingBottom : '0'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Syringe.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
@@ -325,11 +325,12 @@ const BasicMap = () => {
   );
 };
 
-const InvoiceTotal = ({selectedTests} : any) => {
+const InvoiceTotal = ({selectedTests , width} : any) => {
   
+  console.log("width data",width)
   return (
     <td >
-      <Table style={{ width: "100%" , marginLeft : '0' }}>
+      <Table style={{ width: `${width}%` , marginLeft : '0' }}>
         <tbody>
           <tr 
           //  style={{ display: "flex", justifyContent: "space-between", margin: "16px 0 24px 0", alignItems: "end" }}
@@ -429,49 +430,44 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile} : any) => {
     // sessionStorage.setItem('address', JSON.stringify(selectedAddress));
   };
   return (
-    <>
-      {/* <Button color="secondary" onClick={toggle}>{FullScreenModals}</Button> */}
-      <Modal fullscreen isOpen={isOpen} toggle={toggle} 
-      // style={{width : '75vw', PaddingLeft : '7rem'}}
-      >
-        <ModalHeader toggle={toggle}>
-          <div style={{display : 'grid'}}>
-
-        <img style={{height:'4rem', margin:'0 '}} className="img-fluid table-avtar" src={`${ImagePath}/Icon.png`} alt="user image" />
-
-          <span className="fs-5">My Shopping cart</span>
-          <p>{selectedTests.length} Item</p>
-          </div>
-        </ModalHeader>
-        <ModalBody className="dark-modal">
-        {/* <div className="large-modal-header"><ChevronsRight />
-          <h5 className="f-w-600">{WebDesigns} </h5>
+    <Modal
+      fullscreen
+      isOpen={isOpen}
+      toggle={toggle}
+      className={`modal-slide-in`} // Apply your custom class here
+      style={{ transition: 'transform 0.5s ease-out' }} // Optional transition style
+    >
+      <ModalHeader toggle={toggle}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', textAlign: 'center' }}>
+          <img
+            style={{ height: '4rem', margin: '0 auto' }}
+            className="img-fluid table-avatar"
+            src={`${ImagePath}/Icon.png`}
+            alt="user image"
+          />
+          <p style={{ fontSize: '24px', fontWeight: '600', margin: '0' }}>
+            My Shopping Cart
+          </p>
+          <p style={{ margin: '0' }}>{selectedTests.length} Item{selectedTests.length !== 1 ? 's' : ''}</p>
         </div>
-        <p className="modal-padding-space">We build specialised websites for companies, list them on digital directories, and set up a sales funnel to boost ROI.</p>
-        {FullScreenData.map(({ title, text }, index) => (
-          <Fragment key={index}>
-            <div className="large-modal-header">
-              <ChevronsRight />
-              <h5 className="f-w-600">{title}</h5>
-            </div>
-            <p className="modal-padding-space">{text}</p>
-          </Fragment>
-        ))} */}
-        <TableHeadOptions selectedTests={selectedTests}/>
-        <InvoiceTotal selectedTests={selectedTests}/>
-
-<p>Transportation is charged etxra. Minimum charge for Transportation is 100. You can pay Transportation fee at the time of sample collection.</p>
+      </ModalHeader>
+      <ModalBody className="dark-modal" style={{ padding: '24px' }}>
+        <TableHeadOptions selectedTests={selectedTests} />
+        <InvoiceTotal selectedTests={selectedTests} width={'110'} />
+        <p style={{ paddingTop: '24px', paddingBottom: '24px', margin: '0' }}>
+          Transportation is charged extra. Minimum charge for Transportation is <span style={{ fontWeight: 'bold' }}><i className='fa fa-rupee'></i>100.00</span>. You can pay the Transportation fee at the time of sample collection.
+        </p>
         <Col sm="12">
-<Link href={'/acheck/send_details'}>
-                  <Button onClick={handleBookingClick}  style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '4rem'}} color="">Confirm Booking
-                    {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
-                    </Button>
-</Link>
-                </Col>
-        </ModalBody>
-      </Modal>
-    </>
+          <Link href={'/acheck/send_details'}>
+            <Button onClick={handleBookingClick} style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white', marginTop: '0' }} color="">
+              Confirm Booking
+            </Button>
+          </Link>
+        </Col>
+      </ModalBody>
+    </Modal>
   );
+
 };
 
 const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, size, hover, headClass, headRowClass, headData, children }) => {
@@ -495,75 +491,112 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
 };
 
 const TableHeadOptions=({selectedTests} : any)=> {
+
+  // const { setBookingData } = useBooking();
+  console.log("the data informations ",selectedTests);
+  
+
+  const handleRowClick = (data: any) => {
+    // router.push({
+    //   pathname: '/acheck/patient_details', 
+    //   query: {
+    //     b_id: data.id,
+    //   },
+    // });
+    sessionStorage.setItem('booked_test', JSON.stringify(data));
+
+    console.log("handle click in the patient information",data)
+  }
   // TableHeadOptions=()=> {
 
     const TableHeadOptionBody = [
       {
         id: 1,
-        firstName: "LDL Cholesterol",
-        lastName: "Code #234566",
-        userName: "1200",
-        time: "No upcoming tests"
+        test_date: "25/07/2024",
+        lastName: "2 Tests",
+        userName: "LBNHVB100420241",
+        time: "07:00 AM"
       },
       {
         id: 2,
-        firstName: "LDL Cholesterol",
-        lastName: "Code #234566",
-        userName: "1200",
-        time: "No upcoming tests"
+        test_date: "28/07/2024",
+        lastName: "2 Tests",
+        userName: "LBNHVB100420241",
+        time: "07:00 AM"
+      },
+      {
+        id: 3,
+        test_date: "29/07/2024",
+        lastName: "2 Tests",
+        userName: "LBNHVB100420241",
+        time: "07:00 AM"
       },
     ];
 
   return (
-    <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
-      <Card style={{boxShadow : 'none' , margin : '0'}}>
+    <Col sm="" style={{paddingRight : '0' , paddingLeft : '0' , paddingBottom : '24px'}}>
+      <Card style={{boxShadow : 'none' , margin : '0'}}> 
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
-          <Col sm="12" lg="12" xl="12">
+          <Col sm="12" lg="12" xl="12" style={{paddingLeft : '0' , paddingRight : '0'}}>
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
               {selectedTests.map((data : any) => (
-                <tr key={data.id}>
+                <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
                   {/* <th scope="row">{data.id}</th> */}
-                  <td>
-        <img style={{height:'4rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/ProfileIcon.png`} alt="user image" />
+                  <td style={{paddingTop : '0'}}>
+        <img style={{height:'3rem', margin:'0' , borderRadius : '5px'}} className="img-fluid table-avtar" src={`${ImagePath}/ThumbnailTest.png`} alt="user image" />
         {/* {data.lastName} */}
                     </td>
-                  <td>
+                  <td style={{paddingLeft : '0' , paddingTop : '8px'}}>
                   <div style={{display : 'grid'}}>
-                    <h4 style={{paddingTop : '16px', margin : '0'}}>
-                      {data.test_name}
-                    </h4>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" /> */}
+                  <p style={{ paddingTop: '0', margin: '0' , fontSize : '16px' , fontWeight : '600' }}>
+                          {data.test_name}
+                        </p>
+                    {/* <div className="gap-1" style={{display : 'flex', marginTop : '0'}}>
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {data.id}
+                    {data.lastName}1 Test
                     </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex'}}>
-                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" /> */}
+                    </div> */}
+                    <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
                     <p style={{paddingTop : '0', margin : '0'}}> 
 
-                    {data.price}
+                    {/* {data.timeslot_id} */}
+                    Code : {data.id}
                     </p>
                     </div>
-                    {/* <div className="gap-2" style={{display : 'flex'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                    <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/VectorProfile.png`} alt="user image" /> */}
                     <p style={{paddingTop : '0', margin : '0'}}>
 
-                    {data.time}
+                    {/* {data.name} */}
+                    <span style={{marginRight : '4px' , marginTop : '4px'}}><i className='fa fa-rupee'></i></span>{data.price}.00
                     </p>
+                    </div>
+                    {/* <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
+                    <p style={{paddingTop : '0', margin : '0'}}>
+
+                    LBNHVB10042024{data.id}
+                    </p>
+                    </div> */}
+                    {/* <div className="gap-2" style={{display : 'flex', marginTop : '4px'}}>
+                    <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem' , margin : '0'}}>Upcoming</p>
+
                     </div> */}
                   </div>
                   </td>
                   <td>
-                    <i className='fa fa-angle-right'></i>
+                    <i style={{fontSize : '14px'}} className='icon-trash'></i>
                     {/* {data.userName} */}
                     </td>
                 </tr>
               ))}
+
             </CommonTable>
+        <div style={{borderBottomStyle : 'groove'}}></div>
           </Col>
         </Row>
       </Card>

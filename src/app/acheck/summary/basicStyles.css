@@ -29,3 +29,38 @@
     background-color: #F5F5F5;
 } */
         
+
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .modal-slide-in {
+    animation: slideInFromLeft 0.5s ease-out;
+  }
+  
+  .modal-slide-out {
+    animation: slideOutToLeft 0.5s ease-in;
+  }
+  
+  @keyframes slideOutToLeft {
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+  
+
+  .modal {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }

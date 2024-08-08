@@ -233,7 +233,7 @@ const BasicCardProfile = ({patientInformation} : any) => {
                     </p>
                     </div>
 <div className="gap-2" style={{display : 'flex' , paddingBottom : '4px'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon-Relation.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
@@ -241,7 +241,7 @@ const BasicCardProfile = ({patientInformation} : any) => {
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex' , paddingBottom : '0'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Syringe.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     

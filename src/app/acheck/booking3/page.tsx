@@ -75,116 +75,112 @@ export default TestTime;
 const IconsRadio = React.forwardRef(({ selectedTime, onTimeChange }: any, ref: React.Ref<any>) => {
 
   const CustomRadioListData = [
-    {
-      id: 1,
-      icon: "Gender - Male.png",
-      text: "7:00 AM",
-      defaultChecked: true,
-    },
-    {
-      id: 2,
-      icon: "Gender - Female.png",
-      text: "8:00 AM",
-    },
-    {
-      id: 3,
-      icon: "Gender - Other.png",
-      text: "8:30 AM",
-    },
-    {
-      id: 4,
-      icon: "Gender - Male.png",
-      text: "9:30 AM",
-      defaultChecked: true,
-    },
-    {
-      id: 5,
-      icon: "Gender - Female.png",
-      text: "10:00 AM",
-    },
-    {
-      id: 6,
-      icon: "Gender - Other.png",
-      text: "10:30 AM",
-    },
-    {
-      id: 7,
-      icon: "Gender - Male.png",
-      text: "2:00 PM",
-      defaultChecked: true,
-    },
-    {
-      id: 8,
-      icon: "Gender - Female.png",
-      text: "2:30 PM",
-    },
-    {
-      id: 9,
-      icon: "Gender - Other.png",
-      text: "3:30 PM",
-    },
-    {
-      id: 10,
-      icon: "Gender - Male.png",
-      text: "4:30 PM",
-      defaultChecked: true,
-    },
-    {
-      id: 11,
-      icon: "Gender - Female.png",
-      text: "6:00 PM",
-    },
-    {
-      id: 9,
-      icon: "Gender - Other.png",
-      text: "7:00 PM",
-    },
-    {
-      id: 10,
-      icon: "Gender - Male.png",
-      text: "7:30 PM",
-      defaultChecked: true,
-    },
-    {
-      id: 11,
-      icon: "Gender - Female.png",
-      text: "8:00 PM",
-    },
-    
-  ]
+    { id: 1, icon: "Gender - Male.png", text: "7:00 AM" },
+    { id: 2, icon: "Gender - Female.png", text: "8:00 AM" },
+    { id: 3, icon: "Gender - Other.png", text: "8:30 AM" },
+    { id: 4, icon: "Gender - Male.png", text: "9:30 AM" },
+    { id: 5, icon: "Gender - Female.png", text: "10:00 AM" },
+    { id: 6, icon: "Gender - Other.png", text: "10:30 AM" },
+    { id: 7, icon: "Gender - Male.png", text: "2:00 PM" },
+    { id: 8, icon: "Gender - Female.png", text: "2:30 PM" },
+    { id: 9, icon: "Gender - Other.png", text: "3:30 PM" },
+    { id: 10, icon: "Gender - Male.png", text: "4:30 PM" },
+    { id: 11, icon: "Gender - Female.png", text: "6:00 PM" },
+    { id: 12, icon: "Gender - Other.png", text: "7:00 PM" },
+    { id: 13, icon: "Gender - Male.png", text: "7:30 PM" },
+    { id: 14, icon: "Gender - Female.png", text: "8:00 PM" },
+  ];
+
   const morningOptions = CustomRadioListData.slice(0, 4);
   const afternoonOptions = CustomRadioListData.slice(4, 8);
   const eveningOptions = CustomRadioListData.slice(8);
-  
+
   return (
     <Col xl="12" sm="12" className="order-xl-0 order-sm-1">
-      <Card style={{padding : '16px', boxShadow : 'none' , margin : '0'}}>
-      <p style={{fontWeight:'600',fontSize:'16px'}}>Morning </p>
-
-      <div className=" h-100 checkbox-checked">
-        <div className="form-check radio-primary ps-0">
-          <ul className="radio-wrapper">
-            {CustomRadioListData.map(({ icon, id, text, defaultChecked }, index) => (
-              <li className="p-1 pt-2 pb-2" key={index}>
-                <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio"
-                //  defaultChecked={defaultChecked}
-                  name="radio2" value={text}
-                  // checked={selectedTime === text}
-                  onChange={() => onTimeChange(text)}/>
-                <Label htmlFor={`radio-${id}`} check>
-                {/* <img style={{ height: '100%', }} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" /> */}
-
-                  {/* <i className={`fa fa-${icon}`}></i> */}
-                  <span>{text}</span>
-                </Label>
-              </li>
-            ))}
-          </ul>
+      <Card style={{ padding: '16px', boxShadow: 'none', margin: '0' }}>
+        {/* Morning */}
+        <div>
+          <p style={{ fontWeight: '600', fontSize: '16px' }}>Morning</p>
+          <div className="h-100 checkbox-checked">
+            <div className="form-check radio-primary ps-0">
+              <ul className="radio-wrapper">
+                {morningOptions.map(({ icon, id, text }, index) => (
+                  <li className="p-1 pt-2 pb-2" key={id}>
+                    <Input
+                      className="checkbox-shadow d-block"
+                      id={`radio-${id}`}
+                      type="radio"
+                      name="radio-time"
+                      value={text}
+                      checked={selectedTime === text}
+                      onChange={() => onTimeChange(text)}
+                    />
+                    <Label htmlFor={`radio-${id}`} check>
+                      <span>{text}</span>
+                    </Label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-      </Card>
 
+        {/* Afternoon */}
+        <div style={{ marginTop: '16px' }}>
+          <p style={{ fontWeight: '600', fontSize: '16px' }}>Afternoon</p>
+          <div className="h-100 checkbox-checked">
+            <div className="form-check radio-primary ps-0">
+              <ul className="radio-wrapper">
+                {afternoonOptions.map(({ icon, id, text }, index) => (
+                  <li className="p-1 pt-2 pb-2" key={id}>
+                    <Input
+                      className="checkbox-shadow d-block"
+                      id={`radio-${id}`}
+                      type="radio"
+                      name="radio-time"
+                      value={text}
+                      checked={selectedTime === text}
+                      onChange={() => onTimeChange(text)}
+                    />
+                    <Label htmlFor={`radio-${id}`} check>
+                      <span>{text}</span>
+                    </Label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Evening */}
+        <div style={{ marginTop: '16px' }}>
+          <p style={{ fontWeight: '600', fontSize: '16px' }}>Evening</p>
+          <div className="h-100 checkbox-checked">
+            <div className="form-check radio-primary ps-0">
+              <ul className="radio-wrapper">
+                {eveningOptions.map(({ icon, id, text }, index) => (
+                  <li className="p-1 pt-2 pb-2" key={id}>
+                    <Input
+                      className="checkbox-shadow d-block"
+                      id={`radio-${id}`}
+                      type="radio"
+                      name="radio-time"
+                      value={text}
+                      checked={selectedTime === text}
+                      onChange={() => onTimeChange(text)}
+                    />
+                    <Label htmlFor={`radio-${id}`} check>
+                      <span>{text}</span>
+                    </Label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </Card>
     </Col>
   );
 });
+
 

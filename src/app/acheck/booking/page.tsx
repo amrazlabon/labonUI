@@ -27,7 +27,7 @@ interface FormValue {
     relation: string;
     tests: string | number;
     workInCities: [] ;
-    oneDayJob: string;
+    nick_name: string;
     // companyName: string;
     brandName: string;
     currentWorkingCity: string;
@@ -93,7 +93,7 @@ const Page = () => {
         relation: '',
         tests: '',
         workInCities: [],
-        oneDayJob: '',
+        nick_name: '',
         brandName: '',
         currentWorkingCity: '',
         monthlySalary: '',

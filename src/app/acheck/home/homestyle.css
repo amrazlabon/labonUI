@@ -10,7 +10,7 @@
     margin: 0;
 }
 .menu li {
-    font-size: 18px;
+    font-size: 16px;
     color: #2F2D92;
     padding: 10px 0;
     border-bottom: 1px solid #EAEAEA;
@@ -24,12 +24,14 @@
     width: 155px;
     border: none;
     border-bottom-style: solid;
+    width: 100%;
 }
 .package-btn{
   
     width: 155px;
     border: none;
     /* border-bottom-style: solid; */
+    width: 100%;
 }
 
 .social-profile {
@@ -43,6 +45,7 @@
 
 .modal-content {
     /* background-color: transparent; */
+    border-radius: 2rem;
 }
 
 .btnStyles { 
@@ -58,7 +61,7 @@
     width: 90%;
     height: 3rem;
     border-radius: 2rem;
-    background: rgba(146, 164, 176, 1);
+    background: #426770;
     margin-top: 5rem;
 
 }
@@ -69,3 +72,37 @@
     background-color: black;
     margin: 0 10px; /* Adjust the margins as needed */
   }
+  .btn-group, .btn-group-vertical {
+    position: relative;
+    display: flex;
+    vertical-align: middle;
+}
+   
+.modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: var(--bs-modal-header-padding);
+    border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
+    border-top-left-radius: var(--bs-modal-inner-border-radius);
+    border-top-right-radius: var(--bs-modal-inner-border-radius);
+    flex-direction: column-reverse;
+}
+
+.modal-dialog { 
+    margin : 24px;
+}
+
+.modal { 
+    top : 3rem;
+}
+
+.modal-body {
+     padding: 24px;
+}
+
+
+.form-control {
+    border: 1px solid #D5D5D5;
+    }
+    

@@ -56,7 +56,7 @@ const QontoStepIconRoot = styled('div')<{ ownerState: { active?: boolean, comple
       height: 12,
       borderRadius: '50%',
       border: '2px solid #FFFFFF', // White outer circle
-      backgroundColor: 'transparent', // Blank inner circle
+      backgroundColor: ownerState.active ? '#FFFFFF' : 'transparent', // Blank inner circle
     },
   }),
 );
@@ -130,7 +130,6 @@ const ProgressWithNumberStepsCart = ({ stepActive, setStepActive } : any) => {
               className="position-absolute top-0 start-0 p-0 translate-middle rounded-circle txt-light"
               onClick={() => setStepActive(0)}
             >
-              1
             </Button>
             <DynamicProgressWithNumberSteps stepActive={stepActive} setStepActive={setStepActive} />
           </div>

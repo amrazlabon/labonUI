@@ -37,6 +37,7 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
         location: profile.location ? profile.location :'',
         address: profile.address ? profile.address :'',
         age: profile.age ? profile.age :'',
+        nick_name: profile.nick_name ? profile.nick_name :'',
         // time: '8:00 AM', // default value for time
       });
       console.log("formdata",formData);
@@ -44,17 +45,51 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
       const handleToggleChange = (event: any) => {
         setIsSelectFromContacts(event.target.checked);
       };
+
+      const calculateAge = (dob: string) => {
+        if (!dob) return '';
+        const today = new Date();
+        const birthDate = new Date(dob);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age.toString();
+      };
     
       const handleFormChange = (field: string, value: string) => {
-        setFormData({
-          ...formData,
-          [field]: value,
-        });
-        setProfile({
-          ...profile,
-          [field]: value,
-        });
+        // setFormData({
+        //   ...formData,
+        //   [field]: value,
+        // });
+        // setProfile({
+        //   ...profile,
+        //   [field]: value,
+        // });
         
+        if (field === 'dob') {
+          const age = calculateAge(value);
+          setFormData({
+            ...formData,
+            [field]: value,
+            age: age, // Update age based on dob
+          });
+          setProfile({
+            ...profile,
+            [field]: value,
+            age: age, // Update age in profile
+          });
+        } else {
+          setFormData({
+            ...formData,
+            [field]: value,
+          });
+          setProfile({
+            ...profile,
+            [field]: value,
+          });
+        }
         console.log("formdata",formData);
         
       };
@@ -114,19 +149,8 @@ export default PatientAdd;
 
 const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
 
-  const calculateAge = (dob: string) => {
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
   
-    // Check if the birth date has not occurred yet this year
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-  
-    return age;
-  };
+  const [isAgeShow , setIsAgeShow] = useState(false)
 
   
   const handleInputChange = (e: any) => {
@@ -134,14 +158,15 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
     
     const { name, value } = e.target;
     if (name === 'dob') {
-      console.log("coming inside");
-      
-      const age = calculateAge(value);
-      console.log("the age",age);
-      
-      // onFormChange('age', age);
-      formData.age = age;
+      setIsAgeShow(true)
     }
+      
+    //   const age = calculateAge(value);
+    //   console.log("the age",age);
+      
+    // onFormChange('age', age);
+
+    // }
     onFormChange(name, value);
   };
 
@@ -153,10 +178,10 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
     setStepActive(3)
   }
 
-  const { name, dob, gender, pincode , mobile , email , location , address} = formData;
+  const { name, dob, gender, pincode , mobile , email , location , address , nick_name} = formData;
 
   // Check if all required fields have values
-  const canShowSummaryButton = name && dob && gender && pincode && mobile && email && location && address;
+  const canShowSummaryButton = name && dob && gender && pincode && mobile && email && location && address && nick_name;
 
   return (
     <Col>
@@ -184,7 +209,7 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
                   </FormGroup>
                 </Col>
                 <div className="gap-4" style={{ display: 'flex' , margin : '0' }}>
-                  <Col sm="6" className="mt-2">
+                  <Col sm="6" className="mt-3">
                     <FormGroup floating>
                       <Input
                         type="date"
@@ -196,6 +221,18 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
                       <Label check>Date</Label>
                     </FormGroup>
                   </Col>
+                  {isAgeShow &&
+                  <Col sm="2" className="mb-6 mt-3">
+                  <FormGroup floating>
+                    <Input disabled type="number" 
+                    value={formData.age}
+                    name="age"
+                    placeholder="Age"
+                    onChange={handleInputChange} />
+                    <Label check>Age</Label>
+                  </FormGroup>
+                </Col>
+                  }
                 </div>
                 <IconsRadio selectedTime={formData.gender} onTimeChange={handleTimeChange} />
                 <Col sm="12">
@@ -246,7 +283,7 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
                     <Label check>Location</Label>
                   </FormGroup>
                 </Col>
-                <Col sm="12" className="mb-2">
+                <Col sm="12" className="mb-0">
                   <FormGroup floating className="mb-6">
                     <Input
                       type="text"
@@ -256,6 +293,13 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
                       onChange={handleInputChange}
                     />
                     <Label check>Address</Label>
+                  </FormGroup>
+                </Col>
+                <Col sm="12" className="mb-2">
+                  <FormGroup floating>
+                    <Input type="text" name="nick_name" value={formData.nick_name} onChange={handleInputChange} placeholder="Name" />
+                    <Label>Nick Name</Label>
+                    {/* <p style={{margin : '0' , paddingTop : '8px' , color : 'GrayText'}}>Example: Home</p> */}
                   </FormGroup>
                 </Col>
                 {canShowSummaryButton && (
@@ -418,7 +462,8 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         pincode: data.pincode, // Add appropriate value or logic if needed
         location: data.location, // Add appropriate value or logic if needed
         address: data.address, // Add appropriate value or logic if needed
-        age: data.age // Add appropriate value or logic if needed
+        age: data.age, // Add appropriate value or logic if needed
+        nick_name: data.nick_name // Add appropriate value or logic if needed
       });
       setStepActive(3)
     };
@@ -443,7 +488,7 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
                           {data.first_name}
                         </p>
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
-                          <img style={{ height: '1rem', margin: '0'  ,}} className="img-fluid table-avatar" src={`${ImagePath}/icon-Relation.png`} alt="user image" />
+                          <img style={{ height: '1rem', margin: '0'  ,}} className="img-fluid table-avatar" src={`${ImagePath}/Icon-Relation.png`} alt="user image" />
                           <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' }}>
                             {data.relation}
                           </p>
@@ -455,7 +500,7 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
                           </p>
                         </div>
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
-                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                          <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
                           <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' , color  :'rgba(196, 107, 101, 1)' }}>
                             No upcoming tests
                           </p>
