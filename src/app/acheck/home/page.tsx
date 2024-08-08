@@ -1,6 +1,6 @@
 'use client'
 import { CheckedCheckbox, CheckMeOut, ClickOut, Close, DefaultCheck, Defaultcheckboxes, Email, ExtraLargeModals, Height, ImagePath, MofiLogin, Password, SaveChanges, SignIn, WebDesign, Width } from "@/Constant";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 // import { Col } from "reactstrap";
 import { Card, CardBody, Col, Row, Button , FormGroup, Table , Form , Input , Label , Modal, ModalBody, ModalFooter, Toast, ToastBody} from 'reactstrap';
 
@@ -109,7 +109,6 @@ const home = () => {
         // <Container fluid className="p-3">
         
         <Col md="6" style={{ padding: '0' }}>
-            {/* <ModalTwo/> */}
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
 
             <div style={{ background: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)', height: '16rem', alignContent: 'end' }}>
@@ -360,7 +359,7 @@ const DefaultChecks = ({ data  , selectedTests ,  setSelectedTests , toggle} : a
   const isDisabled = selectedTestData.length === 0;
 
   return (
-    <Col sm="6" xl="4" style={{ padding: '0' }}>
+    <Col sm="" xl="" style={{ padding: '0' }}>
       <div className="card-wrapper checkbox-checked" style={{ padding: '0' }}>
         {data.map((test: any, index: any) => (
           <div key={index} className="form-check">
@@ -373,7 +372,7 @@ const DefaultChecks = ({ data  , selectedTests ,  setSelectedTests , toggle} : a
             <Label htmlFor={`flexCheckDefault-${index}`} check>
               <div style={{ display: 'grid' }}>
                 <div className="gap-3" style={{ display: 'flex', padding: '0' }}>
-                  <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="test image" />
+                  <img style={{ height: '1.3rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/Thumbnail-2.png`} alt="test image" />
                   <p style={{ margin: '0', paddingTop: '0', paddingBottom: '0', fontStyle: '18px' }}>
                     {test.test_name}
                   </p>
@@ -445,7 +444,7 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
     const isDisabled = selectedTest === null;
   
     return (
-      <Col sm="6" xl="4">
+      <Col sm="" xl="">
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
             <div className="card-wrapper checkbox-checked" style={{padding : '0'}}>
           {savedAddresses.map((test: any, index: any) => (
@@ -587,17 +586,18 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
       };
     return (
       <>
+      <Col md='6'>
         {/* <Button color="info"  onClick={toggle}>{ExtraLargeModals}</Button> */}
         <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Test">
 {/* <Input style={{padding:'10px',width:'100%',borderRadius:'15px',marginTop:'1rem' , marginBottom : '2rem'}} name="twitterUrl" value={''} type="url" placeholder={'Search'} /> */}
 <Input
           style={{ padding: '10px', width: '100%', borderRadius: '15px', marginTop: '0', marginBottom: '24px' }}
           name="search"
-        //   value={searchTerm}
+          //   value={searchTerm}
           type="text"
           placeholder="Search"
           onChange={handleSearchInputChange}
-        />
+          />
 <p style={{paddingTop : '0' , margin : '0',textAlign:'center'}}>
                     
                     Example : If you want to search for <span style={{fontWeight:'600'}}>Cholesterol</span>, type Cholesterol and enter.
@@ -611,11 +611,12 @@ All Tests
           <p className="modal-padding-space">We build specialised websites for companies, list them on digital directories, and set up a sales funnel to boost ROI.</p>
           {FullScreenData.map(({ title, text }, index) => (
             <Fragment key={index}>
-              <div className="large-modal-header"><ChevronsRight /><h5 className="f-w-600">{title}</h5></div>
-              <p className="modal-padding-space">{text}</p>
+            <div className="large-modal-header"><ChevronsRight /><h5 className="f-w-600">{title}</h5></div>
+            <p className="modal-padding-space">{text}</p>
             </Fragment>
-          ))} */}
+            ))} */}
         </CommonModal>
+            </Col>
       </>
     );
   };
@@ -798,135 +799,7 @@ All Tests
       </Modal>
     );
   };
-
-
-  const ModalTwo = () => {
-    const [modalTwo, setModalTwo] = useState(false);
-    const modalTwoTogggle = () => setModalTwo(!modalTwo);
   
-    return (
-      <Col xl="4" md="6" className="custom-alert text-center">
-        <div className="card-wrapper border rounded-3 h-100">
-          <div className="Mofi-demo-img">
-            {/* <CommonMofiModalTitle heading="Modal 2 -" subHeading="Result Modal" text="Example of Mofi login form." /> */}
-            <div className="overflow-hidden">
-              {/* <img className="image-fluid" src={`${ImagePath}/alert/learning.png`} alt="learning" /> */}
-              <Button color="primary" className="mx-auto mt-3" onClick={modalTwoTogggle}>{ClickOut}</Button>
-            </div>
-            <CommonModal centered modalBodyClassName="social-profile text-start" isOpen={modalTwo} toggle={modalTwoTogggle}>
-              <div className="modal-toggle-wrapper">
-                {/* <h3>Sign In / Sign Up with Mobile</h3>
-                <p>Fill in your information below to continue.</p> */}
-                <StaticForm staticModalToggle={modalTwoTogggle} />
-              </div>
-            </CommonModal>
-          </div>
-        </div>
-      </Col>
-    );
-  };
-  
-
-  const StaticForm:React.FC<StaticModalToggleProp> = ({staticModalToggle}) => {
-
-    const [mobile, setMobile] = useState("");
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
-  const [showOtp, setShowOtp] = useState(false);
-  const [showVerifyButton, setShowVerifyButton] = useState(false);
-
-  const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^0-9]/g, ""); // Ensure only numbers are entered
-    setMobile(value);
-
-    if (value.length === 10) {
-      setShowOtp(true);
-    } else {
-      setShowOtp(false);
-      setShowVerifyButton(false);
-    }
-  };
-
-  const handleOtpChange = (element: HTMLInputElement, index: number) => {
-    const value = element.value.replace(/[^0-9]/g, ""); // Ensure only numbers are entered
-    if (value.length <= 1) {
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
-
-      // Move to next input if value is entered
-      if (value && index < 5) {
-        (element.nextSibling as HTMLElement)?.focus();
-      }
-
-      // Check if all OTP fields are filled
-      if (newOtp.every((digit) => digit.length === 1)) {
-        setShowVerifyButton(true);
-      } else {
-        setShowVerifyButton(false);
-      }
-    }
-  };
-    return (
-        <Col>
-       {/* {()=>( */}
-        <Form>
-          <Row className="g-3">
-          <Col sm="12">
-                  <FormGroup  floating className="mb-6">
-                    <Input disabled type="text" placeholder='esd' />
-                    <Label check>Mobile</Label>
-                  </FormGroup>
-                </Col>
-            {/* <Col md="12">
-            <Label check>Sign In / Sign Up with Mobile</Label>
-              <Field
-                className="form-control"
-                name="mobile"
-                type="text"
-                placeholder="Enter Mobile"
-                value={mobile}
-                onChange={handleMobileChange}
-              />
-              <p className="mt-2">Example: 9847098470 (10 digit only)</p>
-            </Col> */}
-            {/* {showOtp && ( */}
-              <Col md="12">
-                <Label check htmlFor="otp">Enter OTP sent to your Mobile</Label>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  {otp.map((data, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      name={`otp${index}`}
-                      maxLength={1}
-                      className="form-control"
-                      value={otp[index]}
-                      onChange={(e) => handleOtpChange(e.target, index)}
-                      onFocus={(e) => e.target.select()} // Select input value on focus
-                      style={{ width: '2rem', textAlign: 'center' }}
-                    />
-                  ))}
-                </div>
-              </Col>
-            {/* )} */}
-            {/* <Col xs="12">
-              <div className="form-check">
-                <Input type="checkbox" />
-                <Label check htmlFor="gridCheck">{CheckMeOut}</Label>
-              </div>
-            </Col> */}
-            {/* {showVerifyButton && ( */}
-              <Col xs="12">
-                <Button className=' btnStyles' color="primary" type="submit" onClick={staticModalToggle}>Verify<span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
-              </Col>
-            {/* )} */}
-        </Row>
-      </Form>
-       {/* )} */}
-        </Col>
-
-    );
-  };
 
 
   const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, size, hover, headClass, headRowClass, headData, children }) => {

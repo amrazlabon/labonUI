@@ -12,7 +12,7 @@ import TapTop from "@/LayoutLabon/TapTop";
 import { useEffect } from "react";
 import { setToggleSidebar } from "@/Redux/Reducers/LayoutSlice";
 import { setLayout } from "@/Redux/Reducers/ThemeCustomizerSlice";
-
+import '../inlineStyle.css'
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { layout } = useAppSelector((state) => state.themeCustomizer);
   const dispatch = useAppDispatch();
@@ -51,8 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <div className="page-body-wrapper">
           {/* <SideBar /> */}
-          <div className="page-body" style={{marginTop : '80px'}}>
-          {/* <div style={{maxWidth : '1000px' , marginLeft : '15rem' , width : '100%'}} className="mobile-restricted-content">
+          <div className="page-body" style={{marginTop : '76px'}}>
+          {/* <div className="mobile-restricted-content">
               {children}
             </div> */}
             {children}

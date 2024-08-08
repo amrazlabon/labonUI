@@ -131,7 +131,7 @@ const Page = () => {
     return (
         <Col md='6' >
       <div style={{padding : '0', height:'13.5rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-        <Col sm='6' mdd='6' lg='6'>
+        <Col sm='6' md='6' lg='6'>
 <Steppers stepActive={stepActive} setStepActive={setStepActive} />
         </Col>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>

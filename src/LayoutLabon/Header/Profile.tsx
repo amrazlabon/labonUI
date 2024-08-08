@@ -86,7 +86,7 @@ export const Profile = () => {
             {
               icon: <LogOut />,
               title: "Sign In",
-              link:"",
+              link:"acheck/login",
             },
             // {
             //   icon: <FileText />,

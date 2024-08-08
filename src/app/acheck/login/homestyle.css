@@ -107,8 +107,8 @@
     }
 
     .modal-content {
-        background-color: var(--bs-modal-bg) !important;
-        /* border : none */
+        background-color: transparent !important;
+        border : none
     }
 
 
