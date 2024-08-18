@@ -1,11 +1,12 @@
 'use client'
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row } from "reactstrap";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ImagePath } from "@/Constant";
 import BasicCard from "./BasicCard";
 import Link from "next/link";
 import './formStyle.css';
 import React from "react";
+import axios from "axios";
 
 
 const TestTime = ({profile , setProfile , setStepActive , selectedTests, selectedAddress} : any) => {
@@ -19,16 +20,36 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
   const handleBookTimingsClick =() => {
     setStepActive(2)
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("the fdate of the profle",profile.date);
+      
+      try {
+        const response = await axios.get(`/api/timeslot?date=${profile.date}`);
+        // setData(response.data);
+        let data = response.data.sort((a : any, b : any) => a.id - b.id);
+        console.log("the timeslot data",data);
+        setTimeSlotData(data);
+        
+      } catch (error) {
+      }
+    }
+    fetchData();
+
+  }, []);
   
   const [selectedTime, setSelectedTime] = useState<string>(profile.timeslot ? profile.timeslot : null); // State for selected time
+  const [timeSlotData, setTimeSlotData] = useState<any>([]); // State for selected time
   console.log("the data for the button",selectedTime);
 
-  const handleTimeChange = (time: string) => {
+  const handleTimeChange = (time: string , id : any) => {
     console.log("time",time)
     setSelectedTime(time);
     setProfile({
       ...profile,
       timeslot: time,
+      timeslot_id : id
     });
     if (buttonRef.current) {
       buttonRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -48,7 +69,7 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
 {/* <p style={{fontWeight:'600',fontSize:'16px'}}>Morning </p> */}
 {/* <span style={{color:'#65C466'}}> (Recommended)</span> */}
 </div>
-<IconsRadio selectedTime={selectedTime} onTimeChange={handleTimeChange}/>
+<IconsRadio timeSlotData={timeSlotData} selectedTime={selectedTime} onTimeChange={handleTimeChange}/>
                                     
 
 {selectedTime && 
@@ -72,7 +93,7 @@ export default TestTime;
 
 
 
-const IconsRadio = React.forwardRef(({ selectedTime, onTimeChange }: any, ref: React.Ref<any>) => {
+const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange }: any, ref: React.Ref<any>) => {
 
   const CustomRadioListData = [
     { id: 1, icon: "Gender - Male.png", text: "7:00 AM" },
@@ -91,9 +112,15 @@ const IconsRadio = React.forwardRef(({ selectedTime, onTimeChange }: any, ref: R
     { id: 14, icon: "Gender - Female.png", text: "8:00 PM" },
   ];
 
-  const morningOptions = CustomRadioListData.slice(0, 4);
-  const afternoonOptions = CustomRadioListData.slice(4, 8);
-  const eveningOptions = CustomRadioListData.slice(8);
+  const morningIds = [1, 2, 3, 4];
+const afternoonIds = [5, 6, 7, 8];
+const eveningIds = [9, 10, 11, 12, 13, 14, 15];
+
+// Filter the array based on these IDs
+const morningOptions = timeSlotData.filter((item : any) => morningIds.includes(item.id));
+const afternoonOptions = timeSlotData.filter((item : any) => afternoonIds.includes(item.id));
+const eveningOptions = timeSlotData.filter((item : any) => eveningIds.includes(item.id));
+
 
   return (
     <Col xl="12" sm="12" className="order-xl-0 order-sm-1">
@@ -104,19 +131,19 @@ const IconsRadio = React.forwardRef(({ selectedTime, onTimeChange }: any, ref: R
           <div className="h-100 checkbox-checked">
             <div className="form-check radio-primary ps-0">
               <ul className="radio-wrapper">
-                {morningOptions.map(({ icon, id, text }, index) => (
+                {morningOptions.map(({ icon, id, timeslot } : any, index : any) => (
                   <li className="p-1 pt-2 pb-2" key={id}>
                     <Input
                       className="checkbox-shadow d-block"
                       id={`radio-${id}`}
                       type="radio"
                       name="radio-time"
-                      value={text}
-                      checked={selectedTime === text}
-                      onChange={() => onTimeChange(text)}
+                      value={timeslot}
+                      checked={selectedTime === timeslot}
+                      onChange={() => onTimeChange(timeslot, id)}
                     />
                     <Label htmlFor={`radio-${id}`} check>
-                      <span>{text}</span>
+                      <span>{timeslot}</span>
                     </Label>
                   </li>
                 ))}
@@ -131,19 +158,19 @@ const IconsRadio = React.forwardRef(({ selectedTime, onTimeChange }: any, ref: R
           <div className="h-100 checkbox-checked">
             <div className="form-check radio-primary ps-0">
               <ul className="radio-wrapper">
-                {afternoonOptions.map(({ icon, id, text }, index) => (
+                {afternoonOptions.map(({ icon, id, timeslot } : any, index : any) => (
                   <li className="p-1 pt-2 pb-2" key={id}>
                     <Input
                       className="checkbox-shadow d-block"
                       id={`radio-${id}`}
                       type="radio"
                       name="radio-time"
-                      value={text}
-                      checked={selectedTime === text}
-                      onChange={() => onTimeChange(text)}
+                      value={timeslot}
+                      checked={selectedTime === timeslot}
+                      onChange={() => onTimeChange(timeslot, id)}
                     />
                     <Label htmlFor={`radio-${id}`} check>
-                      <span>{text}</span>
+                      <span>{timeslot}</span>
                     </Label>
                   </li>
                 ))}
@@ -158,19 +185,19 @@ const IconsRadio = React.forwardRef(({ selectedTime, onTimeChange }: any, ref: R
           <div className="h-100 checkbox-checked">
             <div className="form-check radio-primary ps-0">
               <ul className="radio-wrapper">
-                {eveningOptions.map(({ icon, id, text }, index) => (
+                {eveningOptions.map(({ icon, id, timeslot } : any, index : any) => (
                   <li className="p-1 pt-2 pb-2" key={id}>
                     <Input
                       className="checkbox-shadow d-block"
                       id={`radio-${id}`}
                       type="radio"
                       name="radio-time"
-                      value={text}
-                      checked={selectedTime === text}
-                      onChange={() => onTimeChange(text)}
+                      value={timeslot}
+                      checked={selectedTime === timeslot}
+                      onChange={() => onTimeChange(timeslot, id)}
                     />
                     <Label htmlFor={`radio-${id}`} check>
-                      <span>{text}</span>
+                      <span>{timeslot}</span>
                     </Label>
                   </li>
                 ))}

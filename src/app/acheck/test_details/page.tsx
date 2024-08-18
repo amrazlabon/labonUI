@@ -2,7 +2,7 @@
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row, Table } from "reactstrap";
 // import BasicCard from "./BasicCard";
 // import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
@@ -18,33 +18,65 @@ import Link from "next/link";
 import './buttonStyle.css'
 import { InvoiceTableHeader, InvoiceFourData, InvoiceFourDataLabon, InvoiceTableHeaderLabon } from "@/Data/Application/Ecommerce";
 import { SimpleAccordion } from "./SimpleAccordion";
+import axios from "axios";
 // import { SimpleAccordion } from "./SimpleAccordion";
 
 // import OpenModalMofi from ".";
 
 const PatientDetails = () => {
-  const [selectedTests , setSelectedTests] = useState([
-    {
-      test_name : 'Cholesterol',
-      price:'460',
-      id:1
-    },
-    {
-      test_name : 'Cholesterol',
-      price:'460',
-      id:2
-    }
+  const [selectedTests , setSelectedTests] = useState<any>([
+    // {
+    //   test_name : 'Cholesterol',
+    //   price:'460',
+    //   id:1
+    // },
+    // {
+    //   test_name : 'Cholesterol',
+    //   price:'460',
+    //   id:2
+    // }
   ])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+    // const booking_id = sessionStorage.getItem('booking_id');
+    const order_id = sessionStorage.getItem('order_id');
+    console.log("the patient information");
+    
+    if(order_id){
+
+      console.log("the patient information inside");
+
+      // const response = await axios.get(`/api/patient_info?endpoint=per&id=${patient_id}`);
+      const TestResponse = await axios.get(`/api/orders?endpoint=per&id=${order_id}`);
+      console.log("the test iformation from the order_id",TestResponse.data);
+      // setData(response.data);
+      // setPatientInformation(response.data)
+      setSelectedTests(TestResponse.data)
+    }
+    } catch (error) {
+      setSelectedTests([])
+      // setBookingInformation(TableHeadOptionBody)
+      // setError(error.message);
+    }
+    // setBookingInformation(TableHeadOptionBody)
+  };
+
+    fetchData();
+  }, []);
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
       
     return (
-    <Col md='6' >
+      <Col md='6' >
+{selectedTests.length !== 0 &&
+  <>
       <Card style={{backgroundColor:'#F5F5F5' , padding : '24px' , boxShadow : 'none' , margin : '0'}}>
       {/* <div className="mb-2" style={{height:'8rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}> */}
-      <h1 className="text-black " style={{paddingBottom:'24px' , margin : '0'}}>LBNHVB0803202437</h1>
+      <h1 className="text-black " style={{paddingBottom:'24px' , margin : '0'}}>LBNHVB080320243{selectedTests.id}</h1>
 {/* <p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p> */}
 {/* <div style={{display : 'flex'}}>
 <h1 className="text-white ml-4 " style={{marginLeft:'2rem', }}>1,100.00</h1> */}
@@ -60,10 +92,9 @@ const PatientDetails = () => {
 {/* <h1 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Summary</h1>
 
 <BasicCard/> */}
-
 <div>
 {/* <h2 className="text-black ml-4 mt-4" style={{margin:'2rem'}}>Contact Details</h2> */}
-<BasicCardSchedule/>
+<BasicCardSchedule selectedTests={selectedTests}/>
 
 {/* <BasicCardProfile/> */}
   
@@ -72,7 +103,7 @@ const PatientDetails = () => {
 <div>
 <h2 className="text-black" style={{paddingBottom:'24px', marginTop : '24px'}}>Location</h2>
 <BasicMap/>
-<BasicCardProfileMap/>
+<BasicCardProfileMap selectedTests={selectedTests}/>
 </div>
                                     
 {/* </div> */}
@@ -83,7 +114,7 @@ const PatientDetails = () => {
 {/* <h1>Test Booking and Invoice</h1> */}
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'16px'}}>Tests Included</h2>
 <div>
-<SimpleAccordion selectedTests={selectedTests}/>
+<SimpleAccordion selectedTests={selectedTests.tests}/>
 
 {/* <CardBody> */}
             <Table className="table-wrapper table-responsive theme-scrollbar" borderless>
@@ -148,16 +179,28 @@ const PatientDetails = () => {
             {/* <OpenModalMofi/> */}
         {/* </div> */}
         </Card>
+  </>
+}
         </Col>
+                  
     )
 }
 
 export default PatientDetails;
 
-const BasicCardSchedule = ({profile} : any) => {
+const BasicCardSchedule = ({selectedTests} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
-
+  console.log("the selected tests data in the schedule", selectedTests);
+  
+  const formatDate = (isoString : any) => {
+    const date = new Date(isoString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+  
   return (
     <Col sm="12" xl="12">
       <Card style={{backgroundColor : '#E5E5E5' , boxShadow : 'none' , margin : '0' ,border: '1px solid rgba(0, 0, 0, 0.1)'}}>
@@ -169,7 +212,7 @@ const BasicCardSchedule = ({profile} : any) => {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 className="mb-0" style={{paddingBottom: '8px'}}>
-Home Test Schedule
+{selectedTests.nick_name ? selectedTests.nick_name : 'Home'} Test Schedule
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </h2>
             {/* <i className="fa fa-edit"></i> */}
@@ -181,8 +224,8 @@ Home Test Schedule
             <img style={{height:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Calendar.png`} alt="user image" />
 
             <p className="mb-0 mt-2">
-{/* {profile.date} */}
-27/04/2024
+{formatDate(selectedTests.test_date)}
+{/* 27/04/2024 */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
             </div>
@@ -191,8 +234,8 @@ Home Test Schedule
             <img style={{height:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
 
             <p className="mb-0 mt-2" >
-{/* {profile.timeslot} */}
-08:30 AM
+{selectedTests.time_slot}
+{/* 08:30 AM */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
             </div>
@@ -206,7 +249,7 @@ Home Test Schedule
   );
 };
 
-const BasicCardProfileMap = () => {
+const BasicCardProfileMap = ({selectedTests} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
@@ -223,7 +266,7 @@ const BasicCardProfileMap = () => {
 <div style={{display : 'grid'}}>
 
           <p className="mb-0" style={{paddingBottom : '8px' , fontSize : '16px', fontWeight : '600'}}>
-Home Address
+{selectedTests.nick_name ? selectedTests.nick_name : 'Home'} Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
           {/* <h1 className="mb-0"> */}
@@ -231,15 +274,7 @@ Home Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           {/* </h1> */}
           <p className="mb-0">
-          Suite No.123, Famous Building,
-                      {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </p>
-
-          <p className="mb-0"> */}
-          Sample Street, Athirampuzha P.O,            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </p>
-          <p className="mb-0"> */}
-          Kottayam - 686001, Kerala India.
+            {selectedTests.address ? (selectedTests.address + selectedTests.location + selectedTests.pincode) : ''}
           {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
 </div>
@@ -408,6 +443,7 @@ const TableHeadOptions=()=> {
 
 
 const InvoiceTotal = ({selectedTests} : any) => {
+  console.log("the selected tests in the total",selectedTests)
   
   return (
     <td >
@@ -430,54 +466,55 @@ const InvoiceTotal = ({selectedTests} : any) => {
   );
 };
 
-const InvoiceSubTotal = ({selectedTests} : any) => {
 
-  const totalPrice = selectedTests.reduce((total : any, test : any) => {
+
+const InvoiceSubTotal = ({ selectedTests }: { selectedTests: { tests: { price: string }[] } }) => {
+  // Ensure `selectedTests.tests` is an array and calculate total price
+  const totalPrice = (selectedTests.tests || []).reduce((total, test) => {
     return total + (test.price ? parseFloat(test.price) : 0);
   }, 0);
+
+  const gst = totalPrice * 0.18;
+  const convenienceFee = totalPrice * 0.07;
+  const grandTotal = totalPrice + gst + convenienceFee;
+
   return (
     <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" , marginLeft : '12px' , color : 'grey'}}>{Subtotal}</span>
-        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem'  }}><span style={{marginRight : '3px'}}><i className='fa fa-rupee'></i></span>{totalPrice}.00</span>
-      </li>
-      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left", marginLeft : '12px' , color : 'grey'}}>GST (18%)</span>
-        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice *0.18}</span>
-      </li>
-      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left" , marginLeft : '12px', color : 'grey' }}>Convinience Fee</span>
-        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice * 0.07}</span>
-      </li>
-      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
-      {/* <li style={{ display: "flex", alignItems: "center" }}>
-        <span style={{ display: "block", width: 95 }}>{TotalDue}</span>
-        <span style={{ display: "block",color: "#7A70BA", opacity: "0.9", fontWeight: 600, padding: "12px 25px", borderRadius: 5, background: "rgba(122, 112, 186 , 0.1)", fontSize: 16}} >$6120.00</span>
-      </li> */}
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
-        <span style={{ display: "block", width: 95, textAlign: "left", marginLeft : '12px' , fontWeight : '600' }}>Total</span>
-        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        
-        <div style={{display : 'grid'}}>
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 , fontSize : '18px' ,paddingRight : '2rem'  }}> <span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice + (totalPrice * 0.18) + (totalPrice * 0.07)}
-        {/* <p style={{background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem' , margin : '0', marginRight : '0'}}>UnPaid</p> */}
-
+        <span style={{ display: "block", width: 95, textAlign: "left", marginLeft: '12px', color: 'grey' }}>Subtotal</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", opacity: "0.9", fontWeight: 600, paddingRight: '2rem' }}>
+          <span style={{ marginRight: '3px' }}><i className='fa fa-rupee'></i></span>{totalPrice.toFixed(2)}
         </span>
-          {/* <p>hbsf</p>
-          <p>hbsf</p> */}
-        <p style={{display: "block" , background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '3rem'  , justifySelf: 'end' ,marginRight : '2rem' }}>Paid</p>
+      </li>
+      <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '8px 0' }} />
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left", marginLeft: '12px', color: 'grey' }}>GST (18%)</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", opacity: "0.9", fontWeight: 600, paddingRight: '2rem' }}>
+          <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{gst.toFixed(2)}
+        </span>
+      </li>
+      <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '8px 0' }} />
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left", marginLeft: '12px', color: 'grey' }}>Convenience Fee</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", opacity: "0.9", fontWeight: 600, paddingRight: '2rem' }}>
+          <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{convenienceFee.toFixed(2)}
+        </span>
+      </li>
+      <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '8px 0' }} />
+      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+        <span style={{ display: "block", width: 95, textAlign: "left", marginLeft: '12px', fontWeight: '600' }}>Total</span>
+        <div style={{ display: 'grid' }}>
+          <span style={{ display: "block", width: 125, textAlign: "right", opacity: "0.9", fontWeight: 600, fontSize: '18px', paddingRight: '2rem' }}>
+            <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{grandTotal.toFixed(2)}
+          </span>
+          <p style={{ display: "block", background: 'rgba(101, 196, 102, 1)', color: 'white', borderRadius: '5px', padding: '2px', width: '3rem', justifySelf: 'end', marginRight: '2rem' }}>Paid</p>
         </div>
       </li>
-
-      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '8px 0' }} />
     </ul>
   );
 };
+
 
 
 

@@ -6,43 +6,53 @@ import { FloatingFormData } from "@/Data/Form&Table/Form";
 import BasicCard from "./BasicCard";
 import {  ImagePath } from "@/Constant";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './form.css'
 import DatePicker from "react-multi-date-picker";
+import axios from "axios";
 
 const FloatingForm = () => {
-
+  const [profileData, setProfileData] = useState<any>([]);
   const [formData, setFormData] = useState({
-    name:
-    //  profile.name ? profile.name :
-      '',
-    dob:
-    //  profile.dob ? profile.dob :
-     '',
-    mobile: 
-    // profile.mobile ? profile.mobile :
-    '',
-    gender:
-    //  profile.gender ? profile.gender :
-     '',
-    email:
-    //  profile.email ? profile.email :
-     '',
-    pincode:
-    //  profile.pincode ? profile.pincode :
-     '',
-    location:
-    //  profile.location ? profile.location :
-     '',
-    address:
-    //  profile.address ? profile.address :
-     '',
-    age:
-    //  profile.age ? profile.age :
-     '',
-     user_id : ''
-    // time: '8:00 AM', // default value for time
-  }); 
+    name: '',
+    dob: '',
+    mobile: '',
+    gender: '',
+    email: '',
+    pincode: '',
+    location: '',
+    address: '',
+    age: '',
+    id: ''
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userId = sessionStorage.getItem('user_id');
+        if (userId) {
+          const response = await axios.get(`/api/login?endpoint=user&id=${userId}`);
+          setProfileData(response.data);
+
+          const formatDate = (dateString: string) => {
+            const date = new Date(dateString);
+            return date.toISOString().split('T')[0];
+          };
+          // Assuming response.data contains fields: name, dob, mobile, gender, email, pincode, location, address, and age
+          setFormData({
+            ...response.data,
+            dob: formatDate(response.data.dob), 
+            // age: calculateAge(response.data.dob), // Update age based on dob
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   console.log("form value",formData);
 
   const handleInputChange = (e: any) => {
@@ -72,6 +82,18 @@ const FloatingForm = () => {
       gender: gender,
     });
   };
+
+  const handleFormData = async () => { 
+    const userId = formData.id;
+    try {
+      const response = await axios.patch('/api/login',formData);
+      // setSavedAddresses(response.data);
+      console.log("Saved addresses: where dont know", response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+    }
+  
   
   return (
     <Col md="6">
@@ -129,9 +151,9 @@ const FloatingForm = () => {
               <Col sm="12">
                   <FormGroup  floating className="mb-6 mt-3">
                     <Input disabled type="text" 
-                    name="user_id"
+                    name="id"
                     placeholder="Enter Name"
-                    value={formData.user_id}
+                    value={formData.id}
                     onChange={handleInputChange} />
                     <Label check>User ID</Label>
                   </FormGroup>
@@ -246,7 +268,7 @@ const FloatingForm = () => {
                   <Col sm="12">
                   {/* <Link href={'/acheck/summary'}> */}
                     <Button 
-                    // onClick={handleBookTimingsClick} 
+                    onClick={handleFormData} 
                     className="btn-lg" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
                       Save Profile <span><i className="fa fa-save" style={{ marginLeft: '24px' }}></i></span>
                     </Button>

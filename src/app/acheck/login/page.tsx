@@ -1,13 +1,14 @@
 'use client'
 
-import CommonModal from "@/Components/UiKits/Modal/Common/CommonModal";
+// import CommonModal from "@/Components/UiKits/Modal/Common/CommonModal";
 import { ClickOut } from "@/Constant";
 import { StaticModalToggleProp } from "@/Types/UikitsType";
 import { useState, useRef, useEffect } from "react";
-import { Col, Button, Form, Row, FormGroup, Input, Label } from "reactstrap";
+import { Col, Button, Form, Row, FormGroup, Input, Label, Modal, ModalBody } from "reactstrap";
 // import OpenModalMofi from ".";
 import './homestyle.css'
 import Link from "next/link";
+import axios from "axios";
 
 const Login = () => {
     const [modalTwo, setModalTwo] = useState(false);
@@ -50,6 +51,31 @@ const ModalTwo = ({modalTwo , modalTwoTogggle} : any) => {
           </div>
         </div>
       </Col>
+    );
+  };
+
+  interface CommonModalProps {
+    isOpen: boolean;
+    toggle: () => void;
+    centered?: boolean;
+    modalBodyClassName?: string;
+    children: React.ReactNode;
+  }
+  
+  const CommonModal: React.FC<CommonModalProps> = ({
+    isOpen,
+    toggle,
+    centered,
+    modalBodyClassName,
+    children
+  }) => {
+    return (
+      <Modal isOpen={isOpen} toggle={toggle} centered={centered} className="custom-modal">
+        {/* <ModalHeader toggle={toggle}>Modal Header</ModalHeader> */}
+        <ModalBody className={modalBodyClassName}>
+          {children}
+        </ModalBody>
+      </Modal>
     );
   };
   
@@ -105,8 +131,21 @@ const ModalTwo = ({modalTwo , modalTwoTogggle} : any) => {
       }
     };
 
-    const signInButton = () => {
-      sessionStorage.setItem('user_id', JSON.stringify(1));
+    const signInButton = async () => {
+      try { 
+        const reqBody = {
+          mobile : '+91' + formData.mobile
+        }
+        const response = await axios.post('/api/login',reqBody);
+        console.log("the response from the login",response.data);
+        
+        sessionStorage.setItem('user_id', JSON.stringify(response.data[0].id));
+        sessionStorage.setItem('user_data', JSON.stringify(response.data[0]));
+      }
+      catch {
+        console.error("Error fetching Login:");
+
+      }
       // setIsLoggedIn(true)
       staticModalToggle();
   

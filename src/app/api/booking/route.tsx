@@ -6,7 +6,7 @@ export async function GET(){
         console.log('request education=> check ');
         // const reqBody = await request.json();
         // console.log('body ===============>', reqBody);
-        const response = await axios.get(`http://0.0.0.0:37000/addresses/user/1`);
+        const response = await axios.get(`http://43.205.139.219/addresses/user/1`);
         console.log("tests data",response.data)
         const res = NextResponse.json(response.data);
         // console.log('back success ===> ', res);
@@ -20,12 +20,13 @@ export async function GET(){
     
 }
 
+
 export async function POST(request : NextRequest){
     try{
         console.log('request education=> check post');
         const reqBody = await request.json();
         console.log('body ===============>', reqBody);
-        const response = await axios.post(`http://0.0.0.0:37000/tests/letter/${reqBody.term}`);
+        const response = await axios.post(`http://43.205.139.219/tests/letter/${reqBody.term}`);
         console.log("tests data",response.data)
         const res = NextResponse.json(response.data);
         // console.log('back success ===> ', res);

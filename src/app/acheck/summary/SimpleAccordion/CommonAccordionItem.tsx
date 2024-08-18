@@ -89,3 +89,7 @@ const CommonAccordionItem = ({ item }) => {
 };
 
 export default CommonAccordionItem;
+
+function formatPrice(value : any) {  
+  return value.toFixed(2)
+}

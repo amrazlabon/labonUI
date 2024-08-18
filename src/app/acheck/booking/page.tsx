@@ -27,7 +27,13 @@ interface FormValue {
     relation: string;
     tests: string | number;
     workInCities: [] ;
+    test_data: [] ;
+    address_data: [] ;
     nick_name: string;
+    patient_id: string;
+    timeslot_id: string;
+    user_id: string;
+    test_id: string;
     // companyName: string;
     brandName: string;
     currentWorkingCity: string;
@@ -92,8 +98,14 @@ const Page = () => {
         date: '',
         relation: '',
         tests: '',
+        address_data: [],
+        test_data: [],
         workInCities: [],
         nick_name: '',
+        patient_id : '',
+        timeslot_id : '',
+        test_id:'',
+        user_id:'',
         brandName: '',
         currentWorkingCity: '',
         monthlySalary: '',
@@ -110,12 +122,33 @@ const Page = () => {
     console.log("the profile value in the stepper",profile);
     useEffect(() => {
         const tests = sessionStorage.getItem('tests');
+        const userId = sessionStorage.getItem('user_id');
     const address = sessionStorage.getItem('address');
 
     if (tests) {
+      const parsedTests = JSON.parse(tests);
+
       setSelectedTests(JSON.parse(tests));
+      setProfile(prevProfile => ({
+        ...prevProfile,
+        test_data: parsedTests
+    }));
+    }
+    if (userId) {
+      const parsedTests = JSON.parse(userId);
+
+      // setSelectedTests(JSON.parse(tests));
+      setProfile(prevProfile => ({
+        ...prevProfile,
+        user_id: parsedTests
+    }));
     }
     if (address) {
+      const parsedAddress = JSON.parse(address);
+      setProfile(prevProfile => ({
+        ...prevProfile,
+        address_data: parsedAddress
+    }));
       setSelectedAddress(JSON.parse(address));
     }
         // citiesAPI().then((cities: string[]) => {

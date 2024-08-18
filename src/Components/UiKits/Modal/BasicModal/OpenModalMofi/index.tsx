@@ -11,7 +11,7 @@ const OpenModalMofi = () => {
   return (
     <>
       <Button color="primary" onClick={openModaltoggle}>{OpenModalForMofi}</Button>
-      <CommonModal isOpen={openModal} toggle={openModaltoggle} modalBodyClassName="p-0" heading="Mofi SIGN-UP">
+      <CommonModal isOpen={openModal} toggle={openModaltoggle} modalBodyClassName="p-0" >
         <div className="modal-toggle-wrapper social-profile text-start dark-sign-up">
           <h3 className="modal-header justify-content-center border-0">{MofiSignUp}</h3>
           <OpenModalForm modal={openModaltoggle}/>

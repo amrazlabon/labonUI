@@ -15,7 +15,7 @@ import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import Link from "next/link";
 import { SimpleAccordion } from "./SimpleAccordion";
-import CommonModal from "@/Components/UiKits/Modal/Common/CommonModal";
+// import CommonModal from "@/Components/UiKits/Modal/Common/CommonModal";
 import { ChevronsRight } from "react-feather";
 import { FullScreenData } from "@/Data/Uikits/modal";
 import './basicStyles.css'
@@ -92,7 +92,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 
 
 <BasicMap/>
-<BasicCardProfileMap/>
+<BasicCardProfileMap profile={profile}/>
 </div>
 <BasicCardSchedule profile={profile}/>
                                     
@@ -205,10 +205,12 @@ Home Test Schedule
   );
 };
 
-const BasicCardProfileMap = () => {
+const BasicCardProfileMap = ({profile} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
+  console.log("the profile data inside the home address",profile);
+  
   return (
     <Col sm="12" xl="12">
       <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0', boxShadow : 'none' , margin : '0'}}>
@@ -222,7 +224,7 @@ const BasicCardProfileMap = () => {
 <div style={{display : 'grid'}}>
 
           <p className="mb-0" style={{paddingBottom : '8px' , fontSize : '16px', fontWeight : '600'}}>
-Home Address
+{profile.nick_name ? profile.nick_name : 'Home'} Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
           {/* <h1 className="mb-0"> */}
@@ -230,15 +232,8 @@ Home Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           {/* </h1> */}
           <p className="mb-0">
-          Suite No.123, Famous Building,
-                      {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </p>
-
-          <p className="mb-0"> */}
-          Sample Street, Athirampuzha P.O,            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </p>
-          <p className="mb-0"> */}
-          Kottayam - 686001, Kerala India.
+            {profile.address} , {profile.location} , {profile.pincode}
+          
           {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
 </div>
@@ -275,7 +270,7 @@ const BasicCardProfile = ({profile} : any) => {
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {profile.gender ? profile.gender : 'Male'} ({profile.age ? profile.gender : '63'} Years)
+                    {profile.gender ? profile.gender : 'Male'} ({profile.age ? profile.age : '63'} Years)
                     </p>
                     </div>
 <div className="gap-2" style={{display : 'flex' , paddingBottom : '4px'}}>
@@ -359,19 +354,19 @@ const InvoiceSubTotal = ({selectedTests} : any) => {
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" , marginLeft : '12px' , color : 'grey'}}>{Subtotal}</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem'  }}><span style={{marginRight : '3px'}}><i className='fa fa-rupee'></i></span>{totalPrice}.00</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem'  }}><span style={{marginRight : '3px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice)}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
         <span style={{ display: "block", width: 95, textAlign: "left", marginLeft : '12px' , color : 'grey'}}>GST (18%)</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice *0.18}</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice *0.18)}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" , marginLeft : '12px', color : 'grey' }}>Convinience Fee</span>
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice * 0.07}</span>
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice * 0.07)}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       {/* <li style={{ display: "flex", alignItems: "center" }}>
@@ -383,7 +378,7 @@ const InvoiceSubTotal = ({selectedTests} : any) => {
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
         
         <div style={{display : 'grid'}}>
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 , fontSize : '18px' ,paddingRight : '2rem'  }}> <span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{totalPrice + (totalPrice * 0.18) + (totalPrice * 0.07)}
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 , fontSize : '18px' ,paddingRight : '2rem'  }}> <span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice + (totalPrice * 0.18) + (totalPrice * 0.07))}
         {/* <p style={{background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem' , margin : '0', marginRight : '0'}}>UnPaid</p> */}
 
         </span>
@@ -398,6 +393,9 @@ const InvoiceSubTotal = ({selectedTests} : any) => {
   );
 };
 
+function formatPrice(value : any) {
+  return value.toFixed(2);
+}
 
 
 const FullScreenModal = ({isOpen , toggle , selectedTests , profile} : any) => {
@@ -409,16 +407,25 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile} : any) => {
   const handleBookingClick = async () => {
     try {
       const reqBody = {
-        user_id:1,
-    labsub_id:1,
-    test_id:1,
-    timeslot_id:1,
+        user_id: profile.user_id,
+    // labsub_id: profile.labsub_id,
+    test_id: profile.test_data.map((item : any) => item.id).join(','),    
+    timeslot_id: profile.timeslot_id,
+    ...(profile.patient_id && { patient_id: profile.patient_id }),
+    // patient_id : profile.patient_id ,
     name : profile.name,
     pincode : profile.pincode,
     location: profile.location,
     address : profile.address,
+    gender : profile.gender,
     email : profile.email,
-    mobile : profile.mobile
+    mobile : profile.mobile,
+    nick_name :profile.nick_name,
+    time_slot :profile.timeslot,
+    // sub_total :'profile.sub_total',
+    // total :'profile.total',
+    // gst : 'profile.gst',
+    // convenience_fee :'profile.convenience_fee',
       }
       const response = await axios.post('/api/orders',reqBody);
       // setSavedAddresses(response.data);

@@ -43,9 +43,7 @@
 
 }
 
-.custom-modal .modal-content {
-    background-color: rgba(122, 141, 154, 1) !important;
-        border : none;
+.modal-content {
     /* background-color: transparent; */
     border-radius: 2rem;
 }
@@ -108,6 +106,10 @@
     border: 1px solid #D5D5D5;
     }
 
+    .modal-content {
+        background-color: transparent !important;
+        border : none
+    }
 
 
     .six-digit-input {

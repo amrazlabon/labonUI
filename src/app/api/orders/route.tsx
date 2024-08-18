@@ -6,7 +6,7 @@ export async function POST(request: NextRequest){
         console.log('request education=> ');
         const reqBody = await request.json();
         console.log('body ===============>', reqBody);
-        const response = await axios.post(`http://0.0.0.0:37000/orders`, reqBody);
+        const response = await axios.post(`http://43.205.139.219/orders`, reqBody);
         console.log(response.data)
         const res = NextResponse.json(response.data);
         return res;
@@ -30,13 +30,19 @@ export async function GET(request: Request){
         let res;
         if(endpoint === 'user'){
 
-            response = await axios.get(`http://0.0.0.0:37000/orders/${endpoint}/${id}`);
+            response = await axios.get(`http://43.205.139.219/orders/${endpoint}/${id}`);
             console.log("tests data",response.data)
             res = NextResponse.json(response.data);
         }
         else if(endpoint === 'per'){
 
-            response = await axios.get(`http://0.0.0.0:37000/orders/${endpoint}/${id}`);
+            response = await axios.get(`http://43.205.139.219/orders/${endpoint}/${id}`);
+            console.log("tests data",response.data)
+            res = NextResponse.json(response.data);
+        }
+        else if(endpoint === 'patient'){
+
+            response = await axios.get(`http://43.205.139.219/orders/${endpoint}/${id}`);
             console.log("tests data",response.data)
             res = NextResponse.json(response.data);
         }

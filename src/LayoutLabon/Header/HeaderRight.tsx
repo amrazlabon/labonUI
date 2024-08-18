@@ -14,8 +14,9 @@ import { useEffect, useState } from "react";
 export const HeaderRight = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  console.log("is logged in",isLoggedIn);
+  console.log("is logged in",isOpen);
   
   useEffect(() => {
     const userId = sessionStorage.getItem("user_id");
@@ -29,14 +30,18 @@ export const HeaderRight = () => {
       <ul className="nav-menus">
         {/* <HeaderSearch /> */}
         {/* <MaximizeScreen /> */}
-        <Notification />
         {/* <BookMark /> */}
         {/* <DarkMode /> */}
-        <MessageBox />
-        <CartData />
-        { isLoggedIn && <SearchBox />}
+        {/* <MessageBox /> */}
+        {!isOpen && (
+          <>
+            <Notification />
+            <CartData />
+            {isLoggedIn && <SearchBox />}
+          </>
+        )}
         {/* <Languages/> */}
-        <Profile 
+        <Profile isOpen={isOpen} setIsOpen={setIsOpen}
         // isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
         />
       </ul>

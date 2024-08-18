@@ -55,26 +55,30 @@ const PatientDetails = () => {
         },
       ];
 
+      console.log("the patient information data",patientInformation)
       useEffect(() => {
         const fetchData = async () => {
           try {
         const booking_id = sessionStorage.getItem('booking_id');
-        const user_id = sessionStorage.getItem('user_id');
-        if(booking_id){
+        const patient_id = sessionStorage.getItem('patient_id');
+        console.log("the patient information");
+        
+        if(patient_id){
 
+          console.log("the patient information inside");
 
-          const response = await axios.get(`/api/patient_info?endpoint=per&id=${booking_id}`);
-          const TestResponse = await axios.get(`/api/orders?endpoint=user&id=${user_id}`);
-          // setData(response.data);
-          console.log("the test iformation of contacrs",TestResponse.data);
+          const response = await axios.get(`/api/patient_info?endpoint=per&id=${patient_id}`);
           setPatientInformation(response.data)
-          setBookingInformation(TestResponse.data)
+          const TestResponse = await axios.get(`/api/orders?endpoint=patient&id=${patient_id}`);
+          console.log("the test iformation of contacrs",TestResponse.data.test_data);
+          // setData(response.data);
+          setBookingInformation(TestResponse.data.test_data)
         }
         } catch (error) {
-          setBookingInformation(TableHeadOptionBody)
+          setBookingInformation([])
           // setError(error.message);
         }
-        setBookingInformation(TableHeadOptionBody)
+        // setBookingInformation(TableHeadOptionBody)
       };
     
         fetchData();
@@ -114,7 +118,7 @@ Contact Details
 <div>
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Location</h2>
 <BasicMap/>
-<BasicCardProfileMap/>
+<BasicCardProfileMap patientInformation={patientInformation}/>
 </div>
 {/* <BasicCardSchedule/> */}
                                     
@@ -158,7 +162,7 @@ Contact Details
 
 export default PatientDetails;
 
-const BasicCardProfileMap = () => {
+const BasicCardProfileMap = ({patientInformation} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
@@ -175,23 +179,17 @@ const BasicCardProfileMap = () => {
 <div style={{display : 'grid'}}>
 
           <p className="mb-0" style={{paddingBottom : '8px' , fontSize : '16px', fontWeight : '600'}}>
-Home Address
+{patientInformation.nick_name ? patientInformation.nick_name : 'Home'} Address
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
           {/* <h1 className="mb-0"> */}
 {/* Ramakrishnan */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           {/* </h1> */}
-          <p className="mb-0">
-          Suite No.123, Famous Building,
-                      {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </p>
-
-          <p className="mb-0"> */}
-          Sample Street, Athirampuzha P.O,            {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
-          {/* </p>
-          <p className="mb-0"> */}
-          Kottayam - 686001, Kerala India.
+          <p className="mb-0">{patientInformation.address ? patientInformation.address + patientInformation.location + patientInformation.pincode : 
+          `Suite No.123, Famous Building,
+          Sample Street, Athirampuzha P.O,
+          Kottayam - 686001, Kerala India.`}
           {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
 </div>
@@ -335,10 +333,27 @@ const TableHeadOptions=({bookingInformation} : any)=> {
       //     b_id: data.id,
       //   },
       // });
-      sessionStorage.setItem('booked_test', JSON.stringify(data));
+      // sessionStorage.setItem('booked_test', JSON.stringify(data));
+      sessionStorage.setItem('order_id', JSON.stringify(data.id));
   
       console.log("handle click in the patient information",data)
     }
+    const formatDate = (isoString : any) => {
+      const date = new Date(isoString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
+    const getTestCount = (testId : any) => {
+      if (typeof testId === 'string') {
+        // Split the test_id by comma and filter out any empty strings
+        const ids = testId.split(',').filter(id => id.trim() !== '');
+        return ids.length;
+      }
+      return 0;
+    };
 
     return (
       <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
@@ -346,6 +361,7 @@ const TableHeadOptions=({bookingInformation} : any)=> {
           {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
           <Row className="card-block">
             <Col sm="12" lg="12" xl="12" style={{paddingLeft : '16px' , paddingRight : '16px'}}>
+            {bookingInformation.length > 0 ? (
               <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
                 {bookingInformation.map((data : any) => (
                   <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
@@ -357,21 +373,21 @@ const TableHeadOptions=({bookingInformation} : any)=> {
                     <td>
                     <div style={{display : 'grid'}}>
                     <p style={{ paddingTop: '0', margin: '0' , fontSize : '16px' , fontWeight : '600' }}>
-                            {data.test_date}
+                            {formatDate(data.test_date)}
                           </p>
                       <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
                       <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
   
                       <p style={{paddingTop : '0' , margin : '0'}}>
                       
-                      {data.lastName}1 Test
+                      {getTestCount(data.test_id)} Test
                       </p>
                       </div>
                       <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
                       <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
                       <p style={{paddingTop : '0', margin : '0'}}> 
   
-                      {data.timeslot_id}
+                      {data.time_slot}
                       </p>
                       </div>
                       <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
@@ -390,7 +406,7 @@ const TableHeadOptions=({bookingInformation} : any)=> {
                       </div>
                       <div className="gap-2" style={{display : 'flex', marginTop : '4px'}}>
                       {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
-                      <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem' , margin : '0'}}>Upcoming</p>
+                      <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem' , margin : '0'}}>{data.status}</p>
   
                       </div>
                     </div>
@@ -402,6 +418,9 @@ const TableHeadOptions=({bookingInformation} : any)=> {
                   </tr>
                 ))}
               </CommonTable>
+            ) : (
+              <p style={{margin : '24px'}}>There are no booked Tests</p>
+            )}
             </Col>
           </Row>
         </Card>

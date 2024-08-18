@@ -44,7 +44,9 @@ const PatientInformation = () => {
             time: "No upcoming tests"
           },
         ];
-        setPatientInformation(TableHeadOptionBody)
+        console.log("coming till here");
+        
+        setPatientInformation([])
         // setError(error.message);
       }
     };

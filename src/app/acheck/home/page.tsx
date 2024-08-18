@@ -446,6 +446,7 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
     return (
       <Col sm="" xl="">
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
+            {savedAddresses.length > 0 ? (
             <div className="card-wrapper checkbox-checked" style={{padding : '0'}}>
           {savedAddresses.map((test: any, index: any) => (
             <div key={index} className="form-check">
@@ -460,7 +461,7 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
                 <div style={{ display: 'grid' }}>
                   <div className="gap-2" style={{ display: 'flex', padding: '0' }}>
                     <p style={{ margin: '0', paddingTop: '0', paddingBottom: '12px' , fontSize : '18px'}}>
-                      {test.address}
+                      {test.nick_name}
                     </p>
                   </div>
                   <div className="gap-2" style={{ display: 'flex' }}>
@@ -468,11 +469,11 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
                     <div style={{display : 'grid'}}>
 
                     <p style={{ paddingTop: '0', margin: '0' }}>
-                      {test.location}
+                      {test.address} , {test.location} , {test.pincode}
                     </p>
-                    <p style={{ paddingTop: '0', margin: '0' }}>
+                    {/* <p style={{ paddingTop: '0', margin: '0' }}>
                       {test.pincode ? test.pincode : 'N/A'}
-                    </p>
+                    </p> */}
                     </div>
                   </div>
                   {/* <div className="gap-2" style={{ display: 'flex' }}>
@@ -481,7 +482,11 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
               </Label>
             </div>
           ))}
-        </div>
+        </div>) : (
+              <p>There are no saved address</p>
+
+        )
+}
         <Col sm="12" style={{paddingTop : '24px'}}>
         <Button
           onClick={handleSelectTestsClick}
@@ -635,11 +640,13 @@ All Tests
       try {
       const userId = sessionStorage.getItem('user_id');
       if(userId){
+        console.log("is inside the data");
+        
         setIsLoggedIn(true)
-      }
-      const response = await axios.get('/api/booking');
+        const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
         setSavedAddresses(response.data);
         console.log("Saved addresses: where dont know", response.data);
+      }
       } catch (error) {
         const data = [{
             id : 1,
@@ -665,7 +672,7 @@ All Tests
             nick_name : 'Home'
             
         },]
-        setSavedAddresses(data)
+        setSavedAddresses([])
         console.error("Error fetching data:", error.message);
       }
     };

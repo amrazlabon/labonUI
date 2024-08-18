@@ -52,7 +52,7 @@ const BookingInformation = () => {
       // setData(response.data);
       console.log("the test iformation of contacrs",TestResponse.data);
       // setPatientInformation(response.data)
-      setBookingInformation(TestResponse.data)
+      setBookingInformation(TestResponse.data.test_data)
     }
     } catch (error) {
       setBookingInformation(TableHeadOptionBody)
@@ -116,7 +116,7 @@ const TableHeadOptions=({bookingInformation} : any)=> {
     //     b_id: data.id,
     //   },
     // });
-    sessionStorage.setItem('booked_test', JSON.stringify(data));
+    sessionStorage.setItem('order_id', JSON.stringify(data.id));
 
     console.log("handle click in the patient information",data)
   }
@@ -146,68 +146,90 @@ const TableHeadOptions=({bookingInformation} : any)=> {
       },
     ];
 
+    const formatDate = (isoString : any) => {
+      const date = new Date(isoString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
+    const getTestCount = (testId : any) => {
+      if (typeof testId === 'string') {
+        // Split the test_id by comma and filter out any empty strings
+        const ids = testId.split(',').filter(id => id.trim() !== '');
+        return ids.length;
+      }
+      return 0;
+    };
+
   return (
     <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
       <Card style={{boxShadow : 'none' , margin : '0'}}> 
         {/* <CommonCardHeader title={TableHeadOption} span={TableHeadOptionData}/> */}
         <Row className="card-block">
           <Col sm="12" lg="12" xl="12" style={{paddingLeft : '16px' , paddingRight : '16px'}}>
-            <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
-              {bookingInformation.map((data : any) => (
-                <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
-                  {/* <th scope="row">{data.id}</th> */}
-                  <td style={{paddingTop : '0'}}>
-        <img style={{height:'3rem', margin:'0' , borderRadius : '5px'}} className="img-fluid table-avtar" src={`${ImagePath}/ThumbnailTest.png`} alt="user image" />
-        {/* {data.lastName} */}
+          {bookingInformation.length > 0 ? (
+
+          <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
+                {bookingInformation.map((data : any) => (
+                  <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
+                    {/* <th scope="row">{data.id}</th> */}
+                    <td style={{paddingTop : '0'}}>
+          <img style={{height:'3rem', margin:'0' , borderRadius : '5px'}} className="img-fluid table-avtar" src={`${ImagePath}/ThumbnailTest.png`} alt="user image" />
+          {/* {data.lastName} */}
+                      </td>
+                    <td>
+                    <div style={{display : 'grid'}}>
+                    <p style={{ paddingTop: '0', margin: '0' , fontSize : '16px' , fontWeight : '600' }}>
+                            {formatDate(data.test_date)}
+                          </p>
+                      <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
+  
+                      <p style={{paddingTop : '0' , margin : '0'}}>
+                      
+                      {getTestCount(data.test_id)} Test
+                      </p>
+                      </div>
+                      <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                      <p style={{paddingTop : '0', margin : '0'}}> 
+  
+                      {data.time_slot}
+                      </p>
+                      </div>
+                      <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/VectorProfile.png`} alt="user image" />
+                      <p style={{paddingTop : '0', margin : '0'}}>
+  
+                      {data.name}
+                      </p>
+                      </div>
+                      <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
+                      <p style={{paddingTop : '0', margin : '0'}}>
+  
+                      LBNHVB10042024{data.id}
+                      </p>
+                      </div>
+                      <div className="gap-2" style={{display : 'flex', marginTop : '4px'}}>
+                      {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
+                      <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem' , margin : '0'}}>{data.status}</p>
+  
+                      </div>
+                    </div>
                     </td>
-                  <td>
-                  <div style={{display : 'grid'}}>
-                  <p style={{ paddingTop: '0', margin: '0' , fontSize : '16px' , fontWeight : '600' }}>
-                          {data.test_date}
-                        </p>
-                    <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
-
-                    <p style={{paddingTop : '0' , margin : '0'}}>
-                    
-                    {data.lastName}1 Test
-                    </p>
-                    </div>
-                    <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}> 
-
-                    {data.timeslot_id}
-                    </p>
-                    </div>
-                    <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/VectorProfile.png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}>
-
-                    {data.name}
-                    </p>
-                    </div>
-                    <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
-                    <p style={{paddingTop : '0', margin : '0'}}>
-
-                    LBNHVB10042024{data.id}
-                    </p>
-                    </div>
-                    <div className="gap-2" style={{display : 'flex', marginTop : '4px'}}>
-                    {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
-                    <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem' , margin : '0'}}>Upcoming</p>
-
-                    </div>
-                  </div>
-                  </td>
-                  <td>
-                    <i className='fa fa-angle-right'></i>
-                    {/* {data.userName} */}
-                    </td>
-                </tr>
-              ))}
-            </CommonTable>
+                    <td>
+                      <i className='fa fa-angle-right'></i>
+                      {/* {data.userName} */}
+                      </td>
+                  </tr>
+                ))}
+              </CommonTable>
+          ) : (
+            <p>There are no booked tests</p>
+          )}
           </Col>
         </Row>
       </Card>

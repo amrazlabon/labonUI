@@ -436,12 +436,18 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/patient_info');
-        // setData(response.data);
-        console.log("the patient iformation of contacrs",response.data);
+        const userId = sessionStorage.getItem('user_id');
+      if(userId){
+        console.log("is inside the data");
+        
+        // setIsLoggedIn(true)
+        const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
         setPatientInformation(response.data)
+        // setSavedAddresses(response.data);
+        console.log("Saved addresses: where dont know", response.data);
+      }
       } catch (error) {
-        setPatientInformation(TableHeadOptionBody)
+        setPatientInformation([])
         // setError(error.message);
       }
     };
@@ -453,7 +459,7 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
     const handleRowClick = (data: any) => {
       setProfile({
         ...profile,
-        name: data.firstName,
+        name: data.first_name,
         relation : data.relation,
         dob: data.dob, // Add appropriate value or logic if needed
         mobile: data.mobile, // Add appropriate value or logic if needed
@@ -463,7 +469,8 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         location: data.location, // Add appropriate value or logic if needed
         address: data.address, // Add appropriate value or logic if needed
         age: data.age, // Add appropriate value or logic if needed
-        nick_name: data.nick_name // Add appropriate value or logic if needed
+        nick_name: data.nick_name, // Add appropriate value or logic if needed
+        patient_id : data.id
       });
       setStepActive(3)
     };
