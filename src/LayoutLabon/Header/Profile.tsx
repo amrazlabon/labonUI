@@ -6,117 +6,169 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FileText, LogOut, Settings, Users } from "react-feather";
+import LoginModal from "@/Redux/loginDo";
+import './profileStyle.css'
 
 export const Profile = ({isOpen , setIsOpen} : any) => {
   const { i18LangStatus } = useAppSelector((store) => store.langSlice);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [showModal, setShowModal] = useState(false);
+
+  console.log("check if this is working fine");
+  
+  const toggleModal = () => {
+    setShowModal(prev => !prev);
+  };
+
   const [userId , setUserId] = useState<any>(null)
+  const [userData , setUserData] = useState<any>(null)
   const router = useRouter();
+
   const LogOutUser = () => {
-    Cookies.remove("mofi_token");
-    router.push("/acheck/profile");
+    // Cookies.remove("mofi_token");
+    router.push("/acheck/home");
+    sessionStorage.removeItem('user_id')
+    sessionStorage.removeItem('user_data')
   };
   const [UserProfileData , setUserProfileData]  = useState<any>([])
 
-
   useEffect(() => {
-    const userId = sessionStorage.getItem("user_id");
-    if (userId) {
-      setUserId(userId)
-      const UserProfileData = [
-        {
-          icon: <Users />,
-          title: "Account",
-          link:"chat/private_chat",
-        },
-        // {
-          //   icon: <Mail />,
-          //   title: "Inbox",
-          //   link:"app/letter_box",
-          // },
-          {
-            icon: <FileText />,
-            title: "Taskboard",
-            link:"app/task",
-          },
-          {
-            icon: <Settings />,
-            title: "Settings",
-            link:"users/edit_profile",
-          },
-          {
-            icon: <FileText />,
-            title: "My Contact",
-            link:"acheck/patient_information",
-          },
-          {
-            icon: <FileText />,
-            title: "My Booking",
-            link:"acheck/booking_information",
-          },
-          {
-            icon: <LogOut />,
-            title: "Log Out",
-            link:"",
-          },
-        ];
-        setUserProfileData(UserProfileData)
-      }
-      else {
+    // Function to check if user is logged in
+    const checkLoginStatus = () => {
+      const userId = sessionStorage.getItem("user_id");
+      const userData = sessionStorage.getItem("user_data");
+      if (userId) {
+        setUserId(userId)
+        if(userData){
+          console.log("the json data",userData);
+          
+          const userDataList = JSON.parse(userData)
+          setUserData(userDataList)
+        }
         const UserProfileData = [
-          {
-            icon: <Users />,
-            title: "Account",
-            link:"chat/private_chat",
-          },
+          // {
+          //   icon: <Users />,
+          //   title: "Account",
+          //   link:"chat/private_chat",
+          // },
           // {
             //   icon: <Mail />,
             //   title: "Inbox",
             //   link:"app/letter_box",
             // },
+            // {
+            //   icon: <FileText />,
+            //   title: "Taskboard",
+            //   link:"app/task",
+            // },
+            // {
+            //   icon: <Settings />,
+            //   title: "Settings",
+            //   link:"users/edit_profile",
+            // },
             {
               icon: <FileText />,
-              title: "Taskboard",
-              link:"app/task",
+              title: "My Contact",
+              link:"",
             },
             {
-              icon: <Settings />,
-              title: "Settings",
-              link:"users/edit_profile",
+              icon: <FileText />,
+              title: "My Booking",
+              link:"",
             },
             {
               icon: <LogOut />,
-              title: "Sign In",
-              link:"acheck/login",
+              title: "Log Out",
+              link:"",
+              onClick(evt : any) { 
+                evt.preventDefault();
+                router.push("/acheck/home");
+  sessionStorage.removeItem('user_id')
+  sessionStorage.removeItem('user_data')
+  const event = new Event('sessionUpdate');
+  window.dispatchEvent(event);
+  setUserId(null)
+  setUserData(null)
+                // toggleModal()
+                // setModalToggle();
+             }
             },
-            // {
-            //   icon: <FileText />,
-            //   title: "My Contact",
-            //   link:"acheck/patient_information",
-            // },
-            // {
-            //   icon: <FileText />,
-            //   title: "My Booking",
-            //   link:"acheck/booking_information",
-            // },
           ];
           setUserProfileData(UserProfileData)
-  
-      }
-    // console.log("user id",isLoggedIn)
+        }
+        else {
+          const UserProfileData = [
+            // {
+            //   icon: <Users />,
+            //   title: "Account",
+            //   link:"chat/private_chat",
+            // },
+            // {
+              //   icon: <Mail />,
+              //   title: "Inbox",
+              //   link:"app/letter_box",
+              // },
+              {
+                icon: <FileText />,
+                title: "Find Tests",
+                link:"app/task",
+              },
+              {
+                icon: <Settings />,
+                title: "Settings",
+                link:"users/edit_profile",
+              },
+              {
+                icon: <LogOut />,
+                title: "Sign In",
+                link:"acheck/login",
+                onClick(evt : any) { 
+                  evt.preventDefault();
+                  toggleModal()
+                  // setModalToggle();
+               }
+              },
+              // {
+              //   icon: <FileText />,
+              //   title: "My Contact",
+              //   link:"acheck/patient_information",
+              // },
+              // {
+              //   icon: <FileText />,
+              //   title: "My Booking",
+              //   link:"acheck/booking_information",
+              // },
+            ];
+            setUserProfileData(UserProfileData)
     
-    
-  // if(isLoggedIn)
+        }
+      // setIsLoggedIn(!!userId);
+    };
+
+    // Check login status on component mount
+    checkLoginStatus();
+
+    // Listen for storage changes and custom session update event
+    window.addEventListener("storage", checkLoginStatus);
+    window.addEventListener("sessionUpdate", checkLoginStatus);
+
+    return () => {
+      // Clean up event listeners
+      window.removeEventListener("storage", checkLoginStatus);
+      window.removeEventListener("sessionUpdate", checkLoginStatus);
+    };
   }, []);
 
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+  
       
   return (
     <div >
+      <LoginModal showModal={showModal} toggleModal={toggleModal}/>
       <div className="header-content d-flex align-items-center">
         <i
           className={`fa ${isOpen ? 'fa-times' : 'fa-align-right'}`}
@@ -125,17 +177,27 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
         ></i>
       </div>
       {isOpen && (
-        <ul className="profile-dropdown" style={{width : 'intrinsic' , top : '75px' , left : '0'}}>
-        {userId && <div className="flex-grow-1" style={{borderBottomStyle : 'groove'}}>
-          <span>Alen Miller</span>
-          <p className="mb-0 font-outfit">
-            USER ID: LBNUSR-1-IND
+        <ul className="profile-dropdown" style={{width : 'auto' , top : '75px' , left : '0'}}>
+        {userId !== null && 
+        <Link href={'/acheck/profile'}>
+
+        <div className="" style={{borderBottomStyle : 'groove' , padding : '20px', display : 'flex' , gap : '2rem'}}>
+<img style={{height:'3rem', margin:'0 ' , borderRadius : '20px'}} className="img-fluid table-avtar" src={`${ImagePath}/Father.png`} alt="user image" />
+
+          <div style={{display : 'grid'}}>
+
+          <p>{userData.name ? userData.name : 'NA'}</p>
+          <p className="mb-0">
+            USER ID: LBNUSR-1-IND{userData.id}
             {/* <i className="fa fa-angle-down"></i> */}
           </p>
-        </div>}
+          </div>
+        </div>
+        </Link>
+}
           {UserProfileData.map((item : any, index : any) => (
             <li key={index} style={{borderBottomStyle : 'groove'}}>
-              <Link href={`/${item.link}`}>
+              <Link href={`/${item.link}`} onClick={item.onClick}>
                 {item.icon}
                 <span>{item.title}</span>
               </Link>
@@ -190,6 +252,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
         .profile-dropdown li a span {
           margin-left: 8px;
         }
+          
       `}</style>
     </div>
   );

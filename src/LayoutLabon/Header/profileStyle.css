@@ -1,28 +1,7 @@
-.profile-nav {
-    position: relative;
-  }
-  
-  .profile-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 100vw; /* Make the dropdown fit the screen width */
-    background: white;
-    border: 1px solid #ddd;
-    display: none; /* Hide by default */
-  }
-  
-  .profile-nav .profile-dropdown.onhover-show-div {
-    display: block; /* Show when dropdown is visible */
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: transparent;
-    font-size: 18px;
-    cursor: pointer;
-  }
-  
+.page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li {
+  padding: 20px !important;
+}
+
+.page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li:last-child {
+  padding-top: 20px !important;
+}

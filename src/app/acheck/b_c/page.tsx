@@ -56,19 +56,20 @@ const BookingConfirmation = () => {
                     <p style={{marginTop : '0' }}>In case you have any clarifications, please call us on the support number <span style={{fontWeight : 'bold'}}>+91 9446061000</span>. See you soon!</p>
                     <div style={{borderBottomStyle : 'groove' , marginTop : '24px' , marginBottom : '24px'}}></div>
                     {/* <h2>Save this Data</h2> */}
-<p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0' , textAlign : 'left'}}>Save this Date</p>
+<p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0' , textAlign : 'left'}}>Save this Data</p>
 
                     <p style={{textAlign : 'left' , paddingTop : '12px'}}>We don’t see the patient details saved. Would <br /> you like to save it for future use?</p>
                     </div>
 
-                    <Col sm="12" style={{paddingTop : '24px'}}>
+                    {/* <Col sm="12" style={{paddingTop : '24px'}}>
         <Link href={''}>
                   <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white', borderRadius : '50px' }} color="">Yes <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span></Button>
         </Link>
                 </Col>
                 <Link href={''}>
                 <p className="text-center" style={{paddingTop : '24px' , cursor : 'pointer'}}>Dashboard</p>
-                </Link>  {/* <button className={"test-btn"}>Dashboard</button> */}
+                </Link> */}
+                  {/* <button className={"test-btn"}>Dashboard</button> */}
                 
 
                 </div>

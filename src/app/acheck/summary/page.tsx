@@ -25,7 +25,7 @@ import axios from "axios";
 
 // import OpenModalMofi from ".";
 
-const Summary = ({profile , setProfile , setStepActive , selectedTests, selectedAddress} : any) => {
+const Summary = ({profile , setProfile , setStepActive , selectedTests, selectedAddress , setSelectedTests} : any) => {
 
   const [fullScreen, setFullScreen] = useState(false);
   const fullScreenToggle = () => setFullScreen(!fullScreen);
@@ -42,11 +42,18 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
       const handleAddToCartClick = () => {
         setFullScreen(true); // or false, depending on what you want to do
       };
+
+      const editClick = () => {
+
+      console.log("comin ghere");
+      
+        setStepActive(2)
+      }
       
     return (
     <Col md='' >
 
-      <FullScreenModal isOpen={fullScreen} toggle={fullScreenToggle} selectedTests={selectedTests} profile={profile}/>
+      <FullScreenModal isOpen={fullScreen} toggle={fullScreenToggle} selectedTests={selectedTests} profile={profile} setSelectedTests={setSelectedTests} setProfile={setProfile}/>
       {/* <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
 
@@ -78,7 +85,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 <div style={{paddingBottom :'12px'}}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
   <h2 className="text-black ml-4" style={{ paddingBottom: '16px' }}>Patient Details</h2>
-  <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
+  <i onClick={editClick} style={{fontSize : '20px'}} className="fa fa-edit"></i>
 </div>
 <BasicCardProfile profile={profile}/>
   
@@ -87,14 +94,14 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 <div style={{paddingBottom :'24px'}}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
   <h2 className="text-black ml-4 mt-3" style={{ paddingBottom: '16px' }}>Home Test Location</h2>
-  <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
+  <i onClick={editClick} style={{fontSize : '20px'}} className="fa fa-edit"></i>
 </div>
 
 
 <BasicMap/>
 <BasicCardProfileMap profile={profile}/>
 </div>
-<BasicCardSchedule profile={profile}/>
+<BasicCardSchedule setStepActive={setStepActive} profile={profile}/>
                                     
 {/* </div> */}
 <div>
@@ -155,9 +162,16 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 
 export default Summary;
 
-const BasicCardSchedule = ({profile} : any) => {
+const BasicCardSchedule = ({setStepActive ,  profile} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
+
+  const editClick = () => {
+
+    console.log("comin ghere");
+    
+      setStepActive(1)
+    }
 
   return (
     <Col sm="12" xl="12">
@@ -173,7 +187,7 @@ const BasicCardSchedule = ({profile} : any) => {
 Home Test Schedule
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </h2>
-            <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
+            <i onClick={editClick} style={{fontSize : '20px'}} className="fa fa-edit"></i>
 </div>
         
           <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem'}}>Upcoming</p>
@@ -266,7 +280,7 @@ const BasicCardProfile = ({profile} : any) => {
 {profile.name ? profile.name : 'Vasudevan Ramachandran  '}
 </h1>
 <div className="gap-2" style={{display : 'flex' , padding : '0' , paddingBottom : '4px'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Gender.png`} alt="user image" />
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Gender.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
@@ -282,7 +296,7 @@ const BasicCardProfile = ({profile} : any) => {
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex' , paddingBottom : '0'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Syringe.png`} alt="user image" />
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
@@ -398,7 +412,7 @@ function formatPrice(value : any) {
 }
 
 
-const FullScreenModal = ({isOpen , toggle , selectedTests , profile} : any) => {
+const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelectedTests , setProfile} : any) => {
   // const [fullScreen, setFullScreen] = useState(false);
   // const fullScreenToggle = () => setFullScreen(!fullScreen);
 
@@ -436,6 +450,31 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile} : any) => {
     sessionStorage.setItem('booking_order', JSON.stringify(profile));
     // sessionStorage.setItem('address', JSON.stringify(selectedAddress));
   };
+
+  const handleRowClick = (data: any) => {
+    if (selectedTests.length > 1) {
+      // Filter out the item from selectedTests
+      const updatedSelectedTests = selectedTests.filter((test: any) => test.id !== data.id);
+      setSelectedTests(updatedSelectedTests);
+
+      // Filter out the item from profile.test_data
+      const updatedTestData = profile.test_data.filter((test: any) => test.id !== data.id);
+      setProfile({
+        ...profile,
+        test_data: updatedTestData,
+      });
+
+      console.log("Updated selectedTests:", updatedSelectedTests);
+      console.log("Updated profile:", profile);
+    } else {
+      // Optionally, you can show a message or perform another action if deletion is not allowed
+      console.log("Cannot delete the last item");
+      // For example, you could show an alert:
+      // alert("You cannot delete the last item in the cart.");
+    }
+  };
+
+
   return (
     <Modal
       fullscreen
@@ -459,7 +498,7 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile} : any) => {
         </div>
       </ModalHeader>
       <ModalBody className="dark-modal" style={{ padding: '24px' }}>
-        <TableHeadOptions selectedTests={selectedTests} />
+        <TableHeadOptions selectedTests={selectedTests} handleRowClick={handleRowClick}/>
         <InvoiceTotal selectedTests={selectedTests} width={'110'} />
         <p style={{ paddingTop: '24px', paddingBottom: '24px', margin: '0' }}>
           Transportation is charged extra. Minimum charge for Transportation is <span style={{ fontWeight: 'bold' }}><i className='fa fa-rupee'></i>100.00</span>. You can pay the Transportation fee at the time of sample collection.
@@ -497,23 +536,11 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
   );
 };
 
-const TableHeadOptions=({selectedTests} : any)=> {
+const TableHeadOptions=({selectedTests , handleRowClick} : any)=> {
 
   // const { setBookingData } = useBooking();
   console.log("the data informations ",selectedTests);
   
-
-  const handleRowClick = (data: any) => {
-    // router.push({
-    //   pathname: '/acheck/patient_details', 
-    //   query: {
-    //     b_id: data.id,
-    //   },
-    // });
-    sessionStorage.setItem('booked_test', JSON.stringify(data));
-
-    console.log("handle click in the patient information",data)
-  }
   // TableHeadOptions=()=> {
 
     const TableHeadOptionBody = [
@@ -548,7 +575,7 @@ const TableHeadOptions=({selectedTests} : any)=> {
           <Col sm="12" lg="12" xl="12" style={{paddingLeft : '0' , paddingRight : '0'}}>
             <CommonTable headClass="table-dark" headData={TableHeadOptionHead}>
               {selectedTests.map((data : any) => (
-                <tr style={{ cursor: 'pointer' }} key={data.id} onClick={() => handleRowClick(data)}>
+                <tr style={{ cursor: 'pointer' }} key={data.id} >
                   {/* <th scope="row">{data.id}</th> */}
                   <td style={{paddingTop : '0'}}>
         <img style={{height:'3rem', margin:'0' , borderRadius : '5px'}} className="img-fluid table-avtar" src={`${ImagePath}/ThumbnailTest.png`} alt="user image" />
@@ -596,7 +623,7 @@ const TableHeadOptions=({selectedTests} : any)=> {
                   </div>
                   </td>
                   <td>
-                    <i style={{fontSize : '14px'}} className='icon-trash'></i>
+                    <i onClick={() => handleRowClick(data)} style={{fontSize : '14px'}} className='icon-trash'></i>
                     {/* {data.userName} */}
                     </td>
                 </tr>

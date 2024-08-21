@@ -17,7 +17,7 @@ import Summary from '../summary/page';
 import './bookStyle.css'
 
 
-const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selectedTests, selectedAddress, education, experience, salary }: any) => {
+const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selectedTests, selectedAddress, setSelectedTests, experience, salary }: any) => {
 
     const searchParams = useSearchParams();
     // const userType = searchParams.get('type');
@@ -139,6 +139,7 @@ const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selecte
                                         setStepActive={setStepActive}
                                         selectedTests={selectedTests}
                     selectedAddress={selectedAddress}
+                    setSelectedTests={setSelectedTests}
                                         // menuItems={menuItems}
                                         // cities={cities}
                                         // updateData={updateData}

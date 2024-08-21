@@ -18,6 +18,7 @@ import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/Bas
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { BasicCenter, BasicContainerStyle } from "@/Data/Miscellaneous/Maps";
 import axios from "axios";
+import LoginModal from "@/Redux/loginDo";
 
 
 type Test = {
@@ -54,8 +55,11 @@ const home = () => {
     const [selectedAddress, setSelectedAddress] = useState<Location[]>([]);
     console.log("the selected test in the home page",selectedAddress);
     
-    const handleBookingClick = () => {
-      if(selectedTests.length === 0 || selectedAddress.length === 0){
+    const handleBookingClick = (evt : any) => {
+      const userId = sessionStorage.getItem("user_id");
+
+      if(selectedTests.length === 0 && selectedAddress.length === 0){
+        evt.preventDefault();
         setOpen(true)
         setToasterContent('Select Test to Continue')
         setToasterColorContent('warning')
@@ -64,6 +68,26 @@ const home = () => {
         },10000)
 
     }
+    else if(selectedAddress.length === 0){
+      evt.preventDefault();
+      setOpen(true)
+      setToasterContent('Select Address to Continue')
+      setToasterColorContent('warning')
+      setTimeout(()=>{
+          setOpen(false);
+      },10000)
+
+  }
+  else if(!userId){
+    evt.preventDefault();
+    setOpen(true)
+    setToasterContent('Please Login to Continue')
+    setToasterColorContent('warning')
+    setTimeout(()=>{
+        setOpen(false);
+    },10000)
+
+}
     else{
         sessionStorage.setItem('tests', JSON.stringify(selectedTests));
         sessionStorage.setItem('address', JSON.stringify(selectedAddress));
@@ -333,27 +357,25 @@ export default home;
 // import React, { useState } from 'react';
 // import { Col, Input, Label, Button } from 'reactstrap';
 
-const DefaultChecks = ({ data  , selectedTests ,  setSelectedTests , toggle} : any) => {
-  const [selectedTestData, setSelectedTestData] = useState([]);
+const DefaultChecks = ({ data, selectedTests, setSelectedTests, toggle } : any) => {
+  const [selectedTestData, setSelectedTestData] = useState(selectedTests.map((test : any) => test.id));
 
   const handleCheckboxChange = (index : any) => {
-    const selectedData = selectedTestData.map((index : any) => data[index]);
+    const testId = data[index].id;
 
     setSelectedTestData((prevSelected : any) => {
-      if (prevSelected.includes(index)) {
-        return prevSelected.filter((i : any) => i !== index);
+      if (prevSelected.includes(testId)) {
+        return prevSelected.filter((id : any) => id !== testId);
       } else {
-        return [...prevSelected, index];
+        return [...prevSelected, testId];
       }
     });
   };
 
   const handleSelectTestsClick = () => {
-    const selectedData = selectedTestData.map((index : any) => data[index]);
-    console.log('Selected tests data:', selectedData);
-    setSelectedTests(selectedData)
+    const selectedData = selectedTestData.map((id : any) => data.find((test : any) => test.id === id));
+    setSelectedTests(selectedData);
     toggle();
-    // Perform further actions with selectedData
   };
 
   const isDisabled = selectedTestData.length === 0;
@@ -361,13 +383,13 @@ const DefaultChecks = ({ data  , selectedTests ,  setSelectedTests , toggle} : a
   return (
     <Col sm="" xl="" style={{ padding: '0' }}>
       <div className="card-wrapper checkbox-checked" style={{ padding: '0' }}>
-        {data.map((test: any, index: any) => (
+        {data.map((test : any, index : any) => (
           <div key={index} className="form-check">
             <Input
               id={`flexCheckDefault-${index}`}
               type="checkbox"
               onChange={() => handleCheckboxChange(index)}
-              // checked={selectedTestData.includes(index)}
+              checked={selectedTestData.includes(test.id)}
             />
             <Label htmlFor={`flexCheckDefault-${index}`} check>
               <div style={{ display: 'grid' }}>
@@ -412,8 +434,8 @@ const DefaultChecks = ({ data  , selectedTests ,  setSelectedTests , toggle} : a
       </Col>
     </Col>
   );
-
 };
+
 
 const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
     const [selectedTest, setSelectedTest] = useState<number | null>(null);
@@ -678,11 +700,70 @@ All Tests
     };
 
     fetchData();
+
+    const checkLoginStatus = () => {
+      const userId = sessionStorage.getItem("user_id");
+      setIsLoggedIn(!!userId);
+    };
+
+    // Check login status on component mount
+    checkLoginStatus();
+
+    // Listen for storage changes and custom session update event
+    window.addEventListener("storage", checkLoginStatus);
+    window.addEventListener("sessionUpdate", checkLoginStatus);
+
+    return () => {
+      // Clean up event listeners
+      window.removeEventListener("storage", checkLoginStatus);
+      window.removeEventListener("sessionUpdate", checkLoginStatus);
+    };
   }, []);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setShowForm(false);
+  };
+
+  const fetchData = async () => {
+    try {
+    const userId = sessionStorage.getItem('user_id');
+    if(userId){
+      console.log("is inside the data");
+      
+      setIsLoggedIn(true)
+      const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
+      setSavedAddresses(response.data);
+      console.log("Saved addresses: where dont know", response.data);
+    }
+    } catch (error) {
+      const data = [{
+          id : 1,
+          pincode : '678907',
+          location : 'Test Location',
+          address : 'Test Address',
+          nick_name : 'Home'
+          
+      },
+      {
+          id : 2,
+          pincode : '678907',
+          location : 'Test Location',
+          address : 'Test Address',
+          nick_name : 'Home'
+          
+      },
+      {
+          id : 3,
+          pincode : '678907',
+          location : 'Test Location',
+          address : 'Test Address',
+          nick_name : 'Home'
+          
+      },]
+      setSavedAddresses([])
+      console.error("Error fetching data:", error.message);
+    }
   };
 
   const handleContinueClick = () => {
@@ -698,8 +779,17 @@ All Tests
     toggle();
     // Handle form submission logic here, e.g., send form data to the server
   };
+  const [showModal, setShowModal] = useState(false);
+
+  console.log("check if this is working fine");
+  
+  const toggleModal = () => {
+    setShowModal(prev => !prev);
+  };
+
   const signInButton = () => {
-    sessionStorage.setItem('user_id', JSON.stringify(1));
+    // sessionStorage.setItem('user_id', JSON.stringify(1));
+    toggleModal()
     setIsLoggedIn(true)
 
   }
@@ -740,6 +830,8 @@ All Tests
     else {
       return (
         <div>
+      <LoginModal showModal={showModal} toggleModal={toggleModal}/>
+
           <p style={{ paddingTop: '0', margin: '0'  ,cursor : 'pointer',color:'#1D0F8F'}} onClick={() => handleOptionClick("add")}>
             Add new Address.
           </p>
@@ -943,12 +1035,45 @@ All Tests
       address: ''
     });
   
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+  
       setFormData({
-        ...formData,
-        [e.target.name]: e.target.value
+          ...formData,
+          [name]: value
       });
-    };
+  
+      if (name === 'pincode' && value.length === 6) {
+          // Call the third-party API when pincode length is 6
+          try {
+              const response = await axios.get(`https://api.postalpincode.in/pincode/${value}`);
+              const locationData = response.data[0];
+  
+              if (locationData.Status === 'Success' && locationData.PostOffice.length > 0) {
+                  // Filter the PostOffice array to find the Sub Post Office
+                  const subPostOffice = locationData.PostOffice.find(
+                      (postOffice : any) => postOffice.BranchType === 'Sub Post Office'
+                  );
+  
+                  if (subPostOffice) {
+                      setFormData({
+                          ...formData,
+                          location: `${subPostOffice.Name}, ${subPostOffice.District}, ${subPostOffice.State}`,
+                          pincode: value
+                      });
+                  } else {
+                      console.log('No Sub Post Office found for this pincode.');
+                  }
+              } else {
+                  console.log('Invalid Pincode');
+              }
+          } catch (error) {
+              console.error('Error fetching location data:', error);
+          }
+      }
+  };
+  
+  
   
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
@@ -965,17 +1090,17 @@ All Tests
           {/* <CardBody style={{ padding: '24px' }}> */}
             <Form className="floating-wrapper" onSubmit={handleSubmit}>
               <Row className="g-3">
-                <Col sm="6">
-                  <FormGroup floating className="mb-6">
-                    <Input type="text" name="pincode" value={formData.pincode} onChange={handleChange} placeholder="Pincode" />
-                    <Label>Pincode</Label>
-                  </FormGroup>
-                </Col>
                 <Col sm="12">
                   <FormGroup floating className="mb-6">
                     <Input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
                     <Label>Address</Label>
                     <p style={{margin : '0' , paddingTop : '8px' , color : 'GrayText'}}>Example: Flat No. 123, Building No. 123</p>
+                  </FormGroup>
+                </Col>
+                <Col sm="12">
+                  <FormGroup floating className="mb-6">
+                    <Input type="text" name="pincode" value={formData.pincode} onChange={handleChange} placeholder="Pincode" />
+                    <Label>Pincode</Label>
                   </FormGroup>
                 </Col>
                 <Col sm="12" className="mt-6">
@@ -1030,6 +1155,7 @@ All Tests
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              background : 'orangered',
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}>
               <div className="d-flex justify-content-between align-items-center">

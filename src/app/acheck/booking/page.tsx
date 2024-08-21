@@ -147,7 +147,11 @@ const Page = () => {
       const parsedAddress = JSON.parse(address);
       setProfile(prevProfile => ({
         ...prevProfile,
-        address_data: parsedAddress
+        address_data: parsedAddress,
+        address : parsedAddress[0].address,
+        pincode : parsedAddress[0].pincode,
+        location : parsedAddress[0].location,
+        nick_name : parsedAddress[0].nick_name,
     }));
       setSelectedAddress(JSON.parse(address));
     }
@@ -161,13 +165,24 @@ const Page = () => {
         // positionAPI().then((position)=>{ setCategory(position.result) }) 
     }, [])
 
+    const goBack =() => { 
+
+      setStepActive(stepActive - 1)
+    }
+
     return (
         <Col md='6' >
       <div style={{padding : '0', height:'13.5rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
         <Col sm='6' md='6' lg='6'>
 <Steppers stepActive={stepActive} setStepActive={setStepActive} />
         </Col>
-<h1 className="text-white" style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
+        <div style={{display : 'flex'}}>
+{(stepActive === 1 || stepActive === 2 || stepActive === 3) && (
+  <i onClick={goBack} className='fa fa-angle-left' style={{padding:'24px 0 24px 24px', fontSize : '24px' , color : 'white'}}></i>
+  // <p  style={{color : 'white'}}>Back</p>
+  )
+}<h1 className="text-white"  style={{padding:'24px', margin: '0'}}>Home Visit Booking</h1>
+        </div>
 {/* <div>
   <p className="text-white" style={{paddingBottom:'8px',paddingLeft : '24px', margin: '0'}}>Glucose</p>
   <h2 className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>1100.00</h2>
@@ -227,6 +242,7 @@ const Page = () => {
                     setProfile={setProfile}
                     selectedTests={selectedTests}
                     selectedAddress={selectedAddress}
+                    setSelectedTests={setSelectedTests}
 
                     // cities={cities}
                     // education={education}

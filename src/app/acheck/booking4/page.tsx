@@ -128,7 +128,7 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
             </div>
 
             </Card>
-            {isSelectFromContacts ? <FloatingForm formData={formData} onFormChange={handleFormChange} setStepActive={setStepActive}/> : 
+            {isSelectFromContacts ? <FloatingForm profile={profile} setProfile={setProfile} formData={formData} onFormChange={handleFormChange} setStepActive={setStepActive}/> : 
             <TableHeadOptions profile={profile} setProfile={setProfile} setStepActive={setStepActive}/>}
 
 
@@ -147,7 +147,7 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
 
 export default PatientAdd;
 
-const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
+const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepActive}: any) => {
 
   
   const [isAgeShow , setIsAgeShow] = useState(false)
@@ -174,8 +174,43 @@ const FloatingForm = ({ formData, onFormChange , setStepActive}: any) => {
     onFormChange('gender', gender);
   };
 
-  const handleBookTimingsClick =() => {
-    setStepActive(3)
+  const handleBookTimingsClick =async () => {
+    console.log("form data",formData);
+    const userId = sessionStorage.getItem('user_id');
+
+    if(userId){
+
+      const reqBody = {
+        address : formData.address,
+        location : formData.location,
+        pincode : formData.pincode,
+        nick_name : formData.nick_name,
+        dob : new Date(formData.dob),
+        mobile : formData.mobile,
+        email : formData.email,
+        age : formData.age,
+        gender : formData.gender,
+        user_id : parseInt(userId, 10),
+        first_name : formData.name,
+        relation : 'Father',
+      }
+      try {
+        const response = await axios.post('/api/patient_info',reqBody);
+        // setSavedAddresses(response.data);
+        setStepActive(3)
+        console.log("coming till here");
+        console.log("Saved addresses: where dont know", response.data);
+        setProfile({
+          ...profile,
+          patient_id : response.data[0].id
+        })
+        
+
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      }
+    }
+    
   }
 
   const { name, dob, gender, pincode , mobile , email , location , address , nick_name} = formData;

@@ -55,15 +55,6 @@ const FloatingForm = () => {
 
   console.log("form value",formData);
 
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-      ...(name === 'dob' && { age: calculateAge(value) })
-    });
-  };
-
   const calculateAge = (dob: string) => {
     if (!dob) return '';
     const today = new Date();
@@ -75,6 +66,47 @@ const FloatingForm = () => {
     }
     return age.toString();
   };
+
+  const handleInputChange = async (e: any) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+      ...(name === 'dob' && { age: calculateAge(value) })
+    });
+
+    if (name === 'pincode' && value.length === 6) {
+      // Call the third-party API when pincode length is 6
+      try {
+          const response = await axios.get(`https://api.postalpincode.in/pincode/${value}`);
+          const locationData = response.data[0];
+
+          if (locationData.Status === 'Success' && locationData.PostOffice.length > 0) {
+              // Filter the PostOffice array to find the Sub Post Office
+              const subPostOffice = locationData.PostOffice.find(
+                  (postOffice : any) => postOffice.BranchType === 'Sub Post Office'
+              );
+
+              if (subPostOffice) {
+                  setFormData({
+                      ...formData,
+                      location: `${subPostOffice.Name}, ${subPostOffice.District}, ${subPostOffice.State}`,
+                      pincode: value
+                  });
+              } else {
+                  console.log('No Sub Post Office found for this pincode.');
+              }
+          } else {
+              console.log('Invalid Pincode');
+          }
+      } catch (error) {
+          console.error('Error fetching location data:', error);
+      }
+  };
+
+}
+
+  
 
   const handleTimeChange = (gender: string) => {
     setFormData({
