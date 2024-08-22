@@ -53,7 +53,7 @@ const home = () => {
       
     const [selectedTests, setSelectedTests] = useState<any>([]);
     const [selectedAddress, setSelectedAddress] = useState<Location[]>([]);
-    console.log("the selected test in the home page",selectedAddress);
+    // console.log("the selected test in the home page",selectedAddress);
     
     const handleBookingClick = (evt : any) => {
       const userId = sessionStorage.getItem("user_id");
@@ -450,7 +450,7 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
     const handleSelectTestsClick = () => {
       if (selectedTest !== null) {
         const selectedTestData = savedAddresses[selectedTest];
-        console.log('Selected test data:', selectedTestData);
+        // console.log('Selected test data:', selectedTestData);
         setSelectedAddress([selectedTestData])
         // setToasterContent('All Good, Continue Booking')
         // setToasterColorContent('success')
@@ -542,31 +542,11 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
           try {
             const response = await axios.get('/api/tests');
             setData(response.data);
-            console.log("the test data",response.data);
+            // console.log("the test data",response.data);
             
           } catch (error) {
-            const data = [{
-                id : 1,
-                test_name : 'Glucose',
-                label : 'This is test to check the value of Glucose',
-                price : '250'
-                
-            },
-            {
-                id : 2,
-                test_name : 'Cholesterol',
-                label : 'This is test to check the value of Cholesterol',
-                price : '250'
-                
-            },
-            {
-                id : 3,
-                test_name : 'HDL',
-                label : 'Glucose Test',
-                price : '250'
-                
-            }]
-            setData(data)
+            
+            setData([])
             setError(error.message);
           }
         };
@@ -575,37 +555,30 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
       }, []);
 
 
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('/api/tests');
+          setData(response.data);
+          // console.log("the test data",response.data);
+          
+        } catch (error) {
+          
+          setData([])
+          setError(error.message);
+        }
+      };
     
       const handleSearchInputChange = async (event : any) => {
         const term = event.target.value;
         try {
             // const response = await axios.get(term ? `http://0.0.0.0:37000/tests/letter/${term}` : '/api/tests');
             const response = await axios.post('/api/tests', {term});
-            console.log("the searchrespose data",response.data)
+            // console.log("the searchrespose data",response.data)
             setData(response.data);
           } catch (error) {
-            const data = [{
-                id : 1,
-                test_name : 'Glucose',
-                label : 'Glucose Test',
-                price : '250'
-                
-            },
-            {
-                id : 2,
-                test_name : 'Cholesterol',
-                label : 'Glucose Test',
-                price : '250'
-                
-            },
-            {
-                id : 3,
-                test_name : 'HDL',
-                label : 'Glucose Test',
-                price : '250'
-                
-            }]
-            setData(data)
+            
+            // setData([])
+            fetchData()
             setError(error.message);
           }
         // setSearchTerm(term);
@@ -662,12 +635,12 @@ All Tests
       try {
       const userId = sessionStorage.getItem('user_id');
       if(userId){
-        console.log("is inside the data");
+        // console.log("is inside the data");
         
         setIsLoggedIn(true)
         const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
         setSavedAddresses(response.data);
-        console.log("Saved addresses: where dont know", response.data);
+        // console.log("Saved addresses: where dont know", response.data);
       }
       } catch (error) {
         const data = [{
@@ -729,12 +702,12 @@ All Tests
     try {
     const userId = sessionStorage.getItem('user_id');
     if(userId){
-      console.log("is inside the data");
+      // console.log("is inside the data");
       
       setIsLoggedIn(true)
       const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
       setSavedAddresses(response.data);
-      console.log("Saved addresses: where dont know", response.data);
+      // console.log("Saved addresses: where dont know", response.data);
     }
     } catch (error) {
       const data = [{
@@ -771,7 +744,7 @@ All Tests
   };
 
   const handleFormSubmit = (formData: any) => {
-    console.log("Form Data:", formData);
+    // console.log("Form Data:", formData);
     setSelectedAddress([formData])
     setSelectedOption('')
     // setShowForm(false)
@@ -781,7 +754,7 @@ All Tests
   };
   const [showModal, setShowModal] = useState(false);
 
-  console.log("check if this is working fine");
+  // console.log("check if this is working fine");
   
   const toggleModal = () => {
     setShowModal(prev => !prev);
@@ -1062,10 +1035,10 @@ All Tests
                           pincode: value
                       });
                   } else {
-                      console.log('No Sub Post Office found for this pincode.');
+                      // console.log('No Sub Post Office found for this pincode.');
                   }
               } else {
-                  console.log('Invalid Pincode');
+                  // console.log('Invalid Pincode');
               }
           } catch (error) {
               console.error('Error fetching location data:', error);
@@ -1134,7 +1107,7 @@ All Tests
 
   const ColorsSchemes = ( {open , setOpen , toasterContent , toasterColorContent} : any ) => {
   
-    console.log("toaster content",toasterColorContent,toasterContent)
+    // console.log("toaster content",toasterColorContent,toasterContent)
     return (
       <Col md="6">
         <Card style={{boxShadow : 'none', margin : '0'}}>

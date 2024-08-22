@@ -118,7 +118,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
           mobile: '+91' + formData.mobile,
         };
         const response = await axios.post('/api/login', reqBody);
-        console.log('the response from the login', response.data);
+        // console.log('the response from the login', response.data);
 
         sessionStorage.setItem('user_id', JSON.stringify(response.data[0].id));
         sessionStorage.setItem('user_data', JSON.stringify(response.data[0]));

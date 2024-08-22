@@ -119,7 +119,7 @@ const Page = () => {
         profileImage:''
     })
     
-    console.log("the profile value in the stepper",profile);
+    // console.log("the profile value in the stepper",profile);
     useEffect(() => {
         const tests = sessionStorage.getItem('tests');
         const userId = sessionStorage.getItem('user_id');

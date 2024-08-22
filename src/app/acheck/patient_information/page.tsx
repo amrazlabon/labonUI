@@ -166,7 +166,7 @@ const TableHeadOptions=({patientInformation} : any)=> {
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px' }}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
                           <p style={{ paddingTop: '0', margin: '0'  , fontSize : '14px'}}>
-                            5 tests done so far
+                            0 tests done so far
                           </p>
                         </div>
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>

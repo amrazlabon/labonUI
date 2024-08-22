@@ -15,7 +15,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
 
   const [showModal, setShowModal] = useState(false);
 
-  console.log("check if this is working fine");
+  // console.log("check if this is working fine");
   
   const toggleModal = () => {
     setShowModal(prev => !prev);
@@ -70,12 +70,12 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
             {
               icon: <FileText />,
               title: "My Contact",
-              link:"",
+              link:"acheck/patient_information",
             },
             {
               icon: <FileText />,
               title: "My Booking",
-              link:"",
+              link:"acheck/booking_information",
             },
             {
               icon: <LogOut />,

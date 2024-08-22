@@ -40,7 +40,7 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
         nick_name: profile.nick_name ? profile.nick_name :'',
         // time: '8:00 AM', // default value for time
       });
-      console.log("formdata",formData);
+      // console.log("formdata",formData);
     
       const handleToggleChange = (event: any) => {
         setIsSelectFromContacts(event.target.checked);
@@ -90,7 +90,7 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
             [field]: value,
           });
         }
-        console.log("formdata",formData);
+        // console.log("formdata",formData);
         
       };
 
@@ -154,7 +154,7 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
 
   
   const handleInputChange = (e: any) => {
-    console.log("the values of date change",e.target.name);
+    // console.log("the values of date change",e.target.name);
     
     const { name, value } = e.target;
     if (name === 'dob') {
@@ -175,11 +175,11 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
   };
 
   const handleBookTimingsClick =async () => {
-    console.log("form data",formData);
+    // console.log("form data",formData);
     const userId = sessionStorage.getItem('user_id');
 
     if(userId){
-
+      
       const reqBody = {
         address : formData.address,
         location : formData.location,
@@ -193,13 +193,15 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
         user_id : parseInt(userId, 10),
         first_name : formData.name,
         relation : 'Father',
+        middle_name : '',
+        last_name : '',
       }
       try {
+        setStepActive(3)
         const response = await axios.post('/api/patient_info',reqBody);
         // setSavedAddresses(response.data);
-        setStepActive(3)
-        console.log("coming till here");
-        console.log("Saved addresses: where dont know", response.data);
+        // console.log("coming till here");
+        // console.log("Saved addresses: where dont know", response.data);
         setProfile({
           ...profile,
           patient_id : response.data[0].id
@@ -210,6 +212,7 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
         console.error("Error fetching data:", error.message);
       }
     }
+
     
   }
 
@@ -473,13 +476,13 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
       try {
         const userId = sessionStorage.getItem('user_id');
       if(userId){
-        console.log("is inside the data");
+        // console.log("is inside the data");
         
         // setIsLoggedIn(true)
         const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
         setPatientInformation(response.data)
         // setSavedAddresses(response.data);
-        console.log("Saved addresses: where dont know", response.data);
+        // console.log("Saved addresses: where dont know", response.data);
       }
       } catch (error) {
         setPatientInformation([])
@@ -538,7 +541,7 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px' }}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
                           <p style={{ paddingTop: '0', margin: '0'  , fontSize : '14px'}}>
-                            5 tests done so far
+                            0 tests done so far
                           </p>
                         </div>
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>

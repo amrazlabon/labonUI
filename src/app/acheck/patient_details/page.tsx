@@ -145,13 +145,12 @@ Contact Details
         </CardBody> */}
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
-<Col sm="12">
+{/* <Col sm="12">
 <Link href={'/acheck/home'}>
                   <Button className="btn-lg" style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Book a Home Test for this Contact
-                     {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
                      </Button>
 </Link>
-                </Col>
+                </Col> */}
         <div>
             {/* <OpenModalMofi/> */}
         </div>
@@ -186,10 +185,8 @@ const BasicCardProfileMap = ({patientInformation} : any) => {
 {/* Ramakrishnan */}
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           {/* </h1> */}
-          <p className="mb-0">{patientInformation.address ? patientInformation.address + patientInformation.location + patientInformation.pincode : 
-          `Suite No.123, Famous Building,
-          Sample Street, Athirampuzha P.O,
-          Kottayam - 686001, Kerala India.`}
+          <p className="mb-0">{patientInformation.address ? patientInformation.address + ', ' + patientInformation.location + ', ' + patientInformation.pincode : 
+          `NA`}
           {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
 </div>
@@ -223,11 +220,11 @@ const BasicCardProfile = ({patientInformation} : any) => {
 {profile.name ? profile.name : 'Vasudevan Ramachandran  '}
 </h1> */}
 <div className="gap-2" style={{display : 'flex' , padding : '0' , paddingBottom : '4px'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Gender.png`} alt="user image" />
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Gender.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {patientInformation.gender ? patientInformation.gender : 'Male'} ({patientInformation.age ? patientInformation.gender : '63'} Years)
+                    {patientInformation.gender ? patientInformation.gender : 'Male'} ({patientInformation.age ? patientInformation.age : '63'} Years)
                     </p>
                     </div>
 <div className="gap-2" style={{display : 'flex' , paddingBottom : '4px'}}>
@@ -239,7 +236,7 @@ const BasicCardProfile = ({patientInformation} : any) => {
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex' , paddingBottom : '0'}}>
-                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Syringe.png`} alt="user image" />
+                    <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     

@@ -45,7 +45,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 
       const editClick = () => {
 
-      console.log("comin ghere");
+      // console.log("comin ghere");
       
         setStepActive(2)
       }
@@ -168,7 +168,7 @@ const BasicCardSchedule = ({setStepActive ,  profile} : any) => {
 
   const editClick = () => {
 
-    console.log("comin ghere");
+    // console.log("comin ghere");
     
       setStepActive(1)
     }
@@ -398,7 +398,7 @@ const InvoiceSubTotal = ({selectedTests} : any) => {
         </span>
           {/* <p>hbsf</p>
           <p>hbsf</p> */}
-        <p style={{display: "block" , background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '3rem'  , justifySelf: 'end' ,marginRight : '2rem' }}>Paid</p>
+        <p style={{display: "block" , background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem'  , justifySelf: 'end' ,marginRight : '2rem' }}>UnPaid</p>
         </div>
       </li>
 

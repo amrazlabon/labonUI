@@ -140,7 +140,6 @@ const ProgressWithNumberStepsCart = ({ stepActive, setStepActive } : any) => {
 };
 
 const DynamicProgressWithNumberSteps = ({ stepActive, setStepActive } : any) => {
-  console.log("the step active value",stepActive);
   
   const ProgressNumberList = [
     {

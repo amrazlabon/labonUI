@@ -22,7 +22,7 @@ const Tests = ({profile , setProfile , setStepActive , selectedTests, selectedAd
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
-      console.log("the date value", profile);
+      // console.log("the date value", profile);
       const [dateValue, setDateValue] = useState<Date | null>(null); // Initialize as null
 
   // const [dateValue, setDateValue] = useState<Date>(profile?.date ? new Date() : new Date());
@@ -68,7 +68,7 @@ const DefaultCalendar = ({profile , setProfile , setStepActive ,  dateValue, set
   // const date = `${dateValue.getDate()} - ${dateValue.getMonth() + 1} - ${dateValue.getFullYear()} `
 
   const formatDate = (date : any) => {
-    console.log("the date in the format date",date);
+    // console.log("the date in the format date",date);
     
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed

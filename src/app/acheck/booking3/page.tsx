@@ -23,13 +23,13 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("the fdate of the profle",profile.date);
+      // console.log("the fdate of the profle",profile.date);
       
       try {
         const response = await axios.get(`/api/timeslot?date=${profile.date}`);
         // setData(response.data);
         let data = response.data.sort((a : any, b : any) => a.id - b.id);
-        console.log("the timeslot data",data);
+        // console.log("the timeslot data",data);
         setTimeSlotData(data);
         
       } catch (error) {
@@ -41,10 +41,10 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
   
   const [selectedTime, setSelectedTime] = useState<string>(profile.timeslot ? profile.timeslot : null); // State for selected time
   const [timeSlotData, setTimeSlotData] = useState<any>([]); // State for selected time
-  console.log("the data for the button",selectedTime);
+  // console.log("the data for the button",selectedTime);
 
   const handleTimeChange = (time: string , id : any) => {
-    console.log("time",time)
+    // console.log("time",time)
     setSelectedTime(time);
     setProfile({
       ...profile,

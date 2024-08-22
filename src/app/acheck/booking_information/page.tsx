@@ -50,7 +50,7 @@ const BookingInformation = () => {
       // const response = await axios.get(`/api/patient_info?endpoint=per&id=${booking_id}`);
       const TestResponse = await axios.get(`/api/orders?endpoint=user&id=${user_id}`);
       // setData(response.data);
-      console.log("the test iformation of contacrs",TestResponse.data);
+      // console.log("the test iformation of contacrs",TestResponse.data);
       // setPatientInformation(response.data)
       setBookingInformation(TestResponse.data.test_data)
     }
@@ -106,7 +106,7 @@ const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, siz
 const TableHeadOptions=({bookingInformation} : any)=> {
 
   // const { setBookingData } = useBooking();
-  console.log("the data informations ",bookingInformation);
+  // console.log("the data informations ",bookingInformation);
   
 
   const handleRowClick = (data: any) => {
@@ -118,7 +118,7 @@ const TableHeadOptions=({bookingInformation} : any)=> {
     // });
     sessionStorage.setItem('order_id', JSON.stringify(data.id));
 
-    console.log("handle click in the patient information",data)
+    // console.log("handle click in the patient information",data)
   }
   // TableHeadOptions=()=> {
 

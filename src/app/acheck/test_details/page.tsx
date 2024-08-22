@@ -153,26 +153,22 @@ const PatientDetails = () => {
         </CardBody> */}
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
-<Col sm="12">
+{/* <Col sm="12">
 <Link href={'/acheck/booking'}>
 
                   <Button className="btn-lg bg-gray-400 " style={{height: '3rem', width :'100%' , backgroundColor: 'black !important'
  , color :'white' , marginTop : '16px' , borderRadius : '50px'}}>Reschedule Booking 
-                    {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
                     </Button>
 </Link>
                 </Col>
 
                 <Col sm="12">
 <Link href={'/acheck/booking_cancellation'}>
-                  {/* <Button style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color=""> */}
                     <p className="text-center mt-3">
                       Cancel Booking 
                       </p>
-                    {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
-                    {/* </Button> */}
 </Link>
-                </Col>
+                </Col> */}
                 {/* <p className=" mt-4">Dashboard</p> */}
 
         {/* <div> */}
@@ -200,6 +196,17 @@ const BasicCardSchedule = ({selectedTests} : any) => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
+
+  const getStatus = (testDate: string) => {
+    const today = new Date().setHours(0, 0, 0, 0);
+    const date = new Date(testDate).setHours(0, 0, 0, 0);
+
+    if (date < today) {
+      return "Completed";
+    } else {
+      return "Upcoming";
+    }
+  };
   
   return (
     <Col sm="12" xl="12">
@@ -218,7 +225,10 @@ const BasicCardSchedule = ({selectedTests} : any) => {
             {/* <i className="fa fa-edit"></i> */}
 </div>
         
-          <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem'}}>Upcoming</p>
+<p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem'}}>
+            {getStatus(selectedTests.test_date)}
+          </p>
+          {/* <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem'}}>Upcoming</p> */}
           <div className="gap-4" style={{display : 'flex' , marginTop:'8px'}}>
             <div style={{display : 'flex'}}>
             <img style={{height:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Calendar.png`} alt="user image" />
@@ -274,7 +284,7 @@ const BasicCardProfileMap = ({selectedTests} : any) => {
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           {/* </h1> */}
           <p className="mb-0">
-            {selectedTests.address ? (selectedTests.address + selectedTests.location + selectedTests.pincode) : ''}
+            {selectedTests.address ? (selectedTests.address + ', ' + selectedTests.location + ', ' + selectedTests.pincode) : ''}
           {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </p>
 </div>
@@ -507,7 +517,9 @@ const InvoiceSubTotal = ({ selectedTests }: { selectedTests: { tests: { price: s
           <span style={{ display: "block", width: 125, textAlign: "right", opacity: "0.9", fontWeight: 600, fontSize: '18px', paddingRight: '2rem' }}>
             <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{grandTotal.toFixed(2)}
           </span>
-          <p style={{ display: "block", background: 'rgba(101, 196, 102, 1)', color: 'white', borderRadius: '5px', padding: '2px', width: '3rem', justifySelf: 'end', marginRight: '2rem' }}>Paid</p>
+        <p style={{display: "block" , background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem'  , justifySelf: 'end' ,marginRight : '2rem' }}>UnPaid</p>
+
+          {/* <p style={{ display: "block", background: 'rgba(101, 196, 102, 1)', color: 'white', borderRadius: '5px', padding: '2px', width: '3rem', justifySelf: 'end', marginRight: '2rem' }}>Paid</p> */}
         </div>
       </li>
       <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '8px 0' }} />

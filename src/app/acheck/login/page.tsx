@@ -86,7 +86,7 @@ const ModalTwo = ({modalTwo , modalTwoTogggle} : any) => {
       otp: '', // Store OTP as a single string
     });
   
-    console.log("the form data",formData);
+    // console.log("the form data",formData);
     
     const [showOtp, setShowOtp] = useState(false);
     const [showVerifyButton, setShowVerifyButton] = useState(false);
@@ -137,7 +137,7 @@ const ModalTwo = ({modalTwo , modalTwoTogggle} : any) => {
           mobile : '+91' + formData.mobile
         }
         const response = await axios.post('/api/login',reqBody);
-        console.log("the response from the login",response.data);
+        // console.log("the response from the login",response.data);
         
         sessionStorage.setItem('user_id', JSON.stringify(response.data[0].id));
         sessionStorage.setItem('user_data', JSON.stringify(response.data[0]));
