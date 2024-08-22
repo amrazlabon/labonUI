@@ -161,6 +161,14 @@ const emailTasks = [];
         message: emailContentAdmin,
     });
 
+    if (isSelectFromContacts) {
+      emailTasks.push({
+          email: bookingOrder.email,
+          subject: 'Labon - Home Visit Booking Confirmation LBNHVB112220241',
+          message: emailContentPatient,
+      });
+  }
+
     // Add the customer email
     emailTasks.push({
         email: userData.email,
@@ -169,13 +177,7 @@ const emailTasks = [];
     });
 
     // Conditionally add the patient email
-    if (isSelectFromContacts) {
-        emailTasks.push({
-            email: bookingOrder.email,
-            subject: 'Labon - Home Visit Booking Confirmation LBNHVB112220241',
-            message: emailContentPatient,
-        });
-    }
+    
 
     try {
         // Send all emails in sequence or in parallel
