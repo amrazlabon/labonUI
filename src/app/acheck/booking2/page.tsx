@@ -18,49 +18,46 @@ import { formatShortWeekday } from '@/utils/formatShortWeekday';
 
 const Tests = ({profile , setProfile , setStepActive , selectedTests, selectedAddress} : any) => {
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
-  // const [dateValue, setDateValue] = useState(new Date());
   const callback = useCallback((tab: number | undefined) => {
-        setActiveTab(tab);
-      }, []);
-      // console.log("the date value", profile);
-      const [dateValue, setDateValue] = useState<Date | null>(null); // Initialize as null
+    setActiveTab(tab);
+  }, []);
 
-  // const [dateValue, setDateValue] = useState<Date>(profile?.date ? new Date() : new Date());
-      
-  const handleBookTimingsClick =() => {
-    setStepActive(1)
-  }
-    return (
-    <Col md='' style={{backgroundColor : '#F5F5F5', paddingTop : '0', boxShadow : 'none'}}>
-{/* <div> */}
+  // Initialize dateValue with the date from profile if it exists, otherwise null
+  const [dateValue, setDateValue] = useState<Date | null>(
+    profile?.date ? new Date(profile.date.split('/').reverse().join('-')) : null
+  );
 
-      <Card style={{backgroundColor:'#F5F5F5' , padding : '0' , boxShadow : 'none' , margin : '0'}}>
-      {/* <h1 className="text-black ml-4 mt-4 " style={{margin:'2rem' }}>Tests</h1> */}
+  const handleBookTimingsClick = () => {
+    setStepActive(1);
+  };
 
-{/* <div> */}
-<h1 className="text-black" style={{paddingBottom:'12px' , marginTop : '0'}}>Pick a Date</h1>
-
-<BasicCard/>
-<DefaultCalendar profile={profile} setProfile={setProfile} setStepActive={setStepActive} dateValue={dateValue} setDateValue={setDateValue}/>
-
-<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '1rem', paddingBottom: '0' }}>
-                                        <p >
-                                            <img style={{ height: '15px' }} className="img-fluid table-avtar" src={`${ImagePath}/Rectangle3.png`} alt="user image" />Selected Date
-                                        </p>
-                                        <p >
-                                            <img style={{ height: '15px' }} className="img-fluid table-avtar" src={`${ImagePath}/Rectangle2.png`} alt="user image" />Available Date
-                                        </p>
-                                        <p className="m-0">
-                                            <img style={{ height: '15px' }} className="img-fluid table-avtar" src={`${ImagePath}/Rectangle1.png`} alt="user image" />Holidays
-                                        </p>
-                                    </div>
-               
-
-        </Card>
-          {/* </div> */}
-        </Col>
-    )
-}
+  return (
+    <Col md='' style={{ backgroundColor: '#F5F5F5', paddingTop: '0', boxShadow: 'none' }}>
+      <Card style={{ backgroundColor: '#F5F5F5', padding: '0', boxShadow: 'none', margin: '0' }}>
+        <h1 className="text-black" style={{ paddingBottom: '12px', marginTop: '0' }}>Pick a Date</h1>
+        <BasicCard />
+        <DefaultCalendar
+          profile={profile}
+          setProfile={setProfile}
+          setStepActive={setStepActive}
+          dateValue={dateValue}
+          setDateValue={setDateValue}
+        />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '1rem', paddingBottom: '0' }}>
+          <p>
+            <img style={{ height: '15px' }} className="img-fluid table-avtar" src={`${ImagePath}/Rectangle3.png`} alt="user image" />Selected Date
+          </p>
+          <p>
+            <img style={{ height: '15px' }} className="img-fluid table-avtar" src={`${ImagePath}/Rectangle2.png`} alt="user image" />Available Date
+          </p>
+          <p className="m-0">
+            <img style={{ height: '15px' }} className="img-fluid table-avtar" src={`${ImagePath}/Rectangle1.png`} alt="user image" />Holidays
+          </p>
+        </div>
+      </Card>
+    </Col>
+  );
+};
 
 export default Tests;
 
@@ -90,7 +87,14 @@ const DefaultCalendar = ({profile , setProfile , setStepActive ,  dateValue, set
   const tileDisabled = ({ date }: { date: Date }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset time to start of the day for comparison
-    return date < today; // Compare dates directly
+  
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1); // Get yesterday's date
+  
+    const currentHour = new Date().getHours();
+  
+    // Disable dates before yesterday, and disable today if current time is after 8 PM (20:00)
+    return date < yesterday || (date.getTime() === today.getTime() && currentHour >= 20);
   };
 
   // Add a custom class for Sundays

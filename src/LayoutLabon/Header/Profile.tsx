@@ -196,7 +196,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
         </Link>
 }
           {UserProfileData.map((item : any, index : any) => (
-            <li key={index} style={{borderBottomStyle : 'groove'}}>
+            <li key={index} style={{borderBottomStyle : 'groove' , display : 'block'}}>
               <Link href={`/${item.link}`} onClick={item.onClick}>
                 {item.icon}
                 <span>{item.title}</span>

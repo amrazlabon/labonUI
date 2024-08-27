@@ -16,7 +16,34 @@ const SendDetails = () => {
     setIsSelectFromContacts(event.target.checked);
   };
 
+  // the issue facing is from here, the loading is having some issue, should look into it here
+  useEffect(() => {
+    const bookingOrder = sessionStorage.getItem('booking_order');
+    const userData = sessionStorage.getItem('user_data');
+    console.log("this is what should be checke din case of loading");
+    
+    console.log("the data in the send details",bookingOrder);
+    
+    try {
+      if (bookingOrder) {
+        setBookingOrder(JSON.parse(bookingOrder));
+      }
+      if (userData) {
+        setUserData(JSON.parse(userData));
+      }
+    } catch (error) {
+      console.error("Failed to parse session storage data:", error);
+    }
+  }, []);
+    // Empty dependency array to run only on initial load
+  
+
+  // think the issue is here, we are facing in the reduce issue and thing will work
+  // issue is with some initial value loading, look what the issue is
   async function sendEmail() {
+    // or we can send the bookingOrder details on the load only, that will solve the issue
+    console.log("else we should call the load function from here");
+    
     const totalTestCost = bookingOrder.test_data.reduce((total : any, test : any) => {
       return total + (test.price ? parseFloat(test.price) : 0);
     }, 0);
@@ -78,7 +105,7 @@ const emailContentLab = `<p>Dear Lab Admin,</p>
   <p><strong>Team Labon</strong></p>
 `;
 
-const emailContentPatient = `<p>Dear Admin,</p>
+const emailContentPatient = `<p>Dear ${bookingOrder.name ? bookingOrder.name : 'NA'},</p>
   
   <p>${userData.name ? userData.name : 'NA' } has made a new home Test booking for you. Our phlebotomist will come to your location on the schedule date & time for blood test.</p>
   
@@ -111,7 +138,7 @@ const emailContentPatient = `<p>Dear Admin,</p>
 
 `;
 
-const emailContentCustomer = `<p>Dear Admin,</p>
+const emailContentCustomer = `<p>Dear ${userData.name ? userData.name : 'NA' },</p>
   
   <p>Your booking for home sample collection for ${bookingOrder.name ? bookingOrder.name : 'NA'} is confirmed.</p>
   
@@ -200,18 +227,6 @@ const emailTasks = [];
 
   }
   
-  
-
-  useEffect(() => {
-    const bookingOrder = sessionStorage.getItem('booking_order');
-    const userData = sessionStorage.getItem('user_data');
-    if(bookingOrder) {
-      setBookingOrder(JSON.parse(bookingOrder))
-    }
-    if(userData) {
-      setUserData(JSON.parse(userData))
-    }
-  } , [] )
 
     return(
         <Col md='6' style={{padding : '24px'}}>

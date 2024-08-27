@@ -193,7 +193,7 @@ const TableHeadOptions=({bookingInformation} : any)=> {
                       </p>
                       </div>
                       <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
-                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" />
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
                       <p style={{paddingTop : '0', margin : '0'}}> 
   
                       {data.time_slot}
@@ -207,7 +207,7 @@ const TableHeadOptions=({bookingInformation} : any)=> {
                       </p>
                       </div>
                       <div className="gap-1" style={{display : 'flex', marginTop : '4px'}}>
-                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Order No..png`} alt="user image" />
+                      <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Order No..png`} alt="user image" />
                       <p style={{paddingTop : '0', margin : '0'}}>
   
                       LBNHVB10042024{data.id}
@@ -215,7 +215,7 @@ const TableHeadOptions=({bookingInformation} : any)=> {
                       </div>
                       <div className="gap-2" style={{display : 'flex', marginTop : '4px'}}>
                       {/* <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/icon - Clock.png`} alt="user image" /> */}
-                      <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem' , margin : '0'}}>{data.status}</p>
+                      <p style={{background: data.status === 'upcoming' ? 'rgba(101, 196, 102, 1)' : '#929292', color : 'white' , borderRadius : '5px' , padding : '5px' , width: 'auto' , margin : '0', textAlign : 'center'}}>{data.status}</p>
   
                       </div>
                     </div>

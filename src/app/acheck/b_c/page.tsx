@@ -47,7 +47,10 @@ const BookingConfirmation = () => {
                     <h1 style={{fontWeight:'700'}}>Booking Confirmed!</h1>
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}> */}
 
-<p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0'}}>Hello {bookingOrder.name ? bookingOrder.name : 'Sudha'}!</p>
+                    <p style={{fontSize: '24px', fontWeight: '400', marginBottom: '24px', marginTop: '24px'}}>
+  Hello {bookingOrder.name ? bookingOrder.name.split(' ')[0] : 'Sudha'}!
+</p>
+
                         {/* <h2>Hello {bookingOrder.name}!</h2> */}
                         <p>
                         You just booked a home test for <span style={{fontWeight : 'bold'}}> {bookingOrder.name ? bookingOrder.name :  'Sreedevi Ramachandran'}</span>. The invoice has been emailed to you. Our phlebotomist assigned to collect blood samples will arrive at your location tenatively byat <span style={{fontWeight : 'bold'}}>{bookingOrder.timeslot ? bookingOrder.timeslot : '7:00 AM'}</span>  on <span style={{fontWeight : 'bold'}}>{bookingOrder.date ? bookingOrder.date : '01/01/2024'}</span>.
@@ -55,10 +58,9 @@ const BookingConfirmation = () => {
                     <br />
                     <p style={{marginTop : '0' }}>In case you have any clarifications, please call us on the support number <span style={{fontWeight : 'bold'}}>+91 9446061000</span>. See you soon!</p>
                     <div style={{borderBottomStyle : 'groove' , marginTop : '24px' , marginBottom : '24px'}}></div>
-                    {/* <h2>Save this Data</h2> */}
-<p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0' , textAlign : 'left'}}>Save this Data</p>
+{/* <p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0' , textAlign : 'left'}}>Save this Data</p>
 
-                    <p style={{textAlign : 'left' , paddingTop : '12px'}}>We don’t see the patient details saved. Would <br /> you like to save it for future use?</p>
+                    <p style={{textAlign : 'left' , paddingTop : '12px'}}>We don’t see the patient details saved. Would <br /> you like to save it for future use?</p> */}
                     </div>
 
                     {/* <Col sm="12" style={{paddingTop : '24px'}}>

@@ -202,9 +202,9 @@ const BasicCardSchedule = ({selectedTests} : any) => {
     const date = new Date(testDate).setHours(0, 0, 0, 0);
 
     if (date < today) {
-      return "Completed";
+      return "completed";
     } else {
-      return "Upcoming";
+      return "upcoming";
     }
   };
   
@@ -225,7 +225,7 @@ const BasicCardSchedule = ({selectedTests} : any) => {
             {/* <i className="fa fa-edit"></i> */}
 </div>
         
-<p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem'}}>
+<p style={{background: getStatus(selectedTests.test_date) === 'upcoming' ? 'rgba(101, 196, 102, 1)' : '#929292', color : 'white' , borderRadius : '5px' , padding : '5px' , width: 'fit-content' , textAlign : 'center'}}>
             {getStatus(selectedTests.test_date)}
           </p>
           {/* <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem'}}>Upcoming</p> */}
@@ -517,7 +517,7 @@ const InvoiceSubTotal = ({ selectedTests }: { selectedTests: { tests: { price: s
           <span style={{ display: "block", width: 125, textAlign: "right", opacity: "0.9", fontWeight: 600, fontSize: '18px', paddingRight: '2rem' }}>
             <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{grandTotal.toFixed(2)}
           </span>
-        <p style={{display: "block" , background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem'  , justifySelf: 'end' ,marginRight : '2rem' }}>UnPaid</p>
+        <p style={{display: "block" , background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '5px' , width: 'fit-content'  , textAlign: 'center' ,marginLeft : '2rem' }}>Unpaid</p>
 
           {/* <p style={{ display: "block", background: 'rgba(101, 196, 102, 1)', color: 'white', borderRadius: '5px', padding: '2px', width: '3rem', justifySelf: 'end', marginRight: '2rem' }}>Paid</p> */}
         </div>

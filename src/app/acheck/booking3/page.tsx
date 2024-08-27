@@ -69,7 +69,7 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
 {/* <p style={{fontWeight:'600',fontSize:'16px'}}>Morning </p> */}
 {/* <span style={{color:'#65C466'}}> (Recommended)</span> */}
 </div>
-<IconsRadio timeSlotData={timeSlotData} selectedTime={selectedTime} onTimeChange={handleTimeChange}/>
+<IconsRadio timeSlotData={timeSlotData} selectedTime={selectedTime} onTimeChange={handleTimeChange} profile={profile}/>
                                     
 
 {selectedTime && 
@@ -93,7 +93,7 @@ export default TestTime;
 
 
 
-const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange }: any, ref: React.Ref<any>) => {
+const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange , profile}: any, ref: React.Ref<any>) => {
 
   const CustomRadioListData = [
     { id: 1, icon: "Gender - Male.png", text: "7:00 AM" },
@@ -113,98 +113,123 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
   ];
 
   const morningIds = [1, 2, 3, 4];
-const afternoonIds = [5, 6, 7, 8];
-const eveningIds = [9, 10, 11, 12, 13, 14, 15];
+  const afternoonIds = [5, 6, 7, 8];
+  const eveningIds = [9, 10, 11, 12, 13, 14, 15];
 
-// Filter the array based on these IDs
-const morningOptions = timeSlotData.filter((item : any) => morningIds.includes(item.id));
-const afternoonOptions = timeSlotData.filter((item : any) => afternoonIds.includes(item.id));
-const eveningOptions = timeSlotData.filter((item : any) => eveningIds.includes(item.id));
+  const now = new Date();
+  const selectedDate = new Date(profile.date.split('/').reverse().join('-')); // Convert dd/mm/yyyy to Date object
+
+  let filteredMorningOptions = morningIds;
+  let filteredAfternoonOptions = afternoonIds;
+
+  if (selectedDate.toDateString() === now.toDateString()) {
+    const currentHour = now.getHours();
+
+    if (currentHour >= 11) {
+      filteredMorningOptions = []; // Filter out morning slots if after 12 PM
+    }
+
+    if (currentHour >= 15) {
+      filteredAfternoonOptions = []; // Filter out afternoon slots if after 4 PM
+    }
+  }
+
+  const morningOptions = timeSlotData.filter((item: any) => filteredMorningOptions.includes(item.id));
+  const afternoonOptions = timeSlotData.filter((item: any) => filteredAfternoonOptions.includes(item.id));
+  const eveningOptions = timeSlotData.filter((item: any) => eveningIds.includes(item.id));
+
+
 
 
   return (
     <Col xl="12" sm="12" className="order-xl-0 order-sm-1">
       <Card style={{ padding: '16px', boxShadow: 'none', margin: '0' }}>
         {/* Morning */}
-        <div>
-          <p style={{ fontWeight: '600', fontSize: '16px' }}>Morning</p>
-          <div className="h-100 checkbox-checked">
-            <div className="form-check radio-primary ps-0">
-              <ul className="radio-wrapper">
-                {morningOptions.map(({ icon, id, timeslot } : any, index : any) => (
-                  <li className="p-1 pt-2 pb-2" key={id}>
-                    <Input
-                      className="checkbox-shadow d-block"
-                      id={`radio-${id}`}
-                      type="radio"
-                      name="radio-time"
-                      value={timeslot}
-                      checked={selectedTime === timeslot}
-                      onChange={() => onTimeChange(timeslot, id)}
-                    />
-                    <Label htmlFor={`radio-${id}`} check>
-                      <span>{timeslot}</span>
-                    </Label>
-                  </li>
-                ))}
-              </ul>
+        {morningOptions.length > 0 && (
+          <div>
+            <p style={{ fontWeight: '600', fontSize: '16px' }}>Morning</p>
+            <div className="h-100 checkbox-checked">
+              <div className="form-check radio-primary ps-0">
+                <ul className="radio-wrapper">
+                  {morningOptions.map(({ icon, id, timeslot }: any, index: any) => (
+                    <li className="p-1 pt-2 pb-2" key={id}>
+                      <Input
+                        className="checkbox-shadow d-block"
+                        id={`radio-${id}`}
+                        type="radio"
+                        name="radio-time"
+                        value={timeslot}
+                        checked={selectedTime === timeslot}
+                        onChange={() => onTimeChange(timeslot, id)}
+                      />
+                      <Label htmlFor={`radio-${id}`} check>
+                        <span>{timeslot}</span>
+                      </Label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Afternoon */}
-        <div style={{ marginTop: '16px' }}>
-          <p style={{ fontWeight: '600', fontSize: '16px' }}>Afternoon</p>
-          <div className="h-100 checkbox-checked">
-            <div className="form-check radio-primary ps-0">
-              <ul className="radio-wrapper">
-                {afternoonOptions.map(({ icon, id, timeslot } : any, index : any) => (
-                  <li className="p-1 pt-2 pb-2" key={id}>
-                    <Input
-                      className="checkbox-shadow d-block"
-                      id={`radio-${id}`}
-                      type="radio"
-                      name="radio-time"
-                      value={timeslot}
-                      checked={selectedTime === timeslot}
-                      onChange={() => onTimeChange(timeslot, id)}
-                    />
-                    <Label htmlFor={`radio-${id}`} check>
-                      <span>{timeslot}</span>
-                    </Label>
-                  </li>
-                ))}
-              </ul>
+        {afternoonOptions.length > 0 && (
+          <div style={{ marginTop: '16px' }}>
+            <p style={{ fontWeight: '600', fontSize: '16px' }}>Afternoon</p>
+            <div className="h-100 checkbox-checked">
+              <div className="form-check radio-primary ps-0">
+                <ul className="radio-wrapper">
+                  {afternoonOptions.map(({ icon, id, timeslot }: any, index: any) => (
+                    <li className="p-1 pt-2 pb-2" key={id}>
+                      <Input
+                        className="checkbox-shadow d-block"
+                        id={`radio-${id}`}
+                        type="radio"
+                        name="radio-time"
+                        value={timeslot}
+                        checked={selectedTime === timeslot}
+                        onChange={() => onTimeChange(timeslot, id)}
+                      />
+                      <Label htmlFor={`radio-${id}`} check>
+                        <span>{timeslot}</span>
+                      </Label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Evening */}
-        <div style={{ marginTop: '16px' }}>
-          <p style={{ fontWeight: '600', fontSize: '16px' }}>Evening</p>
-          <div className="h-100 checkbox-checked">
-            <div className="form-check radio-primary ps-0">
-              <ul className="radio-wrapper">
-                {eveningOptions.map(({ icon, id, timeslot } : any, index : any) => (
-                  <li className="p-1 pt-2 pb-2" key={id}>
-                    <Input
-                      className="checkbox-shadow d-block"
-                      id={`radio-${id}`}
-                      type="radio"
-                      name="radio-time"
-                      value={timeslot}
-                      checked={selectedTime === timeslot}
-                      onChange={() => onTimeChange(timeslot, id)}
-                    />
-                    <Label htmlFor={`radio-${id}`} check>
-                      <span>{timeslot}</span>
-                    </Label>
-                  </li>
-                ))}
-              </ul>
+        {eveningOptions.length > 0 && (
+          <div style={{ marginTop: '16px' }}>
+            <p style={{ fontWeight: '600', fontSize: '16px' }}>Evening</p>
+            <div className="h-100 checkbox-checked">
+              <div className="form-check radio-primary ps-0">
+                <ul className="radio-wrapper">
+                  {eveningOptions.map(({ icon, id, timeslot }: any, index: any) => (
+                    <li className="p-1 pt-2 pb-2" key={id}>
+                      <Input
+                        className="checkbox-shadow d-block"
+                        id={`radio-${id}`}
+                        type="radio"
+                        name="radio-time"
+                        value={timeslot}
+                        checked={selectedTime === timeslot}
+                        onChange={() => onTimeChange(timeslot, id)}
+                      />
+                      <Label htmlFor={`radio-${id}`} check>
+                        <span>{timeslot}</span>
+                      </Label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </Card>
     </Col>
   );

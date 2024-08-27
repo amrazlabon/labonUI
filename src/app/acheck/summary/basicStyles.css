@@ -3,7 +3,7 @@
     max-width: none;
     height: 100%;
     margin: 0;
-    margin-left: 7rem;
+    margin-left: auto;
     }
 
     .accordion-button:not(.collapsed) {

@@ -231,7 +231,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
 const ColorsSchemes = ({ open, setOpen, message }: any) => {
   return (
     <Col md="6">
-      <Card>
+      <Card style={{margin : '0'}}>
         <Toast
           fade
           className="default-show-toast align-items-center text-light border-0"

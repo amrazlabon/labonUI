@@ -170,7 +170,7 @@ const BasicCardSchedule = ({setStepActive ,  profile} : any) => {
 
     // console.log("comin ghere");
     
-      setStepActive(1)
+      setStepActive(0)
     }
 
   return (
@@ -190,7 +190,7 @@ Home Test Schedule
             <i onClick={editClick} style={{fontSize : '20px'}} className="fa fa-edit"></i>
 </div>
         
-          <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem'}}>Upcoming</p>
+          <p style={{background: 'rgba(101, 196, 102, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '5rem' , textAlign : 'center'}}>Upcoming</p>
           <div className="gap-4" style={{display : 'flex' , marginTop:'8px'}}>
             <div style={{display : 'flex'}}>
             <img style={{height:'2rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Calendar.png`} alt="user image" />
@@ -398,7 +398,7 @@ const InvoiceSubTotal = ({selectedTests} : any) => {
         </span>
           {/* <p>hbsf</p>
           <p>hbsf</p> */}
-        <p style={{display: "block" , background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem'  , justifySelf: 'end' ,marginRight : '2rem' }}>UnPaid</p>
+        <p style={{display: "block" , background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem'  , justifySelf: 'end' ,marginRight : '2rem' , textAlign : 'center' }}>Unpaid</p>
         </div>
       </li>
 

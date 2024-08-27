@@ -29,8 +29,9 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
       
       const [formData, setFormData] = useState({
         name: profile.name ? profile.name : '',
-        dob: profile.dob ? profile.dob :'',
+        dob: profile.dob ? new Date(profile.dob).toISOString().split('T')[0] : '',
         mobile: profile.mobile ? profile.mobile :'',
+        relation: profile.relation ? profile.relation :'',
         gender: profile.gender ? profile.gender :'',
         email: profile.email ? profile.email :'',
         pincode: profile.pincode ? profile.pincode :'',
@@ -192,7 +193,7 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
         gender : formData.gender,
         user_id : parseInt(userId, 10),
         first_name : formData.name,
-        relation : 'Father',
+        relation : formData.relation,
         middle_name : '',
         last_name : '',
       }
@@ -216,10 +217,10 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
     
   }
 
-  const { name, dob, gender, pincode , mobile , email , location , address , nick_name} = formData;
+  const { name, dob, gender, pincode , mobile , email , location , address , nick_name , relation} = formData;
 
   // Check if all required fields have values
-  const canShowSummaryButton = name && dob && gender && pincode && mobile && email && location && address && nick_name;
+  const canShowSummaryButton = name && dob && gender && pincode && mobile && email && location && address && nick_name && relation;
 
   return (
     <Col>
@@ -256,11 +257,11 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                         value={formData.dob}
                         onChange={handleInputChange}
                       />
-                      <Label check>Date</Label>
+                      <Label check>Date of Birth</Label>
                     </FormGroup>
                   </Col>
-                  {isAgeShow &&
-                  <Col sm="2" className="mb-6 mt-3">
+                  {(isAgeShow || profile.dob) &&
+                  (<Col sm="2" className="mb-6 mt-3">
                   <FormGroup floating>
                     <Input disabled type="number" 
                     value={formData.age}
@@ -269,12 +270,24 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                     onChange={handleInputChange} />
                     <Label check>Age</Label>
                   </FormGroup>
-                </Col>
+                </Col>)
                   }
                 </div>
                 <IconsRadio selectedTime={formData.gender} onTimeChange={handleTimeChange} />
                 <Col sm="12">
-                  <FormGroup floating className="mb-6 mt-3">
+                  <FormGroup floating className="mb-0 mt-3">
+                    <Input
+                      type="text"
+                      name="relation"
+                      placeholder="Relation"
+                      value={formData.relation}
+                      onChange={handleInputChange}
+                    />
+                    <Label check>Relation</Label>
+                  </FormGroup>
+                </Col>
+                <Col sm="12">
+                  <FormGroup floating className="mb-6 mt-0">
                     <Input
                       type="text"
                       name="mobile"
@@ -501,6 +514,7 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         relation : data.relation,
         dob: data.dob, // Add appropriate value or logic if needed
         mobile: data.mobile, // Add appropriate value or logic if needed
+        // relation: data.relation, // Add appropriate value or logic if needed
         gender: data.gender, // Add appropriate value or logic if needed
         email: data.email, // Add appropriate value or logic if needed
         pincode: data.pincode, // Add appropriate value or logic if needed
