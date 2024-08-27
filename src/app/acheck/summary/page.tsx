@@ -441,13 +441,13 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
     // gst : 'profile.gst',
     // convenience_fee :'profile.convenience_fee',
       }
+      sessionStorage.setItem('booking_order', JSON.stringify(profile));
       const response = await axios.post('/api/orders',reqBody);
       // setSavedAddresses(response.data);
       console.log("Saved addresses: where dont know", response.data);
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
-    sessionStorage.setItem('booking_order', JSON.stringify(profile));
     // sessionStorage.setItem('address', JSON.stringify(selectedAddress));
   };
 

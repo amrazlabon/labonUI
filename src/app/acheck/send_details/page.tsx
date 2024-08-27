@@ -18,8 +18,8 @@ const SendDetails = () => {
 
   // the issue facing is from here, the loading is having some issue, should look into it here
   useEffect(() => {
-    const bookingOrder = sessionStorage.getItem('booking_order');
     const userData = sessionStorage.getItem('user_data');
+    const bookingOrder = sessionStorage.getItem('booking_order');
     console.log("this is what should be checke din case of loading");
     
     console.log("the data in the send details",bookingOrder);
