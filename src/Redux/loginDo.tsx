@@ -197,7 +197,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
                   {Array(6).fill('').map((_, index) => (
                     <input
                       key={index}
-                      type="text"
+                      type="number"
                       maxLength={maxLength}
                       className="digit-input"
                       value={formData.otp[index] || ''}

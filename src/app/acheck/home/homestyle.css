@@ -30,6 +30,7 @@
     padding: 1rem;
     width: 155px;
     border: none;
+    color : black !important;
     border-bottom-style: solid;
     width: 100%;
 }
@@ -38,6 +39,7 @@
     width: 155px;
     border: none;
     /* border-bottom-style: solid; */
+    color : black !important;
     width: 100%;
 }
 

@@ -17,7 +17,7 @@ import Summary from '../summary/page';
 import './bookStyle.css'
 
 
-const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selectedTests, selectedAddress, setSelectedTests, experience, salary }: any) => {
+const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selectedTests, selectedAddress, setSelectedTests, fullScreen, setFullScreen }: any) => {
 
     const searchParams = useSearchParams();
     // const userType = searchParams.get('type');
@@ -26,27 +26,6 @@ const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selecte
 
     const [updateData, setUpdateData] = useState({})
     const [update, setUpdate] = useState(false)
-
-    // const getUserDetail = async () => {
-    //     const userId = sessionStorage.getItem('userId');
-    //     try {
-    //         const response = await axios.get(`/api/cv-create/${userId}`);
-    //         const res = response.data.data.result;
-    //         return res;
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getUserDetail().then((data: any) => {
-    //         setUpdateData(data)
-    //         if( data?.userProfile?.hasOwnProperty('isFresher')){
-    //             setUpdate(true)
-    //         }
-    //     })
-    // }
-    // ,[]);
 
     
     
@@ -140,6 +119,8 @@ const StepperSwitch = ({ stepActive, setStepActive, setProfile, profile, selecte
                                         selectedTests={selectedTests}
                     selectedAddress={selectedAddress}
                     setSelectedTests={setSelectedTests}
+                    fullScreen={fullScreen}
+                    setFullScreen={setFullScreen}
                                         // menuItems={menuItems}
                                         // cities={cities}
                                         // updateData={updateData}

@@ -65,6 +65,7 @@ type Test = {
   };
 
 const Page = () => {
+  const [fullScreen, setFullScreen] = useState(false);
     
     const [stepActive, setStepActive] = useState<number>(0);
     // const [registerData, setRegisterData] = useState([]);
@@ -170,6 +171,11 @@ const Page = () => {
       setStepActive(stepActive - 1)
     }
 
+    const handleAddToCartClick = () => {
+      setFullScreen(true); // or false, depending on what you want to do
+    };
+
+
     return (
         <Col md='6' >
       <div style={{padding : '0', height:'13.5rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
@@ -211,7 +217,7 @@ const Page = () => {
   </div>
   <div style={{ flex: 1, display: 'flex', justifyContent: 'bottom' ,paddingRight : '24px'}}>
                   {stepActive == 3 && 
-                    <Button className='btn-lg' style={{height: '3rem', width :'12rem' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '1.3rem'}} color="">Add To Cart</Button>
+                    <Button onClick={handleAddToCartClick} className='btn-lg' style={{height: '3rem', width :'12rem' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '1.3rem'}} color="">Add To Cart</Button>
 }
       <div style={{marginTop : '2rem'}}>
                     {profile.timeslot && (stepActive === 1 || stepActive === 2 || stepActive === 0) &&(
@@ -243,6 +249,8 @@ const Page = () => {
                     selectedTests={selectedTests}
                     selectedAddress={selectedAddress}
                     setSelectedTests={setSelectedTests}
+                    fullScreen={fullScreen}
+                    setFullScreen={setFullScreen}
 
                     // cities={cities}
                     // education={education}

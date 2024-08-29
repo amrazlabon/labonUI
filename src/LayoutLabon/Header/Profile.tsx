@@ -69,6 +69,21 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
             // },
             {
               icon: <FileText />,
+              title: "Book a Home Visit",
+              link:"",
+            },
+            {
+              icon: <FileText />,
+              title: "Find Tests",
+              link:"",
+            },
+            {
+              icon: <FileText />,
+              title: "My Profile",
+              link:"",
+            },
+            {
+              icon: <FileText />,
               title: "My Contact",
               link:"acheck/patient_information",
             },
@@ -78,8 +93,13 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               link:"acheck/booking_information",
             },
             {
+              icon: <FileText />,
+              title: "Switch Accounts",
+              link:"",
+            },
+            {
               icon: <LogOut />,
-              title: "Log Out",
+              title: "Sign Out",
               link:"",
               onClick(evt : any) { 
                 evt.preventDefault();
@@ -111,13 +131,18 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               // },
               {
                 icon: <FileText />,
+                title: "Book a Home Visit",
+                link:"",
+              },
+              {
+                icon: <FileText />,
                 title: "Find Tests",
-                link:"app/task",
+                link:"",
               },
               {
                 icon: <Settings />,
-                title: "Settings",
-                link:"users/edit_profile",
+                title: "Solution Integration for Labs",
+                link:"",
               },
               {
                 icon: <LogOut />,
@@ -181,14 +206,14 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
         {userId !== null && 
         <Link href={'/acheck/profile'}>
 
-        <div className="" style={{borderBottomStyle : 'groove' , padding : '20px', display : 'flex' , gap : '2rem'}}>
+        <div className="" style={{borderBottomStyle : 'groove' , padding : '20px 20px 20px 12px', display : 'flex' , gap : '2rem'}}>
 <img style={{height:'3rem', margin:'0 ' , borderRadius : '20px'}} className="img-fluid table-avtar" src={`${ImagePath}/Father.png`} alt="user image" />
 
           <div style={{display : 'grid'}}>
 
-          <p>{userData.name ? userData.name : 'NA'}</p>
-          <p className="mb-0">
-            USER ID: LBNUSR-1-IND{userData.id}
+          <p style={{color : 'black' , fontSize : '20px', fontWeight : 600 , marginBottom : '8px'}}>{userData.name ? userData.name : 'NA'}</p>
+          <p className="mb-0" style={{color : 'black' , fontSize : '12px'}}>
+            <strong>USER ID</strong>: LBNUSR-1-IND{userData.id}
             {/* <i className="fa fa-angle-down"></i> */}
           </p>
           </div>
@@ -198,7 +223,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
           {UserProfileData.map((item : any, index : any) => (
             <li key={index} style={{borderBottomStyle : 'groove' , display : 'block'}}>
               <Link href={`/${item.link}`} onClick={item.onClick}>
-                {item.icon}
+                {/* {item.icon} */}
                 <span>{item.title}</span>
               </Link>
             </li>

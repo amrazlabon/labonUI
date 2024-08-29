@@ -15,6 +15,7 @@ import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import Link from "next/link";
 import axios from "axios";
+import './patientDetails.css'
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
 

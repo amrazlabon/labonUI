@@ -275,17 +275,26 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                 </div>
                 <IconsRadio selectedTime={formData.gender} onTimeChange={handleTimeChange} />
                 <Col sm="12">
-                  <FormGroup floating className="mb-0 mt-3">
-                    <Input
-                      type="text"
-                      name="relation"
-                      placeholder="Relation"
-                      value={formData.relation}
-                      onChange={handleInputChange}
-                    />
-                    <Label check>Relation</Label>
-                  </FormGroup>
-                </Col>
+  <FormGroup floating className="mb-0 mt-3">
+    <Input
+      type="select"
+      name="relation"
+      placeholder="Relation"
+      value={formData.relation}
+      onChange={handleInputChange}
+    >
+      <option value="" disabled>Select Relation</option>
+      <option value="Father">Father</option>
+      <option value="Mother">Mother</option>
+      <option value="Brother">Brother</option>
+      <option value="Sister">Sister</option>
+      <option value="Self">Self</option>
+      <option value="Wife">Wife</option>
+    </Input>
+    <Label check>Relation</Label>
+  </FormGroup>
+</Col>
+
                 <Col sm="12">
                   <FormGroup floating className="mb-6 mt-0">
                     <Input

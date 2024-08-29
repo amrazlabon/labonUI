@@ -51,7 +51,7 @@ const SendDetails = () => {
 
     const emailContentAdmin = `<p>Dear Admin,</p>
   
-  <p>${userData.name ? userData.name : 'NA' } has made a new home Test booking for ${bookingOrder.name ? bookingOrder.name : 'NA'} . An email notification has already gone to the Lab Admin. Please ensure it is followed up and the blood test happens on time.</p>
+  <p>${userData.name ? userData.name.split(' ')[0] : 'Customer' } has made a new home Test booking for ${bookingOrder.name ? bookingOrder.name.split(' ')[0] : 'NA'} . An email notification has already gone to the Lab Admin. Please ensure it is followed up and the blood test happens on time.</p>
   
   <p><strong>Booking details:</strong></p>
   <ol>
@@ -63,15 +63,15 @@ const SendDetails = () => {
     <li><strong>Gender:</strong> ${bookingOrder.gender ? bookingOrder.gender : 'NA'}</li>
     <li><strong>Location:</strong> ${bookingOrder.location ? bookingOrder.location : 'NA'}</li>
     <li><strong>Address:</strong> ${bookingOrder.address ? bookingOrder.address : 'NA'}</li>
-    <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'NA' }</li>
+    <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'Customer' }</li>
     <li><strong>Customer Contact:</strong> ${userData.mobile ? userData.mobile : 'NA' }</li>
     <li><strong>Tests Booked:</strong>
       <ul>
-        ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${test.price}</li>`).join('')}
+        ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${formatPrice(test.price)}</li>`).join('')}
       </ul>
     </li>
-    <li><strong>Total Amount:</strong> ₹${totalTestCost}</li>
-    <li><strong>Payment to collect from Lab:</strong> ₹${(totalTestCost * 0.1)}</li>
+    <li><strong>Total Amount:</strong> ₹${formatPrice(totalTestCost)}</li>
+    <li><strong>Payment to collect from Lab:</strong> ₹${formatPrice((totalTestCost * 0.1))}</li>
   </ol>
 
   <p>System generated email</p>
@@ -93,11 +93,11 @@ const emailContentLab = `<p>Dear Lab Admin,</p>
     <li><strong>Address:</strong> ${bookingOrder.address ? bookingOrder.address : 'NA'}</li>
     <li><strong>Tests Booked:</strong>
       <ul>
-        ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${test.price}</li>`).join('')}
+        ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${formatPrice(test.price)}</li>`).join('')}
       </ul>
     </li>
-    <li><strong>Total Amount to collect from Patient:</strong> ₹${totalTestCost}</li>
-    <li><strong>Payment to Labon:</strong> ₹${(totalTestCost * 0.1)}</li>
+    <li><strong>Total Amount to collect from Patient:</strong> ₹${formatPrice(totalTestCost)}</li>
+    <li><strong>Payment to Labon:</strong> ₹${formatPrice((totalTestCost * 0.1))}</li>
   </ol>
 
 
@@ -105,9 +105,9 @@ const emailContentLab = `<p>Dear Lab Admin,</p>
   <p><strong>Team Labon</strong></p>
 `;
 
-const emailContentPatient = `<p>Dear ${bookingOrder.name ? bookingOrder.name : 'NA'},</p>
+const emailContentPatient = `<p>Dear ${bookingOrder.name ? bookingOrder.name.split(' ')[0] : 'Patient'},</p>
   
-  <p>${userData.name ? userData.name : 'NA' } has made a new home Test booking for you. Our phlebotomist will come to your location on the schedule date & time for blood test.</p>
+  <p>${userData.name ? userData.name.split(' ')[0] : 'Customer' } has made a new home Test booking for you. Our phlebotomist will come to your location on the schedule date & time for blood test.</p>
   
   <p>Your Booking ID is LBNHVB112220241 </p>
   <p><strong>Below are the booking details:</strong></p>
@@ -119,14 +119,14 @@ const emailContentPatient = `<p>Dear ${bookingOrder.name ? bookingOrder.name : '
     <li><strong>Gender:</strong> ${bookingOrder.gender ? bookingOrder.gender : 'NA'}</li>
     <li><strong>Location:</strong> ${bookingOrder.location ? bookingOrder.location : 'NA'}</li>
     <li><strong>Address:</strong> ${bookingOrder.address ? bookingOrder.address : 'NA'}</li>
-    <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'NA' }</li>
+    <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'Customer' }</li>
     <li><strong>Customer Contact:</strong> ${userData.mobile ? userData.mobile : 'NA' }</li>
     <li><strong>Tests Booked:</strong>
       <ul>
-        ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${test.price}</li>`).join('')}
+        ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${formatPrice(test.price)}</li>`).join('')}
       </ul>
     </li>
-    <li><strong>Total Amount:</strong> ₹${totalTestCost}</li>
+    <li><strong>Total Amount:</strong> ₹${formatPrice(totalTestCost)}</li>
     <li>Payment: You can make the payment to our phlebotomist by cash/Google Pay when we arrive on the scheduled date/time for blood sample collection.</li>
     <li>Transportation Charges: Please make a transportation fee of Rs.100 when our Phlebotomist come for blood sample collection. If there are any additional charges to be paid for transportation, it will be informed when we arrive for blood test on the scheduled date/time.</li>
     <li>Phlebotomist Name: NA</li>
@@ -138,9 +138,9 @@ const emailContentPatient = `<p>Dear ${bookingOrder.name ? bookingOrder.name : '
 
 `;
 
-const emailContentCustomer = `<p>Dear ${userData.name ? userData.name : 'NA' },</p>
+const emailContentCustomer = `<p>Dear ${userData.name ? userData.name.split(' ')[0] : 'Customer' },</p>
   
-  <p>Your booking for home sample collection for ${bookingOrder.name ? bookingOrder.name : 'NA'} is confirmed.</p>
+  <p>Your booking for home sample collection for ${bookingOrder.name ? bookingOrder.name.split(' ')[0] : 'Patient'} is confirmed.</p>
   
   <p>Your Booking ID is LBNHVB112220241 </p>
   <p><strong>We thank you for booking the service with Labon.ai. Below are the booking details:</strong></p>
@@ -152,14 +152,14 @@ const emailContentCustomer = `<p>Dear ${userData.name ? userData.name : 'NA' },<
     <li><strong>Gender:</strong> ${bookingOrder.gender ? bookingOrder.gender : 'NA'}</li>
     <li><strong>Location:</strong> ${bookingOrder.location ? bookingOrder.location : 'NA'}</li>
     <li><strong>Address:</strong> ${bookingOrder.address ? bookingOrder.address : 'NA'}</li>
-    <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'NA' }</li>
+    <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'Customer' }</li>
     <li><strong>Customer Contact:</strong> ${userData.mobile ? userData.mobile : 'NA' }</li>
     <li><strong>Tests Booked:</strong>
       <ul>
-        ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${test.price}</li>`).join('')}
+        ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${formatPrice(test.price)}</li>`).join('')}
       </ul>
     </li>
-    <li><strong>Total Amount:</strong> ₹${totalTestCost}</li>
+    <li><strong>Total Amount:</strong> ₹${formatPrice(totalTestCost)}</li>
     <li>Payment: Our phlebotomist will collect the payment from the patient when we arrive on the scheduled date/time for blood sample collection. They can pay by cash/Google Pay. Please keep the patient informed of the same.</li>
     <li>Transportation Charges: We collect transportation charges from the patient when we reach their location for blood test. The minimum transportation charge is Rs.100. If there are any additional charges to be paid for transportation, it will be informed to you when we call you for confirmation of the booking, or, it will be informed to the patient when we arrive on the scheduled date/time for blood sample collection.</li>
     <li>Phlebotomist Name: NA</li>
@@ -181,7 +181,6 @@ const emailTasks = [];
         message: emailContentLab,
     });
 
-    // Add the admin email
     emailTasks.push({
         email: 'joseph@labon.ai',
         subject: 'New Home Blood Test Booking',
@@ -196,7 +195,6 @@ const emailTasks = [];
       });
   }
 
-    // Add the customer email
     emailTasks.push({
         email: userData.email,
         subject: 'Labon - Home Visit Booking Confirmation LBNHVB112220241',
@@ -271,3 +269,12 @@ const emailTasks = [];
 }
 
 export default SendDetails;
+
+function formatPrice(value: any): string {
+  const numberValue = parseFloat(value); // Convert string to number
+  if (isNaN(numberValue)) {
+    console.error("Invalid number input:", value);
+    return "0.00"; // Return a default value or handle the error as needed
+  }
+  return numberValue.toFixed(2); // Convert to 2 decimal places
+}

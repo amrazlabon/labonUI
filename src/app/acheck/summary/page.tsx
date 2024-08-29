@@ -25,9 +25,9 @@ import axios from "axios";
 
 // import OpenModalMofi from ".";
 
-const Summary = ({profile , setProfile , setStepActive , selectedTests, selectedAddress , setSelectedTests} : any) => {
+const Summary = ({profile , setProfile , setStepActive , selectedTests, selectedAddress , setSelectedTests , fullScreen , setFullScreen} : any) => {
 
-  const [fullScreen, setFullScreen] = useState(false);
+  // const [fullScreen, setFullScreen] = useState(false);
   const fullScreenToggle = () => setFullScreen(!fullScreen);
 
   const [activeTab, setActiveTab] = useState<number | undefined>(1);

@@ -64,10 +64,22 @@ abbr[title] {
   border-radius: 10px;
   /* background:; */
   background: rgba(179, 115, 228, 0.5);
+  color : black !important
 
 }
 
 /* Ensure the tile is not clickable */
 .react-calendar__tile:disabled {
   pointer-events: none;
+}
+
+.react-calendar__navigation__label__labelText  { 
+  color: #004984 !important;
+  font-weight: bold !important;
+
+}
+
+.react-calendar__navigation button {
+  color : black !important
+
 }

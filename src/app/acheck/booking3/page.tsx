@@ -10,7 +10,7 @@ import axios from "axios";
 
 
 const TestTime = ({profile , setProfile , setStepActive , selectedTests, selectedAddress} : any) => {
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  // const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
@@ -45,15 +45,17 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
 
   const handleTimeChange = (time: string , id : any) => {
     // console.log("time",time)
+    window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: "smooth" });
+
     setSelectedTime(time);
     setProfile({
       ...profile,
       timeslot: time,
       timeslot_id : id
     });
-    if (buttonRef.current) {
-      buttonRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    // if (buttonRef.current) {
+    //   buttonRef.current.scrollIntoView({ behavior: 'smooth' });
+    // }
   };
     return (
     <Col md='' style={{boxShadow : 'none'}}>
@@ -64,11 +66,6 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
 <h1 className="text-black" style={{margin:'0', paddingBottom : '24px' , marginTop : '0'}}>Select a Suitable Time</h1>
 
 <BasicCard/>
-<div style={{display:'flex'}}>
-
-{/* <p style={{fontWeight:'600',fontSize:'16px'}}>Morning </p> */}
-{/* <span style={{color:'#65C466'}}> (Recommended)</span> */}
-</div>
 <IconsRadio timeSlotData={timeSlotData} selectedTime={selectedTime} onTimeChange={handleTimeChange} profile={profile}/>
                                     
 
@@ -147,12 +144,12 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
         {/* Morning */}
         {morningOptions.length > 0 && (
           <div>
-            <p style={{ fontWeight: '600', fontSize: '16px' }}>Morning</p>
+            <p style={{ fontWeight: '600', fontSize: '16px' , marginBottom : '16px' }}>Morning</p>
             <div className="h-100 checkbox-checked">
               <div className="form-check radio-primary ps-0">
                 <ul className="radio-wrapper">
                   {morningOptions.map(({ icon, id, timeslot }: any, index: any) => (
-                    <li className="p-1 pt-2 pb-2" key={id}>
+                    <li className="p-1 pt-2 pb-2" key={id} style={{maxWidth : '90px'}}>
                       <Input
                         className="checkbox-shadow d-block"
                         id={`radio-${id}`}
@@ -162,7 +159,10 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
                         checked={selectedTime === timeslot}
                         onChange={() => onTimeChange(timeslot, id)}
                       />
-                      <Label htmlFor={`radio-${id}`} check>
+                      <Label htmlFor={`radio-${id}`} check
+                      style={{
+                        color: selectedTime === timeslot ? 'white' : 'black',
+                      }}>
                         <span>{timeslot}</span>
                       </Label>
                     </li>
@@ -175,13 +175,13 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
 
         {/* Afternoon */}
         {afternoonOptions.length > 0 && (
-          <div style={{ marginTop: '16px' }}>
-            <p style={{ fontWeight: '600', fontSize: '16px' }}>Afternoon</p>
+          <div style={{ marginTop: '24px' }}>
+            <p style={{ fontWeight: '600', fontSize: '16px' , marginBottom : '16px'}}>Afternoon</p>
             <div className="h-100 checkbox-checked">
               <div className="form-check radio-primary ps-0">
                 <ul className="radio-wrapper">
                   {afternoonOptions.map(({ icon, id, timeslot }: any, index: any) => (
-                    <li className="p-1 pt-2 pb-2" key={id}>
+                    <li className="p-1 pt-2 pb-2" key={id} style={{maxWidth : '90px'}}>
                       <Input
                         className="checkbox-shadow d-block"
                         id={`radio-${id}`}
@@ -191,7 +191,10 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
                         checked={selectedTime === timeslot}
                         onChange={() => onTimeChange(timeslot, id)}
                       />
-                      <Label htmlFor={`radio-${id}`} check>
+                      <Label htmlFor={`radio-${id}`} check
+                      style={{
+                        color: selectedTime === timeslot ? 'white' : 'black',
+                      }}>
                         <span>{timeslot}</span>
                       </Label>
                     </li>
@@ -204,13 +207,13 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
 
         {/* Evening */}
         {eveningOptions.length > 0 && (
-          <div style={{ marginTop: '16px' }}>
-            <p style={{ fontWeight: '600', fontSize: '16px' }}>Evening</p>
+          <div style={{ marginTop: '24px' }}>
+            <p style={{ fontWeight: '600', fontSize: '16px' , marginBottom : '16px'}}>Evening</p>
             <div className="h-100 checkbox-checked">
               <div className="form-check radio-primary ps-0">
                 <ul className="radio-wrapper">
                   {eveningOptions.map(({ icon, id, timeslot }: any, index: any) => (
-                    <li className="p-1 pt-2 pb-2" key={id}>
+                    <li className="p-1 pt-2 pb-2" key={id} style={{maxWidth : '90px'}}>
                       <Input
                         className="checkbox-shadow d-block"
                         id={`radio-${id}`}
@@ -220,7 +223,10 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
                         checked={selectedTime === timeslot}
                         onChange={() => onTimeChange(timeslot, id)}
                       />
-                      <Label htmlFor={`radio-${id}`} check>
+                      <Label htmlFor={`radio-${id}`} check
+                      style={{
+                        color: selectedTime === timeslot ? 'white' : 'black',
+                      }}>
                         <span>{timeslot}</span>
                       </Label>
                     </li>

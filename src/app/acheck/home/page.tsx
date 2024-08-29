@@ -3,7 +3,9 @@ import { CheckedCheckbox, CheckMeOut, ClickOut, Close, DefaultCheck, Defaultchec
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 // import { Col } from "reactstrap";
 import { Card, CardBody, Col, Row, Button , FormGroup, Table , Form , Input , Label , Modal, ModalBody, ModalFooter, Toast, ToastBody} from 'reactstrap';
-
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 import './homestyle.css'
 import { FaCheckCircle } from "react-icons/fa";
 import { CommonModalType, StaticModalToggleProp } from "@/Types/UikitsType";
@@ -40,6 +42,14 @@ type Test = {
 //   const [selectedTests, setSelectedTests] = useState<Test[]>([]);
 //     const [selectedAddress, setSelectedAddress] = useState<Location[]>([]);
 const home = () => {
+  const settings = {
+    // dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    // arrows: true,
+};
     const [open,setOpen] = useState(false)
     const [toasterContent,setToasterContent] = useState('')
     const [toasterColorContent,setToasterColorContent] = useState('')
@@ -62,7 +72,7 @@ const home = () => {
         evt.preventDefault();
         setOpen(true)
         setToasterContent('Select Test to Continue')
-        setToasterColorContent('warning')
+        setToasterColorContent('danger')
         setTimeout(()=>{
             setOpen(false);
         },10000)
@@ -72,7 +82,7 @@ const home = () => {
       evt.preventDefault();
       setOpen(true)
       setToasterContent('Select Address to Continue')
-      setToasterColorContent('warning')
+      setToasterColorContent('danger')
       setTimeout(()=>{
           setOpen(false);
       },10000)
@@ -82,7 +92,7 @@ const home = () => {
     evt.preventDefault();
     setOpen(true)
     setToasterContent('Please Login to Continue')
-    setToasterColorContent('warning')
+    setToasterColorContent('danger')
     setTimeout(()=>{
         setOpen(false);
     },10000)
@@ -104,7 +114,7 @@ const home = () => {
         if(selectedTests.length === 0){
             setOpen(true)
             setToasterContent('Select Test to Continue')
-            setToasterColorContent('warning')
+            setToasterColorContent('danger')
             setTimeout(()=>{
                 setOpen(false);
             },10000)
@@ -135,7 +145,7 @@ const home = () => {
         <Col md="6" style={{ padding: '0' }}>
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
 
-            <div style={{ background: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)', height: '16rem', alignContent: 'end' }}>
+            <div style={{ background: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)', height: '21rem', alignContent: 'end' }}>
                 <img className="w-100" src={`${ImagePath}/home.png`} alt="user" />
 
             </div>
@@ -144,7 +154,7 @@ const home = () => {
       <CardBody style={{padding : '0'}}>
       <div className="btn-group">
   <button className={"test-btn"}>Book a Home Visit</button>
-  <button className={"package-btn"}>Integrate Solutions</button>
+  <button className={"package-btn"}>Integrate Solution</button>
 </div> 
         {/* <h5 style={{ textAlign: 'center' }}>Book a Home Visit</h5>
         <p style={{ textAlign: 'center' }}>Integrate Solution</p> */}
@@ -178,19 +188,31 @@ const home = () => {
           }
           </Col>
           <Col xs="10">
-            <p style={{ margin: '0' , cursor : 'pointer'}} onClick={selectLocation}>
-                {
-                    selectedAddress.length != 0 ? selectedAddress[0].address +', ' + selectedAddress[0].location + ', ' + selectedAddress[0].pincode
- : "Select Location"                }
-                {/* Flat No.1A, Skyline Bell Whether, Kurishupalli.. */}
-                </p>
+          <p
+  style={{
+    margin: '0',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    paddingRight : '24px'
+  }}
+  onClick={selectLocation}
+>
+  {
+    selectedAddress.length != 0 
+    ? selectedAddress[0].address + ', ' + selectedAddress[0].location + ', ' + selectedAddress[0].pincode 
+    : "Select Location"
+  }
+</p>
+
           </Col>
         </Row>
         <Link href={'/acheck/booking'}>
 
         <Button className="btnStyless" onClick={handleBookingClick} style={{ width: '90%', marginTop: '20px', marginLeft : '20px', color:'white'}} color="">
           Book A Blood Test At Home
-          <span className="">
+          <span className="" style={{float : 'right'}}>
           <i style={{marginLeft : '2rem'}} className="fa fa-angle-right"></i>
 
           </span>
@@ -202,107 +224,140 @@ const home = () => {
     <ExtraLargeModal isOpen={extraLargeScreen} toggle={extraLargeScreenToggle} selectedTests={selectedTests}  setSelectedTests={setSelectedTests}/>
     <ExtraLargeModalLocation isOpen={extraLargeScreenLocation} toggle={extraLargeScreenToggleLocation} setSelectedAddress={setSelectedAddress}/>
 
-            <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '1fr 1fr',     margin: '2rem 1rem 0rem 1rem' }}>
+            <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '2fr 3fr',     margin: '2rem 0 0 0' , height : '15.4rem'}}>
                 <div>
 
-                    <img style={{ position: 'absolute', zIndex: 2, height: '13rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/Phone.png`} alt="user" />
+                    <img style={{ position: 'absolute', zIndex: 2, height: '13rem' , marginTop : '3rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/Phone.png`} alt="user" />
                     <img style={{ position: 'absolute', zIndex: 1 }} className="img-fluid rounded-circle" src={`${ImagePath}/Circles.png`} alt="user" />
 
 
                 </div>
-                <div style={{ zIndex: 1 }}>
+                <div style={{ zIndex: 1  , padding :'18px'}}>
 
-                    <h1>
+                    <p style={{fontSize : '18px' , fontWeight : '600' , color : '#543063'}}>
                         Conveniently book through our WhatsApp
-                    </h1>
-                    <p>
+                    </p>
+                    <p style={{color : '#543063'}}>
                         Get a smooth and guided booking experience through our WhatsApp
                     </p>
+                    <p style={{display: "block" , background: '#AE99C0', color : 'white' , borderRadius : '5px' , padding : '5px' , width: 'fit-content'  , float : 'right' ,marginRight : '0rem' , marginTop : '24px', textAlign : 'center' , fontWeight : 'bold' }}>Book on WhatsApp</p>
+
+
 
                 </div>
             </div>
             <div style={{ marginTop: '2rem' , padding : '24px'}}>
-                <p style={{ fontSize: '24px', fontWeight: '700' }}>Purple Labs for everyone</p>
+                <p style={{ fontSize: '24px', fontWeight: '700' }}>Labon for everyone</p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', columnGap: '1rem' }}>
-                    <div>
+                    <div style={{marginTop : '6px'}}>
                         <img className="img-fluid thumbnail" src={`${ImagePath}/Thumbnail.jpg`} alt="user" />
 
                     </div>
                     <div>
-                        <h1>For elderly parents</h1>
-                        <p>
+                    <p style={{margin : 0 , fontSize : '18px' , fontWeight : '600'}}>For elderly parents</p>
+                        <p style={{marginTop : '8px'}}>
                             Schedule a home sample collection and stop worrying about your parents periodical tests.
                         </p>
                     </div>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', columnGap: '1rem' }}>
-                    <div>
+                    <div style={{marginTop : '6px'}}>
                         <img className="img-fluid thumbnail" src={`${ImagePath}/Thumbnail.jpg`} alt="user" />
 
                     </div>
                     <div>
-                        <h1>For you</h1>
-                        <p>
+                    <p style={{margin : 0 , fontSize : '18px' , fontWeight : '600'}}>For You</p>
+                        <p style={{marginTop : '8px'}}>
                             It’s important you do not miss a test. We help you repeat your schedule and visit where you are.
                         </p>
                     </div>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', columnGap: '1rem' }}>
-                    <div>
+                    <div style={{marginTop : '6px'}}>
                         <img className="img-fluid thumbnail" src={`${ImagePath}/Thumbnail.jpg`} alt="user" />
 
                     </div>
                     <div>
-                        <h1>Anywhere in Kerala</h1>
-                        <p>
+                        <p style={{margin : 0 , fontSize : '18px' , fontWeight : '600'}}>Anywhere in Kerala</p>
+                        <p style={{marginTop : '8px'}}>
                             No matter where in Kerala, we will visit you and collect the samples. All you need to do is just schedule it.
                         </p>
                     </div>
                 </div>
             </div>
-            <div style={{ background: '#533063', clipPath: 'polygon(0px 40px, 100% 0px, 100% 100%, 0px 100%)', paddingTop: '2rem' }}>
+            <div style={{ background: '#533063', clipPath: 'polygon(0px 60px, 100% 0px, 100% 100%, 0px 100%)', paddingTop: '4rem' }}>
 
                 <p style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', lineHeight: '29.05px', padding: '24px' }}>
                     The smarter way to manage your home sample collections
                 </p>
-                <img className="img-fluid family" src={`${ImagePath}/Family.jpg`} alt="user" />
+                <img className="img-fluid family" src={`${ImagePath}/family.jpg`} alt="user" />
 
 
-                <p style={{ color: '#FFFFFF', fontSize: '16px', fontWeight: '400', lineHeight: '24px', padding: '24px' }}>
+<div style={{padding: '24px'}}>
+
+                <p style={{ color: '#FFFFFF', fontSize: '16px', fontWeight: 'bold', lineHeight: '24px', }}>
                     We live abroad and our parents keep visiting us once a while. While they are in Kerala, it was a big worry for us about their periodical tests. With Purple Labs, we were able to schedule tests and they come on time and collect samples, wherever the patient is.
-                    <br /><br /><br />
+                    {/* <br /><br /><br /> */}
+                    </p>
+                    <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: 'bold', lineHeight: '24px' }}>
+                      
                     Not just that, we are able to live track the phlebotomists coming for sample collection and the current location of the samples been collected. This is really a great information for us. Thanks to Purple Labs.
                 </p>
+
+                <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: 'bold', lineHeight: '24px' }}>We are able to live track the phlebotomists coming for blood sample collection and the status of the samples collected. This is really a great information for us. Thanks to Labon.</p>
+</div>
             </div>
 
-            <div style={{padding : '24px'}}>
-                <p style={{ fontWeight: '700', fontSize: '24px' }}>
-                    Making the difference
-                </p>
-                <p style={{ fontWeight: '800', fontSize: '48px' }}>
-                    100k+
-                </p>
-                <p>
-                    Individuals and families have been using Purple Labs, either for themselves or for their parents and relatives.
-                </p>
-            </div>
-            <div style={{ clipPath: 'polygon(0 0, 100% 0, 100% 90%, 0 100%)', background: '#D6E8ED', padding: '2rem', }}>
+            <div style={{ padding: '24px', display: 'grid', gap: '8px' }}>
+    <p style={{ fontWeight: 'bold', fontSize: '24px'  , margin : 0}}>
+        Making the difference
+    </p>
+    <p style={{ fontWeight: 'bold', fontSize: '48px', margin : 0 }}>
+        100k+
+    </p>
+    <p style={{margin : 0}}>
+        Individuals and families have been using Purple Labs, either for themselves or for their parents and relatives.
+    </p>
+</div>
+
+            <div style={{ clipPath: 'polygon(0 0, 100% 0, 100% 90%, 0 100%)', background: '#D6E8ED', padding: '2rem 2rem 4rem 2rem', }}>
                 <p style={{ fontSize: '24px', fontWeight: '700' }}>From our blogs</p>
+                <Slider {...settings}>
                 <div>
                     <img className="img-fluid" src={`${ImagePath}/deliverbike.jpg`} alt="user" />
-
+                    <p style={{ fontSize: '16px', fontWeight: '600', color: '#3E616B', marginTop: '12px' }}>
+                        Why tracking of samples collected from homes is important?
+                    </p>
+                    <p style={{ fontSize: '16px', marginTop: '12px' }}>
+                        Description
+                    </p>
+                    <div style={{ color: '#369C3E', display: 'flex', alignItems: 'baseline' }}>
+                        <p>Know more</p>
+                        <i className="fa fa-angle-right" style={{ marginLeft: '1rem', color: '#369C3E' }}></i>
+                    </div>
                 </div>
-                <p style={{ fontSize: '16px', fontWeight: '600', color: '#3E616B' }}>
-                    Why tracking of samples collected from homes is important?
-                </p>
-                <div style={{ color: '#369C3E', display: 'flex' }}>
-                    <p>Know more </p>
-                    <img style={{ height: '20px' }} className="img-fluid" src={`${ImagePath}/Vector.png`} alt="user" />
+                <div>
+                    <img className="img-fluid" src={`${ImagePath}/deliverbike.jpg`} alt="user" />
+                    <p style={{ fontSize: '16px', fontWeight: '600', color: '#3E616B', marginTop: '12px' }}>
+                        Why tracking of samples collected from homes is important?
+                    </p>
+                    <p style={{ fontSize: '16px', marginTop: '12px' }}>
+                        Description
+                    </p>
+                    <div style={{ color: '#369C3E', display: 'flex', alignItems: 'baseline' }}>
+                        <p>Know more</p>
+                        <i className="fa fa-angle-right" style={{ marginLeft: '1rem', color: '#369C3E' }}></i>
+                    </div>
                 </div>
+                
+                {/* Repeat the above div block for the other blog sections */}
+            </Slider>
 
             </div>
+            
+            {/* this is the download option which is commented now
             <div style={{ padding: '1rem' }}>
                 <p style={{ fontSize: '24px', fontWeight: '700' }}>Download our apps</p>
                 <div style={{ display: 'flex', gap: '1rem' }}>
@@ -316,35 +371,41 @@ const home = () => {
 
                 </div>
                 <p style={{marginTop:'1rem'}}>Not only through the web, you can also manage everything from our app.</p>
-            </div>
+            </div> */}
             <div style={{padding : '24px'}}>
-                <ul className="menu">
-                    <li>Book a Home Visit</li>
-                    <li>Integrate Our Solution (Labs)</li>
-                    <li>Find Tests</li>
-                    <li style={{marginTop:'2rem'}}>About Us</li>
-                    <li>Contact Us</li>
-                    <li>Support</li>
-                </ul>
+            <ul className="menu">
+    <li onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}>
+        Book a Home Visit
+    </li>
+    <li>Integrate Our Solution (Labs)</li>
+    <li>Find Tests</li>
+    <li style={{ marginTop: '2rem' }}>About Us</li>
+    <li>Contact Us</li>
+    <li>Support</li>
+</ul>
+
             </div>
             <div style={{padding:'24px'}}>
 
-            <div style={{display:'flex',gap:'1rem'}}>
+            <div style={{display:'flex',gap:'2rem'}}>
                 <p style={{color:'#999999',textDecorationLine:'underline'}}>Privacy Policy</p>
                 <p style={{color:'#999999',textDecorationLine:'underline'}}>Terms of Service</p>
             </div>
-            <div>
-            <img style={{marginRight:'6rem'}} className="img-fluid" src={`${ImagePath}/Logo.png`} alt="user" />
-            <img  className="img-fluid" src={`${ImagePath}/Icon - Instagram.png`} alt="user" />
-            <img  className="img-fluid" src={`${ImagePath}/Icon - YouTube.png`} alt="user" />
-            <img  className="img-fluid" src={`${ImagePath}/Icon - Twitter.png`} alt="user" />
-            <img  className="img-fluid" src={`${ImagePath}/meta.png`} alt="user" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' , paddingTop : '24px'}}>
+    <img style={{ margin: '0' }} className="img-fluid" src={`${ImagePath}/Logo.png`} alt="user" />
 
-            </div>
+    <div style={{ display: 'flex', gap: '10px' }}>
+        <img className="img-fluid" src={`${ImagePath}/Icon - Instagram.png`} alt="Instagram" />
+        <img className="img-fluid" src={`${ImagePath}/Icon - YouTube.png`} alt="YouTube" />
+        <img className="img-fluid" src={`${ImagePath}/Icon - Twitter.png`} alt="Twitter" />
+        <img className="img-fluid" src={`${ImagePath}/meta.png`} alt="Meta" />
+    </div>
+</div>
 
 
 
-            <p style={{fontSize:'12px',color:'#999999'}}>Copyright 2023, Purple Labs. All Rights Reserved.</p>
+
+            <p style={{fontSize:'12px',color:'#999999', paddingTop : '32px'}}>Copyright 2023, Labon. All Rights Reserved.</p>
             </div>
 
 
@@ -1126,16 +1187,19 @@ All Tests
               margin: "0 auto",
               width: "100%",
               display: "flex",
-              justifyContent: "center",
+              // justifyContent: "center",
               alignItems: "center",
-              background : 'orangered',
+              paddingLeft : '24px',
+              // background : 'orangered',
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}>
-              <div className="d-flex justify-content-between align-items-center">
-        <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
-        <ToastBody>{toasterContent}</ToastBody>
-                {/* <Button close className="btn-close-white me-2 m-auto" onClick={() => setOpen(false)}></Button> */}
-              </div>
+             <div className="d-flex align-items-center">
+    <i className="fa fa-thumbs-up"></i>
+    {/* <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" /> */}
+    <ToastBody className="ms-2">{toasterContent}</ToastBody>
+    {/* <Button close className="btn-close-white me-2 m-auto" onClick={() => setOpen(false)}></Button> */}
+</div>
+
             </Toast>
           {/* </CardBody> */}
         </Card>

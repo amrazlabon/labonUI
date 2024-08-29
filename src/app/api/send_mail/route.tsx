@@ -34,6 +34,7 @@ export async function POST(request: Request) {
 
     const { email, subject, message } = reqBody;
 
+    const textContent = 'Mail from Labon'
     if (!email || !subject || !message) {
       console.error('Missing required fields');
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
               },
             ],
             Subject: subject,
-            // TextPart: message,
+            TextPart: textContent,
             HTMLPart: message,
           },
         ],
