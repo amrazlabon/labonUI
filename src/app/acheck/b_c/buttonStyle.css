@@ -4,3 +4,8 @@
     border: none;
     border-bottom-style: solid;
 }
+
+.bg-success {
+    background-color: #65C466 !important;
+    color: #fff;
+}

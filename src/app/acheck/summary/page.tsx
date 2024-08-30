@@ -371,18 +371,16 @@ const InvoiceSubTotal = ({selectedTests} : any) => {
         <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem'  }}><span style={{marginRight : '3px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice)}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+      {/* <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
         <span style={{ display: "block", width: 95, textAlign: "left", marginLeft : '12px' , color : 'grey'}}>GST (18%)</span>
-        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
         <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice *0.18)}</span>
       </li>
       <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
         <span style={{ display: "block", width: 95, textAlign: "left" , marginLeft : '12px', color : 'grey' }}>Convinience Fee</span>
-        {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
         <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 ,paddingRight : '2rem' }}><span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice * 0.07)}</span>
       </li>
-      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/>
+      <hr style={{border: 'none',  borderTop: '1px solid #000',  margin: '8px 0' }}/> */}
       {/* <li style={{ display: "flex", alignItems: "center" }}>
         <span style={{ display: "block", width: 95 }}>{TotalDue}</span>
         <span style={{ display: "block",color: "#7A70BA", opacity: "0.9", fontWeight: 600, padding: "12px 25px", borderRadius: 5, background: "rgba(122, 112, 186 , 0.1)", fontSize: 16}} >$6120.00</span>
@@ -392,7 +390,7 @@ const InvoiceSubTotal = ({selectedTests} : any) => {
         {/* <span style={{ display: "block", textAlign: "right" }}>:</span> */}
         
         <div style={{display : 'grid'}}>
-        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 , fontSize : '18px' ,paddingRight : '2rem'  }}> <span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice + (totalPrice * 0.18) + (totalPrice * 0.07))}
+        <span style={{ display: "block", width: 125, textAlign: "right", color: "", opacity: "0.9", fontWeight: 600 , fontSize : '18px' ,paddingRight : '2rem'  }}> <span style={{marginRight : '4px'}}><i className='fa fa-rupee'></i></span>{formatPrice(totalPrice)}
         {/* <p style={{background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '2px' , width: '4rem' , margin : '0', marginRight : '0'}}>UnPaid</p> */}
 
         </span>

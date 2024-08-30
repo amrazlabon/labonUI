@@ -120,6 +120,18 @@ const FloatingForm = () => {
     try {
       const response = await axios.patch('/api/login',formData);
       // setSavedAddresses(response.data);
+      if(response.data) { 
+      // const userResponse = await axios.get('/api/login');
+      const userResponse = await axios.get(`/api/login?endpoint=user&id=${userId}`);
+      if (userResponse) { 
+        console.log("the user response data",userResponse.data);
+        
+        sessionStorage.setItem('user_data', JSON.stringify(userResponse.data));
+        const event = new Event('sessionUpdate');
+        window.dispatchEvent(event);
+
+      }
+      }
       console.log("Saved addresses: where dont know", response.data);
     } catch (error) {
       console.error("Error fetching data:", error.message);

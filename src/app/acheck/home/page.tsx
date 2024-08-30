@@ -1,5 +1,5 @@
 'use client'
-import { CheckedCheckbox, CheckMeOut, ClickOut, Close, DefaultCheck, Defaultcheckboxes, Email, ExtraLargeModals, Height, ImagePath, MofiLogin, Password, SaveChanges, SignIn, WebDesign, Width } from "@/Constant";
+import { CheckedCheckbox, CheckMeOut, ClickOut, Close, DefaultCheck, Defaultcheckboxes, Email, ExtraLargeModals, Height, ImagePath, MarginLeft, MofiLogin, Password, SaveChanges, SignIn, WebDesign, Width } from "@/Constant";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 // import { Col } from "reactstrap";
 import { Card, CardBody, Col, Row, Button , FormGroup, Table , Form , Input , Label , Modal, ModalBody, ModalFooter, Toast, ToastBody} from 'reactstrap';
@@ -43,12 +43,12 @@ type Test = {
 //     const [selectedAddress, setSelectedAddress] = useState<Location[]>([]);
 const home = () => {
   const settings = {
-    // dots: true,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    // arrows: true,
+    arrows: false,
 };
     const [open,setOpen] = useState(false)
     const [toasterContent,setToasterContent] = useState('')
@@ -75,7 +75,7 @@ const home = () => {
         setToasterColorContent('danger')
         setTimeout(()=>{
             setOpen(false);
-        },10000)
+        },5000)
 
     }
     else if(selectedAddress.length === 0){
@@ -85,7 +85,7 @@ const home = () => {
       setToasterColorContent('danger')
       setTimeout(()=>{
           setOpen(false);
-      },10000)
+      },5000)
 
   }
   else if(!userId){
@@ -95,7 +95,7 @@ const home = () => {
     setToasterColorContent('danger')
     setTimeout(()=>{
         setOpen(false);
-    },10000)
+    },5000)
 
 }
     else{
@@ -117,7 +117,7 @@ const home = () => {
             setToasterColorContent('danger')
             setTimeout(()=>{
                 setOpen(false);
-            },10000)
+            },5000)
 
         }
         else{
@@ -139,6 +139,15 @@ const home = () => {
     //     setStartDate(start);
     //     setEndDate(end);
     //   };
+
+    const toasterNotification = () => {
+      setOpen(true)
+            setToasterContent('Men at work! Visit again later')
+            setToasterColorContent('danger')
+            setTimeout(()=>{
+                setOpen(false);
+            },5000)
+    }
     return (
         // <Container fluid className="p-3">
         
@@ -154,7 +163,7 @@ const home = () => {
       <CardBody style={{padding : '0'}}>
       <div className="btn-group">
   <button className={"test-btn"}>Book a Home Visit</button>
-  <button className={"package-btn"}>Integrate Solution</button>
+  <button onClick={toasterNotification} className={"package-btn"}>Integrate Solution</button>
 </div> 
         {/* <h5 style={{ textAlign: 'center' }}>Book a Home Visit</h5>
         <p style={{ textAlign: 'center' }}>Integrate Solution</p> */}
@@ -202,7 +211,7 @@ const home = () => {
   {
     selectedAddress.length != 0 
     ? selectedAddress[0].address + ', ' + selectedAddress[0].location + ', ' + selectedAddress[0].pincode 
-    : "Select Location"
+    : "Select Address"
   }
 </p>
 
@@ -210,13 +219,27 @@ const home = () => {
         </Row>
         <Link href={'/acheck/booking'}>
 
-        <Button className="btnStyless" onClick={handleBookingClick} style={{ width: '90%', marginTop: '20px', marginLeft : '20px', color:'white'}} color="">
-          Book A Blood Test At Home
-          <span className="" style={{float : 'right'}}>
-          <i style={{marginLeft : '2rem'}} className="fa fa-angle-right"></i>
+        <Button
+  className="btnStyless"
+  onClick={handleBookingClick}
+  style={{
+    width: '90%',
+    marginTop: '20px',
+    marginLeft: '20px',
+    color: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center', // Center content vertically
+    position: 'relative',
+  }}
+  color=""
+>
+  Book A Blood Test At Home
+  <span style={{ position: 'absolute', right: '20px' }}>
+    <i style={{ marginLeft: '2rem' }} className="fa fa-angle-right"></i>
+  </span>
+</Button>
 
-          </span>
-        </Button>
         
         </Link>
       </CardBody>
@@ -377,7 +400,7 @@ const home = () => {
     <li onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}>
         Book a Home Visit
     </li>
-    <li>Integrate Our Solution (Labs)</li>
+    <li onClick={toasterNotification}>Integrate Our Solution (Labs)</li>
     <li>Find Tests</li>
     <li style={{ marginTop: '2rem' }}>About Us</li>
     <li>Contact Us</li>
@@ -418,7 +441,7 @@ export default home;
 // import React, { useState } from 'react';
 // import { Col, Input, Label, Button } from 'reactstrap';
 
-const DefaultChecks = ({ data, selectedTests, setSelectedTests, toggle } : any) => {
+const DefaultChecks = ({ data, selectedTests, setSelectedTests, toggle , searchTerm} : any) => {
   const [selectedTestData, setSelectedTestData] = useState(selectedTests.map((test : any) => test.id));
 
   const handleCheckboxChange = (index : any) => {
@@ -436,10 +459,22 @@ const DefaultChecks = ({ data, selectedTests, setSelectedTests, toggle } : any) 
   const handleSelectTestsClick = () => {
     const selectedData = selectedTestData.map((id : any) => data.find((test : any) => test.id === id));
     setSelectedTests(selectedData);
+    sessionStorage.setItem('tests', JSON.stringify(selectedData));
     toggle();
   };
 
   const isDisabled = selectedTestData.length === 0;
+
+  const highlightSearchTerm = (text: string, searchTerm: string) => {
+    if (!searchTerm) return text;
+    
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, index) => 
+      part.toLowerCase() === searchTerm.toLowerCase() ? <strong key={index}>{part}</strong> : part
+    );
+  };
 
   return (
     <Col sm="" xl="" style={{ padding: '0' }}>
@@ -456,8 +491,9 @@ const DefaultChecks = ({ data, selectedTests, setSelectedTests, toggle } : any) 
               <div style={{ display: 'grid' }}>
                 <div className="gap-3" style={{ display: 'flex', padding: '0' }}>
                   <img style={{ height: '1.3rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/Thumbnail-2.png`} alt="test image" />
-                  <p style={{ margin: '0', paddingTop: '0', paddingBottom: '0', fontStyle: '18px' }}>
-                    {test.test_name}
+                  <p style={{ margin: '0', paddingTop: '0', paddingBottom: '0', fontSize: '18px' }}>
+                    {/* Highlight the search term in the test name */}
+                    {highlightSearchTerm(test.test_name, searchTerm)}
                   </p>
                 </div>
                 <div className="gap-3" style={{ display: 'flex' }}>
@@ -511,7 +547,10 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
     const handleSelectTestsClick = () => {
       if (selectedTest !== null) {
         const selectedTestData = savedAddresses[selectedTest];
+        console.log("the selected address data",selectedTestData);
+        
         // console.log('Selected test data:', selectedTestData);
+        sessionStorage.setItem('address', JSON.stringify([selectedTestData]));
         setSelectedAddress([selectedTestData])
         // setToasterContent('All Good, Continue Booking')
         // setToasterColorContent('success')
@@ -520,6 +559,8 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
         //     setOpen(false);
         //   },10000)
           toggle();
+    window.location.href = '/acheck/booking';
+        
         //   setSelectedAddress([])
         // Add logic to handle the selected test data
       }
@@ -571,6 +612,7 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
         )
 }
         <Col sm="12" style={{paddingTop : '24px'}}>
+        {/* <Link href={'/acheck/booking'}> */}
         <Button
           onClick={handleSelectTestsClick}
           className={`btn-lg ${isDisabled ? 'btn-disabled' : ''}`}
@@ -583,9 +625,10 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
           }}
           color=""
           disabled={isDisabled}
-        >
+          >
           Select Address
         </Button>
+          {/* </Link> */}
         </Col>
       </Col>
     );
@@ -629,45 +672,70 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
         }
       };
     
-      const handleSearchInputChange = async (event : any) => {
-        const term = event.target.value;
-        try {
-            // const response = await axios.get(term ? `http://0.0.0.0:37000/tests/letter/${term}` : '/api/tests');
-            const response = await axios.post('/api/tests', {term});
-            // console.log("the searchrespose data",response.data)
-            setData(response.data);
-          } catch (error) {
-            
-            // setData([])
-            fetchData()
-            setError(error.message);
-          }
-        // setSearchTerm(term);
-        // fetchData(term);
-      };
+      const [searchTerm, setSearchTerm] = useState('');
+
+const handleSearchInputChange = async (event : any) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+
+    try {
+        const response = await axios.post('/api/tests', { term });
+        setData(response.data);
+    } catch (error) {
+        fetchData();
+        setError(error.message);
+    }
+};
+
     return (
       <>
       <Col md='6'>
         {/* <Button color="info"  onClick={toggle}>{ExtraLargeModals}</Button> */}
         <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Test">
 {/* <Input style={{padding:'10px',width:'100%',borderRadius:'15px',marginTop:'1rem' , marginBottom : '2rem'}} name="twitterUrl" value={''} type="url" placeholder={'Search'} /> */}
-<Input
-          style={{ padding: '10px', width: '100%', borderRadius: '15px', marginTop: '0', marginBottom: '24px' }}
-          name="search"
-          //   value={searchTerm}
-          type="text"
-          placeholder="Search"
-          onChange={handleSearchInputChange}
-          />
+<div style={{ position: 'relative', width: '100%' }}>
+  <Input
+    style={{ 
+      padding: '10px', 
+      width: '100%', 
+      borderRadius: '15px', 
+      marginTop: '0', 
+      marginBottom: '24px', 
+      paddingRight: '30px' // Make space for the "X" icon
+    }}
+    name="search"
+    type="text"
+    placeholder="Search"
+    onChange={handleSearchInputChange}
+    value={searchTerm}
+     // Bind value to clear input when "X" is clicked
+  />
+  {searchTerm && (
+    <span 
+      style={{
+        position: 'absolute',
+        right: '10px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        cursor: 'pointer',
+        color: '#999'
+      }}
+      onClick={() => handleSearchInputChange({ target: { value: '' } })}
+    >
+      &times;
+    </span>
+  )}
+</div>
+
 <p style={{paddingTop : '0' , margin : '0',textAlign:'center'}}>
                     
                     Example : If you want to search for <span style={{fontWeight:'600'}}>Cholesterol</span>, type Cholesterol and enter.
                     </p>
         <h2 style={{marginTop:'24px', paddingTop : '0' , paddingBottom : '16px',fontWeight:'800',marginLeft:'0'}}>
-All Tests
+        {searchTerm ? `Results for "${searchTerm}"` : 'All Tests'}
 </h2>
 
-            <DefaultChecks data={data} selectedTests={selectedTests} setSelectedTests={setSelectedTests} toggle={toggle}/>
+            <DefaultChecks data={data} selectedTests={selectedTests} setSelectedTests={setSelectedTests} toggle={toggle} searchTerm={searchTerm}/>
           {/* <div className="large-modal-header"><ChevronsRight /><h5 className="f-w-600">{WebDesign}</h5></div>
           <p className="modal-padding-space">We build specialised websites for companies, list them on digital directories, and set up a sales funnel to boost ROI.</p>
           {FullScreenData.map(({ title, text }, index) => (
@@ -686,22 +754,27 @@ All Tests
 
     const [selectedOption, setSelectedOption] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace this with actual authentication logic
+  // const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace this with actual authentication logic
   const [savedAddresses, setSavedAddresses] = useState<any>([]);
-  const modalTitle = selectedOption === "add" ? "Add New Address" : "Select Location";
+  const modalTitle = selectedOption === "add" ? "Add New Address" : "Select Address";
 
 
   useEffect(() => {
     const fetchData = async () => {
+      
       try {
+        console.log("if it is in the fetc data after the logout");
       const userId = sessionStorage.getItem('user_id');
       if(userId){
-        // console.log("is inside the data");
+        console.log("is inside the data",userId);
         
-        setIsLoggedIn(true)
+        // setIsLoggedIn(true)
         const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
         setSavedAddresses(response.data);
         // console.log("Saved addresses: where dont know", response.data);
+      }
+      else {
+        setSavedAddresses([])
       }
       } catch (error) {
         const data = [{
@@ -728,6 +801,8 @@ All Tests
             nick_name : 'Home'
             
         },]
+        console.log("it is inside the catch error");
+        
         setSavedAddresses([])
         console.error("Error fetching data:", error.message);
       }
@@ -736,8 +811,11 @@ All Tests
     fetchData();
 
     const checkLoginStatus = () => {
-      const userId = sessionStorage.getItem("user_id");
-      setIsLoggedIn(!!userId);
+      console.log("coming during logout also");
+      
+      // const userId = sessionStorage.getItem("user_id");
+    fetchData();
+    // setIsLoggedIn(!!userId);
     };
 
     // Check login status on component mount
@@ -759,58 +837,21 @@ All Tests
     setShowForm(false);
   };
 
-  const fetchData = async () => {
-    try {
-    const userId = sessionStorage.getItem('user_id');
-    if(userId){
-      // console.log("is inside the data");
-      
-      setIsLoggedIn(true)
-      const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
-      setSavedAddresses(response.data);
-      // console.log("Saved addresses: where dont know", response.data);
-    }
-    } catch (error) {
-      const data = [{
-          id : 1,
-          pincode : '678907',
-          location : 'Test Location',
-          address : 'Test Address',
-          nick_name : 'Home'
-          
-      },
-      {
-          id : 2,
-          pincode : '678907',
-          location : 'Test Location',
-          address : 'Test Address',
-          nick_name : 'Home'
-          
-      },
-      {
-          id : 3,
-          pincode : '678907',
-          location : 'Test Location',
-          address : 'Test Address',
-          nick_name : 'Home'
-          
-      },]
-      setSavedAddresses([])
-      console.error("Error fetching data:", error.message);
-    }
-  };
-
   const handleContinueClick = () => {
     setShowForm(true);
   };
 
   const handleFormSubmit = (formData: any) => {
-    // console.log("Form Data:", formData);
+    console.log("Form Data:", formData);
+    sessionStorage.setItem('address', JSON.stringify([formData]));
     setSelectedAddress([formData])
     setSelectedOption('')
+    setShowForm(false);
+
     // setShowForm(false)
     // setIsLoggedIn(false)
     toggle();
+    window.location.href = '/acheck/booking';
     // Handle form submission logic here, e.g., send form data to the server
   };
   const [showModal, setShowModal] = useState(false);
@@ -824,7 +865,7 @@ All Tests
   const signInButton = () => {
     // sessionStorage.setItem('user_id', JSON.stringify(1));
     toggleModal()
-    setIsLoggedIn(true)
+    // setIsLoggedIn(true)
 
   }
 
@@ -844,7 +885,7 @@ All Tests
             <h2 className="text-black ml-4" style={{paddingBottom:'24px'}}>Current Location</h2>
             <BasicMap/>
             <p style={{ paddingTop: '16px', margin: '0' }} >
-            Map by default shows your current location       . If needed, you may drag the pointer      to the exact location and continue.
+            Map by default shows your current location. If needed, you may drag the pointer to the exact location and continue.
           </p>
           <Button onClick={handleContinueClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Continue
             {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
@@ -869,26 +910,26 @@ All Tests
           <p style={{ paddingTop: '0', margin: '0'  ,cursor : 'pointer',color:'#1D0F8F'}} onClick={() => handleOptionClick("add")}>
             Add new Address.
           </p>
-          <div className="vertical-line"></div>
+          <div style={{width : '1px' , height : '25px' , backgroundColor : 'black' , margin : '5px 10px'}}></div>
           {/* <br />
           <br />
           <br /> */}
           Or
           {/* <br /><br /><br /> */}
-          <div className="vertical-line"></div>
+          <div style={{width : '1px' , height : '25px' , backgroundColor : 'black' , margin : '5px 10px'}}></div>
 
           <p style={{ paddingTop: '0', margin: '0', fontWeight:'600'}} >
             Select from saved Addresses.
           </p>
           <br />
-          {!isLoggedIn && (
+          {savedAddresses.length === 0 && (
             <>
               <p style={{ paddingTop: '0', margin: '0' , color : '#C46B65'}}>You must sign in to display saved addresses.</p>
               <br />
               <p style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' , cursor : 'pointer',fontSize:"16px"}} onClick={signInButton}>Click here to <span style={{color : 'blue',fontWeight:'600'}}>Sign in</span></p>
             </>
           )}
-          {isLoggedIn && (
+          {savedAddresses.length > 0 && (
             <>
             <DefaultRadio savedAddresses={savedAddresses} setSelectedAddress={setSelectedAddress} toggle={toggle} />
             {/* <TableHeadOptions savedAddresses={savedAddresses} /> */}
@@ -917,7 +958,7 @@ All Tests
         {(title || sizeTitle || fullTitle) && (
           <div className="modal-header" onClick={toggle}>
             {title && <h5 className="f-w-600">{title}</h5>}
-            {sizeTitle && <h4>{sizeTitle}</h4>}
+            {sizeTitle && <p style={{fontSize : '24px' , fontWeight : 'bold' , margin : 0}}>{sizeTitle}</p>}
             {fullTitle && <h1 className="fs-5">{fullTitle}</h1>}
             <Button close></Button>
           </div>
@@ -1069,48 +1110,63 @@ All Tests
       address: ''
     });
   
-    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-  
-      setFormData({
-          ...formData,
-          [name]: value
-      });
-  
-      if (name === 'pincode' && value.length === 6) {
-          // Call the third-party API when pincode length is 6
-          try {
-              const response = await axios.get(`https://api.postalpincode.in/pincode/${value}`);
-              const locationData = response.data[0];
-  
-              if (locationData.Status === 'Success' && locationData.PostOffice.length > 0) {
-                  // Filter the PostOffice array to find the Sub Post Office
-                  const subPostOffice = locationData.PostOffice.find(
-                      (postOffice : any) => postOffice.BranchType === 'Sub Post Office'
-                  );
-  
-                  if (subPostOffice) {
-                      setFormData({
-                          ...formData,
-                          location: `${subPostOffice.Name}, ${subPostOffice.District}, ${subPostOffice.State}`,
-                          pincode: value
-                      });
-                  } else {
-                      // console.log('No Sub Post Office found for this pincode.');
-                  }
-              } else {
-                  // console.log('Invalid Pincode');
-              }
-          } catch (error) {
-              console.error('Error fetching location data:', error);
+    const [showPincode, setShowPincode] = useState(false);
+  const [showLocation, setShowLocation] = useState(false);
+  const [showNickName, setShowNickName] = useState(false);
+
+  const handleChange = async (e : any) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+
+    if (name === 'address' && value.length >= 3) {
+      setShowPincode(true);
+    }
+
+    if (name === 'pincode' && value.length === 6) {
+      // Call the third-party API when pincode length is 6
+      try {
+        const response = await axios.get(`https://api.postalpincode.in/pincode/${value}`);
+        const locationData = response.data[0];
+
+        if (locationData.Status === 'Success' && locationData.PostOffice.length > 0) {
+          const subPostOffice = locationData.PostOffice.find(
+            (postOffice : any) => postOffice.BranchType === 'Sub Post Office'
+          );
+
+          if (subPostOffice) {
+            setFormData({
+              ...formData,
+              location: `${subPostOffice.Name}, ${subPostOffice.District}, ${subPostOffice.State}`,
+              pincode: value
+            });
+            setShowLocation(true);  // Show location field after fetching the location
+      setShowNickName(true);
+    } else {
+            console.log('No Sub Post Office found for this pincode.');
           }
+        } else {
+          console.log('Invalid Pincode');
+        }
+      } catch (error) {
+        console.error('Error fetching location data:', error);
       }
+    }
+
+    if (name === 'location' && value) {
+      setShowNickName(true);
+    }
   };
+
   
   
   
     const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
+    // sessionStorage.setItem('address', JSON.stringify([formData]));
+    e.preventDefault();
       onSubmit(formData);
     };
     
@@ -1131,30 +1187,60 @@ All Tests
                     <p style={{margin : '0' , paddingTop : '8px' , color : 'GrayText'}}>Example: Flat No. 123, Building No. 123</p>
                   </FormGroup>
                 </Col>
-                <Col sm="12">
-                  <FormGroup floating className="mb-6">
-                    <Input type="text" name="pincode" value={formData.pincode} onChange={handleChange} placeholder="Pincode" />
-                    <Label>Pincode</Label>
-                  </FormGroup>
-                </Col>
-                <Col sm="12" className="mt-6">
-                  <FormGroup floating>
-                    <Input type="text" name="location" value={formData.location} onChange={handleChange} placeholder="Location" />
-                    <Label>Location</Label>
-                  </FormGroup>
-                </Col>
-                <Col sm="12" className="mb-6">
-                  <FormGroup floating>
-                    <Input type="text" name="nick_name" value={formData.nick_name} onChange={handleChange} placeholder="Name" />
-                    <Label>Nick Name for the address</Label>
-                    <p style={{margin : '0' , paddingTop : '8px' , color : 'GrayText'}}>Example: Home</p>
-                  </FormGroup>
-                </Col>
+                {showPincode && (
+            <Col sm="12">
+              <FormGroup floating className="mb-6">
+                <Input
+                  type="text"
+                  name="pincode"
+                  value={formData.pincode}
+                  onChange={handleChange}
+                  placeholder="Pincode"
+                />
+                <Label>Pincode</Label>
+              </FormGroup>
+            </Col>
+          )}
+
+          {showLocation && (
+            <Col sm="12" className="mt-6">
+              <FormGroup floating>
+                <Input
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  placeholder="Location"
+                />
+                <Label>Location</Label>
+              </FormGroup>
+            </Col>
+          )}
+
+          {showNickName && (
+            <Col sm="12" className="mb-6">
+              <FormGroup floating>
+                <Input
+                  type="text"
+                  name="nick_name"
+                  value={formData.nick_name}
+                  onChange={handleChange}
+                  placeholder="Name"
+                />
+                <Label>Nick Name for the address</Label>
+                <p style={{ margin: '0', paddingTop: '8px', color: 'GrayText' }}>
+                  Example: Home
+                </p>
+              </FormGroup>
+            </Col>
+          )}
                 {canShowButton &&
                 <Col sm="12">
+                  {/* <Link href={'/acheck/booking'}> */}
                   <Button type="submit" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
                     Save Address
                   </Button>
+                  {/* </Link> */}
                 </Col>
                 }
               </Row>
@@ -1196,7 +1282,7 @@ All Tests
              <div className="d-flex align-items-center">
     <i className="fa fa-thumbs-up"></i>
     {/* <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" /> */}
-    <ToastBody className="ms-2">{toasterContent}</ToastBody>
+    <ToastBody className="">{toasterContent}</ToastBody>
     {/* <Button close className="btn-close-white me-2 m-auto" onClick={() => setOpen(false)}></Button> */}
 </div>
 

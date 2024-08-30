@@ -77,9 +77,9 @@
 
 .vertical-line {
     width: 1px;
-    height: 50px;
+    height: 25px;
     background-color: black;
-    margin: 0 10px; /* Adjust the margins as needed */
+    margin: 5px 10px; /* Adjust the margins as needed */
   }
   .btn-group, .btn-group-vertical {
     position: relative;
@@ -146,7 +146,20 @@
         outline: none;
         border-color: #AE7FD1; /* Focus border color */
       }
+
+      .bg-danger {
+        background-color: #C46B65 !important;
+        color: #fff;
+    }
+
+    .bg-success {
+        background-color: #65C466 !important;
+        color: #fff;
+    }
       
+    .map-js-height {
+        height: 220px !important;
+    }
 
 
     

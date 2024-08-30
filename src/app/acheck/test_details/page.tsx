@@ -497,7 +497,7 @@ const InvoiceSubTotal = ({ selectedTests }: { selectedTests: { tests: { price: s
         </span>
       </li>
       <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '8px 0' }} />
-      <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
+      {/* <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
         <span style={{ display: "block", width: 95, textAlign: "left", marginLeft: '12px', color: 'grey' }}>GST (18%)</span>
         <span style={{ display: "block", width: 125, textAlign: "right", opacity: "0.9", fontWeight: 600, paddingRight: '2rem' }}>
           <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{gst.toFixed(2)}
@@ -510,12 +510,12 @@ const InvoiceSubTotal = ({ selectedTests }: { selectedTests: { tests: { price: s
           <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{convenienceFee.toFixed(2)}
         </span>
       </li>
-      <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '8px 0' }} />
+      <hr style={{ border: 'none', borderTop: '1px solid #000', margin: '8px 0' }} /> */}
       <li style={{ display: "flex", justifyContent: "space-between", paddingBottom: 0 }}>
         <span style={{ display: "block", width: 95, textAlign: "left", marginLeft: '12px', fontWeight: '600' }}>Total</span>
         <div style={{ display: 'grid' }}>
           <span style={{ display: "block", width: 125, textAlign: "right", opacity: "0.9", fontWeight: 600, fontSize: '18px', paddingRight: '2rem' }}>
-            <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{grandTotal.toFixed(2)}
+            <span style={{ marginRight: '4px' }}><i className='fa fa-rupee'></i></span>{totalPrice.toFixed(2)}
           </span>
         <p style={{display: "block" , background: 'rgba(196, 107, 101, 1)', color : 'white' , borderRadius : '5px' , padding : '5px' , width: 'fit-content'  , textAlign: 'center' ,marginLeft : '2rem' }}>Unpaid</p>
 

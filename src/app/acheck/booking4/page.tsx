@@ -284,11 +284,11 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
       onChange={handleInputChange}
     >
       <option value="" disabled>Select Relation</option>
+      <option value="Self">Myself</option>
       <option value="Father">Father</option>
       <option value="Mother">Mother</option>
       <option value="Brother">Brother</option>
       <option value="Sister">Sister</option>
-      <option value="Self">Self</option>
       <option value="Wife">Wife</option>
     </Input>
     <Label check>Relation</Label>

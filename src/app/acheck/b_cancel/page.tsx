@@ -22,7 +22,7 @@ const BookingCancellationConfirm = () => {
     useEffect(()=>{
       setTimeout(()=>{
         setOpen(false);
-      },10000)
+      },5000)
     },[])
     return (
         // <Container fluid className="p-3">
@@ -71,7 +71,7 @@ const ColorsSchemes = ({open} : any, {setOpen} : any) => {
   
     return (
       <Col md="6">
-        <Card>
+        <Card style={{boxShadow : 'none', margin : '0'}}>
           
           {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}
           {/* <CardBody className="toast-rtl colors-schemes"> */}
@@ -85,13 +85,15 @@ const ColorsSchemes = ({open} : any, {setOpen} : any) => {
               margin: "0 auto",
               width: "100%",
               display: "flex",
-              height : '4rem',
-              justifyContent: "center",
+              // justifyContent: "center",
               alignItems: "center",
+              paddingLeft : '24px',
+              // background : 'orangered',
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}>
-              <div className="d-flex justify-content-between align-items-center">
-        <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
+              <div className="d-flex align-items-center">
+        {/* <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" /> */}
+        <i className="fa fa-thumbs-up"></i>
 
                 <ToastBody>Your booking has been cancelled.</ToastBody>
                 {/* <Button close className="btn-close-white me-2 m-auto" onClick={() => setOpen(false)}></Button> */}
