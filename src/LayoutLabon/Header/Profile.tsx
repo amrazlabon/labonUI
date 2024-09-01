@@ -70,7 +70,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
             {
               icon: <FileText />,
               title: "Book a Home Visit",
-              link:"",
+              link:"acheck/home",
             },
             {
               icon: <FileText />,
@@ -80,7 +80,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
             {
               icon: <FileText />,
               title: "My Profile",
-              link:"",
+              link:"acheck/profile",
             },
             {
               icon: <FileText />,
@@ -132,7 +132,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               {
                 icon: <FileText />,
                 title: "Book a Home Visit",
-                link:"",
+                link:"acheck/home",
               },
               {
                 icon: <FileText />,
@@ -206,7 +206,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
         {userId !== null && 
         <Link href={'/acheck/profile'}>
 
-        <div className="" style={{borderBottomStyle : 'groove' , padding : '20px 20px 20px 12px', display : 'flex' , gap : '2rem'}}>
+        <div className="" style={{borderBottomStyle : 'groove' , borderBottomColor : 'black' , padding : '20px 20px 20px 12px', display : 'flex' , gap : '2rem'}}>
 <img style={{height:'3rem', margin:'0 ' , borderRadius : '20px'}} className="img-fluid table-avtar" src={`${ImagePath}/Father.png`} alt="user image" />
 
           <div style={{display : 'grid'}}>

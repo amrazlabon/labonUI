@@ -87,16 +87,52 @@
     vertical-align: middle;
 }
    
-.modal-header {
+.custom-header .modal-header {
     display: flex;
     flex-shrink: 0;
     align-items: center;
+    justify-content: center; /* Center the title horizontally */
     padding: var(--bs-modal-header-padding);
     border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
     border-top-left-radius: var(--bs-modal-inner-border-radius);
     border-top-right-radius: var(--bs-modal-inner-border-radius);
-    flex-direction: column-reverse;
+    flex-direction: row;
+    position: relative; /* Allows positioning of the back icon */
 }
+
+.custom-header .modal-header .fa-angle-left {
+    position: absolute; /* Position the back icon absolutely */
+    left: 16px; /* Adjust the left position as needed */
+}
+
+.custom-header .modal-header h5,
+.custom-header .modal-header p,
+.custom-header .modal-header h1 {
+    margin: 0 auto; /* Center-align the text */
+    flex-grow: 1; /* Allow the title to take up remaining space */
+    text-align: center; /* Center the text content */
+}
+
+.custom-header .modal-body {
+    max-height: 70vh; /* Set a fixed maximum height for the modal body */
+    min-height: 500px; /* Set a fixed maximum height for the modal body */
+    overflow-y: auto; /* Enable vertical scrolling within the modal body */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 24px; /* Ensure consistent padding */
+  }
+
+  .fixed-footer {
+    position: sticky; /* Make the button stick to the bottom */
+    bottom: 0; /* Stick the button to the bottom of its container */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it stays above the modal content */
+    background-color: #fff; /* Background color to match modal */
+    padding: 10px 0; /* Padding to ensure proper spacing */
+    text-align: center; /* Center-align the button */
+    box-shadow: 0 -1px 5px rgba(0,0,0,0.1); /* Optional: slight shadow for visual separation */
+  }
+  
+  
 
 .modal-dialog { 
     margin : 24px;

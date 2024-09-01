@@ -76,12 +76,8 @@ function QontoStepIcon(props: StepIconProps) {
 }
 
 const Steppers = ({ stepActive, setStepActive }: any) => {
-  const stepperProgress = [
-    'Date',
-    'Time',
-    'Patient Details',
-    'Summary'
-  ];
+  const stepperProgress = ['Date', 'Time', 'Patient Details', 'Summary'];
+
   return (
     <div>
       <Box sx={{ width: '50%', paddingTop: '1rem' }}>
@@ -90,19 +86,19 @@ const Steppers = ({ stepActive, setStepActive }: any) => {
           alternativeLabel
           connector={<QontoConnector />}
         >
-          {
-            stepperProgress.map((menu: any, i: any) => (
-              <Step 
-                key={i} 
-                onClick={() => setStepActive(i)}
-              >
-                <StepLabel
-                  StepIconComponent={QontoStepIcon}
-                >
-                </StepLabel>
-              </Step>
-            ))
-          }
+          {stepperProgress.map((menu: any, i: any) => (
+            <Step 
+              key={i} 
+              onClick={() => {
+                if (i < stepActive) {
+                  // Only allow navigating back
+                  setStepActive(i);
+                }
+              }}
+            >
+              <StepLabel StepIconComponent={QontoStepIcon} />
+            </Step>
+          ))}
         </Stepper>
       </Box>
     </div>
@@ -110,6 +106,7 @@ const Steppers = ({ stepActive, setStepActive }: any) => {
 }
 
 export default Steppers;
+
 
 
 

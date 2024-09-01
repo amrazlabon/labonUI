@@ -4,7 +4,7 @@ import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/Bas
 import { CommonTableProp } from "@/Types/TableType";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Card, Col, Row, Table } from "reactstrap";
 
@@ -53,12 +53,21 @@ const PatientInformation = () => {
 
     fetchData();
   }, []);
+
+  const router = useRouter(); // Initialize the router
+
+  const goBack = () => {
+    router.back(); // Go back to the previous route
+  };
   
   return (
     <Col md='6' >
 
 <div style={{padding : '0', height:'6rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+<div style={{display : 'flex'}}>
+<i onClick={goBack} className='fa fa-angle-left' style={{padding:'24px 0 24px 24px', fontSize : '24px' , color : 'white'}}></i>
 <h1 className="text-white" style={{padding:'24px', margin: '0'}}>My Contacts</h1>
+        </div>
 <div style={{padding : '0', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
 </div>

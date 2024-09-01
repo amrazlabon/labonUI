@@ -284,12 +284,15 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
       onChange={handleInputChange}
     >
       <option value="" disabled>Select Relation</option>
-      <option value="Self">Myself</option>
+      <option value="Myself">Myself</option>
       <option value="Father">Father</option>
       <option value="Mother">Mother</option>
-      <option value="Brother">Brother</option>
-      <option value="Sister">Sister</option>
-      <option value="Wife">Wife</option>
+      <option value="Spouse">Spouse</option>
+      <option value="Sibling">Sibling</option>
+      <option value="Child">Child</option>
+      <option value="Relative">Relative</option>
+      <option value="Friend">Friend</option>
+      <option value="Other">Other</option>
     </Input>
     <Label check>Relation</Label>
   </FormGroup>
@@ -399,18 +402,18 @@ const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
   const CustomRadioListData = [
     {
       id: 1,
-      icon: "Gender - Male.png",
+      icon: "fa fa-male",
       text: "Male",
       defaultChecked: true,
     },
     {
       id: 2,
-      icon: "Gender - Female.png",
+      icon: "fa fa-female",
       text: "Female",
     },
     {
       id: 3,
-      icon: "Gender - Other.png",
+      icon: "fa fa-dot-circle-o",
       text: "Other",
     },
   ]
@@ -428,16 +431,17 @@ const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
             </li> */}
             {CustomRadioListData.map(({ icon, id, text, defaultChecked }, index) => (
               <li className="p-1 pt-2 pb-2" key={index} style={{maxWidth : '50px'}}>
-                <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio" defaultChecked={defaultChecked} name="radio2" 
-                checked={selectedTime === text}
-                onChange={() => onTimeChange(text)}/>
-                <Label htmlFor={`radio-${id}`} check>
-                <img style={{ height: '100%', margin : '0'}} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" />
+              <Input className="checkbox-shadow d-block" id={`radio-${id}`} type="radio" defaultChecked={defaultChecked} name="radio2" 
+              checked={selectedTime === text}
+              onChange={() => onTimeChange(text)}/>
+              <Label htmlFor={`radio-${id}`} check>
+              <i className={`${icon}`} style={{ marginLeft: '' , padding :0 , fontSize : '28px' , color: selectedTime === text ? 'white' : 'black',}}></i>
+              {/* <img style={{ height: '100%', margin : '0'}} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" /> */}
 
-                  {/* <i className={`fa fa-${icon}`}></i> */}
-                  {/* <span>{text}</span> */}
-                </Label>
-              </li>
+                {/* <i className={`fa fa-${icon}`}></i> */}
+                {/* <span>{text}</span> */}
+              </Label>
+            </li>
             ))}
           </ul>
         </div>

@@ -19,6 +19,7 @@ import './buttonStyle.css'
 import { InvoiceTableHeader, InvoiceFourData, InvoiceFourDataLabon, InvoiceTableHeaderLabon } from "@/Data/Application/Ecommerce";
 import { SimpleAccordion } from "./SimpleAccordion";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 // import { SimpleAccordion } from "./SimpleAccordion";
 
 // import OpenModalMofi from ".";
@@ -69,6 +70,12 @@ const PatientDetails = () => {
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
       }, []);
+
+      const router = useRouter(); // Initialize the router
+
+  const goBack = () => {
+    router.back(); // Go back to the previous route
+  };
       
     return (
       <Col md='6' >
@@ -76,7 +83,11 @@ const PatientDetails = () => {
   <>
       <Card style={{backgroundColor:'#F5F5F5' , padding : '24px' , boxShadow : 'none' , margin : '0'}}>
       {/* <div className="mb-2" style={{height:'8rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}> */}
+      <div style={{display : 'flex'}}>
+  <i onClick={goBack} className='fa fa-angle-left' style={{paddingRight:'24px', fontSize : '24px' , color : 'black'}}></i>
+      {/* <h1 className="text-black ml-4" style={{margin:'0' , paddingBottom : '24px'}}>My Booking Information</h1> */}
       <h1 className="text-black " style={{paddingBottom:'24px' , margin : '0'}}>LBNHVB080320243{selectedTests.id}</h1>
+        </div>
 {/* <p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p> */}
 {/* <div style={{display : 'flex'}}>
 <h1 className="text-white ml-4 " style={{marginLeft:'2rem', }}>1,100.00</h1> */}

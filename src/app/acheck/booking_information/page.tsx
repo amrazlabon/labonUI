@@ -9,6 +9,7 @@ import Link from "next/link";
 import router from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 const BookingInformation = () => {
@@ -55,16 +56,26 @@ const BookingInformation = () => {
       setBookingInformation(TestResponse.data.test_data)
     }
     } catch (error) {
-      setBookingInformation(TableHeadOptionBody)
+      setBookingInformation([])
       // setError(error.message);
     }
   };
 
     fetchData();
   }, []);
+
+  const router = useRouter(); // Initialize the router
+
+  const goBack = () => {
+    router.back(); // Go back to the previous route
+  };
+
   return (
     <Col md='6' style={{padding : '24px'}}>
+       <div style={{display : 'flex'}}>
+  <i onClick={goBack} className='fa fa-angle-left' style={{paddingRight:'24px', fontSize : '24px' , color : 'black'}}></i>
       <h1 className="text-black ml-4" style={{margin:'0' , paddingBottom : '24px'}}>My Booking Information</h1>
+        </div>
 <BasicCard/>
 
     {/* <div className="btn-group">

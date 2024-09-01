@@ -51,6 +51,7 @@ export interface CommonModalType {
   centered?: boolean;
   onClosed?: () => void;
   backdrop?: boolean | "static";
+  handleBackClick?: any;
 }
 
 export interface FormSubmitProp {

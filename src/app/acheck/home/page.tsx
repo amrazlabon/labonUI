@@ -155,7 +155,7 @@ const home = () => {
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
 
             <div style={{ background: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)', height: '21rem', alignContent: 'end' }}>
-                <img className="w-100" src={`${ImagePath}/home.png`} alt="user" />
+                <img className="w-100" style={{verticalAlign : 'bottom'}} src={`${ImagePath}/home.png`} alt="user" />
 
             </div>
 
@@ -250,7 +250,7 @@ const home = () => {
             <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '2fr 3fr',     margin: '2rem 0 0 0' , height : '15.4rem'}}>
                 <div>
 
-                    <img style={{ position: 'absolute', zIndex: 2, height: '13rem' , marginTop : '3rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/Phone.png`} alt="user" />
+                    <img style={{ position: 'absolute', zIndex: 2, height: '13rem' , marginTop : '3rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/mobilehand.png`} alt="user" />
                     <img style={{ position: 'absolute', zIndex: 1 }} className="img-fluid rounded-circle" src={`${ImagePath}/Circles.png`} alt="user" />
 
 
@@ -713,6 +713,7 @@ const handleSearchInputChange = async (event : any) => {
   {searchTerm && (
     <span 
       style={{
+        fontSize : '24px',
         position: 'absolute',
         right: '10px',
         top: '50%',
@@ -754,7 +755,7 @@ const handleSearchInputChange = async (event : any) => {
 
     const [selectedOption, setSelectedOption] = useState("");
   const [showForm, setShowForm] = useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace this with actual authentication logic
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace this with actual authentication logic
   const [savedAddresses, setSavedAddresses] = useState<any>([]);
   const modalTitle = selectedOption === "add" ? "Add New Address" : "Select Address";
 
@@ -763,45 +764,19 @@ const handleSearchInputChange = async (event : any) => {
     const fetchData = async () => {
       
       try {
-        console.log("if it is in the fetc data after the logout");
       const userId = sessionStorage.getItem('user_id');
       if(userId){
         console.log("is inside the data",userId);
         
-        // setIsLoggedIn(true)
+        setIsLoggedIn(true)
         const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
         setSavedAddresses(response.data);
-        // console.log("Saved addresses: where dont know", response.data);
       }
       else {
+        setIsLoggedIn(false)
         setSavedAddresses([])
       }
       } catch (error) {
-        const data = [{
-            id : 1,
-            pincode : '678907',
-            location : 'Test Location',
-            address : 'Test Address',
-            nick_name : 'Home'
-            
-        },
-        {
-            id : 2,
-            pincode : '678907',
-            location : 'Test Location',
-            address : 'Test Address',
-            nick_name : 'Home'
-            
-        },
-        {
-            id : 3,
-            pincode : '678907',
-            location : 'Test Location',
-            address : 'Test Address',
-            nick_name : 'Home'
-            
-        },]
-        console.log("it is inside the catch error");
         
         setSavedAddresses([])
         console.error("Error fetching data:", error.message);
@@ -811,22 +786,16 @@ const handleSearchInputChange = async (event : any) => {
     fetchData();
 
     const checkLoginStatus = () => {
-      console.log("coming during logout also");
       
-      // const userId = sessionStorage.getItem("user_id");
     fetchData();
-    // setIsLoggedIn(!!userId);
     };
 
-    // Check login status on component mount
     checkLoginStatus();
 
-    // Listen for storage changes and custom session update event
     window.addEventListener("storage", checkLoginStatus);
     window.addEventListener("sessionUpdate", checkLoginStatus);
 
     return () => {
-      // Clean up event listeners
       window.removeEventListener("storage", checkLoginStatus);
       window.removeEventListener("sessionUpdate", checkLoginStatus);
     };
@@ -842,7 +811,6 @@ const handleSearchInputChange = async (event : any) => {
   };
 
   const handleFormSubmit = (formData: any) => {
-    console.log("Form Data:", formData);
     sessionStorage.setItem('address', JSON.stringify([formData]));
     setSelectedAddress([formData])
     setSelectedOption('')
@@ -852,29 +820,32 @@ const handleSearchInputChange = async (event : any) => {
     // setIsLoggedIn(false)
     toggle();
     window.location.href = '/acheck/booking';
-    // Handle form submission logic here, e.g., send form data to the server
   };
   const [showModal, setShowModal] = useState(false);
 
-  // console.log("check if this is working fine");
   
   const toggleModal = () => {
     setShowModal(prev => !prev);
   };
 
   const signInButton = () => {
-    // sessionStorage.setItem('user_id', JSON.stringify(1));
     toggleModal()
-    // setIsLoggedIn(true)
-
   }
+
+  const handleBackClick = () => {
+    if (showForm) {
+      setShowForm(false);
+    } else {
+      setSelectedOption('');
+    }
+  };
+
 
   const renderContent = () => {
     if (selectedOption === "add") {
       if (showForm) {
         return (
           <div>
-            <h2 className="text-black ml-4" style={{paddingBottom:'16px'}}>Current Location</h2>
 
 <FloatingForm onSubmit={handleFormSubmit} />
           </div>
@@ -888,20 +859,11 @@ const handleSearchInputChange = async (event : any) => {
             Map by default shows your current location. If needed, you may drag the pointer to the exact location and continue.
           </p>
           <Button onClick={handleContinueClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Continue
-            {/* <span><i className="fa fa-angle-right" style={{marginLeft:'1rem'}}></i></span> */}
             </Button>
           </div>
         );
       }
     } 
-    // else if (selectedOption === "saved") {
-    //   return (
-    //     <div>
-    //       <h5>Select from Saved Addresses</h5>
-    //       <p>There are no saved addresses.</p>
-    //     </div>
-    //   );
-    // } 
     else {
       return (
         <div>
@@ -922,14 +884,14 @@ const handleSearchInputChange = async (event : any) => {
             Select from saved Addresses.
           </p>
           <br />
-          {savedAddresses.length === 0 && (
+          {!isLoggedIn && (
             <>
               <p style={{ paddingTop: '0', margin: '0' , color : '#C46B65'}}>You must sign in to display saved addresses.</p>
               <br />
               <p style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' , cursor : 'pointer',fontSize:"16px"}} onClick={signInButton}>Click here to <span style={{color : 'blue',fontWeight:'600'}}>Sign in</span></p>
             </>
           )}
-          {savedAddresses.length > 0 && (
+          {isLoggedIn && (
             <>
             <DefaultRadio savedAddresses={savedAddresses} setSelectedAddress={setSelectedAddress} toggle={toggle} />
             {/* <TableHeadOptions savedAddresses={savedAddresses} /> */}
@@ -943,7 +905,8 @@ const handleSearchInputChange = async (event : any) => {
     return (
       <>
         {/* <Button color="info"  onClick={toggle}>{ExtraLargeModals}</Button> */}
-        <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle={modalTitle}>
+        <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle={modalTitle}
+        handleBackClick={handleBackClick}>
         {renderContent()}
           <Col sm="12">
                 </Col>
@@ -952,15 +915,23 @@ const handleSearchInputChange = async (event : any) => {
     );
   };
 
-  const CommonModal:React.FC<CommonModalType> = ({backdrop, centered, size, isOpen, toggle, title, onClosed, sizeTitle, fullTitle, modalBodyClassName, children } ) => {
+  const CommonModal:React.FC<CommonModalType> = ({backdrop, centered, size, isOpen, toggle, title, onClosed, sizeTitle, fullTitle, modalBodyClassName, children, handleBackClick } ) => {
     return (
-      <Modal backdrop={backdrop} centered={centered} size={size} isOpen={isOpen} toggle={toggle} onClosed={onClosed}>
+      <Modal backdrop={backdrop} centered={centered} size={size} isOpen={isOpen} toggle={toggle} onClosed={onClosed} className='custom-header'>
         {(title || sizeTitle || fullTitle) && (
-          <div className="modal-header" onClick={toggle}>
+          <div className="modal-header">
+            {sizeTitle === "Add New Address" && (
+            <i
+              className="fa fa-angle-left"
+              style={{ paddingRight: '24px', fontSize: '24px', color: 'black', cursor: 'pointer' }}
+              onClick={handleBackClick} // Handle click event
+            ></i>
+          )}
+
             {title && <h5 className="f-w-600">{title}</h5>}
-            {sizeTitle && <p style={{fontSize : '24px' , fontWeight : 'bold' , margin : 0}}>{sizeTitle}</p>}
+            {sizeTitle && <p className="" style={{fontSize : '24px' , fontWeight : 'bold' , margin : 0}}>{sizeTitle}</p>}
             {fullTitle && <h1 className="fs-5">{fullTitle}</h1>}
-            <Button close></Button>
+            <Button close onClick={toggle}></Button> 
           </div>
         )}
         <ModalBody className={modalBodyClassName ? modalBodyClassName : ""}>{children}</ModalBody>
@@ -1238,7 +1209,7 @@ const handleSearchInputChange = async (event : any) => {
                 <Col sm="12">
                   {/* <Link href={'/acheck/booking'}> */}
                   <Button type="submit" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
-                    Save Address
+                    Select this Address
                   </Button>
                   {/* </Link> */}
                 </Col>

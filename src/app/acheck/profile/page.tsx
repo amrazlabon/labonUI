@@ -335,18 +335,18 @@ const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
   const CustomRadioListData = [
     {
       id: 1,
-      icon: "Gender - Male.png",
+      icon: "fa fa-male",
       text: "Male",
       defaultChecked: true,
     },
     {
       id: 2,
-      icon: "Gender - Female.png",
+      icon: "fa fa-female",
       text: "Female",
     },
     {
       id: 3,
-      icon: "Gender - Other.png",
+      icon: "fa fa-dot-circle-o",
       text: "Other",
     },
   ]
@@ -368,7 +368,8 @@ const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
                 checked={selectedTime === text}
                 onChange={() => onTimeChange(text)}/>
                 <Label htmlFor={`radio-${id}`} check>
-                <img style={{ height: '100%', margin : '0'}} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" />
+                <i className={`${icon}`} style={{ marginLeft: '' , padding :0 , fontSize : '28px' , color: selectedTime === text ? 'white' : 'black',}}></i>
+                {/* <img style={{ height: '100%', margin : '0'}} className="img-fluid table-avtar" src={`${ImagePath}/${icon}`} alt="user image" /> */}
 
                   {/* <i className={`fa fa-${icon}`}></i> */}
                   {/* <span>{text}</span> */}

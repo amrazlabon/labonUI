@@ -16,6 +16,7 @@ import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Tabl
 import Link from "next/link";
 import axios from "axios";
 import './patientDetails.css'
+import { useRouter } from "next/navigation";
 // import NavComponent from "./NavComponent";
 // import CustomHorizontalWizard from ".";
 
@@ -84,12 +85,22 @@ const PatientDetails = () => {
     
         fetchData();
       }, []);
+
+      const router = useRouter(); // Initialize the router
+
+  const goBack = () => {
+    router.back(); // Go back to the previous route
+  };
     
       
     return (
     <Col md='6' >
       <div style={{padding : '0', height:'6rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)'}}>
-<h1 className="text-white" style={{padding:'24px', margin: '0'}}>{patientInformation.first_name ? patientInformation.first_name : 'Vasudevan Radhakrishnan'}</h1>
+      <div style={{display : 'flex'}}>
+<i onClick={goBack} className='fa fa-angle-left' style={{padding:'24px 0 24px 24px', fontSize : '24px' , color : 'white'}}></i>
+{/* <h1 className="text-white" style={{padding:'24px', margin: '0'}}>My Contacts</h1> */}
+<h1 className="text-white" style={{padding:'24px', margin: '0'}}>{patientInformation.first_name ? patientInformation.first_name : ''}</h1>
+        </div>
 <div style={{padding : '0', height:'2rem', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
 </div>
