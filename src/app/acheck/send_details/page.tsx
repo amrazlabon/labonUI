@@ -127,9 +127,9 @@ const emailContentPatient = `<p>Dear ${bookingOrder.name ? bookingOrder.name.spl
       </ul>
     </li>
     <li><strong>Total Amount:</strong> ₹${formatPrice(totalTestCost)}</li>
-    <li>Payment: You can make the payment to our phlebotomist by cash/Google Pay when we arrive on the scheduled date/time for blood sample collection.</li>
-    <li>Transportation Charges: Please make a transportation fee of Rs.100 when our Phlebotomist come for blood sample collection. If there are any additional charges to be paid for transportation, it will be informed when we arrive for blood test on the scheduled date/time.</li>
-    <li>Phlebotomist Name: NA</li>
+    <li><strong>Payment</strong>: You can make the payment to our phlebotomist by cash/Google Pay when we arrive on the scheduled date/time for blood sample collection.</li>
+    <li><strong>Transportation Charges</strong>: Please make a transportation fee of Rs.100 when our Phlebotomist come for blood sample collection. If there are any additional charges to be paid for transportation, it will be informed when we arrive for blood test on the scheduled date/time.</li>
+    <li><strong>Phlebotomist Name</strong>: NA</li>
   </ol>
 
   <p>For any clarifications, please write to contact@labon.ai or call us at +91 9847012345.</p>
@@ -160,9 +160,9 @@ const emailContentCustomer = `<p>Dear ${userData.name ? userData.name.split(' ')
       </ul>
     </li>
     <li><strong>Total Amount:</strong> ₹${formatPrice(totalTestCost)}</li>
-    <li>Payment: Our phlebotomist will collect the payment from the patient when we arrive on the scheduled date/time for blood sample collection. They can pay by cash/Google Pay. Please keep the patient informed of the same.</li>
-    <li>Transportation Charges: We collect transportation charges from the patient when we reach their location for blood test. The minimum transportation charge is Rs.100. If there are any additional charges to be paid for transportation, it will be informed to you when we call you for confirmation of the booking, or, it will be informed to the patient when we arrive on the scheduled date/time for blood sample collection.</li>
-    <li>Phlebotomist Name: NA</li>
+    <li><strong>Payment</strong>: Our phlebotomist will collect the payment from the patient when we arrive on the scheduled date/time for blood sample collection. They can pay by cash/Google Pay. Please keep the patient informed of the same.</li>
+    <li><strong>Transportation Charges</strong>: We collect transportation charges from the patient when we reach their location for blood test. The minimum transportation charge is Rs.100. If there are any additional charges to be paid for transportation, it will be informed to you when we call you for confirmation of the booking, or, it will be informed to the patient when we arrive on the scheduled date/time for blood sample collection.</li>
+    <li><strong>Phlebotomist Name</strong>: NA</li>
   </ol>
 
   <p>For any clarifications, please write to contact@labon.ai or call us at +91 9847012345.</p>

@@ -292,7 +292,7 @@ const BasicCardProfile = ({profile} : any) => {
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {profile.relation ? profile.relation : 'Father'}
+                    {profile.relation ? profile.relation : 'NA'}
                     </p>
                     </div>
                     <div className="gap-2" style={{display : 'flex' , paddingBottom : '0'}}>
@@ -415,6 +415,12 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
   // const fullScreenToggle = () => setFullScreen(!fullScreen);
 
   console.log("profile values",profile);
+
+  const formatDateToISO = (dateString: string): string => {
+    const [day, month, year] = dateString.split('/');
+    const dateObject = new Date(Number(year), Number(month) - 1, Number(day));
+    return dateObject.toISOString(); // yyyy-MM-ddTHH:mm:ss.sssZ
+  };
   
   const handleBookingClick = async () => {
     try {
@@ -434,11 +440,15 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
     mobile : profile.mobile,
     nick_name :profile.nick_name,
     time_slot :profile.timeslot,
+    test_date : formatDateToISO(profile.date),
+    // dob : profile.dob,
+    // age : profile.age,
+    // relation : profile.relation
     // sub_total :'profile.sub_total',
     // total :'profile.total',
     // gst : 'profile.gst',
     // convenience_fee :'profile.convenience_fee',
-      }
+      }      
       sessionStorage.setItem('booking_order', JSON.stringify(profile));
       const response = await axios.post('/api/orders',reqBody);
       // setSavedAddresses(response.data);

@@ -441,9 +441,9 @@ export default home;
 // import React, { useState } from 'react';
 // import { Col, Input, Label, Button } from 'reactstrap';
 
-const DefaultChecks = ({ data, selectedTests, setSelectedTests, toggle , searchTerm} : any) => {
+const DefaultChecks = ({ fulldata , data, selectedTests, setSelectedTests, toggle , searchTerm} : any) => {
   const [selectedTestData, setSelectedTestData] = useState(selectedTests.map((test : any) => test.id));
-
+  
   const handleCheckboxChange = (index : any) => {
     const testId = data[index].id;
 
@@ -457,7 +457,7 @@ const DefaultChecks = ({ data, selectedTests, setSelectedTests, toggle , searchT
   };
 
   const handleSelectTestsClick = () => {
-    const selectedData = selectedTestData.map((id : any) => data.find((test : any) => test.id === id));
+    const selectedData = selectedTestData.map((id : any) => fulldata.find((test : any) => test.id === id));
     setSelectedTests(selectedData);
     sessionStorage.setItem('tests', JSON.stringify(selectedData));
     toggle();
@@ -571,6 +571,7 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
       <Col sm="" xl="">
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
             {savedAddresses.length > 0 ? (
+              <div>
             <div className="card-wrapper checkbox-checked" style={{padding : '0'}}>
           {savedAddresses.map((test: any, index: any) => (
             <div key={index} className="form-check">
@@ -606,12 +607,8 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
               </Label>
             </div>
           ))}
-        </div>) : (
-              <p>There are no saved address</p>
-
-        )
-}
-        <Col sm="12" style={{paddingTop : '24px'}}>
+              </div>
+              <Col sm="12" style={{paddingTop : '24px'}}>
         {/* <Link href={'/acheck/booking'}> */}
         <Button
           onClick={handleSelectTestsClick}
@@ -630,6 +627,12 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
         </Button>
           {/* </Link> */}
         </Col>
+        </div>
+        ) : (
+              <p>There are no saved address</p>
+
+        )
+}
       </Col>
     );
   };
@@ -640,12 +643,14 @@ const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
   const ExtraLargeModal = ({ isOpen, toggle , selectedTests,  setSelectedTests} : any) => {
   
     const [data, setData] = useState<any>(null);
+    const [fulldata, setFullData] = useState<any>(null);
   const [error, setError] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
           try {
             const response = await axios.get('/api/tests');
             setData(response.data);
+            setFullData(response.data);
             // console.log("the test data",response.data);
             
           } catch (error) {
@@ -736,7 +741,7 @@ const handleSearchInputChange = async (event : any) => {
         {searchTerm ? `Results for "${searchTerm}"` : 'All Tests'}
 </h2>
 
-            <DefaultChecks data={data} selectedTests={selectedTests} setSelectedTests={setSelectedTests} toggle={toggle} searchTerm={searchTerm}/>
+            <DefaultChecks fulldata={fulldata} data={data} selectedTests={selectedTests} setSelectedTests={setSelectedTests} toggle={toggle} searchTerm={searchTerm}/>
           {/* <div className="large-modal-header"><ChevronsRight /><h5 className="f-w-600">{WebDesign}</h5></div>
           <p className="modal-padding-space">We build specialised websites for companies, list them on digital directories, and set up a sales funnel to boost ROI.</p>
           {FullScreenData.map(({ title, text }, index) => (
