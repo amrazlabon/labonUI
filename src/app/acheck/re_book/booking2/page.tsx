@@ -2,7 +2,7 @@
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row } from "reactstrap";
 // import BasicCard from "./BasicCard";
 // import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
@@ -22,11 +22,31 @@ const Tests = ({profile , setProfile , setStepActive , selectedTests, selectedAd
     setActiveTab(tab);
   }, []);
 
+  
   // Initialize dateValue with the date from profile if it exists, otherwise null
-  const [dateValue, setDateValue] = useState<Date | null>(
-    profile?.date ? new Date(profile.date.split('/').reverse().join('-')) : null
-  );
+  console.log("the profile.date value",profile.date);
+  const [dateValue, setDateValue] = useState<Date | null>(null);
 
+  useEffect(() => {
+    if (profile.date) {
+      // Split, reverse, and join the date to match "yyyy-mm-dd" format
+      const formattedDate = profile.date.split('/').reverse().join('-');
+      
+      // Create a new Date object from the formatted date
+      const dateObj = new Date(formattedDate);
+      
+      // Check if the date object is valid
+      if (!isNaN(dateObj.getTime())) {
+        setDateValue(dateObj);
+      } else {
+        setDateValue(null); // Invalid date
+      }
+    } else {
+      setDateValue(null); // No date provided
+    }
+  }, [profile.date]);
+
+  
   const handleBookTimingsClick = () => {
     setStepActive(1);
   };

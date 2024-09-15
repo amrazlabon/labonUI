@@ -14,7 +14,7 @@ const BookingConfirmation = () => {
   const [bookingOrder, setBookingOrder] = useState<any>({});
   const [open,setOpen] = useState(true)
     useEffect(()=>{
-      const bookingOrder = sessionStorage.getItem('booking_order');
+      const bookingOrder = sessionStorage.getItem('reschedule_booking');
     if(bookingOrder) {
       setBookingOrder(JSON.parse(bookingOrder))
     }
@@ -33,6 +33,15 @@ const BookingConfirmation = () => {
     //     setStartDate(start);
     //     setEndDate(end);
     //   };
+
+    const formatDate = (isoString : any) => {
+      const date = new Date(isoString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
     return (
         // <Container fluid className="p-3">
 
@@ -48,7 +57,7 @@ const BookingConfirmation = () => {
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}> */}
                     {/* <p>Booking ID: <strong>LBNHVB112220241</strong></p> */}
                     <p style={{fontSize: '16px', fontWeight: '', marginBottom: '24px', marginTop: '24px'}}>
-                    Booking ID: <strong>LBNHVB112220241</strong>
+                    Booking ID: <strong>LBNHVB1122202{bookingOrder.id}</strong>
 </p>
                     <p style={{fontSize: '24px', fontWeight: '400', marginBottom: '24px', marginTop: '24px'}}>
   Hello {bookingOrder.name ? bookingOrder.name.split(' ')[0] : 'Sudha'}!
@@ -56,7 +65,7 @@ const BookingConfirmation = () => {
 
                         {/* <h2>Hello {bookingOrder.name}!</h2> */}
                         <p>
-                        Your booking for <span style={{fontWeight : 'bold'}}> {bookingOrder.name ? bookingOrder.name :  'Sreedevi Ramachandran'}</span> on <span style={{fontWeight : 'bold'}}>{bookingOrder.date ? bookingOrder.date : '01/01/2024'}</span> at <span style={{fontWeight : 'bold'}}>{bookingOrder.timeslot ? bookingOrder.timeslot : '7:00 AM'}</span> has been rescheduled.
+                        Your booking for <span style={{fontWeight : 'bold'}}> {bookingOrder.name ? bookingOrder.name :  'Sreedevi Ramachandran'}</span> on <span style={{fontWeight : 'bold'}}>{bookingOrder.test_date ? formatDate(bookingOrder.test_date) : '01/01/2024'}</span> at <span style={{fontWeight : 'bold'}}>{bookingOrder.time_slot ? bookingOrder.time_slot : '7:00 AM'}</span> has been rescheduled.
                         </p>
                     <br />
                     <p style={{marginTop : '0' }}>For any clarifications, please call our support number <span style={{fontWeight : 'bold'}}>+91 9446061000</span>. See you soon!</p>

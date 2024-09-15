@@ -37,6 +37,7 @@ const PatientDetails = () => {
     //   id:2
     // }
   ])
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,6 +76,15 @@ const PatientDetails = () => {
 
   const goBack = () => {
     router.back(); // Go back to the previous route
+  };
+
+  const handleReschedule = () => {
+    // Store selectedTests in session storage
+    sessionStorage.setItem('reschedule_booking', JSON.stringify(selectedTests));
+    window.location.href = '/acheck/re_book';
+    
+    // Optionally, you can redirect the user or show a confirmation message
+    // router.push('/acheck/booking'); // Uncomment if you need to navigate
   };
       
     return (
@@ -164,16 +174,18 @@ const PatientDetails = () => {
         </CardBody> */}
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
-{/* <Col sm="12">
-<Link href={'/acheck/booking'}>
+<Col sm="12">
+{/* <Link href={'/acheck/booking'}> */}
 
-                  <Button className="btn-lg bg-gray-400 " style={{height: '3rem', width :'100%' , backgroundColor: 'black !important'
- , color :'white' , marginTop : '16px' , borderRadius : '50px'}}>Reschedule Booking 
+                  <Button className="btn-lg bg-gray-400 btnStyles" style={{height: '3rem', width :'100%' , backgroundColor: 'black !important'
+ , color :'white' , marginTop : '16px' , borderRadius : '50px'}}
+ onClick={handleReschedule}
+ >Reschedule Booking 
                     </Button>
-</Link>
+{/* </Link> */}
                 </Col>
 
-                <Col sm="12">
+ {/*                <Col sm="12">
 <Link href={'/acheck/booking_cancellation'}>
                     <p className="text-center mt-3">
                       Cancel Booking 

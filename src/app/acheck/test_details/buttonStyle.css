@@ -31,3 +31,12 @@ background-color: #F5F5F5;
     .map-js-height {
         height: 220px !important;
     }
+
+    .btnStyles { 
+        width: 90%;
+        height: 3rem;
+        border-radius: 2rem;
+        background-color: #92A4B0;
+        margin-top: 5rem;
+    
+    }

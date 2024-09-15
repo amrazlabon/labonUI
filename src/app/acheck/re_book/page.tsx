@@ -125,16 +125,37 @@ const Page = () => {
         const tests = sessionStorage.getItem('tests');
         const userId = sessionStorage.getItem('user_id');
     const address = sessionStorage.getItem('address');
+    const reschedule_booking = sessionStorage.getItem('reschedule_booking');
 
-    if (tests) {
-      const parsedTests = JSON.parse(tests);
+    if (reschedule_booking) {
+      const parsedRescheduleBooking = JSON.parse(reschedule_booking);
 
-      setSelectedTests(JSON.parse(tests));
+      // Update selectedTests with reschedule_booking.tests
+      setSelectedTests(parsedRescheduleBooking.tests || []);
+
+      // Update profile with reschedule_booking data
       setProfile(prevProfile => ({
         ...prevProfile,
-        test_data: parsedTests
-    }));
+        date: parsedRescheduleBooking.test_date || prevProfile.date,
+        timeslot: parsedRescheduleBooking.time_slot || prevProfile.timeslot,
+        address : parsedRescheduleBooking.address,
+        pincode : parsedRescheduleBooking.pincode,
+        location : parsedRescheduleBooking.location,
+        nick_name : parsedRescheduleBooking.nick_name,
+        name : parsedRescheduleBooking.name,
+        gender : parsedRescheduleBooking.gender,
+        // name : parsedRescheduleBooking.name,
+      }));
     }
+    // if (tests) {
+    //   const parsedTests = JSON.parse(tests);
+
+    //   setSelectedTests(JSON.parse(tests));
+    //   setProfile(prevProfile => ({
+    //     ...prevProfile,
+    //     test_data: parsedTests
+    // }));
+    // }
     if (userId) {
       const parsedTests = JSON.parse(userId);
 
@@ -144,18 +165,18 @@ const Page = () => {
         user_id: parsedTests
     }));
     }
-    if (address) {
-      const parsedAddress = JSON.parse(address);
-      setProfile(prevProfile => ({
-        ...prevProfile,
-        address_data: parsedAddress,
-        address : parsedAddress[0].address,
-        pincode : parsedAddress[0].pincode,
-        location : parsedAddress[0].location,
-        nick_name : parsedAddress[0].nick_name,
-    }));
-      setSelectedAddress(JSON.parse(address));
-    }
+    // if (address) {
+    //   const parsedAddress = JSON.parse(address);
+    //   setProfile(prevProfile => ({
+    //     ...prevProfile,
+    //     address_data: parsedAddress,
+    //     address : parsedAddress[0].address,
+    //     pincode : parsedAddress[0].pincode,
+    //     location : parsedAddress[0].location,
+    //     nick_name : parsedAddress[0].nick_name,
+    // }));
+    //   setSelectedAddress(JSON.parse(address));
+    // }
         // citiesAPI().then((cities: string[]) => {
         //     const uniqueCities = cities.filter((value, index, self) => self.indexOf(value) === index);
         //     setCities(uniqueCities);
@@ -172,7 +193,10 @@ const Page = () => {
     }
 
     const handleAddToCartClick = () => {
-      setFullScreen(true); // or false, depending on what you want to do
+    window.location.href = '/acheck/b_r';
+
+      // setFullScreen(true); 
+      // or false, depending on what you want to do
     };
 
 
@@ -215,10 +239,10 @@ const Page = () => {
 }
   </div>
   <div style={{ flex: 1, display: 'flex', justifyContent: 'bottom' ,paddingRight : '24px'}}>
-                  {stepActive == 3 && 
+                  {stepActive == 2 && 
                     <Button onClick={handleAddToCartClick} className='btn-lg' style={{height: '3rem', width :'12rem' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '1.3rem'}} color="">Reschedule</Button>
 }
-      <div style={{marginTop : '2rem'}}>
+      {/* <div style={{marginTop : '2rem'}}>
                     {profile.timeslot && (stepActive === 1 || stepActive === 2 || stepActive === 0) &&(
                         <p className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>Time : {profile.timeslot}</p>
                     )}
@@ -226,7 +250,7 @@ const Page = () => {
 
                         <p className="text-white" style={{paddingBottom:'0',paddingLeft : '24px', margin: '0'}}>Date : {profile.date}</p>
                     )}
-</div>
+</div> */}
 
   </div>
 </div>
