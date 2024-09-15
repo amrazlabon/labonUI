@@ -53,7 +53,7 @@ export async function POST(request: Request) {
         Messages: [
           {
             From: {
-              Email: 'mohd.amraz0@gmail.com',
+              Email: 'amraz@labon.ai',
               Name: 'Labon Test',
             },
             To: [

@@ -74,7 +74,8 @@ const PatientDetails = () => {
           const TestResponse = await axios.get(`/api/orders?endpoint=patient&id=${patient_id}`);
           console.log("the test iformation of contacrs",TestResponse.data.test_data);
           // setData(response.data);
-          setBookingInformation(TestResponse.data.test_data)
+        const sortedData = TestResponse.data.test_data.sort((a : any, b : any) => b.id - a.id); // Sorts in ascending order
+        setBookingInformation(sortedData)
         }
         } catch (error) {
           setBookingInformation([])

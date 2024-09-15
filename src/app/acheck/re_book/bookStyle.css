@@ -1,0 +1,12 @@
+.bg-white {
+    --bs-bg-opacity: 0;
+    background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+  }
+
+
+  .custom-font {
+    font-family: 'Helvetica Neue Condensed', sans-serif;
+    font-weight: bold;
+    font-size: 32px;
+  }
+  

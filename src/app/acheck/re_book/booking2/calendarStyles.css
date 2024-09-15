@@ -1,0 +1,85 @@
+.react-calendar {
+  width: 100%;
+  background: #F5F5F5;
+  border: none;
+  box-shadow: none;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+}
+
+.react-calendar__tile--active {
+  background: #9E2929 !important;
+  border-radius: 10px;
+  color: white !important;
+}
+
+.react-calendar__tile:hover {
+  background: #9E2929 !important;
+  border-radius: 10px;
+  color: white !important;
+}
+
+.current-date-tile {
+  font-weight: 1000;
+  border-radius: 10px;
+  /* background:; */
+  background: rgba(179, 115, 228, 0.5);
+}
+
+/* .react-calendar__tile:disabled {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+
+} */
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+  text-decoration: none;
+
+  font-weight: 700;
+}
+/* span {
+  display: inline-block;
+  color: #004984;
+  font-size: 16px;
+  font-weight: 700;
+} */
+
+.bg-white {
+  --bs-bg-opacity: 0;
+  background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+}
+
+/* Custom styles for disabled Sundays */
+.sunday-tile {
+  cursor: not-allowed; /* Show as not selectable */
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+
+}
+
+.remaining-date-tile {
+  border-radius: 10px;
+  /* background:; */
+  background: rgba(179, 115, 228, 0.5);
+  color : black !important
+
+}
+
+/* Ensure the tile is not clickable */
+.react-calendar__tile:disabled {
+  pointer-events: none;
+}
+
+.react-calendar__navigation__label__labelText  { 
+  color: #004984 !important;
+  font-weight: bold !important;
+
+}
+
+.react-calendar__navigation button {
+  color : black !important
+
+}

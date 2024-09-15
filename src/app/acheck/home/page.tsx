@@ -402,9 +402,15 @@ const home = () => {
     </li>
     <li onClick={toasterNotification}>Integrate Our Solution (Labs)</li>
     <li>Find Tests</li>
+    <Link href={'/acheck/about_us'}>
     <li style={{ marginTop: '2rem' }}>About Us</li>
+    </Link>
+    <Link href={'/acheck/contact_us'}>
     <li>Contact Us</li>
+    </Link>
+    <Link href={'/acheck/support'}>
     <li>Support</li>
+    </Link>
 </ul>
 
             </div>
@@ -775,7 +781,8 @@ const handleSearchInputChange = async (event : any) => {
         
         setIsLoggedIn(true)
         const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
-        setSavedAddresses(response.data);
+        const sortedData = response.data.sort((a : any, b : any) => b.id - a.id); // Sorts in ascending order
+        setSavedAddresses(sortedData);
       }
       else {
         setIsLoggedIn(false)

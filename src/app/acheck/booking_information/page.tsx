@@ -53,7 +53,8 @@ const BookingInformation = () => {
       // setData(response.data);
       // console.log("the test iformation of contacrs",TestResponse.data);
       // setPatientInformation(response.data)
-      setBookingInformation(TestResponse.data.test_data)
+      const sortedData = TestResponse.data.test_data.sort((a : any, b : any) => b.id - a.id); // Sorts in ascending order
+      setBookingInformation(sortedData)
     }
     } catch (error) {
       setBookingInformation([])

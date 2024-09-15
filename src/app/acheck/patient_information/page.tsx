@@ -18,8 +18,9 @@ const PatientInformation = () => {
       const id = sessionStorage.getItem('user_id');
       const response = await axios.get(`/api/patient_info?endpoint=user&id=${id}`);
         // setData(response.data);
+        const sortedData = response.data.sort((a : any, b : any) => b.id - a.id); // Sorts in ascending order
         console.log("the patient iformation of contacrs",response.data);
-        setPatientInformation(response.data)
+        setPatientInformation(sortedData)
       } catch (error) {
         const TableHeadOptionBody = [
           {

@@ -18,9 +18,9 @@ const BookingConfirmation = () => {
     if(bookingOrder) {
       setBookingOrder(JSON.parse(bookingOrder))
     }
-      // setTimeout(()=>{
-      //   setOpen(false);
-      // },5000)
+      setTimeout(()=>{
+        setOpen(false);
+      },10000)
     },[])
 
     // const { openModal } = useModal();
@@ -44,19 +44,22 @@ const BookingConfirmation = () => {
 
 
                     <img style={{height:'35px', paddingBottom : ''}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" />
-                    <h1 style={{fontWeight:'700'}}>Booking Confirmed!</h1>
+                    <h1 style={{fontWeight:'700'}}>Booking Rescheduled!</h1>
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}> */}
-
+                    {/* <p>Booking ID: <strong>LBNHVB112220241</strong></p> */}
+                    <p style={{fontSize: '16px', fontWeight: '', marginBottom: '24px', marginTop: '24px'}}>
+                    Booking ID: <strong>LBNHVB112220241</strong>
+</p>
                     <p style={{fontSize: '24px', fontWeight: '400', marginBottom: '24px', marginTop: '24px'}}>
   Hello {bookingOrder.name ? bookingOrder.name.split(' ')[0] : 'Sudha'}!
 </p>
 
                         {/* <h2>Hello {bookingOrder.name}!</h2> */}
                         <p>
-                        You just booked a home test for <span style={{fontWeight : 'bold'}}> {bookingOrder.name ? bookingOrder.name :  'Sreedevi Ramachandran'}</span>. The invoice has been emailed to you. Our phlebotomist assigned to collect blood samples will arrive at your location tenatively byat <span style={{fontWeight : 'bold'}}>{bookingOrder.timeslot ? bookingOrder.timeslot : '7:00 AM'}</span>  on <span style={{fontWeight : 'bold'}}>{bookingOrder.date ? bookingOrder.date : '01/01/2024'}</span>.
+                        Your booking for <span style={{fontWeight : 'bold'}}> {bookingOrder.name ? bookingOrder.name :  'Sreedevi Ramachandran'}</span> on <span style={{fontWeight : 'bold'}}>{bookingOrder.date ? bookingOrder.date : '01/01/2024'}</span> at <span style={{fontWeight : 'bold'}}>{bookingOrder.timeslot ? bookingOrder.timeslot : '7:00 AM'}</span> has been rescheduled.
                         </p>
                     <br />
-                    <p style={{marginTop : '0' }}>In case you have any clarifications, please call us on the support number <span style={{fontWeight : 'bold'}}>+91 9446061000</span>. See you soon!</p>
+                    <p style={{marginTop : '0' }}>For any clarifications, please call our support number <span style={{fontWeight : 'bold'}}>+91 9446061000</span>. See you soon!</p>
                     <div style={{borderBottomStyle : 'groove' , marginTop : '24px' , marginBottom : '24px'}}></div>
 {/* <p style={{fontSize : '24px' , fontWeight :'400' , marginBottom : '0' , textAlign : 'left'}}>Save this Data</p>
 
@@ -110,7 +113,7 @@ const ColorsSchemes = ( {open} : any, {setOpen} : any) => {
               <div className="d-flex align-items-center">
         {/* <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" /> */}
         <i className="fa fa-thumbs-up"></i>
-        <ToastBody>Congrats! Booking confirmed.</ToastBody>
+        <ToastBody>Your Booking has been Rescheduled.</ToastBody>
                 {/* <Button close className="btn-close-white me-2 m-auto" onClick={() => setOpen(false)}></Button> */}
               </div>
             </Toast>

@@ -1,0 +1,11 @@
+.test-btn{
+    padding: 1rem;
+    width: 155px;
+    border: none;
+    border-bottom-style: solid;
+}
+
+.bg-success {
+    background-color: #65C466 !important;
+    color: #fff;
+}

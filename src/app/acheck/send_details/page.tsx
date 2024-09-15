@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { Col, Input, Label , Button} from "reactstrap"
+import { Col, Input, Label , Button, Card, Toast, ToastBody} from "reactstrap"
 import './style.css'
 import Link from "next/link";
 import axios from "axios";
@@ -11,6 +11,7 @@ const SendDetails = () => {
     const [isSelectFromContacts, setIsSelectFromContacts] = useState(true);
     const [bookingOrder, setBookingOrder] = useState<any>({});
     const [userData, setUserData] = useState<any>({});
+    const [open,setOpen] = useState(true)
 
   const handleToggleChange = (event : any) => {
     setIsSelectFromContacts(event.target.checked);
@@ -34,6 +35,10 @@ const SendDetails = () => {
     } catch (error) {
       console.error("Failed to parse session storage data:", error);
     }
+
+    setTimeout(()=>{
+      setOpen(false);
+    },5000)
   }, []);
     // Empty dependency array to run only on initial load
   
@@ -228,7 +233,8 @@ const emailTasks = [];
 
     return(
         <Col md='6' style={{padding : '24px'}}>
-            <div className=" login-dark">
+                <ColorsSchemes open={open} setOpen={setOpen}/>
+                <div className=" login-dark">
                     <div className="text-center">
 
                     <p style={{fontSize : '24px' , fontWeight :'600' , marginBottom : '0' , textAlign : 'left'}}>Send Details to Patient</p>
@@ -260,7 +266,7 @@ const emailTasks = [];
         
                         <Col sm="12">
                 <Link href={'/acheck/b_c'}>
-                  <Button onClick={sendEmail} style={{marginTop : '8px' ,height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Confirm Booking</Button>
+                  <Button className="btn-lg" onClick={sendEmail} style={{marginTop : '8px' ,height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white'}} color="">Send Details</Button>
                 </Link>
                 </Col>
         </Col>
@@ -269,6 +275,43 @@ const emailTasks = [];
 }
 
 export default SendDetails;
+
+const ColorsSchemes = ( {open} : any, {setOpen} : any) => {
+  
+  return (
+    <Col md="6">
+       <Card style={{boxShadow : 'none', margin : '0'}}>
+        
+        {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}
+        {/* <CardBody className="toast-rtl colors-schemes"> */}
+          <Toast fade className="default-show-toast align-items-center text-light bg-success border-0" isOpen={open}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1050,
+            margin: "0 auto",
+            width: "100%",
+            display: "flex",
+            // justifyContent: "center",
+            alignItems: "center",
+            paddingLeft : '24px',
+            // background : 'orangered',
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          }}>
+            <div className="d-flex align-items-center">
+      {/* <img style={{height:'15px', marginLeft : '1rem'}} className="img-fluid table-avtar" src={`${ImagePath}/Thumbs-up.png`} alt="user image" /> */}
+      <i className="fa fa-thumbs-up"></i>
+      <ToastBody>Congrats! Booking confirmed.</ToastBody>
+              {/* <Button close className="btn-close-white me-2 m-auto" onClick={() => setOpen(false)}></Button> */}
+            </div>
+          </Toast>
+        {/* </CardBody> */}
+      </Card>
+    </Col>
+  );
+};
 
 function formatPrice(value: any): string {
   const numberValue = parseFloat(value); // Convert string to number

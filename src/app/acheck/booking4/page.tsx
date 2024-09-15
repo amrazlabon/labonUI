@@ -506,7 +506,8 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         
         // setIsLoggedIn(true)
         const response = await axios.get(`/api/patient_info?endpoint=user&id=${userId}`);
-        setPatientInformation(response.data)
+        const sortedData = response.data.sort((a : any, b : any) => b.id - a.id); // Sorts in ascending order
+        setPatientInformation(sortedData)
         // setSavedAddresses(response.data);
         // console.log("Saved addresses: where dont know", response.data);
       }
