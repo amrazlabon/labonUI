@@ -30,6 +30,31 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
   // const [fullScreen, setFullScreen] = useState(false);
   const fullScreenToggle = () => setFullScreen(!fullScreen);
 
+  const formatDateToISO = (dateString: string): string => {
+    const [day, month, year] = dateString.split('/');
+  
+    // Create the date object with UTC values to prevent timezone shift
+    const dateObject = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+  
+    return dateObject.toISOString().split('T')[0]; // Keep only the date part (yyyy-MM-dd)
+  };
+  
+  
+  const incrementProfileComplete = (currentValue : any) => {
+    if (!currentValue || currentValue === '') {
+      return 'A'; // If empty, start from A
+    }
+    
+    const nextCharCode = currentValue.charCodeAt(0) + 1;
+  
+    if (nextCharCode > 'Z'.charCodeAt(0)) {
+      return 'Z'; // Cap at 'Z'
+    }
+  
+    return String.fromCharCode(nextCharCode); // Increment to the next character
+  };
+
+  
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
@@ -39,9 +64,43 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
       }
       console.log("the profile value",profile);
       
-      const handleAddToCartClick = () => {
-        // setFullScreen(true ); 
-    window.location.href = '/acheck/b_r';
+      const handleAddToCartClick = async () => {
+        console.log("the reschedule is happening");
+        
+    const reschedule_booking = sessionStorage.getItem('reschedule_booking');
+    if(reschedule_booking){
+    try { 
+      const parsedRescheduleBooking = JSON.parse(reschedule_booking);
+      const reqBody = {
+    // if(reschedule_booking){
+      id : parsedRescheduleBooking.id,
+            timeslot_id : profile.timeslot_id,
+    time_slot :profile.timeslot,
+    test_date : formatDateToISO(profile.date),
+    reschedule_count: incrementProfileComplete(profile.reschedule_count) // Logic for profile_complete
+}
+      sessionStorage.setItem('rescheduled_order', JSON.stringify(profile));
+      const response = await axios.patch('/api/orders',reqBody);
+      // setFullScreen(true ); 
+      if(response) {
+        console.log("the reposne from the abovd",profile.test_date);
+        const reqBody ={
+          mobile : response.data[0].mobile,
+          var1 : profile.date,
+          var2 : profile.timeslot,
+          var3 : 'LBNUSR'+ response.data[0].id  + '-' + response.data[0].reschedule_count,
+          endpoint : 'booking_rescheduled'
+
+        }
+      const smsResponse = await axios.post('/api/send_sms',reqBody);
+
+      // window.location.href = '/acheck/send_details'
+      window.location.href = '/acheck/b_r';
+      }
+        }
+        catch (error) {
+          console.error("Error fetching data:", error.message);
+        }}
 
         // or false, depending on what you want to do
       };
@@ -426,6 +485,8 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
   };
   
   const handleBookingClick = async () => {
+    console.log("the profile data in the summary",profile);
+    
     try {
       const reqBody = {
         user_id: profile.user_id,
@@ -444,6 +505,9 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
     nick_name :profile.nick_name,
     time_slot :profile.timeslot,
     test_date : formatDateToISO(profile.date),
+    // co_ordinates : profile.co_ordinates
+    co_ordinates : profile.co_ordinates
+
     // dob : profile.dob,
     // age : profile.age,
     // relation : profile.relation
@@ -456,6 +520,7 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
       const response = await axios.post('/api/orders',reqBody);
       // setSavedAddresses(response.data);
       console.log("Saved addresses: where dont know", response.data);
+      // window.location.href = 'acheck/send_details'
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
@@ -515,11 +580,11 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
           Transportation is charged extra. Minimum charge for Transportation is <span style={{ fontWeight: 'bold' }}><i className='fa fa-rupee'></i>100.00</span>. You can pay the Transportation fee at the time of sample collection.
         </p>
         <Col sm="12">
-          <Link href={'/acheck/send_details'}>
+          {/* <Link href={'/acheck/send_details'}> */}
             <Button onClick={handleBookingClick} style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white', marginTop: '0' }} color="">
               Confirm Booking
             </Button>
-          </Link>
+          {/* </Link> */}
         </Col>
       </ModalBody>
     </Modal>

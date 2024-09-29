@@ -8,7 +8,8 @@ export async function GET(request: Request){
         // const reqBody = await request.json();
         // console.log('body ===============>', reqBody);
         const date = searchParams.get('date'); // Get the 'id' query parameter
-        const response = await axios.get(`http://43.205.139.219/timeslot?date=${date}`);
+        const pincode = searchParams.get('pincode'); // Get the 'id' query parameter
+        const response = await axios.get(`http://43.205.139.219/timeslot?date=${date}&pincode=${pincode}`);
         console.log("tests data",response.data)
         const res = NextResponse.json(response.data);
         // console.log('back success ===> ', res);

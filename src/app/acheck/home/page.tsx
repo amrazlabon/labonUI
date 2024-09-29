@@ -17,10 +17,11 @@ import {  Formik } from "formik";
 import { BorderRadius } from "@/Components/UiKits/HelperClasses/StyleBorderCart/BorderRadius";
 import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { BasicCenter, BasicContainerStyle } from "@/Data/Miscellaneous/Maps";
 import axios from "axios";
 import LoginModal from "@/Redux/loginDo";
+import Head from "next/head";
 
 
 type Test = {
@@ -37,6 +38,7 @@ type Test = {
     address: string;
     pincode: any;
     nick_name: string | null;
+    co_ordinates : {}
   };
 
 //   const [selectedTests, setSelectedTests] = useState<Test[]>([]);
@@ -150,7 +152,13 @@ const home = () => {
     }
     return (
         // <Container fluid className="p-3">
-        
+        <>
+        {/* Add the SEO meta tags */}
+        <Head>
+          <meta name="description" content="Get a home blood test done at the comfort of your home. Book for yourself or for your family or elderly parents. If you are living outside Kerala or India, use https://labon.ai  to book home blood test for your parents or relatives living in Kerala. We will collect blood samples from home at your convenient time." />
+          <meta name="keywords" content="home blood test, home blood sample collection, online blood test, lab test at home, book home blood test, home blood test kerala, online blood test kerala, book lab test at home, collect blood sample from home." />
+          <title>Home - Labon</title>
+        </Head>
         <Col md="6" style={{ padding: '0' }}>
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
 
@@ -245,7 +253,7 @@ const home = () => {
       </CardBody>
     </Card>
     <ExtraLargeModal isOpen={extraLargeScreen} toggle={extraLargeScreenToggle} selectedTests={selectedTests}  setSelectedTests={setSelectedTests}/>
-    <ExtraLargeModalLocation isOpen={extraLargeScreenLocation} toggle={extraLargeScreenToggleLocation} setSelectedAddress={setSelectedAddress}/>
+    <ExtraLargeModalLocation isOpen={extraLargeScreenLocation} toggle={extraLargeScreenToggleLocation} selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress}/>
 
             <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '2fr 3fr',     margin: '2rem 0 0 0' , height : '15.4rem'}}>
                 <div>
@@ -439,6 +447,7 @@ const home = () => {
 
 
         </Col>
+        </>
     );
 };
 
@@ -540,7 +549,7 @@ const DefaultChecks = ({ fulldata , data, selectedTests, setSelectedTests, toggl
 };
 
 
-const DefaultRadio = ({ savedAddresses , setSelectedAddress , toggle}: any) => {
+const DefaultRadio = ({ savedAddresses , selectedAddress , setSelectedAddress , toggle}: any) => {
     const [selectedTest, setSelectedTest] = useState<number | null>(null);
   
     const [open,setOpen] = useState(false)
@@ -762,7 +771,7 @@ const handleSearchInputChange = async (event : any) => {
     );
   };
 
-  const ExtraLargeModalLocation = ({ isOpen, toggle , setSelectedAddress } : any) => {
+  const ExtraLargeModalLocation = ({ isOpen, toggle , selectedAddress , setSelectedAddress } : any) => {
 
     const [selectedOption, setSelectedOption] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -770,12 +779,19 @@ const handleSearchInputChange = async (event : any) => {
   const [savedAddresses, setSavedAddresses] = useState<any>([]);
   const modalTitle = selectedOption === "add" ? "Add New Address" : "Select Address";
 
+  const [formData, setFormData] = useState({
+    nick_name: '',
+  pincode: '',
+  location: '',
+  address: '', 
+  co_ordinates : {}
+});
 
   useEffect(() => {
     const fetchData = async () => {
       
       try {
-      const userId = sessionStorage.getItem('user_id');
+      const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
       if(userId){
         console.log("is inside the data",userId);
         
@@ -859,14 +875,14 @@ const handleSearchInputChange = async (event : any) => {
         return (
           <div>
 
-<FloatingForm onSubmit={handleFormSubmit} />
+<FloatingForm onSubmit={handleFormSubmit} formData={formData} setFormData={setFormData} />
           </div>
         );
       } else {
         return (
           <div>
             <h2 className="text-black ml-4" style={{paddingBottom:'24px'}}>Current Location</h2>
-            <BasicMap/>
+            <BasicMap formData={formData} setFormData={setFormData}/>
             <p style={{ paddingTop: '16px', margin: '0' }} >
             Map by default shows your current location. If needed, you may drag the pointer to the exact location and continue.
           </p>
@@ -905,7 +921,7 @@ const handleSearchInputChange = async (event : any) => {
           )}
           {isLoggedIn && (
             <>
-            <DefaultRadio savedAddresses={savedAddresses} setSelectedAddress={setSelectedAddress} toggle={toggle} />
+            <DefaultRadio savedAddresses={savedAddresses} selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress} toggle={toggle} />
             {/* <TableHeadOptions savedAddresses={savedAddresses} /> */}
                    </>
           )}
@@ -1063,20 +1079,106 @@ const handleSearchInputChange = async (event : any) => {
     );
   }
 
-  const BasicMap = () => {
+  const BasicMap = ({formData , setFormData} : any) => {
     const { isLoaded } = useJsApiLoader({
       id: "google-map-script",
       googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q&v=3.exp&libraries=geometry,drawing,places",
     });
+  
+    const [clickedLocation, setClickedLocation] = useState<any>();
+    // const [currentLocation, setCurrentLocation] = useState(null);
+    const [mapCenter, setMapCenter] = useState({ lat: 37.7749, lng: -122.4194 });
+    // Handle the click event and set the coordinates
+    const handleMapClick = (event: google.maps.MapMouseEvent) => {
+      if (event.latLng) {
+        const lat = event.latLng.lat();
+        const lng = event.latLng.lng();
+        setClickedLocation({ lat, lng });
+        setFormData((prevData: any) => ({
+          ...prevData,
+          co_ordinates: {
+            latitude: lat,
+            longitude: lng,
+          },
+        }));
+  
+        console.log("Clicked location: ", lat, lng); // You can use this for debugging or further actions
+      }
+    };
+
+    const useCurrentLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+      if (latitude && longitude) {
+
+            setClickedLocation({ lat: latitude, lng: longitude });
+      }
+            setMapCenter({ lat: latitude, lng: longitude }); // Center map on the current location
+            setFormData((prevData: any) => ({
+              ...prevData,
+              co_ordinates: {
+                latitude,
+                longitude,
+              },
+            }));
+  
+            console.log("Current location: ", latitude, longitude);
+          },
+          (error) => {
+            console.error("Error fetching current location:", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    };
+
+    console.log("the lcoation marked data",clickedLocation);
     
+  
+  
     return (
       <Col lg="" md="">
-        <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0', boxShadow : 'none'}}>
-          {/* <CommonCardHeader title={BasicDemoMap} /> */}
-          <CardBody style={{padding : '0'}}>
-            <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
+        <Card style={{ marginBottom: '0', borderBottomLeftRadius: '0', borderBottomRightRadius: '0', boxShadow: 'none' }}>
+          <CardBody style={{ padding: '0' }}>
+          <button 
+  onClick={useCurrentLocation} 
+  style={{
+    marginBottom: '10px',
+    padding: '8px 16px',        // Adjust padding for smaller size
+    borderRadius: '8px',        // Adds border radius
+    border: '1px solid #ccc',   // Adds a border
+    backgroundColor: '#f5f5f5', // Background color
+    cursor: 'pointer',          // Cursor changes to pointer on hover
+    fontSize: '14px',           // Adjusts font size
+    color: '#333',              // Text color
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)', // Adds a subtle shadow
+  }}
+>
+  Use Current Location
+</button>
+
+            <div className="map-js-height overflow-hidden" style={{ borderTopRightRadius: '1rem', borderTopLeftRadius: '1rem' }}>
               <div id="gmap-simple" className="map-block">
-                {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
+                {isLoaded ? (
+                  <GoogleMap
+                    mapContainerStyle={{ height: "400px", width: "100%" }}
+                    center={mapCenter} // Center map on the current location or default
+                    zoom={10}
+                    onClick={handleMapClick}
+                  >
+                    {clickedLocation && (
+                      <Marker position={clickedLocation} />
+                    )}
+                    {/* {clickedLocation && (
+                      <Marker position={clickedLocation} icon="http://maps.google.com/mapfiles/ms/icons/blue-dot.png" />
+                    )} */}
+                  </GoogleMap>
+                ) : (
+                  "Loading"
+                )}
               </div>
             </div>
           </CardBody>
@@ -1084,14 +1186,18 @@ const handleSearchInputChange = async (event : any) => {
       </Col>
     );
   };
+  
+  
+  // export default BasicMap;
+  
 
-  const FloatingForm = ({ onSubmit }: any) => {
-    const [formData, setFormData] = useState({
-        nick_name: '',
-      pincode: '',
-      location: '',
-      address: ''
-    });
+  const FloatingForm = ({ onSubmit , formData , setFormData }: any) => {
+    // const [formData, setFormData] = useState({
+    //     nick_name: '',
+    //   pincode: '',
+    //   location: '',
+    //   address: ''
+    // });
   
     const [showPincode, setShowPincode] = useState(false);
   const [showLocation, setShowLocation] = useState(false);

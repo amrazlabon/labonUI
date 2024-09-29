@@ -25,7 +25,7 @@ export async function POST(request : NextRequest){
         console.log('request education=> check post');
         const reqBody = await request.json();
         console.log('body ===============>', reqBody);
-        const response = await axios.post(`http://43.205.139.219/tests/letter/${reqBody.term}`);
+        const response = await axios.post(`http://43.205.139.219/send_sms/${reqBody.endpoint}`,reqBody);
         console.log("tests data",response.data)
         const res = NextResponse.json(response.data);
         // console.log('back success ===> ', res);

@@ -26,7 +26,7 @@ const TestTime = ({profile , setProfile , setStepActive , selectedTests, selecte
       // console.log("the fdate of the profle",profile.date);
       
       try {
-        const response = await axios.get(`/api/timeslot?date=${profile.date}`);
+        const response = await axios.get(`/api/timeslot?date=${profile.date}&pincode=${profile.pincode}`);
         // setData(response.data);
         let data = response.data.sort((a : any, b : any) => a.id - b.id);
         // console.log("the timeslot data",data);
@@ -109,31 +109,39 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
     { id: 14, icon: "Gender - Female.png", text: "8:00 PM" },
   ];
 
-  const morningIds = [1, 2, 3, 4];
-  const afternoonIds = [5, 6, 7, 8];
-  const eveningIds = [9, 10, 11, 12, 13, 14, 15];
+  const morningIds = [1, 2, 3, 4,5];
+  const afternoonIds = [ 6, 7, 8,9];
+  const eveningIds = [ 10, 11, 12, 13, 14, 15];
 
   const now = new Date();
   const selectedDate = new Date(profile.date.split('/').reverse().join('-')); // Convert dd/mm/yyyy to Date object
 
   let filteredMorningOptions = morningIds;
   let filteredAfternoonOptions = afternoonIds;
+  let filteredEveningOptions = eveningIds;
 
   if (selectedDate.toDateString() === now.toDateString()) {
     const currentHour = now.getHours();
 
-    if (currentHour >= 11) {
+    if (currentHour >= 8) {
       filteredMorningOptions = []; // Filter out morning slots if after 12 PM
     }
 
-    if (currentHour >= 15) {
+    if (currentHour >= 11) {
+      filteredMorningOptions = []; // Filter out morning slots if after 12 PM
       filteredAfternoonOptions = []; // Filter out afternoon slots if after 4 PM
+    }
+
+    if (currentHour >= 15) {
+      filteredMorningOptions = []; // Filter out morning slots if after 12 PM
+      filteredAfternoonOptions = []; // Filter out afternoon slots if after 4 PM
+      filteredEveningOptions = []
     }
   }
 
   const morningOptions = timeSlotData.filter((item: any) => filteredMorningOptions.includes(item.id));
   const afternoonOptions = timeSlotData.filter((item: any) => filteredAfternoonOptions.includes(item.id));
-  const eveningOptions = timeSlotData.filter((item: any) => eveningIds.includes(item.id));
+  const eveningOptions = timeSlotData.filter((item: any) => filteredEveningOptions.includes(item.id));
 
 
 

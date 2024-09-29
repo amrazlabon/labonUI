@@ -20,6 +20,7 @@ import { InvoiceTableHeader, InvoiceFourData, InvoiceFourDataLabon, InvoiceTable
 import { SimpleAccordion } from "./SimpleAccordion";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import moment from "moment";
 // import { SimpleAccordion } from "./SimpleAccordion";
 
 // import OpenModalMofi from ".";
@@ -38,6 +39,8 @@ const PatientDetails = () => {
     // }
   ])
   const [isButtonVisible, setIsButtonVisible] = useState(false);
+  const [isWithin12Hours, setIsWithin12Hours] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +59,18 @@ const PatientDetails = () => {
       // setData(response.data);
       // setPatientInformation(response.data)
       setSelectedTests(TestResponse.data)
+      const { test_date, time_slot } = TestResponse.data;
+
+          // Combine test_date and time_slot into one DateTime
+          const testDateTime = moment(test_date).format('YYYY-MM-DD') + ' ' + time_slot;
+          const testDate = moment(testDateTime, 'YYYY-MM-DD hh:mm A');
+
+          // Get current date and calculate the difference
+          const currentDate = moment();
+          const hoursDifference = testDate.diff(currentDate, 'hours');
+
+          // Check if less than 12 hours
+          setIsWithin12Hours(hoursDifference < 12);
     }
     } catch (error) {
       setSelectedTests([])
@@ -96,7 +111,7 @@ const PatientDetails = () => {
       <div style={{display : 'flex'}}>
   <i onClick={goBack} className='fa fa-angle-left' style={{paddingRight:'24px', fontSize : '24px' , color : 'black'}}></i>
       {/* <h1 className="text-black ml-4" style={{margin:'0' , paddingBottom : '24px'}}>My Booking Information</h1> */}
-      <h1 className="text-black " style={{paddingBottom:'24px' , margin : '0'}}>LBNHVB080320243{selectedTests.id}</h1>
+      <h1 className="text-black " style={{paddingBottom:'24px' , margin : '0'}}>LBNHVB080320243{selectedTests.id}{selectedTests.reschedule_count ? '-' + selectedTests.reschedule_count : ''}</h1>
         </div>
 {/* <p className="text-white ml-4 mt-4" style={{marginLeft:'2rem'}}>Glucose</p> */}
 {/* <div style={{display : 'flex'}}>
@@ -174,16 +189,17 @@ const PatientDetails = () => {
         </CardBody> */}
 {/* <CustomHorizontalWizardFormTabContent activeTab={1} callbackActive={callback} differentId={false}/> */}
 
-<Col sm="12">
+{!isWithin12Hours && <Col sm="12">
 {/* <Link href={'/acheck/booking'}> */}
 
                   <Button className="btn-lg bg-gray-400 btnStyles" style={{height: '3rem', width :'100%' , backgroundColor: 'black !important'
  , color :'white' , marginTop : '16px' , borderRadius : '50px'}}
- onClick={handleReschedule}
+  onClick={handleReschedule}
  >Reschedule Booking 
                     </Button>
 {/* </Link> */}
                 </Col>
+}
 
  {/*                <Col sm="12">
 <Link href={'/acheck/booking_cancellation'}>

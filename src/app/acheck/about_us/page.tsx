@@ -5,6 +5,7 @@ import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row } from 
 import './support.css'
 import { ImagePath } from "@/Constant";
 import BasicCard from "./BasicCard";
+import Head from "next/head";
 
 const AboutUs = () => {
 
@@ -14,6 +15,13 @@ const AboutUs = () => {
     router.back(); // Go back to the previous route
   };
     return (
+      <>
+      {/* Add the SEO meta tags */}
+      <Head>
+        <meta name="description" content="Labon.ai is a startup service provider in the healthcare industry, who enables patients to book for collection of blood samples from home and act as a technology provider for labs. Our software for labs help connect with patients instantly to manage home blood test bookings and payments." />
+        <meta name="keywords" content="know about labon, collect blood samples of patients from home, software for labs, blood test service provider, technology provider for labs, home blood test booking software, service provider to book blood test at home." />
+        <title>About - Labon</title>
+      </Head>
         <Col md="6">
     
     <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
@@ -155,6 +163,7 @@ const AboutUs = () => {
 
     </div>
     </Col>
+    </>
     )
 
 }

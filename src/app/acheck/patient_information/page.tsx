@@ -15,7 +15,7 @@ const PatientInformation = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-      const id = sessionStorage.getItem('user_id');
+      const id = JSON.parse(sessionStorage.getItem('user_id') || 'null');
       const response = await axios.get(`/api/patient_info?endpoint=user&id=${id}`);
         // setData(response.data);
         const sortedData = response.data.sort((a : any, b : any) => b.id - a.id); // Sorts in ascending order
@@ -149,6 +149,14 @@ const TableHeadOptions=({patientInformation} : any)=> {
       },
     ];
 
+    const formatDate = (isoString : any) => {
+      const date = new Date(isoString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
   return (
     <Col sm="" style={{paddingRight : '0' , paddingLeft : '0'}}>
       <Card style={{boxShadow : 'none' , margin : '0'}}>
@@ -176,14 +184,22 @@ const TableHeadOptions=({patientInformation} : any)=> {
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px' }}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
                           <p style={{ paddingTop: '0', margin: '0'  , fontSize : '14px'}}>
-                            0 tests done so far
+                            {data.total_test_count ? data.total_test_count : '0'} tests done so far
                           </p>
                         </div>
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
-                          <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' , color  :'rgba(196, 107, 101, 1)' }}>
-                            No upcoming tests
-                          </p>
+                          <p style={{ paddingTop: '0', margin: '0', fontSize: '14px', color: data.upcoming_test_count || data.upcoming_test_date ? 'rgba(101, 196, 102, 1)' : 'rgba(196, 107, 101, 1)' }}>
+  {data.upcoming_test_count
+    ? `${data.upcoming_test_count} upcoming tests`
+    : data.upcoming_test_date
+      ? `${formatDate(data.upcoming_test_date)} ${data.upcoming_time_slot}`
+      : '0 upcoming tests'}
+</p>
+
+                          {/* <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' , color  :'rgba(196, 107, 101, 1)' }}>
+                            {data.upcoming_test_count ? data.upcoming_test_count + 'upcoming tests' : data.upcoming_test_date + data.upcoming_time_slot}
+                          </p> */}
                         </div>
                       </div>
                     </td>

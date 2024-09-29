@@ -3,8 +3,8 @@ import { Href, ImagePath, Logout, Widgets } from "@/Constant";
 import { useAppSelector } from "@/Redux/Hooks";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { FileText, LogOut, Settings, Users } from "react-feather";
 import LoginModal from "@/Redux/loginDo";
 import './profileStyle.css'
@@ -24,6 +24,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
   const [userId , setUserId] = useState<any>(null)
   const [userData , setUserData] = useState<any>(null)
   const router = useRouter();
+  const pathname = usePathname(); // Hook to detect route changes
 
   const LogOutUser = () => {
     // Cookies.remove("mofi_token");
@@ -185,6 +186,28 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
     };
   }, []);
 
+  // const router = useRouter();
+  const dropdownRef = useRef<HTMLUListElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef, setIsOpen]);
+
+  // Close dropdown on pathname (route) change
+  useEffect(() => {
+    setIsOpen(false); // Close dropdown when the route (pathname) changes
+  }, [pathname]);
+
+
+
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -194,15 +217,15 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
   return (
     <div >
       <LoginModal showModal={showModal} toggleModal={toggleModal}/>
-      <div className="header-content d-flex align-items-center">
+      <div className="header-content d-flex align-items-center" onClick={toggleDropdown}>
         <i
           className={`fa ${isOpen ? 'fa-times' : 'fa-align-right'}`}
-          style={{ marginRight: '8px', padding: '4px 6px', cursor: 'pointer' }}
-          onClick={toggleDropdown}
+          style={{ marginRight: '8px', padding: '4px 6px', cursor: 'pointer', fontSize : '18px' }}
+          
         ></i>
       </div>
       {isOpen && (
-        <ul className="profile-dropdown" style={{width : 'auto' , top : '75px' , left : '0'}}>
+        <ul ref={dropdownRef}  className="profile-dropdown" style={{width : 'auto' , top : '75px' , left : '0'}}>
         {userId !== null && 
         <Link href={'/acheck/profile'}>
 

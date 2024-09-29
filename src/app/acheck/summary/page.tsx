@@ -418,8 +418,11 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
 
   const formatDateToISO = (dateString: string): string => {
     const [day, month, year] = dateString.split('/');
-    const dateObject = new Date(Number(year), Number(month) - 1, Number(day));
-    return dateObject.toISOString(); // yyyy-MM-ddTHH:mm:ss.sssZ
+  
+    // Create the date object with UTC values to prevent timezone shift
+    const dateObject = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+  
+    return dateObject.toISOString().split('T')[0]; // Keep only the date part (yyyy-MM-dd)
   };
   
   const handleBookingClick = async () => {
@@ -437,12 +440,14 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
     address : profile.address,
     gender : profile.gender,
     email : profile.email,
-    mobile : profile.mobile,
+    mobile : '+91' + profile.mobile,
     nick_name :profile.nick_name,
     time_slot :profile.timeslot,
     test_date : formatDateToISO(profile.date),
-    // dob : profile.dob,
-    // age : profile.age,
+    co_ordinates : profile.co_ordinates,
+
+    // dob : formatDateToISO(profile.dob),
+    age : profile.age,
     // relation : profile.relation
     // sub_total :'profile.sub_total',
     // total :'profile.total',
@@ -451,8 +456,23 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
       }      
       sessionStorage.setItem('booking_order', JSON.stringify(profile));
       const response = await axios.post('/api/orders',reqBody);
+      
+      if(response) {
+        console.log("the reposne from the abovd",profile.test_date);
+        const reqBody ={
+          mobile : '+91' + profile.mobile,
+          var1 : profile.date,
+          var2 : profile.timeslot,
+          var3 : 'LBNUSR'+ response.data[0].id,
+          endpoint : 'booking_confirmed'
+
+        }
+      const smsResponse = await axios.post('/api/send_sms',reqBody);
+
+      window.location.href = '/acheck/send_details'
+      }
       // setSavedAddresses(response.data);
-      console.log("Saved addresses: where dont know", response.data);
+      // console.log("Saved addresses: where dont know", response.data);
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
@@ -512,11 +532,11 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
           Transportation is charged extra. Minimum charge for Transportation is <span style={{ fontWeight: 'bold' }}><i className='fa fa-rupee'></i>100.00</span>. You can pay the Transportation fee at the time of sample collection.
         </p>
         <Col sm="12">
-          <Link href={'/acheck/send_details'}>
+          {/* <Link href={'/acheck/send_details'}> */}
             <Button onClick={handleBookingClick} style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white', marginTop: '0' }} color="">
               Confirm Booking
             </Button>
-          </Link>
+          {/* </Link> */}
         </Col>
       </ModalBody>
     </Modal>

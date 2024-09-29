@@ -12,7 +12,7 @@ import { useModal } from "@/context/modalContext";
 
 const BookingConfirmation = () => {
   const [bookingOrder, setBookingOrder] = useState<any>({});
-  const [open,setOpen] = useState(true)
+  const [open,setOpen] = useState(false)
     useEffect(()=>{
       const bookingOrder = sessionStorage.getItem('booking_order');
     if(bookingOrder) {

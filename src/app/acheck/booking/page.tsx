@@ -29,6 +29,7 @@ interface FormValue {
     workInCities: [] ;
     test_data: [] ;
     address_data: [] ;
+    co_ordinates : {}
     nick_name: string;
     patient_id: string;
     timeslot_id: string;
@@ -62,6 +63,7 @@ type Test = {
     address: string;
     pincode: any;
     nick_name: string | null;
+    co_ordinates : {}
   };
 
 const Page = () => {
@@ -100,6 +102,7 @@ const Page = () => {
         relation: '',
         tests: '',
         address_data: [],
+        co_ordinates : {},
         test_data: [],
         workInCities: [],
         nick_name: '',
@@ -123,7 +126,7 @@ const Page = () => {
     console.log("the profile value in the stepper",profile);
     useEffect(() => {
         const tests = sessionStorage.getItem('tests');
-        const userId = sessionStorage.getItem('user_id');
+        const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
     const address = sessionStorage.getItem('address');
 
     if (tests) {
@@ -136,7 +139,7 @@ const Page = () => {
     }));
     }
     if (userId) {
-      const parsedTests = JSON.parse(userId);
+      const parsedTests = userId;
 
       // setSelectedTests(JSON.parse(tests));
       setProfile(prevProfile => ({
@@ -153,6 +156,7 @@ const Page = () => {
         pincode : parsedAddress[0].pincode,
         location : parsedAddress[0].location,
         nick_name : parsedAddress[0].nick_name,
+        co_ordinates : parsedAddress[0].co_ordinates,
     }));
       setSelectedAddress(JSON.parse(address));
     }

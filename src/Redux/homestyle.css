@@ -139,5 +139,9 @@
       }
       
 
+      .bg-danger {
+        background-color: #C46B65 !important;
+        color: #fff;
+    }
 
     

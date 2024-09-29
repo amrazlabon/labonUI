@@ -44,7 +44,7 @@ const BookingInformation = () => {
     const fetchData = async () => {
       try {
     // const booking_id = sessionStorage.getItem('booking_id');
-    const user_id = sessionStorage.getItem('user_id');
+    const user_id = JSON.parse(sessionStorage.getItem('user_id') || 'null');
     if(user_id){
 
 
@@ -222,7 +222,7 @@ const TableHeadOptions=({bookingInformation} : any)=> {
                       <img style={{height:'1rem', margin:'0'}} className="img-fluid table-avtar" src={`${ImagePath}/Icon - Order No..png`} alt="user image" />
                       <p style={{paddingTop : '0', margin : '0'}}>
   
-                      LBNHVB10042024{data.id}
+                      LBNHVB10042024{data.id}{data.reschedule_count ? '-' + data.reschedule_count : ''}
                       </p>
                       </div>
                       <div className="gap-2" style={{display : 'flex', marginTop : '4px'}}>

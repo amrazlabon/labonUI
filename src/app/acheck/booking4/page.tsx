@@ -41,8 +41,9 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
         nick_name: profile.nick_name ? profile.nick_name :'',
         // time: '8:00 AM', // default value for time
       });
-      // console.log("formdata",formData);
-    
+
+      
+
       const handleToggleChange = (event: any) => {
         setIsSelectFromContacts(event.target.checked);
       };
@@ -153,6 +154,125 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
   
   const [isAgeShow , setIsAgeShow] = useState(false)
 
+  const [errors, setErrors] = useState({
+    name: '',
+    dob: '',
+    mobile: '',
+    gender: '',
+    relation : '',
+    nick_name : '',
+    email: '',
+    pincode: '',
+    location: '',
+    address: '',
+    age: ''
+  });
+  // console.log("formdata",formData);
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const mobileRegex = /^[0-9]{10}$/;
+
+
+const validateForm = () => {
+const newErrors : any = {};
+let isValid = true;
+
+// Name validation
+if (formData.name.length < 3) {
+  newErrors.name = 'Name must be at least 3 characters long.';
+  isValid = false;
+}
+
+// Designation validation
+if (formData.pincode) {
+  if (formData.pincode.length < 6) {
+  newErrors.pincode = 'Pincode must be at least 6 characters long.';
+  isValid = false;
+}
+}
+
+if (!formData.gender) {
+newErrors.gender = 'Please fill the field.';
+isValid = false;
+}
+
+if (!formData.relation) {
+newErrors.relation = 'Please fill the field.';
+isValid = false;
+}
+
+if (!formData.nick_name) {
+newErrors.nick_name = 'Please fill the field.';
+isValid = false;
+}
+
+if (!formData.pincode) {
+newErrors.pincode = 'Please fill the field.';
+isValid = false;
+}
+
+if (!formData.address) {
+newErrors.address = 'Please fill the field.';
+isValid = false;
+}
+
+if (!formData.email) {
+newErrors.email = 'Please fill the field.';
+isValid = false;
+}
+
+if (!formData.location) {
+newErrors.location = 'Please fill the field.';
+isValid = false;
+}
+
+if (!formData.age) {
+newErrors.age = 'Please fill the field.';
+isValid = false;
+}
+
+// Mobile validation
+// if (!mobileRegex.test(formData.mobile)) {
+//   newErrors.mobile = 'Mobile number must be 10 digits long.';
+//   isValid = false;
+// }
+
+// Email validation
+if (!emailRegex.test(formData.email)) {
+  newErrors.email = 'Invalid email format.';
+  isValid = false;
+}
+
+if (!mobileRegex.test(formData.mobile)) {
+  newErrors.mobile = 'Invalid mobile format.';
+  isValid = false;
+}
+
+// Message validation
+if (formData.address) {
+  if (formData.address.length < 3) {
+  newErrors.address = 'Address must be at least 3 characters long.';
+  isValid = false;
+}
+}
+
+if (formData.nick_name) {
+if (formData.nick_name.length < 3) {
+newErrors.nick_name = 'Nick Name must be at least 3 characters long.';
+isValid = false;
+}
+}
+if (formData.location) {
+if (formData.location.length < 3) {
+newErrors.location = 'Location must be at least 3 characters long.';
+isValid = false;
+}
+}
+
+setErrors(newErrors);
+return isValid;
+};
+
   
   const handleInputChange = (e: any) => {
     // console.log("the values of date change",e.target.name);
@@ -177,8 +297,11 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
 
   const handleBookTimingsClick =async () => {
     // console.log("form data",formData);
-    const userId = sessionStorage.getItem('user_id');
+    const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
 
+    // console.log("profile value in thw add",profile);
+    if (validateForm()) {
+    
     if(userId){
       
       const reqBody = {
@@ -187,16 +310,19 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
         pincode : formData.pincode,
         nick_name : formData.nick_name,
         dob : new Date(formData.dob),
-        mobile : formData.mobile,
+        mobile : '+91' + formData.mobile,
         email : formData.email,
         age : formData.age,
         gender : formData.gender,
-        user_id : parseInt(userId, 10),
+        user_id : userId,
         first_name : formData.name,
         relation : formData.relation,
         middle_name : '',
         last_name : '',
+        co_ordinates : profile.co_ordinates
       }
+      console.log("the request bidy",reqBody);
+      
       try {
         setStepActive(3)
         const response = await axios.post('/api/patient_info',reqBody);
@@ -213,6 +339,9 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
         console.error("Error fetching data:", error.message);
       }
     }
+  } else {
+    console.log('Form has errors');
+  }
 
     
   }
@@ -243,8 +372,12 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                       placeholder="Patient Name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      style={{
+                        borderColor: errors.name ? 'red' : '', // Change border to red if there's an error
+                      }}
                     />
                     <Label check>Patient Name</Label>
+                    {errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
                   </FormGroup>
                 </Col>
                 <div className="gap-4" style={{ display: 'flex' , margin : '0' }}>
@@ -273,7 +406,10 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                 </Col>)
                   }
                 </div>
+                {errors.age && <p style={{ color: 'red' , margin : 0}}>{errors.age}</p>}
+
                 <IconsRadio selectedTime={formData.gender} onTimeChange={handleTimeChange} />
+                {errors.gender && <p style={{ color: 'red' , margin: 0}}>{errors.gender}</p>}
                 <Col sm="12">
   <FormGroup floating className="mb-0 mt-3">
     <Input
@@ -295,7 +431,8 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
       <option value="Other">Other</option>
     </Input>
     <Label check>Relation</Label>
-  </FormGroup>
+    {errors.relation && <p style={{ color: 'red' }}>{errors.relation}</p>}
+    </FormGroup>
 </Col>
 
                 <Col sm="12">
@@ -306,8 +443,12 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                       placeholder="Mobile"
                       value={formData.mobile}
                       onChange={handleInputChange}
+                      style={{
+                        borderColor: errors.mobile ? 'red' : '', // Change border to red if there's an error
+                      }}
                     />
                     <Label check>Mobile</Label>
+                    {errors.mobile && <p style={{ color: 'red' }}>{errors.mobile}</p>}
                   </FormGroup>
                 </Col>
                 <Col sm="12" className="mb-6">
@@ -318,8 +459,12 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                       placeholder="Email"
                       value={formData.email}
                       onChange={handleInputChange}
+                      style={{
+                        borderColor: errors.email ? 'red' : '', // Change border to red if there's an error
+                      }}
                     />
                     <Label check>Email</Label>
+                    {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
                   </FormGroup>
                 </Col>
                 <Col sm="6">
@@ -330,8 +475,12 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                       placeholder="Pincode"
                       value={formData.pincode}
                       onChange={handleInputChange}
+                      style={{
+                        borderColor: errors.pincode ? 'red' : '', // Change border to red if there's an error
+                      }}
                     />
                     <Label check>Pincode</Label>
+                    {errors.pincode && <p style={{ color: 'red' }}>{errors.pincode}</p>}
                   </FormGroup>
                 </Col>
                 <Col sm="12" className="mb-6">
@@ -342,8 +491,12 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                       placeholder="Location"
                       value={formData.location}
                       onChange={handleInputChange}
+                      style={{
+                        borderColor: errors.location ? 'red' : '', // Change border to red if there's an error
+                      }}
                     />
                     <Label check>Location</Label>
+                    {errors.location && <p style={{ color: 'red' }}>{errors.location}</p>}
                   </FormGroup>
                 </Col>
                 <Col sm="12" className="mb-0">
@@ -354,15 +507,23 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
                       placeholder="Address"
                       value={formData.address}
                       onChange={handleInputChange}
+                      style={{
+                        borderColor: errors.address ? 'red' : '', // Change border to red if there's an error
+                      }}
                     />
                     <Label check>Address</Label>
+                    {errors.address && <p style={{ color: 'red' }}>{errors.address}</p>}
                   </FormGroup>
                 </Col>
                 <Col sm="12" className="mb-2">
                   <FormGroup floating>
-                    <Input type="text" name="nick_name" value={formData.nick_name} onChange={handleInputChange} placeholder="Name" />
+                    <Input type="text" name="nick_name" value={formData.nick_name} onChange={handleInputChange}
+                    style={{
+                      borderColor: errors.nick_name ? 'red' : '', // Change border to red if there's an error
+                    }} placeholder="Name" />
                     <Label>Nick Name</Label>
                     {/* <p style={{margin : '0' , paddingTop : '8px' , color : 'GrayText'}}>Example: Home</p> */}
+                    {errors.nick_name && <p style={{ color: 'red' }}>{errors.nick_name}</p>}
                   </FormGroup>
                 </Col>
                 {canShowSummaryButton && (
@@ -500,7 +661,7 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userId = sessionStorage.getItem('user_id');
+        const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
       if(userId){
         // console.log("is inside the data");
         
@@ -536,9 +697,18 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         address: data.address, // Add appropriate value or logic if needed
         age: data.age, // Add appropriate value or logic if needed
         nick_name: data.nick_name, // Add appropriate value or logic if needed
-        patient_id : data.id
+        patient_id : data.id,
+        co_ordinates : data.co_ordinates
       });
       setStepActive(3)
+    };
+
+    const formatDate = (isoString : any) => {
+      const date = new Date(isoString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
     };
   
 
@@ -569,14 +739,22 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px' }}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/icon - Syringe.png`} alt="user image" />
                           <p style={{ paddingTop: '0', margin: '0'  , fontSize : '14px'}}>
-                            0 tests done so far
+                            {data.total_test_count ? data.total_test_count : '0'} tests done so far
                           </p>
                         </div>
                         <div className="gap-1" style={{ display: 'flex' , marginTop : '4px'}}>
                           <img style={{ height: '1rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/Icon - Clock.png`} alt="user image" />
-                          <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' , color  :'rgba(196, 107, 101, 1)' }}>
-                            No upcoming tests
-                          </p>
+                          <p style={{ paddingTop: '0', margin: '0', fontSize: '14px', color: data.upcoming_test_count || data.upcoming_test_date ? 'rgba(101, 196, 102, 1)' : 'rgba(196, 107, 101, 1)' }}>
+  {data.upcoming_test_count
+    ? `${data.upcoming_test_count} upcoming tests`
+    : data.upcoming_test_date
+      ? `${formatDate(data.upcoming_test_date)} ${data.upcoming_time_slot}`
+      : '0 upcoming tests'}
+</p>
+
+                          {/* <p style={{ paddingTop: '0', margin: '0' , fontSize : '14px' , color  :'rgba(196, 107, 101, 1)' }}>
+                            {data.upcoming_test_count ? data.upcoming_test_count + 'upcoming tests' : data.upcoming_test_date + data.upcoming_time_slot}
+                          </p> */}
                         </div>
                       </div>
                     </td>

@@ -11,6 +11,7 @@ import './form.css'
 import DatePicker from "react-multi-date-picker";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 
 const ContactUs = () => {
   const [profileData, setProfileData] = useState<any>([]);
@@ -46,7 +47,7 @@ const ContactUs = () => {
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const userId = sessionStorage.getItem('user_id');
+  //       const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
   //       if (userId) {
   //         const response = await axios.get(`/api/login?endpoint=user&id=${userId}`);
   //         setProfileData(response.data);
@@ -142,6 +143,11 @@ const validateForm = () => {
   // Designation validation
   if (formData.designation.length < 3) {
     newErrors.designation = 'Designation must be at least 3 characters long.';
+    isValid = false;
+  }
+
+  if (!formData.gender) {
+    newErrors.gender = 'Please fill the field.';
     isValid = false;
   }
 
@@ -244,6 +250,13 @@ const router = useRouter(); // Initialize the router
   
   
   return (
+    <>
+      {/* Add the SEO meta tags */}
+      <Head>
+        <meta name="description" content="Contact Labon either by submitting the form, or by writing to contact@labon.ai or by calling Labon at 8289861000." />
+        <meta name="keywords" content="contact labon, contact labon for home blood test booking, write to labon at contact@labon.ai, call labon at 8289861000, labs contact labon." />
+        <title>Contact - Labon</title>
+      </Head>
     <Col md="6">
 
 <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
@@ -292,6 +305,10 @@ const router = useRouter(); // Initialize the router
                       placeholder="Name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      style={{
+                        borderColor: errors.name ? 'red' : '', // Change border to red if there's an error
+                      }}
+                
                     />
                     <Label check>Name</Label>
                     <p style={{margin : '0' , paddingTop : '8px' , color : 'GrayText'}}>Enter full name. Example: Smitha Chacko</p>
@@ -323,6 +340,7 @@ const router = useRouter(); // Initialize the router
                 </Col>
                 </div> */}
                 <IconsRadio selectedTime={formData.gender} onTimeChange={handleTimeChange} />
+                {errors.gender && <p style={{ color: 'red' , margin : 0}}>{errors.gender}</p>}
                 <Col sm="12">
                   <FormGroup floating className="mb-0 mt-3">
                     <Input
@@ -331,7 +349,10 @@ const router = useRouter(); // Initialize the router
                       placeholder="Designation"
                       value={formData.designation}
                       onChange={handleInputChange}
-                    />
+                      style={{
+                        borderColor: errors.designation ? 'red' : '', // Change border to red if there's an error
+                      }}
+                />
                     <Label check>Designation</Label>
                     {errors.designation && <p style={{ color: 'red' }}>{errors.designation}</p>}
                   </FormGroup>
@@ -344,7 +365,10 @@ const router = useRouter(); // Initialize the router
                       placeholder="Mobile"
                       value={formData.mobile}
                       onChange={handleInputChange}
-                    />
+                      style={{
+                        borderColor: errors.mobile ? 'red' : '', // Change border to red if there's an error
+                      }}
+                />
                     <Label check>Mobile</Label>
                     {errors.mobile && <p style={{ color: 'red' }}>{errors.mobile}</p>}
                   </FormGroup>
@@ -357,7 +381,10 @@ const router = useRouter(); // Initialize the router
                       placeholder="Email"
                       value={formData.email}
                       onChange={handleInputChange}
-                    />
+                      style={{
+                        borderColor: errors.email ? 'red' : '', // Change border to red if there's an error
+                      }}
+                />
                     <Label check>Email</Label>
                     {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
                   </FormGroup>
@@ -395,9 +422,10 @@ const router = useRouter(); // Initialize the router
                       value={formData.message}
                       onChange={handleInputChange}
                       style={{
-                        height: '8rem'
+                        height: '8rem',
+                        borderColor: errors.message ? 'red' : '',
                       }}
-                    />
+                />
                     <Label check>Message</Label>
                     {errors.message && <p style={{ color: 'red' }}>{errors.message}</p>}
                   </FormGroup>
@@ -420,6 +448,7 @@ const router = useRouter(); // Initialize the router
         </CardBody>
       </Card>
     </Col>
+    </>
   );
 };
 

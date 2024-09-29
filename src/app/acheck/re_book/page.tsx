@@ -34,7 +34,7 @@ interface FormValue {
     timeslot_id: string;
     user_id: string;
     test_id: string;
-    // companyName: string;
+    reschedule_count : string;// companyName: string;
     brandName: string;
     currentWorkingCity: string;
     monthlySalary: string | number;
@@ -107,6 +107,7 @@ const Page = () => {
         timeslot_id : '',
         test_id:'',
         user_id:'',
+        reschedule_count : '',
         brandName: '',
         currentWorkingCity: '',
         monthlySalary: '',
@@ -123,7 +124,7 @@ const Page = () => {
     console.log("the profile value in the stepper",profile);
     useEffect(() => {
         const tests = sessionStorage.getItem('tests');
-        const userId = sessionStorage.getItem('user_id');
+        const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
     const address = sessionStorage.getItem('address');
     const reschedule_booking = sessionStorage.getItem('reschedule_booking');
 
@@ -144,7 +145,8 @@ const Page = () => {
         nick_name : parsedRescheduleBooking.nick_name,
         name : parsedRescheduleBooking.name,
         gender : parsedRescheduleBooking.gender,
-        // name : parsedRescheduleBooking.name,
+        age : parsedRescheduleBooking.age,
+        reschedule_count : parsedRescheduleBooking.reschedule_count,
       }));
     }
     // if (tests) {
@@ -157,7 +159,7 @@ const Page = () => {
     // }));
     // }
     if (userId) {
-      const parsedTests = JSON.parse(userId);
+      const parsedTests = userId;
 
       // setSelectedTests(JSON.parse(tests));
       setProfile(prevProfile => ({
@@ -193,7 +195,7 @@ const Page = () => {
     }
 
     const handleAddToCartClick = () => {
-    window.location.href = '/acheck/b_r';
+    // window.location.href = '/acheck/b_r';
 
       // setFullScreen(true); 
       // or false, depending on what you want to do
@@ -239,9 +241,9 @@ const Page = () => {
 }
   </div>
   <div style={{ flex: 1, display: 'flex', justifyContent: 'bottom' ,paddingRight : '24px'}}>
-                  {stepActive == 2 && 
+                  {/* {stepActive == 2 && 
                     <Button onClick={handleAddToCartClick} className='btn-lg' style={{height: '3rem', width :'12rem' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '1.3rem'}} color="">Reschedule</Button>
-}
+} */}
       {/* <div style={{marginTop : '2rem'}}>
                     {profile.timeslot && (stepActive === 1 || stepActive === 2 || stepActive === 0) &&(
                         <p className="text-white" style={{padding:'0', paddingLeft : '24px', margin: '0'}}>Time : {profile.timeslot}</p>

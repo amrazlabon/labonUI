@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import './support.css'
 import { ImagePath } from "@/Constant";
+import Head from "next/head";
 
 const Support = () => {
 
@@ -13,6 +14,13 @@ const Support = () => {
     router.back(); // Go back to the previous route
   };
     return (
+      <>
+      {/* Add the SEO meta tags */}
+      <Head>
+        <meta name="description" content="Labon.ai support helps you to find FAQ, how-to guides and step-by-step tutorials on how to use the platform as a patient to book home blood tests and as a lab to receive and manage bookings and payments." />
+        <meta name="keywords" content="Labon support, get support from labon, get help from labon, why book a blood test at home, how to use http://labon.ai , accept home blood tests and payments." />
+        <title>Support - Labon</title>
+      </Head>
         <Col md="6">
     
     <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
@@ -87,6 +95,7 @@ const Support = () => {
 
     </div>
     </Col>
+    </>
     )
 
 }

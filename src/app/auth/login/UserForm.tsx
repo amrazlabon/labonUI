@@ -38,7 +38,7 @@ export const UserForm = () => {
             // const res = respose.data.result;
             // setEducationData([...educationData, res])
             // return response;
-      // const response = await fetch("http://0.0.0.0:37000/users/email", {
+      // const response = await fetch("http://43.205.139.219/users/email", {
       //   method: "POST",
       //   headers: {
       //     "Content-Type": "application/json",
