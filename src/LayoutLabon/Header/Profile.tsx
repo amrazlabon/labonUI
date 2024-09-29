@@ -28,7 +28,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
 
   const LogOutUser = () => {
     // Cookies.remove("mofi_token");
-    router.push("/acheck/home");
+    router.push("/labs/home");
     sessionStorage.removeItem('user_id')
     sessionStorage.removeItem('user_data')
   };
@@ -71,7 +71,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
             {
               icon: <FileText />,
               title: "Book a Home Visit",
-              link:"acheck/home",
+              link:"labs/home",
             },
             {
               icon: <FileText />,
@@ -81,17 +81,17 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
             {
               icon: <FileText />,
               title: "My Profile",
-              link:"acheck/profile",
+              link:"labs/profile",
             },
             {
               icon: <FileText />,
               title: "My Contact",
-              link:"acheck/patient_information",
+              link:"labs/patient_information",
             },
             {
               icon: <FileText />,
               title: "My Booking",
-              link:"acheck/booking_information",
+              link:"labs/booking_information",
             },
             {
               icon: <FileText />,
@@ -104,7 +104,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               link:"",
               onClick(evt : any) { 
                 evt.preventDefault();
-                router.push("/acheck/home");
+                router.push("/labs/home");
   sessionStorage.removeItem('user_id')
   sessionStorage.removeItem('user_data')
   const event = new Event('sessionUpdate');
@@ -133,7 +133,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               {
                 icon: <FileText />,
                 title: "Book a Home Visit",
-                link:"acheck/home",
+                link:"labs/home",
               },
               {
                 icon: <FileText />,
@@ -148,7 +148,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               {
                 icon: <LogOut />,
                 title: "Sign In",
-                link:"acheck/login",
+                link:"labs/login",
                 onClick(evt : any) { 
                   evt.preventDefault();
                   toggleModal()
@@ -158,12 +158,12 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               // {
               //   icon: <FileText />,
               //   title: "My Contact",
-              //   link:"acheck/patient_information",
+              //   link:"labs/patient_information",
               // },
               // {
               //   icon: <FileText />,
               //   title: "My Booking",
-              //   link:"acheck/booking_information",
+              //   link:"labs/booking_information",
               // },
             ];
             setUserProfileData(UserProfileData)
@@ -227,7 +227,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
       {isOpen && (
         <ul ref={dropdownRef}  className="profile-dropdown" style={{width : 'auto' , top : '75px' , left : '0'}}>
         {userId !== null && 
-        <Link href={'/acheck/profile'}>
+        <Link href={'/labs/profile'}>
 
         <div className="" style={{borderBottomStyle : 'groove' , borderBottomColor : 'black' , padding : '20px 20px 20px 12px', display : 'flex' , gap : '2rem'}}>
 <img style={{height:'3rem', margin:'0 ' , borderRadius : '20px'}} className="img-fluid table-avtar" src={`${ImagePath}/Father.png`} alt="user image" />

@@ -178,7 +178,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
 
       staticModalToggle();
       if (response.data[0].profile_complete === false) {
-        window.location.href = '/acheck/profile';
+        window.location.href = '/labs/profile';
       }
     }
     } catch (error) {
@@ -205,7 +205,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
 
         // staticModalToggle();
         // if (response.data[0].profile_complete === false) {
-        //   window.location.href = '/acheck/profile';
+        //   window.location.href = '/labs/profile';
         // }
       } catch (error) {
         console.error('Error fetching Login:', error);

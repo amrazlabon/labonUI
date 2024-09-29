@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   //   return NextResponse.redirect(new URL("/auth/login", request.url));
   // }
   // if (path.split("/")[1] === "auth" && request.cookies.has("mofi_token")) {
-  //   return NextResponse.redirect(new URL(`/acheck/profile`, request.url));
+  //   return NextResponse.redirect(new URL(`/labs/profile`, request.url));
   // }
 
   return NextResponse.next();

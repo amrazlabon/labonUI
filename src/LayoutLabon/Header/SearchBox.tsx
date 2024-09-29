@@ -9,7 +9,7 @@ export const SearchBox = () => {
   
   return (
     <div className="d-flex profile-media align-items-center">
-      <Link href={'/acheck/profile'}>
+      <Link href={'/labs/profile'}>
         <img className="img-40" style={{marginRight : '8px' , padding : '4px 6px'}} src={`${ImagePath}/Account.png`} alt="" />
       </Link>
         </div>
