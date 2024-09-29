@@ -2,13 +2,13 @@
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row, Table , Modal , ModalHeader , ModalBody } from "reactstrap";
 // import BasicCard from "./BasicCard";
 // import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
 import { BasicDemoMap, Discount, ExtraLargeModal, ExtraLargeModals, FullScreenModals, ImagePath, MarginLeft, PaddingLeft, Subtotal, Tax, WebDesign, WebDesigns } from "@/Constant";
 import BasicCard from "./BasicCard";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { BasicCenter, BasicContainerStyle } from "@/Data/Miscellaneous/Maps";
 import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
 import { CommonTableProp } from "@/Types/TableType";
@@ -27,6 +27,8 @@ import axios from "axios";
 
 const Summary = ({profile , setProfile , setStepActive , selectedTests, selectedAddress , setSelectedTests , fullScreen , setFullScreen} : any) => {
 
+  console.log("the profile values",profile);
+  
   // const [fullScreen, setFullScreen] = useState(false);
   const fullScreenToggle = () => setFullScreen(!fullScreen);
 
@@ -160,7 +162,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
 </div>
 
 
-<BasicMap/>
+<BasicMap profile={profile}/>
 <BasicCardProfileMap profile={profile}/>
 </div>
 <BasicCardSchedule setStepActive={setStepActive} profile={profile}/>
@@ -374,20 +376,39 @@ const BasicCardProfile = ({profile} : any) => {
   );
 };
 
-const BasicMap = () => {
-  const { isLoaded } = useJsApiLoader({
+const BasicMap = ({ profile }: any) => {
+  const loaderOptions = useMemo(() => ({
     id: "google-map-script",
-    googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q&v=3.exp&libraries=geometry,drawing,places",
-  });
+    // googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your actual API key
+    googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAlc4qVGHgErq3Hngdi-XTpOPYlg9wox-I", // Replace with your actual API key
+  }), []);
+  const { isLoaded } = useJsApiLoader(loaderOptions);
+
+  // const { isLoaded } = useJsApiLoader({
+  //   id: "google-map-script",
+  //   googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAlc4qVGHgErq3Hngdi-XTpOPYlg9wox-I", // Replace with your actual API key
+  // });
+  console.log("the value of the selected tests",profile);
   
+
+  const coordinates = {
+    lat: profile?.co_ordinates?.latitude || 0,
+    lng: profile?.co_ordinates?.longitude || 0,
+  };
+
   return (
     <Col lg="" md="">
-      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0', boxShadow : 'none' , margin : '0'}}>
-        {/* <CommonCardHeader title={BasicDemoMap} /> */}
-        <CardBody style={{padding : '0'}}>
-          <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
+      <Card style={{ marginBottom: "0", borderBottomLeftRadius: "0", borderBottomRightRadius: "0" }}>
+        <CardBody style={{ padding: "0" }}>
+          <div className="map-js-height overflow-hidden" style={{ borderTopRightRadius: "1rem", borderTopLeftRadius: "1rem" }}>
             <div id="gmap-simple" className="map-block">
-              {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
+              {isLoaded ? (
+                <GoogleMap mapContainerStyle={BasicContainerStyle} center={coordinates} zoom={10}>
+                  <Marker position={coordinates} />
+                </GoogleMap>
+              ) : (
+                "Loading"
+              )}
             </div>
           </div>
         </CardBody>

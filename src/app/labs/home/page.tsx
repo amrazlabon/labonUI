@@ -1,6 +1,6 @@
 'use client'
 import { CheckedCheckbox, CheckMeOut, ClickOut, Close, DefaultCheck, Defaultcheckboxes, Email, ExtraLargeModals, Height, ImagePath, MarginLeft, MofiLogin, Password, SaveChanges, SignIn, WebDesign, Width } from "@/Constant";
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 // import { Col } from "reactstrap";
 import { Card, CardBody, Col, Row, Button , FormGroup, Table , Form , Input , Label , Modal, ModalBody, ModalFooter, Toast, ToastBody} from 'reactstrap';
 import "slick-carousel/slick/slick.css"; 
@@ -879,6 +879,8 @@ const handleSearchInputChange = async (event : any) => {
           </div>
         );
       } else {
+        console.log("the form data",formData);
+        
         return (
           <div>
             <h2 className="text-black ml-4" style={{paddingBottom:'24px'}}>Current Location</h2>
@@ -886,8 +888,18 @@ const handleSearchInputChange = async (event : any) => {
             <p style={{ paddingTop: '16px', margin: '0' }} >
             Map by default shows your current location. If needed, you may drag the pointer to the exact location and continue.
           </p>
-          <Button onClick={handleContinueClick} style={{height: '3rem', width :'100%' , backgroundColor : '#AE7FD1' , color :'white' , marginTop : '24px'}} color="">Continue
-            </Button>
+          {/* {formData.co_ordinates &&  */}
+          <Button
+  className="btn-lg"
+  disabled={!formData.co_ordinates || Object.keys(formData.co_ordinates).length === 0}
+  onClick={handleContinueClick}
+  style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white', marginTop: '24px' }}
+  color=""
+>
+  Continue
+</Button>
+
+          {/* } */}
           </div>
         );
       }
@@ -1080,10 +1092,12 @@ const handleSearchInputChange = async (event : any) => {
   }
 
   const BasicMap = ({formData , setFormData} : any) => {
-    const { isLoaded } = useJsApiLoader({
+    const loaderOptions = useMemo(() => ({
       id: "google-map-script",
-      googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q&v=3.exp&libraries=geometry,drawing,places",
-    });
+      // googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your actual API key
+      googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAlc4qVGHgErq3Hngdi-XTpOPYlg9wox-I", // Replace with your actual API key
+    }), []);
+    const { isLoaded } = useJsApiLoader(loaderOptions);
   
     const [clickedLocation, setClickedLocation] = useState<any>();
     // const [currentLocation, setCurrentLocation] = useState(null);
@@ -1326,7 +1340,7 @@ const handleSearchInputChange = async (event : any) => {
                 {canShowButton &&
                 <Col sm="12">
                   {/* <Link href={'/labs/booking'}> */}
-                  <Button type="submit" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
+                  <Button className="btn-lg" type="submit" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
                     Select this Address
                   </Button>
                   {/* </Link> */}

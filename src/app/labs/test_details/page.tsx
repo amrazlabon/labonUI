@@ -2,12 +2,12 @@
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row, Table } from "reactstrap";
 // import BasicCard from "./BasicCard";
 // import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
 import { BasicDemoMap, Description, Discount, ImagePath, PaymentTeams, Subtotal, Tax, TotalDue } from "@/Constant";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { BasicCenter, BasicContainerStyle } from "@/Data/Miscellaneous/Maps";
 import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
 import { CommonTableProp } from "@/Types/TableType";
@@ -138,7 +138,7 @@ const PatientDetails = () => {
 
 <div>
 <h2 className="text-black" style={{paddingBottom:'24px', marginTop : '24px'}}>Location</h2>
-<BasicMap/>
+<BasicMap selectedTests={selectedTests}/>
 <BasicCardProfileMap selectedTests={selectedTests}/>
 </div>
                                     
@@ -374,20 +374,61 @@ Your Mother
   );
 };
 
-const BasicMap = () => {
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q&v=3.exp&libraries=geometry,drawing,places",
-  });
+// const BasicMap = ({selectedTests} : any) => {
+//   const { isLoaded } = useJsApiLoader({
+//     id: "google-map-script",
+//     googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q&v=3.exp&libraries=geometry,drawing,places",
+//   });
   
+//   return (
+//     <Col lg="" md="">
+//       <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0', boxShadow : 'none' , margin : '0'}}>
+//         {/* <CommonCardHeader title={BasicDemoMap} /> */}
+//         <CardBody style={{padding : '0'}}>
+//           <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
+//             <div id="gmap-simple" className="map-block">
+//               {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
+//             </div>
+//           </div>
+//         </CardBody>
+//       </Card>
+//     </Col>
+//   );
+// };
+
+const BasicMap = ({ selectedTests }: any) => {
+  const loaderOptions = useMemo(() => ({
+    id: "google-map-script",
+    // googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your actual API key
+    googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAlc4qVGHgErq3Hngdi-XTpOPYlg9wox-I", // Replace with your actual API key
+  }), []);
+  const { isLoaded } = useJsApiLoader(loaderOptions);
+
+  // const { isLoaded } = useJsApiLoader({
+  //   id: "google-map-script",
+  //   googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAlc4qVGHgErq3Hngdi-XTpOPYlg9wox-I", // Replace with your actual API key
+  // });
+  console.log("the value of the selected tests",selectedTests);
+  
+
+  const coordinates = {
+    lat: selectedTests?.co_ordinates?.latitude || 0,
+    lng: selectedTests?.co_ordinates?.longitude || 0,
+  };
+
   return (
     <Col lg="" md="">
-      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0', boxShadow : 'none' , margin : '0'}}>
-        {/* <CommonCardHeader title={BasicDemoMap} /> */}
-        <CardBody style={{padding : '0'}}>
-          <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
+      <Card style={{ marginBottom: "0", borderBottomLeftRadius: "0", borderBottomRightRadius: "0" }}>
+        <CardBody style={{ padding: "0" }}>
+          <div className="map-js-height overflow-hidden" style={{ borderTopRightRadius: "1rem", borderTopLeftRadius: "1rem" }}>
             <div id="gmap-simple" className="map-block">
-              {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
+              {isLoaded ? (
+                <GoogleMap mapContainerStyle={BasicContainerStyle} center={coordinates} zoom={10}>
+                  <Marker position={coordinates} />
+                </GoogleMap>
+              ) : (
+                "Loading"
+              )}
             </div>
           </div>
         </CardBody>

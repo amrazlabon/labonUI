@@ -28,7 +28,7 @@
 
 .test-btn{
     padding: 1rem;
-    width: 155px;
+    /* width: 155px; */
     border: none;
     color : black !important;
     border-bottom-style: solid;

@@ -2,13 +2,13 @@
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row, Table } from "reactstrap";
 // import BasicCard from "./BasicCard";
 // import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
 import { BasicDemoMap, ImagePath } from "@/Constant";
 import BasicCard from "./BasicCard";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { BasicCenter, BasicContainerStyle } from "@/Data/Miscellaneous/Maps";
 import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
 import { CommonTableProp } from "@/Types/TableType";
@@ -121,16 +121,16 @@ const PatientDetails = () => {
 Contact Details
             {/* {BasicCardText1}<em className="txt-danger">“module tabs”</em>{BasicCardText2} */}
           </h2>
-            <i style={{fontSize : '20px'}} className="fa fa-edit"></i>
+            {/* <i style={{fontSize : '20px'}} className="fa fa-edit"></i> */}
 </div>
-<BasicCardProfile patientInformation={patientInformation}/>
+<BasicCardProfile patientInformation={patientInformation} bookingInformation={bookingInformation}/>
   
   
 </div>
 
 <div>
 <h2 className="text-black ml-4 mt-4" style={{paddingBottom:'24px'}}>Location</h2>
-<BasicMap/>
+<BasicMap patientInformation={patientInformation}/>
 <BasicCardProfileMap patientInformation={patientInformation}/>
 </div>
 {/* <BasicCardSchedule/> */}
@@ -178,6 +178,8 @@ const BasicCardProfileMap = ({patientInformation} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
+  console.log("the patient information value",patientInformation);
+  
   return (
     <Col sm="12" xl="12">
       <Card style={{backgroundColor : '' , borderTopLeftRadius : '0' , borderTopRightRadius : '0', boxShadow : 'none' , margin : '0'}}>
@@ -210,10 +212,10 @@ const BasicCardProfileMap = ({patientInformation} : any) => {
   );
 };
 
-const BasicCardProfile = ({patientInformation} : any) => {
+const BasicCardProfile = ({patientInformation , bookingInformation} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
-  console.log("pateint information in the profile",patientInformation);
+  console.log("pateint information in the profile",bookingInformation.length);
 
   return (
     <Col sm="12" xl="12">
@@ -253,7 +255,7 @@ const BasicCardProfile = ({patientInformation} : any) => {
 
                     <p style={{paddingTop : '0' , margin : '0'}}>
                     
-                    {patientInformation.tests ? patientInformation.tests : '0' } Tests done so far
+                    {bookingInformation.length ? bookingInformation.length : '0' } Tests done so far
                     </p>
                     </div>
 </div>
@@ -265,20 +267,59 @@ const BasicCardProfile = ({patientInformation} : any) => {
   );
 };
 
-const BasicMap = () => {
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBkNaAGLEVq0YLQMi-PYEMabFeREadYe1Q&v=3.exp&libraries=geometry,drawing,places",
-  });
+// const BasicMap = ({patientInformation} : any) => {
+//   const { isLoaded } = useJsApiLoader({
+//     id: "google-map-script",
+//     googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAlc4qVGHgErq3Hngdi-XTpOPYlg9wox-I",
+//   });
   
+//   return (
+//     <Col lg="" md="">
+//       <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0'}}>
+//         {/* <CommonCardHeader title={BasicDemoMap} /> */}
+//         <CardBody style={{padding : '0'}}>
+//           <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
+//             <div id="gmap-simple" className="map-block">
+//               {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
+//             </div>
+//           </div>
+//         </CardBody>
+//       </Card>
+//     </Col>
+//   );
+// };
+
+// const BasicContainerStyle = {
+//   width: "100%",
+//   height: "400px",
+// };
+
+const BasicMap = ({ patientInformation }: any) => {
+  const loaderOptions = useMemo(() => ({
+    id: "google-map-script",
+    // googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your actual API key
+    googleMapsApiKey: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAlc4qVGHgErq3Hngdi-XTpOPYlg9wox-I", // Replace with your actual API key
+  }), []);
+  const { isLoaded } = useJsApiLoader(loaderOptions);
+
+  const coordinates = {
+    lat: patientInformation?.co_ordinates?.latitude || 0,
+    lng: patientInformation?.co_ordinates?.longitude || 0,
+  };
+
   return (
     <Col lg="" md="">
-      <Card style={{marginBottom : '0' , borderBottomLeftRadius : '0' , borderBottomRightRadius : '0'}}>
-        {/* <CommonCardHeader title={BasicDemoMap} /> */}
-        <CardBody style={{padding : '0'}}>
-          <div className="map-js-height overflow-hidden" style={{borderTopRightRadius : '1rem' , borderTopLeftRadius : '1rem'}}>
+      <Card style={{ marginBottom: "0", borderBottomLeftRadius: "0", borderBottomRightRadius: "0" }}>
+        <CardBody style={{ padding: "0" }}>
+          <div className="map-js-height overflow-hidden" style={{ borderTopRightRadius: "1rem", borderTopLeftRadius: "1rem" }}>
             <div id="gmap-simple" className="map-block">
-              {isLoaded ? <GoogleMap mapContainerStyle={BasicContainerStyle} center={BasicCenter} zoom={10} /> : "Loading"}
+              {isLoaded ? (
+                <GoogleMap mapContainerStyle={BasicContainerStyle} center={coordinates} zoom={10}>
+                  <Marker position={coordinates} />
+                </GoogleMap>
+              ) : (
+                "Loading"
+              )}
             </div>
           </div>
         </CardBody>
@@ -286,6 +327,7 @@ const BasicMap = () => {
     </Col>
   );
 };
+
 
 const CommonTable :React.FC<CommonTableProp>= ({ tableClass, strip, caption, size, hover, headClass, headRowClass, headData, children }) => {
   return (

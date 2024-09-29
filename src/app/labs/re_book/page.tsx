@@ -28,6 +28,7 @@ interface FormValue {
     tests: string | number;
     workInCities: [] ;
     test_data: [] ;
+    co_ordinates : {};
     address_data: [] ;
     nick_name: string;
     patient_id: string;
@@ -99,6 +100,7 @@ const Page = () => {
         date: '',
         relation: '',
         tests: '',
+        co_ordinates : {},
         address_data: [],
         test_data: [],
         workInCities: [],
@@ -147,6 +149,7 @@ const Page = () => {
         gender : parsedRescheduleBooking.gender,
         age : parsedRescheduleBooking.age,
         reschedule_count : parsedRescheduleBooking.reschedule_count,
+        co_ordinates : parsedRescheduleBooking.co_ordinates,
       }));
     }
     // if (tests) {
