@@ -22,7 +22,7 @@ const AboutUs = () => {
         <meta name="keywords" content="know about labon, collect blood samples of patients from home, software for labs, blood test service provider, technology provider for labs, home blood test booking software, service provider to book blood test at home." />
         <title>About - Labon</title>
       </Head>
-        <Col md="6">
+        <Col md="">
     
     <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
     <div style={{display : 'flex'}}>

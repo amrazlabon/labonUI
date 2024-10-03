@@ -2,7 +2,7 @@
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row, Table , Modal , ModalHeader , ModalBody } from "reactstrap";
 // import BasicCard from "./BasicCard";
 // import CustomHorizontalWizardFormTabContent from "./CustomHorizontalWizardFormTabContent";
-import { Fragment, useCallback, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { setActiveTab } from "@/Redux/Reducers/ProjectSlice";
 // import BasicCard from "./BasicCard";
 import Calendar from "react-calendar";
@@ -30,6 +30,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
   // const [fullScreen, setFullScreen] = useState(false);
   const fullScreenToggle = () => setFullScreen(!fullScreen);
 
+  
   const [activeTab, setActiveTab] = useState<number | undefined>(1);
   const callback = useCallback((tab: number | undefined) => {
         setActiveTab(tab);
@@ -223,7 +224,7 @@ const BasicCardProfileMap = ({profile} : any) => {
   const BasicCardText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
   const BasicCardText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
 
-  console.log("the profile data inside the home address",profile);
+  console.log("the profile data inside the home address is right",profile);
   
   return (
     <Col sm="12" xl="12">
@@ -446,8 +447,19 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
   
   const handleBookingClick = async () => {
     try {
+      const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
+
+    if (userId) {
+      
+
+      // setSelectedTests(JSON.parse(tests));
+    //   setProfile((prevProfile : any) => ({
+    //     ...prevProfile,
+    //     user_id: userId
+    // }));
+    
       const reqBody = {
-        user_id: profile.user_id,
+        user_id: userId,
     // labsub_id: profile.labsub_id,
     test_id: profile.test_data.map((item : any) => item.id).join(','),    
     timeslot_id: profile.timeslot_id,
@@ -492,7 +504,9 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
       }
       // setSavedAddresses(response.data);
       // console.log("Saved addresses: where dont know", response.data);
-    } catch (error) {
+    } 
+  }
+  catch (error) {
       console.error("Error fetching data:", error.message);
     }
     // sessionStorage.setItem('address', JSON.stringify(selectedAddress));

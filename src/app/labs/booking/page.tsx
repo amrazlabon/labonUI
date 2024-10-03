@@ -18,6 +18,9 @@ interface FormValue {
     dob: Date | null | string | number;
     city: string;
     mobile: string;
+    country_code: string;
+    alternate_mobile: string;
+    alternate_country_code: string;
     pincode: string;
     location: string;
     address: string;
@@ -93,6 +96,9 @@ const Page = () => {
         dob: '',
         city: '',
         mobile: '',
+        country_code: '',
+    alternate_mobile: '',
+    alternate_country_code: '',
         pincode: '',
         location: '',
         address: '',
@@ -181,9 +187,9 @@ const Page = () => {
 
 
     return (
-        <Col md='6' >
+        <Col md='' >
       <div style={{padding : '0', height:'13.5rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-        <Col sm='6' md='6' lg='6'>
+        <Col sm='6' md='' lg=''>
 <Steppers stepActive={stepActive} setStepActive={setStepActive} />
         </Col>
         <div style={{display : 'flex'}}>

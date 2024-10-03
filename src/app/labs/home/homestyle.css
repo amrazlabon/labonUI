@@ -139,6 +139,7 @@
 }
 
 .modal { 
+    text-align: -webkit-center;
     top : 3rem;
 }
 

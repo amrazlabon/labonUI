@@ -50,7 +50,7 @@ const BookingConfirmation = () => {
     return (
         // <Container fluid className="p-3">
 
-            <Col md="6" style={{padding : '24px'}}>
+            <Col md="" style={{padding : '24px'}}>
                 <ColorsSchemes open={open} setOpen={setOpen}/>
                 <div className=" login-dark">
                     <div className="text-center">
@@ -62,7 +62,7 @@ const BookingConfirmation = () => {
                     {/* <div style={{display:'flex',padding:'1rem',backgroundColor:'#E5E5E5',borderRadius:'20px',marginTop:'1rem'}}> */}
                     {/* <p>Booking ID: <strong>LBNHVB112220241</strong></p> */}
                     <p style={{fontSize: '16px', fontWeight: '', marginBottom: '24px', marginTop: '24px'}}>
-                    Booking ID: <strong>LBNHVB1122202{rescheduleOrder.id}</strong>
+                    Booking ID: <strong>LBNHVB1122202{rescheduleOrder.id}{bookingOrder.reschedule_count ? '-' + bookingOrder.reschedule_count : ''}</strong>
 </p>
                     <p style={{fontSize: '24px', fontWeight: '400', marginBottom: '24px', marginTop: '24px'}}>
   Hello {bookingOrder.name ? bookingOrder.name.split(' ')[0] : 'Sudha'}!
@@ -103,7 +103,7 @@ export default BookingConfirmation;
 const ColorsSchemes = ( {open} : any, {setOpen} : any) => {
   
     return (
-      <Col md="6">
+      <Col md="">
          <Card style={{boxShadow : 'none', margin : '0'}}>
           
           {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}

@@ -16,6 +16,7 @@ import { CommonTableProp } from "@/Types/TableType";
 import { TableHeadOptionBody, TableHeadOptionHead } from "@/Data/Form&Table/Table/ReactstrapTable/BasicTable";
 import Link from "next/link";
 import axios from "axios";
+import LoginModal from "@/Redux/loginDo";
 
 // import OpenModalMofi from ".";
 
@@ -31,6 +32,9 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
         name: profile.name ? profile.name : '',
         dob: profile.dob ? new Date(profile.dob).toISOString().split('T')[0] : '',
         mobile: profile.mobile ? profile.mobile :'',
+        country_code: profile.country_code ? profile.country_code :'',
+        alternate_mobile: profile.alternate_mobile ? profile.alternate_mobile :'',
+        alternate_country_code: profile.alternate_country_code ? profile.alternate_country_code :'',
         relation: profile.relation ? profile.relation :'',
         gender: profile.gender ? profile.gender :'',
         email: profile.email ? profile.email :'',
@@ -158,6 +162,9 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
     name: '',
     dob: '',
     mobile: '',
+    country_code: '',
+    alternate_mobile: '',
+    alternate_country_code: '',
     gender: '',
     relation : '',
     nick_name : '',
@@ -176,6 +183,12 @@ const mobileRegex = /^[0-9]{10}$/;
 const validateForm = () => {
 const newErrors : any = {};
 let isValid = true;
+
+
+const selectedCountry = "IND" as CountryCode;
+  const expectedMobileLength = countryData[selectedCountry]?.mobileLength || 10;
+
+
 
 // Name validation
 if (formData.name.length < 3) {
@@ -243,8 +256,8 @@ if (!emailRegex.test(formData.email)) {
   isValid = false;
 }
 
-if (!mobileRegex.test(formData.mobile)) {
-  newErrors.mobile = 'Invalid mobile format.';
+if (formData.mobile.length !== expectedMobileLength) {
+  newErrors.mobile = `Invalid mobile format. The number should be ${expectedMobileLength} digits for ${selectedCountry}.`;
   isValid = false;
 }
 
@@ -294,15 +307,35 @@ return isValid;
   const handleTimeChange = (gender: string) => {
     onFormChange('gender', gender);
   };
+  const [showModal, setShowModal] = useState(false);
+
+  
+  const toggleModal = () => {
+    setShowModal(prev => !prev);
+  };
+  const [userIdData , setUserIdData] = useState(null)
+
+  // const signInButton = () => {
+  // }
 
   const handleBookTimingsClick =async () => {
     // console.log("form data",formData);
     const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
 
-    // console.log("profile value in thw add",profile);
+  
+    console.log("profile value before",profile);
     if (validateForm()) {
     
     if(userId){
+      setUserIdData(userId)
+      console.log("this is the user id im getting",userId);
+      
+      setProfile((prevProfile : any) => ({
+        ...prevProfile,
+        user_id: userId
+    }));
+    console.log("the profile values after");
+    
       
       const reqBody = {
         address : formData.address,
@@ -339,6 +372,9 @@ return isValid;
         console.error("Error fetching data:", error.message);
       }
     }
+    else { 
+      toggleModal()
+    }
   } else {
     console.log('Form has errors');
   }
@@ -356,6 +392,7 @@ return isValid;
 
 
       {/* background: linear-gradient(180deg, #522F62 0%, #9462B5 100%); */}
+      <LoginModal showModal={showModal} toggleModal={toggleModal}/>
 
       
       <Card style={{backgroundColor:'#F5F5F5' , padding : '0', boxShadow : 'none' , margin : '0'}}>
@@ -436,9 +473,40 @@ return isValid;
 </Col>
 
                 <Col sm="12">
-                  <FormGroup floating className="mb-6 mt-0">
+                <div className="gap-2" style={{ display: 'flex', alignItems: 'center' }}>
+              <div
+                style={{ position: 'relative', display: 'flex', alignItems: 'center', marginBottom: '1rem' }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <i className={`flag-icon ${countryData['IND'].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
+                </div>
+                <Input
+                  type="select"
+                  value='IND'
+                  // onChange={handleCountryChange}
+                  style={{
+                    height: '3.5rem',
+                    paddingLeft: '60px',
+                  }}
+                >
+                  {Object.keys(countryData).map((country) => (
+                    <option key={country} value={country}>
+                      {countryData[country as CountryCode].code}
+                    </option>
+                  ))}
+                </Input>
+              </div>
+                  <FormGroup floating className="mb-6 mt-0" style={{ flex: '1 1 100%' }}>
                     <Input
-                      type="text"
+                      type="number"
                       name="mobile"
                       placeholder="Mobile"
                       value={formData.mobile}
@@ -448,9 +516,64 @@ return isValid;
                       }}
                     />
                     <Label check>Mobile</Label>
-                    {errors.mobile && <p style={{ color: 'red' }}>{errors.mobile}</p>}
+                    {/* {errors.mobile && <p style={{ color: 'red' }}>{errors.mobile}</p>} */}
                   </FormGroup>
+                  </div>
                 </Col>
+                    {errors.mobile && <p style={{ color: 'red', margin : 0 }}>{errors.mobile}</p>}
+
+
+                <Col sm="12">
+                <div className="gap-2" style={{ display: 'flex', alignItems: 'center' }}>
+              <div
+                style={{ position: 'relative', display: 'flex', alignItems: 'center', marginBottom: '1rem' }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <i className={`flag-icon ${countryData['IND'].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
+                </div>
+                <Input
+                  type="select"
+                  value='IND'
+                  // onChange={handleCountryChange}
+                  style={{
+                    height: '3.5rem',
+                    paddingLeft: '60px',
+                  }}
+                >
+                  {Object.keys(countryData).map((country) => (
+                    <option key={country} value={country}>
+                      {countryData[country as CountryCode].code}
+                    </option>
+                  ))}
+                </Input>
+              </div>
+                  <FormGroup floating className="mb-6 mt-0" style={{ flex: '1 1 100%' }}>
+                    <Input
+                      type="number"
+                      name="mobile"
+                      placeholder="Alternate Mobile"
+                      value={formData.mobile}
+                      onChange={handleInputChange}
+                      style={{
+                        borderColor: errors.mobile ? 'red' : '', // Change border to red if there's an error
+                      }}
+                    />
+                    <Label check>Alternate Mobile</Label>
+                    {/* {errors.mobile && <p style={{ color: 'red' }}>{errors.mobile}</p>} */}
+                  </FormGroup>
+                  </div>
+                </Col>
+                {errors.mobile && <p style={{ color: 'red', margin : 0 }}>{errors.mobile}</p>}
+
+                
                 <Col sm="12" className="mb-6">
                   <FormGroup floating>
                     <Input
@@ -531,7 +654,7 @@ return isValid;
                   <Col sm="12">
                   {/* <Link href={'/labs/summary'}> */}
                     <Button onClick={handleBookTimingsClick} className="btn-lg" style={{ height: '3rem', width: '100%', backgroundColor: '#AE7FD1', color: 'white' }} color="">
-                      Summary <span><i className="fa fa-angle-right" style={{ marginLeft: '24px' }}></i></span>
+                    {userIdData ? 'Summary' : 'Summary'}  <span><i className="fa fa-angle-right" style={{ marginLeft: '24px' }}></i></span>
                     </Button>
                   {/* </Link> */}
                 </Col>
@@ -543,6 +666,71 @@ return isValid;
       </Card>
     </Col>
   );
+};
+
+type CountryCode = 
+  'IND' | 'US' | 'UK' | 'CAN' | 'AUS' | 'DEU' | 'FRA' | 'JPN' | 'CHN' | 'BRA' | 
+  'RUS' | 'SAU' | 'UAE' | 'SGP' | 'KOR' | 'ZAF' | 'MEX' | 'ITA' | 'ESP' | 'TUR' |
+  'EGY' | 'ARG' | 'IDN' | 'NGA' | 'ISR' | 'SWE' | 'NOR' | 'CHE' | 'NLD' | 'BEL' |
+  'THA' | 'VNM' | 'PHL' | 'MYS' | 'PAK' | 'BGD' | 'POL' | 'UKR' | 'NZL' | 'IRN' |
+  'IRQ' | 'OMN' | 'QAT' | 'KWT' | 'JOR' | 'CHL' | 'COL' | 'PER' | 'KEN' | 'ETH' |
+  'GHA' | 'VEN';
+
+
+// Country data mapping with flag classes and codes
+const countryData: any = {
+  IND: { code: '+91', flagClass: 'flag-icon-in', mobileLength: 10 },
+  US: { code: '+1', flagClass: 'flag-icon-us', mobileLength: 10 },
+  UK: { code: '+44', flagClass: 'flag-icon-gb', mobileLength: 10 },
+  CAN: { code: '+1', flagClass: 'flag-icon-ca', mobileLength: 10 },
+  AUS: { code: '+61', flagClass: 'flag-icon-au', mobileLength: 9 },
+  DEU: { code: '+49', flagClass: 'flag-icon-de', mobileLength: 11 },
+  FRA: { code: '+33', flagClass: 'flag-icon-fr', mobileLength: 9 },
+  JPN: { code: '+81', flagClass: 'flag-icon-jp', mobileLength: 10 },
+  CHN: { code: '+86', flagClass: 'flag-icon-cn', mobileLength: 11 },
+  BRA: { code: '+55', flagClass: 'flag-icon-br', mobileLength: 11 },
+  RUS: { code: '+7', flagClass: 'flag-icon-ru', mobileLength: 10 },
+  SAU: { code: '+966', flagClass: 'flag-icon-sa', mobileLength: 9 },
+  UAE: { code: '+971', flagClass: 'flag-icon-ae', mobileLength: 9 },
+  SGP: { code: '+65', flagClass: 'flag-icon-sg', mobileLength: 8 },
+  KOR: { code: '+82', flagClass: 'flag-icon-kr', mobileLength: 10 },
+  ZAF: { code: '+27', flagClass: 'flag-icon-za', mobileLength: 9 },
+  MEX: { code: '+52', flagClass: 'flag-icon-mx', mobileLength: 10 },
+  ITA: { code: '+39', flagClass: 'flag-icon-it', mobileLength: 9 },
+  ESP: { code: '+34', flagClass: 'flag-icon-es', mobileLength: 9 },
+  TUR: { code: '+90', flagClass: 'flag-icon-tr', mobileLength: 10 },
+  EGY: { code: '+20', flagClass: 'flag-icon-eg', mobileLength: 10 },
+  ARG: { code: '+54', flagClass: 'flag-icon-ar', mobileLength: 10 },
+  IDN: { code: '+62', flagClass: 'flag-icon-id', mobileLength: 10 },
+  NGA: { code: '+234', flagClass: 'flag-icon-ng', mobileLength: 10 },
+  ISR: { code: '+972', flagClass: 'flag-icon-il', mobileLength: 9 },
+  SWE: { code: '+46', flagClass: 'flag-icon-se', mobileLength: 9 },
+  NOR: { code: '+47', flagClass: 'flag-icon-no', mobileLength: 8 },
+  CHE: { code: '+41', flagClass: 'flag-icon-ch', mobileLength: 9 },
+  NLD: { code: '+31', flagClass: 'flag-icon-nl', mobileLength: 9 },
+  BEL: { code: '+32', flagClass: 'flag-icon-be', mobileLength: 9 },
+  THA: { code: '+66', flagClass: 'flag-icon-th', mobileLength: 9 },
+  VNM: { code: '+84', flagClass: 'flag-icon-vn', mobileLength: 9 },
+  PHL: { code: '+63', flagClass: 'flag-icon-ph', mobileLength: 10 },
+  MYS: { code: '+60', flagClass: 'flag-icon-my', mobileLength: 9 },
+  PAK: { code: '+92', flagClass: 'flag-icon-pk', mobileLength: 10 },
+  BGD: { code: '+880', flagClass: 'flag-icon-bd', mobileLength: 10 },
+  POL: { code: '+48', flagClass: 'flag-icon-pl', mobileLength: 9 },
+  UKR: { code: '+380', flagClass: 'flag-icon-ua', mobileLength: 9 },
+  NZL: { code: '+64', flagClass: 'flag-icon-nz', mobileLength: 9 },
+  IRN: { code: '+98', flagClass: 'flag-icon-ir', mobileLength: 10 },
+  IRQ: { code: '+964', flagClass: 'flag-icon-iq', mobileLength: 10 },
+  OMN: { code: '+968', flagClass: 'flag-icon-om', mobileLength: 8 },
+  QAT: { code: '+974', flagClass: 'flag-icon-qa', mobileLength: 8 },
+  KWT: { code: '+965', flagClass: 'flag-icon-kw', mobileLength: 8 },
+  JOR: { code: '+962', flagClass: 'flag-icon-jo', mobileLength: 9 },
+  CHL: { code: '+56', flagClass: 'flag-icon-cl', mobileLength: 9 },
+  COL: { code: '+57', flagClass: 'flag-icon-co', mobileLength: 10 },
+  PER: { code: '+51', flagClass: 'flag-icon-pe', mobileLength: 9 },
+  KEN: { code: '+254', flagClass: 'flag-icon-ke', mobileLength: 10 },
+  ETH: { code: '+251', flagClass: 'flag-icon-et', mobileLength: 9 },
+  GHA: { code: '+233', flagClass: 'flag-icon-gh', mobileLength: 9 },
+  VEN: { code: '+58', flagClass: 'flag-icon-ve', mobileLength: 10 },
 };
 
 const CommonFormGroup:React.FC<CommonFormGroupProp> = ({ labelClass, label, colSm, colClass, inputType, placeholder, defaultValue,inputClass,max }) => {
@@ -583,7 +771,7 @@ const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
       <div className=" h-100 checkbox-checked">
         {/* <h6 className="sub-title">{IconsRadios}</h6> */}
         <div className="form-check radio radio-primary ps-0">
-          <ul className="radio-wrapper gap-4">
+          <ul className="radio-wrapper gap-4" style={{justifyContent : 'left'}}>
             {/* <li className="p-1 pt-2 pb-2">
               <Input id="radio-icon" className="d-block" type="radio" name="radio2"/>
               <Label htmlFor="radio-icon" check>
@@ -690,6 +878,9 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         dob: data.dob, // Add appropriate value or logic if needed
         mobile: data.mobile, // Add appropriate value or logic if needed
         // relation: data.relation, // Add appropriate value or logic if needed
+        country_code: data.country_code,
+    alternate_mobile: data.alternate_mobile,
+    alternate_country_code: data.alternate_country_code,
         gender: data.gender, // Add appropriate value or logic if needed
         email: data.email, // Add appropriate value or logic if needed
         pincode: data.pincode, // Add appropriate value or logic if needed

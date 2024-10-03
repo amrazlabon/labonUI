@@ -272,7 +272,7 @@ useEffect(() => {
   
   
   return (
-    <Col md="6">
+    <Col md="">
                 <ColorsSchemes open={open} setOpen={setOpen}/>
                 <BasicCardModal showModal={showModal} toggleModal={toggleModal} />
 
@@ -387,7 +387,38 @@ useEffect(() => {
                 <IconsRadio selectedTime={formData.gender} onTimeChange={handleTimeChange} />
                 {errors.gender && <p style={{ color: 'red' , margin : 0}}>{errors.gender}</p>}
                 <Col sm="12">
-                  <FormGroup floating className="mb-6 mt-3">
+                <div className="gap-2" style={{ display: 'flex', alignItems: 'center' }}>
+              <div
+                style={{ position: 'relative', display: 'flex', alignItems: 'center', marginBottom: '1rem', marginTop: '1rem' }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <i className={`flag-icon ${countryData['IND'].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
+                </div>
+                <Input disabled
+                  type="select"
+                  value='IND'
+                  // onChange={handleCountryChange}
+                  style={{
+                    height: '3.5rem',
+                    paddingLeft: '60px',
+                  }}
+                >
+                  {Object.keys(countryData).map((country) => (
+                    <option key={country} value={country}>
+                      {countryData[country as CountryCode].code}
+                    </option>
+                  ))}
+                </Input>
+              </div>
+                  <FormGroup floating className="mb-6 mt-3" style={{ flex: '1 1 100%' }}>
                     <Input disabled
                       type="text"
                       name="mobile"
@@ -401,6 +432,7 @@ useEffect(() => {
                     <Label check>Mobile</Label>
                     {/* {errors.mobile && <p style={{ color: 'red' }}>{errors.mobile}</p>} */}
                   </FormGroup>
+                  </div>
                 </Col>
                 <Col sm="12" className="mb-6">
                   <FormGroup floating>
@@ -488,7 +520,73 @@ useEffect(() => {
   );
 };
 
+
 export default FloatingForm;
+
+type CountryCode = 
+  'IND' | 'US' | 'UK' | 'CAN' | 'AUS' | 'DEU' | 'FRA' | 'JPN' | 'CHN' | 'BRA' | 
+  'RUS' | 'SAU' | 'UAE' | 'SGP' | 'KOR' | 'ZAF' | 'MEX' | 'ITA' | 'ESP' | 'TUR' |
+  'EGY' | 'ARG' | 'IDN' | 'NGA' | 'ISR' | 'SWE' | 'NOR' | 'CHE' | 'NLD' | 'BEL' |
+  'THA' | 'VNM' | 'PHL' | 'MYS' | 'PAK' | 'BGD' | 'POL' | 'UKR' | 'NZL' | 'IRN' |
+  'IRQ' | 'OMN' | 'QAT' | 'KWT' | 'JOR' | 'CHL' | 'COL' | 'PER' | 'KEN' | 'ETH' |
+  'GHA' | 'VEN';
+
+
+// Country data mapping with flag classes and codes
+const countryData: any = {
+  IND: { code: '+91', flagClass: 'flag-icon-in', mobileLength: 10 },
+  US: { code: '+1', flagClass: 'flag-icon-us', mobileLength: 10 },
+  UK: { code: '+44', flagClass: 'flag-icon-gb', mobileLength: 10 },
+  CAN: { code: '+1', flagClass: 'flag-icon-ca', mobileLength: 10 },
+  AUS: { code: '+61', flagClass: 'flag-icon-au', mobileLength: 9 },
+  DEU: { code: '+49', flagClass: 'flag-icon-de', mobileLength: 11 },
+  FRA: { code: '+33', flagClass: 'flag-icon-fr', mobileLength: 9 },
+  JPN: { code: '+81', flagClass: 'flag-icon-jp', mobileLength: 10 },
+  CHN: { code: '+86', flagClass: 'flag-icon-cn', mobileLength: 11 },
+  BRA: { code: '+55', flagClass: 'flag-icon-br', mobileLength: 11 },
+  RUS: { code: '+7', flagClass: 'flag-icon-ru', mobileLength: 10 },
+  SAU: { code: '+966', flagClass: 'flag-icon-sa', mobileLength: 9 },
+  UAE: { code: '+971', flagClass: 'flag-icon-ae', mobileLength: 9 },
+  SGP: { code: '+65', flagClass: 'flag-icon-sg', mobileLength: 8 },
+  KOR: { code: '+82', flagClass: 'flag-icon-kr', mobileLength: 10 },
+  ZAF: { code: '+27', flagClass: 'flag-icon-za', mobileLength: 9 },
+  MEX: { code: '+52', flagClass: 'flag-icon-mx', mobileLength: 10 },
+  ITA: { code: '+39', flagClass: 'flag-icon-it', mobileLength: 9 },
+  ESP: { code: '+34', flagClass: 'flag-icon-es', mobileLength: 9 },
+  TUR: { code: '+90', flagClass: 'flag-icon-tr', mobileLength: 10 },
+  EGY: { code: '+20', flagClass: 'flag-icon-eg', mobileLength: 10 },
+  ARG: { code: '+54', flagClass: 'flag-icon-ar', mobileLength: 10 },
+  IDN: { code: '+62', flagClass: 'flag-icon-id', mobileLength: 10 },
+  NGA: { code: '+234', flagClass: 'flag-icon-ng', mobileLength: 10 },
+  ISR: { code: '+972', flagClass: 'flag-icon-il', mobileLength: 9 },
+  SWE: { code: '+46', flagClass: 'flag-icon-se', mobileLength: 9 },
+  NOR: { code: '+47', flagClass: 'flag-icon-no', mobileLength: 8 },
+  CHE: { code: '+41', flagClass: 'flag-icon-ch', mobileLength: 9 },
+  NLD: { code: '+31', flagClass: 'flag-icon-nl', mobileLength: 9 },
+  BEL: { code: '+32', flagClass: 'flag-icon-be', mobileLength: 9 },
+  THA: { code: '+66', flagClass: 'flag-icon-th', mobileLength: 9 },
+  VNM: { code: '+84', flagClass: 'flag-icon-vn', mobileLength: 9 },
+  PHL: { code: '+63', flagClass: 'flag-icon-ph', mobileLength: 10 },
+  MYS: { code: '+60', flagClass: 'flag-icon-my', mobileLength: 9 },
+  PAK: { code: '+92', flagClass: 'flag-icon-pk', mobileLength: 10 },
+  BGD: { code: '+880', flagClass: 'flag-icon-bd', mobileLength: 10 },
+  POL: { code: '+48', flagClass: 'flag-icon-pl', mobileLength: 9 },
+  UKR: { code: '+380', flagClass: 'flag-icon-ua', mobileLength: 9 },
+  NZL: { code: '+64', flagClass: 'flag-icon-nz', mobileLength: 9 },
+  IRN: { code: '+98', flagClass: 'flag-icon-ir', mobileLength: 10 },
+  IRQ: { code: '+964', flagClass: 'flag-icon-iq', mobileLength: 10 },
+  OMN: { code: '+968', flagClass: 'flag-icon-om', mobileLength: 8 },
+  QAT: { code: '+974', flagClass: 'flag-icon-qa', mobileLength: 8 },
+  KWT: { code: '+965', flagClass: 'flag-icon-kw', mobileLength: 8 },
+  JOR: { code: '+962', flagClass: 'flag-icon-jo', mobileLength: 9 },
+  CHL: { code: '+56', flagClass: 'flag-icon-cl', mobileLength: 9 },
+  COL: { code: '+57', flagClass: 'flag-icon-co', mobileLength: 10 },
+  PER: { code: '+51', flagClass: 'flag-icon-pe', mobileLength: 9 },
+  KEN: { code: '+254', flagClass: 'flag-icon-ke', mobileLength: 10 },
+  ETH: { code: '+251', flagClass: 'flag-icon-et', mobileLength: 9 },
+  GHA: { code: '+233', flagClass: 'flag-icon-gh', mobileLength: 9 },
+  VEN: { code: '+58', flagClass: 'flag-icon-ve', mobileLength: 10 },
+};
 
 const BasicCardModal = ({ showModal, toggleModal } : any) => {
   const BasicCardText1 = "Tabs have long been used to show alternative views of the same group of information tabs in software.";
@@ -544,7 +642,7 @@ const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
       <div className=" h-100 checkbox-checked">
         {/* <h6 className="sub-title">{IconsRadios}</h6> */}
         <div className="form-check radio radio-primary ps-0">
-          <ul className="radio-wrapper gap-4">
+          <ul className="radio-wrapper gap-4" style={{justifyContent : 'left'}}>
             {/* <li className="p-1 pt-2 pb-2">
               <Input id="radio-icon" className="d-block" type="radio" name="radio2"/>
               <Label htmlFor="radio-icon" check>
@@ -575,7 +673,7 @@ const IconsRadio = ({ selectedTime, onTimeChange }: any) => {
 const ColorsSchemes = ( {open} : any, {setOpen} : any) => {
   
   return (
-    <Col md="6">
+    <Col md="">
        <Card style={{boxShadow : 'none', margin : '0'}}>
         
         {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}

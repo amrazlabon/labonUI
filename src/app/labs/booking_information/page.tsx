@@ -72,7 +72,7 @@ const BookingInformation = () => {
   };
 
   return (
-    <Col md='6' style={{padding : '24px'}}>
+    <Col md='' style={{padding : '24px'}}>
        <div style={{display : 'flex'}}>
   <i onClick={goBack} className='fa fa-angle-left' style={{paddingRight:'24px', fontSize : '24px' , color : 'black'}}></i>
       <h1 className="text-black ml-4" style={{margin:'0' , paddingBottom : '24px'}}>My Booking Information</h1>

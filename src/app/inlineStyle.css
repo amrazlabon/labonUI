@@ -10,7 +10,7 @@
 @media (min-width: 421px) {
   .mobile-restricted-content {
     width: 100%;
-    max-width: 500px; /* Restrict the width */
+    max-width: 430px; /* Restrict the width */
     margin: 0 auto; /* Center the content */
   }
 }

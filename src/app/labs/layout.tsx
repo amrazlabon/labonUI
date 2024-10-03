@@ -47,15 +47,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // Here the breadcrumbs have been hidden
     // The main sidebar is also hidden now
     <Provider store={Store}>
-      <div className={`page-wrapper ${layout}`} id="pageWrapper">
+      <div className={`page-wrapper ${layout}`} id="pageWrapper" >
         <Header />
-        <div className="page-body-wrapper">
+        <div className="page-body-wrapper" >
           {/* <SideBar /> */}
-          <div className="page-body" style={{marginTop : '76px'}}>
-          {/* <div className="mobile-restricted-content">
+          <div className="page-body" style={{marginTop : '80px', marginLeft : 0}}>
+          <div className="mobile-restricted-content">
               {children}
-            </div> */}
-            {children}
+            </div>
+            {/* {children} */}
             </div>
           <Footer />
         </div>

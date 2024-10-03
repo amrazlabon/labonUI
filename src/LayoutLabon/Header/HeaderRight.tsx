@@ -47,8 +47,8 @@ export const HeaderRight = () => {
         {/* <MessageBox /> */}
         {!isOpen && (
           <>
-            <Notification />
-            <CartData />
+            {/* <Notification /> */}
+            {/* <CartData /> */}
             {isLoggedIn && <SearchBox />}
           </>
         )}

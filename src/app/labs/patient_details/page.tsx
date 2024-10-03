@@ -95,7 +95,7 @@ const PatientDetails = () => {
     
       
     return (
-    <Col md='6' >
+    <Col md='' >
       <div style={{padding : '0', height:'6rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)'}}>
       <div style={{display : 'flex'}}>
 <i onClick={goBack} className='fa fa-angle-left' style={{padding:'24px 0 24px 24px', fontSize : '24px' , color : 'white'}}></i>

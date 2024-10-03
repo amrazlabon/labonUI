@@ -51,7 +51,8 @@ export async function GET(request: NextRequest) {
       const id = searchParams.get('id'); // Get the 'id' query parameter
       const otp = searchParams.get('otp'); // Get the 'otp' query parameter
       const mobile = searchParams.get('mobile');  // Get the 'mobile' query parameter
-  
+      const country_code = searchParams.get('country_code');  // Get the 'mobile' query parameter
+      
       console.log("the endpounts",mobile);
       
       let response;
@@ -59,12 +60,12 @@ export async function GET(request: NextRequest) {
         // Handle the first API call
         console.log('Fetching user data');
         response = await axios.get(`http://43.205.139.219/users/${endpoint}/${id}`);
-      } else if (otp && mobile) {
+      } else if (otp && mobile && country_code) {
         // Handle the OTP verification call with query parameters
-        console.log('Verifying OTP');
+        console.log('Verifying OTP', country_code);
         response = await axios.get(`http://43.205.139.219/users/verify_otp`
             , {
-          params: { otp, mobile }
+          params: { otp, mobile , country_code}
         }
     );
       } else {

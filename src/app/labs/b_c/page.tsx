@@ -36,7 +36,7 @@ const BookingConfirmation = () => {
     return (
         // <Container fluid className="p-3">
 
-            <Col md="6" style={{padding : '24px'}}>
+            <Col md="" style={{padding : '24px'}}>
                 <ColorsSchemes open={open} setOpen={setOpen}/>
                 <div className=" login-dark">
                     <div className="text-center">
@@ -86,7 +86,7 @@ export default BookingConfirmation;
 const ColorsSchemes = ( {open} : any, {setOpen} : any) => {
   
     return (
-      <Col md="6">
+      <Col md="">
          <Card style={{boxShadow : 'none', margin : '0'}}>
           
           {/* <CommonCardHeader title={ColorsScheme} span={ColorSchema} /> */}

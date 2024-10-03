@@ -155,7 +155,7 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
             <p style={{ fontWeight: '600', fontSize: '16px' , marginBottom : '16px' }}>Morning</p>
             <div className="h-100 checkbox-checked">
               <div className="form-check radio-primary ps-0">
-                <ul className="radio-wrapper">
+                <ul className="radio-wrapper" style={{justifyContent : 'left'}}>
                   {morningOptions.map(({ icon, id, timeslot }: any, index: any) => (
                     <li className="p-1 pt-2 pb-2" key={id} style={{maxWidth : '90px'}}>
                       <Input
@@ -187,7 +187,7 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
             <p style={{ fontWeight: '600', fontSize: '16px' , marginBottom : '16px'}}>Afternoon</p>
             <div className="h-100 checkbox-checked">
               <div className="form-check radio-primary ps-0">
-                <ul className="radio-wrapper">
+                <ul className="radio-wrapper" style={{justifyContent : 'left'}}>
                   {afternoonOptions.map(({ icon, id, timeslot }: any, index: any) => (
                     <li className="p-1 pt-2 pb-2" key={id} style={{maxWidth : '90px'}}>
                       <Input
@@ -219,7 +219,7 @@ const IconsRadio = React.forwardRef(({timeSlotData ,  selectedTime, onTimeChange
             <p style={{ fontWeight: '600', fontSize: '16px' , marginBottom : '16px'}}>Evening</p>
             <div className="h-100 checkbox-checked">
               <div className="form-check radio-primary ps-0">
-                <ul className="radio-wrapper">
+                <ul className="radio-wrapper" style={{justifyContent : 'left'}}>
                   {eveningOptions.map(({ icon, id, timeslot }: any, index: any) => (
                     <li className="p-1 pt-2 pb-2" key={id} style={{maxWidth : '90px'}}>
                       <Input

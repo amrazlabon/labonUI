@@ -159,7 +159,7 @@ const home = () => {
           <meta name="keywords" content="home blood test, home blood sample collection, online blood test, lab test at home, book home blood test, home blood test kerala, online blood test kerala, book lab test at home, collect blood sample from home." />
           <title>Home - Labon</title>
         </Head>
-        <Col md="6" style={{ padding: '0' }}>
+        <Col md="" style={{ padding: '0' }}>
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
 
             <div style={{ background: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)', height: '21rem', alignContent: 'end' }}>
@@ -493,6 +493,7 @@ const DefaultChecks = ({ fulldata , data, selectedTests, setSelectedTests, toggl
 
   return (
     <Col sm="" xl="" style={{ padding: '0' }}>
+      {data &&
       <div className="card-wrapper checkbox-checked" style={{ padding: '0' }}>
         {data.map((test : any, index : any) => (
           <div key={index} className="form-check">
@@ -501,7 +502,7 @@ const DefaultChecks = ({ fulldata , data, selectedTests, setSelectedTests, toggl
               type="checkbox"
               onChange={() => handleCheckboxChange(index)}
               checked={selectedTestData.includes(test.id)}
-            />
+              />
             <Label htmlFor={`flexCheckDefault-${index}`} check>
               <div style={{ display: 'grid' }}>
                 <div className="gap-3" style={{ display: 'flex', padding: '0' }}>
@@ -527,6 +528,7 @@ const DefaultChecks = ({ fulldata , data, selectedTests, setSelectedTests, toggl
           </div>
         ))}
       </div>
+      }
       <Col sm="12" style={{ padding: '0' }}>
         <Button
           onClick={handleSelectTestsClick}
@@ -709,9 +711,9 @@ const handleSearchInputChange = async (event : any) => {
 
     return (
       <>
-      <Col md='6'>
+      <Col md=''>
         {/* <Button color="info"  onClick={toggle}>{ExtraLargeModals}</Button> */}
-        <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Test">
+        <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Test" >
 {/* <Input style={{padding:'10px',width:'100%',borderRadius:'15px',marginTop:'1rem' , marginBottom : '2rem'}} name="twitterUrl" value={''} type="url" placeholder={'Search'} /> */}
 <div style={{ position: 'relative', width: '100%' }}>
   <Input
@@ -957,7 +959,7 @@ const handleSearchInputChange = async (event : any) => {
 
   const CommonModal:React.FC<CommonModalType> = ({backdrop, centered, size, isOpen, toggle, title, onClosed, sizeTitle, fullTitle, modalBodyClassName, children, handleBackClick } ) => {
     return (
-      <Modal backdrop={backdrop} centered={centered} size={size} isOpen={isOpen} toggle={toggle} onClosed={onClosed} className='custom-header'>
+      <Modal backdrop={backdrop} centered={centered} size={size} isOpen={isOpen} toggle={toggle} onClosed={onClosed} className='custom-header' style={{maxWidth : '400px' , textAlign : 'left'}}>
         {(title || sizeTitle || fullTitle) && (
           <div className="modal-header">
             {sizeTitle === "Add New Address" && (
@@ -1278,7 +1280,7 @@ const handleSearchInputChange = async (event : any) => {
     const canShowButton = nick_name && pincode && location && address;
   
     return (
-      <Col md="6">
+      <Col md="">
         {/* <Card style={{ backgroundColor: '#F5F5F5' , boxShadow : 'none', margin : '0' }}> */}
           {/* <CardBody style={{ padding: '24px' }}> */}
             <Form className="floating-wrapper" onSubmit={handleSubmit}>
@@ -1359,7 +1361,7 @@ const handleSearchInputChange = async (event : any) => {
   
     // console.log("toaster content",toasterColorContent,toasterContent)
     return (
-      <Col md="6">
+      <Col md="">
         <Card style={{boxShadow : 'none', margin : '0'}}>
             {/* {toasterColorContent} */}
           

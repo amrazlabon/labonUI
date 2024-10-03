@@ -103,7 +103,7 @@ const PatientDetails = () => {
   };
       
     return (
-      <Col md='6' >
+      <Col md='' >
 {selectedTests.length !== 0 &&
   <>
       <Card style={{backgroundColor:'#F5F5F5' , padding : '24px' , boxShadow : 'none' , margin : '0'}}>

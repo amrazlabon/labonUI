@@ -257,7 +257,7 @@ const router = useRouter(); // Initialize the router
         <meta name="keywords" content="contact labon, contact labon for home blood test booking, write to labon at contact@labon.ai, call labon at 8289861000, labs contact labon." />
         <title>Contact - Labon</title>
       </Head>
-    <Col md="6">
+    <Col md="">
 
 <div style={{padding : '0', height:'12rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
 <div style={{display : 'flex'}}>

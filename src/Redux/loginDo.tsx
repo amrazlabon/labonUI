@@ -60,15 +60,73 @@ const CommonModal: React.FC<CommonModalProps> = ({
 };
 
 
-type CountryCode = 'IND' | 'US' | 'UK' | 'CAN';
+type CountryCode = 
+  'IND' | 'US' | 'UK' | 'CAN' | 'AUS' | 'DEU' | 'FRA' | 'JPN' | 'CHN' | 'BRA' | 
+  'RUS' | 'SAU' | 'UAE' | 'SGP' | 'KOR' | 'ZAF' | 'MEX' | 'ITA' | 'ESP' | 'TUR' |
+  'EGY' | 'ARG' | 'IDN' | 'NGA' | 'ISR' | 'SWE' | 'NOR' | 'CHE' | 'NLD' | 'BEL' |
+  'THA' | 'VNM' | 'PHL' | 'MYS' | 'PAK' | 'BGD' | 'POL' | 'UKR' | 'NZL' | 'IRN' |
+  'IRQ' | 'OMN' | 'QAT' | 'KWT' | 'JOR' | 'CHL' | 'COL' | 'PER' | 'KEN' | 'ETH' |
+  'GHA' | 'VEN';
+
 
 // Country data mapping with flag classes and codes
-const countryData: Record<CountryCode, { code: string; flagClass: string }> = {
-  IND: { code: '+91', flagClass: 'flag-icon-in' },
-  US: { code: '+1', flagClass: 'flag-icon-us' },
-  UK: { code: '+44', flagClass: 'flag-icon-gb' },
-  CAN: { code: '+1', flagClass: 'flag-icon-ca' },
+const countryData: Record<CountryCode, { code: string; flagClass: string; mobileLength: number }> = {
+  IND: { code: '+91', flagClass: 'flag-icon-in', mobileLength: 10 },
+  US: { code: '+1', flagClass: 'flag-icon-us', mobileLength: 10 },
+  UK: { code: '+44', flagClass: 'flag-icon-gb', mobileLength: 10 },
+  CAN: { code: '+1', flagClass: 'flag-icon-ca', mobileLength: 10 },
+  AUS: { code: '+61', flagClass: 'flag-icon-au', mobileLength: 9 },
+  DEU: { code: '+49', flagClass: 'flag-icon-de', mobileLength: 11 },
+  FRA: { code: '+33', flagClass: 'flag-icon-fr', mobileLength: 9 },
+  JPN: { code: '+81', flagClass: 'flag-icon-jp', mobileLength: 10 },
+  CHN: { code: '+86', flagClass: 'flag-icon-cn', mobileLength: 11 },
+  BRA: { code: '+55', flagClass: 'flag-icon-br', mobileLength: 11 },
+  RUS: { code: '+7', flagClass: 'flag-icon-ru', mobileLength: 10 },
+  SAU: { code: '+966', flagClass: 'flag-icon-sa', mobileLength: 9 },
+  UAE: { code: '+971', flagClass: 'flag-icon-ae', mobileLength: 9 },
+  SGP: { code: '+65', flagClass: 'flag-icon-sg', mobileLength: 8 },
+  KOR: { code: '+82', flagClass: 'flag-icon-kr', mobileLength: 10 },
+  ZAF: { code: '+27', flagClass: 'flag-icon-za', mobileLength: 9 },
+  MEX: { code: '+52', flagClass: 'flag-icon-mx', mobileLength: 10 },
+  ITA: { code: '+39', flagClass: 'flag-icon-it', mobileLength: 9 },
+  ESP: { code: '+34', flagClass: 'flag-icon-es', mobileLength: 9 },
+  TUR: { code: '+90', flagClass: 'flag-icon-tr', mobileLength: 10 },
+  EGY: { code: '+20', flagClass: 'flag-icon-eg', mobileLength: 10 },
+  ARG: { code: '+54', flagClass: 'flag-icon-ar', mobileLength: 10 },
+  IDN: { code: '+62', flagClass: 'flag-icon-id', mobileLength: 10 },
+  NGA: { code: '+234', flagClass: 'flag-icon-ng', mobileLength: 10 },
+  ISR: { code: '+972', flagClass: 'flag-icon-il', mobileLength: 9 },
+  SWE: { code: '+46', flagClass: 'flag-icon-se', mobileLength: 9 },
+  NOR: { code: '+47', flagClass: 'flag-icon-no', mobileLength: 8 },
+  CHE: { code: '+41', flagClass: 'flag-icon-ch', mobileLength: 9 },
+  NLD: { code: '+31', flagClass: 'flag-icon-nl', mobileLength: 9 },
+  BEL: { code: '+32', flagClass: 'flag-icon-be', mobileLength: 9 },
+  THA: { code: '+66', flagClass: 'flag-icon-th', mobileLength: 9 },
+  VNM: { code: '+84', flagClass: 'flag-icon-vn', mobileLength: 9 },
+  PHL: { code: '+63', flagClass: 'flag-icon-ph', mobileLength: 10 },
+  MYS: { code: '+60', flagClass: 'flag-icon-my', mobileLength: 9 },
+  PAK: { code: '+92', flagClass: 'flag-icon-pk', mobileLength: 10 },
+  BGD: { code: '+880', flagClass: 'flag-icon-bd', mobileLength: 10 },
+  POL: { code: '+48', flagClass: 'flag-icon-pl', mobileLength: 9 },
+  UKR: { code: '+380', flagClass: 'flag-icon-ua', mobileLength: 9 },
+  NZL: { code: '+64', flagClass: 'flag-icon-nz', mobileLength: 9 },
+  IRN: { code: '+98', flagClass: 'flag-icon-ir', mobileLength: 10 },
+  IRQ: { code: '+964', flagClass: 'flag-icon-iq', mobileLength: 10 },
+  OMN: { code: '+968', flagClass: 'flag-icon-om', mobileLength: 8 },
+  QAT: { code: '+974', flagClass: 'flag-icon-qa', mobileLength: 8 },
+  KWT: { code: '+965', flagClass: 'flag-icon-kw', mobileLength: 8 },
+  JOR: { code: '+962', flagClass: 'flag-icon-jo', mobileLength: 9 },
+  CHL: { code: '+56', flagClass: 'flag-icon-cl', mobileLength: 9 },
+  COL: { code: '+57', flagClass: 'flag-icon-co', mobileLength: 10 },
+  PER: { code: '+51', flagClass: 'flag-icon-pe', mobileLength: 9 },
+  KEN: { code: '+254', flagClass: 'flag-icon-ke', mobileLength: 10 },
+  ETH: { code: '+251', flagClass: 'flag-icon-et', mobileLength: 9 },
+  GHA: { code: '+233', flagClass: 'flag-icon-gh', mobileLength: 9 },
+  VEN: { code: '+58', flagClass: 'flag-icon-ve', mobileLength: 10 },
 };
+
+
+
 
 
 
@@ -95,15 +153,34 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
 
   console.log("the form data", formData);
 
+  // const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value.replace(/[^0-9]/g, ''); // Ensure only numbers are entered
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     mobile: value,
+  //   }));
+
+  //   // Show the "Send OTP" button if mobile is 10 digits
+  //   if (value.length === 10) {
+  //     setOtpSent(false); // Reset OTP sent status if mobile number changes
+  //   } else {
+  //     setShowOtp(false);
+  //     setShowVerifyButton(false);
+  //     setOtpSent(false); // Reset OTP state when number is invalid
+  //   }
+  // };
+
   const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, ''); // Ensure only numbers are entered
+    const countryMobileLength = countryData[formData.country].mobileLength; // Get the mobile length for the selected country
+    
     setFormData((prevData) => ({
       ...prevData,
       mobile: value,
     }));
-
-    // Show the "Send OTP" button if mobile is 10 digits
-    if (value.length === 10) {
+  
+    // Show the "Send OTP" button if mobile is valid based on country-specific length
+    if (value.length === countryMobileLength) {
       setOtpSent(false); // Reset OTP sent status if mobile number changes
     } else {
       setShowOtp(false);
@@ -111,6 +188,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
       setOtpSent(false); // Reset OTP state when number is invalid
     }
   };
+  
 
   const handleCountryChange = (e: React.ChangeEvent<any>) => {
     const selectedCountry = e.target.value as CountryCode;
@@ -149,11 +227,12 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
     // setShowOtp(true);
     try {
       const reqBody = {
-        mobile: formData.countryCode + formData.mobile,
+        mobile: formData.mobile,
+        country_code: formData.countryCode,
       };
       console.log("the request body,",reqBody);
       
-      const response = await axios.get(`/api/login?otp=${formData.otp}&mobile=${encodeURIComponent(reqBody.mobile)}`);
+      const response = await axios.get(`/api/login?otp=${formData.otp}&mobile=${reqBody.mobile}&country_code=${encodeURIComponent(reqBody.country_code)}`);
       console.log("tje responsein the verify",response.data);
       
 
@@ -190,7 +269,8 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
     // if (formData.otp === '1234') {
       try {
         const reqBody = {
-          mobile: formData.countryCode + formData.mobile,
+          mobile: formData.mobile,
+          country_code: formData.countryCode,
         };
         console.log("the request body,",reqBody);
         
@@ -263,7 +343,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
                 </Input>
               </div>
 
-              <FormGroup floating style={{ flex: '1 1 75%' }}>
+              <FormGroup floating style={{ flex: '1 1 100%' }}>
                 <Input
                   type="text"
                   onChange={handleMobileChange}
@@ -275,7 +355,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
               </FormGroup>
             </div>
             <p style={{ color: 'white', marginTop: '0', marginBottom: '16px' }}>
-              Example: 9847098470 (10 Digit only)
+              Example: 9847098470 ({countryData[formData.country].mobileLength} Digit only)
             </p>
           </Col>
 
@@ -304,18 +384,19 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
             </Col>
           )}
 
-          {!otpSent && formData.mobile.length === 10 && (
-            <Col sm="12">
-              <Button
-              style={{marginTop : '5rem'}}
-                className="btnStyles"
-                color="primary"
-                onClick={signInButton}
-              >
-                Send OTP<span><i className="fa fa-angle-right" style={{ marginLeft: '1rem' }}></i></span>
-              </Button>
-            </Col>
-          )}
+{!otpSent && formData.mobile.length === countryData[formData.country].mobileLength && (
+  <Col sm="12">
+    <Button
+      style={{ marginTop: '5rem' }}
+      className="btnStyles"
+      color="primary"
+      onClick={signInButton}
+    >
+      Send OTP<span><i className="fa fa-angle-right" style={{ marginLeft: '1rem' }}></i></span>
+    </Button>
+  </Col>
+)}
+
           {formData.otp.length === 4 && (
             <Col xs="12" style={{ padding: '0', margin: '0' }}>
               <Button

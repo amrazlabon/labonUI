@@ -206,9 +206,9 @@ const Page = () => {
 
 
     return (
-        <Col md='6' >
+        <Col md='' >
       <div style={{padding : '0', height:'11.5rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
-        <Col sm='6' md='6' lg='6'>
+        <Col sm='6' md='' lg=''>
 {/* <Steppers stepActive={stepActive} setStepActive={setStepActive} /> */}
         </Col>
         <div style={{display : 'flex'}}>
