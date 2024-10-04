@@ -181,13 +181,13 @@ const emailTasks = [];
 
     // Add the lab admin email
     emailTasks.push({
-        email: 'amraz@labon.ai',
+        email: 'labmanager@medivision.in',
         subject: 'New Home Blood Test Booking LBNHVB112220241 through Labon',
         message: emailContentLab,
     });
 
     emailTasks.push({
-        email: 'joseph@labon.ai',
+        email: 'contact@labon.ai',
         subject: 'New Home Blood Test Booking',
         message: emailContentAdmin,
     });

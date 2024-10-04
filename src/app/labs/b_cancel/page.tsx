@@ -42,7 +42,7 @@ const BookingCancellationConfirm = () => {
                         Your booking for <span style={{fontWeight : 'bold'}}> Sreedevi Ramachandran</span> on <span style={{fontWeight : 'bold'}}>01/01/2024</span> at <span style={{fontWeight : 'bold'}}>7:00 AM</span> has been cancelled. You will be refunded <span style={{fontWeight : 'bold'}}>₹350.00</span>, within 7 business days, after deducting the cancellation charges.
                         </p>
                     <br />
-                    <p style={{marginTop : '0'}}>In case you have any clarifications, please call us on the support number <span style={{fontWeight : 'bold'}}>+91 9446061000</span>. See you soon!</p>
+                    <p style={{marginTop : '0'}}>In case you have any clarifications, please call us on the support number <span style={{fontWeight : 'bold'}}>+91 8289861000</span>. See you soon!</p>
                     {/* <hr />
                     <h2>Save this Data</h2>
                     <p>We don’t see the patient details saved. Would <br /> you like to save it for future use?</p> */}
