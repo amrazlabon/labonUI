@@ -216,7 +216,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
       
   return (
     <div >
-      <LoginModal showModal={showModal} toggleModal={toggleModal}/>
+      <LoginModal showModal={showModal} toggleModal={toggleModal} routePage={'home'}/>
       <div className="header-content d-flex align-items-center" onClick={toggleDropdown}>
         <i
           className={`fa ${isOpen ? 'fa-times' : 'fa-align-right'}`}

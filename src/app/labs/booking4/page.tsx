@@ -32,9 +32,11 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
         name: profile.name ? profile.name : '',
         dob: profile.dob ? new Date(profile.dob).toISOString().split('T')[0] : '',
         mobile: profile.mobile ? profile.mobile :'',
-        country_code: profile.country_code ? profile.country_code :'',
+        country_code: profile.country_code ? profile.country_code :'+91',
         alternate_mobile: profile.alternate_mobile ? profile.alternate_mobile :'',
-        alternate_country_code: profile.alternate_country_code ? profile.alternate_country_code :'',
+        alternate_country_code: profile.alternate_country_code ? profile.alternate_country_code :'+91',
+        alternate_country: profile.alternate_country ? profile.alternate_country :'IND',
+        country: profile.country ? profile.country :'IND',
         relation: profile.relation ? profile.relation :'',
         gender: profile.gender ? profile.gender :'',
         email: profile.email ? profile.email :'',
@@ -64,41 +66,31 @@ const PatientAdd = ({profile , setProfile , setStepActive, selectedTests, select
         return age.toString();
       };
     
-      const handleFormChange = (field: string, value: string) => {
-        // setFormData({
-        //   ...formData,
-        //   [field]: value,
-        // });
-        // setProfile({
-        //   ...profile,
-        //   [field]: value,
-        // });
-        
-        if (field === 'dob') {
-          const age = calculateAge(value);
+      const handleFormChange = (fields: { [key: string]: string }) => {
+        if (fields.dob) {
+          const age = calculateAge(fields.dob);
           setFormData({
             ...formData,
-            [field]: value,
-            age: age, // Update age based on dob
+            ...fields, // Merge the incoming fields
+            age: age,  // Update age
           });
           setProfile({
             ...profile,
-            [field]: value,
-            age: age, // Update age in profile
+            ...fields, // Merge the incoming fields
+            age: age,  // Update age
           });
         } else {
           setFormData({
             ...formData,
-            [field]: value,
+            ...fields, // Merge the incoming fields
           });
           setProfile({
             ...profile,
-            [field]: value,
+            ...fields, // Merge the incoming fields
           });
         }
-        // console.log("formdata",formData);
-        
       };
+      
 
 
 
@@ -165,6 +157,8 @@ const FloatingForm = ({ profile , setProfile , formData, onFormChange , setStepA
     country_code: '',
     alternate_mobile: '',
     alternate_country_code: '',
+    alternate_country: '',
+    country: '',
     gender: '',
     relation : '',
     nick_name : '',
@@ -185,7 +179,7 @@ const newErrors : any = {};
 let isValid = true;
 
 
-const selectedCountry = "IND" as CountryCode;
+const selectedCountry = formData.country as CountryCode;
   const expectedMobileLength = countryData[selectedCountry]?.mobileLength || 10;
 
 
@@ -288,24 +282,43 @@ return isValid;
 
   
   const handleInputChange = (e: any) => {
-    // console.log("the values of date change",e.target.name);
-    
     const { name, value } = e.target;
-    if (name === 'dob') {
-      setIsAgeShow(true)
-    }
+    
+    if (name === 'country') {
       
-    //   const age = calculateAge(value);
-    //   console.log("the age",age);
-      
-    // onFormChange('age', age);
+      const selectedCountry = value as CountryCode;
+      // onFormChange('country', selectedCountry);
+      // onFormChange('country_code', countryData[selectedCountry].code);
+      onFormChange({
+        country: selectedCountry,
+        country_code: countryData[selectedCountry].code,
+      });
+  
+    } 
 
-    // }
-    onFormChange(name, value);
+    else if (name === 'alternate_country') {
+      
+      const selectedCountry = value as CountryCode;
+      onFormChange({
+        alternate_country: selectedCountry,
+        alternate_country_code: countryData[selectedCountry].code,
+      });
+    } 
+    else if (name === 'dob') {
+      setIsAgeShow(true)
+      onFormChange({[name] 
+        : value});
+    }
+    else {
+      onFormChange({[name] : value});
+    }
+  
+
+    
   };
 
   const handleTimeChange = (gender: string) => {
-    onFormChange('gender', gender);
+    onFormChange({'gender': gender});
   };
   const [showModal, setShowModal] = useState(false);
 
@@ -315,15 +328,9 @@ return isValid;
   };
   const [userIdData , setUserIdData] = useState(null)
 
-  // const signInButton = () => {
-  // }
 
   const handleBookTimingsClick =async () => {
-    // console.log("form data",formData);
     const userId = JSON.parse(sessionStorage.getItem('user_id') || 'null');
-
-  
-    console.log("profile value before",profile);
     if (validateForm()) {
     
     if(userId){
@@ -334,7 +341,6 @@ return isValid;
         ...prevProfile,
         user_id: userId
     }));
-    console.log("the profile values after");
     
       
       const reqBody = {
@@ -343,16 +349,23 @@ return isValid;
         pincode : formData.pincode,
         nick_name : formData.nick_name,
         dob : new Date(formData.dob),
-        mobile : '+91' + formData.mobile,
+        mobile : formData.mobile,
+        country_code : formData.country_code,
+        alternate_country_code : formData.alternate_country_code,
+        alternate_mobile : formData.alternate_mobile,
+        country : formData.country,
+        alternate_country : formData.alternate_country,
         email : formData.email,
         age : formData.age,
         gender : formData.gender,
         user_id : userId,
         first_name : formData.name,
+        name : formData.name,
         relation : formData.relation,
         middle_name : '',
         last_name : '',
-        co_ordinates : profile.co_ordinates
+        co_ordinates : profile.co_ordinates,
+        is_patient : true
       }
       console.log("the request bidy",reqBody);
       
@@ -384,15 +397,13 @@ return isValid;
 
   const { name, dob, gender, pincode , mobile , email , location , address , nick_name , relation} = formData;
 
-  // Check if all required fields have values
   const canShowSummaryButton = name && dob && gender && pincode && mobile && email && location && address && nick_name && relation;
 
   return (
     <Col>
 
 
-      {/* background: linear-gradient(180deg, #522F62 0%, #9462B5 100%); */}
-      <LoginModal showModal={showModal} toggleModal={toggleModal}/>
+      <LoginModal showModal={showModal} toggleModal={toggleModal} routePage={'summary'}/>
 
       
       <Card style={{backgroundColor:'#F5F5F5' , padding : '0', boxShadow : 'none' , margin : '0'}}>
@@ -425,6 +436,7 @@ return isValid;
                         name="dob"
                         // placeholder="Date"
                         value={formData.dob}
+                        max={new Date().toISOString().split('T')[0]} 
                         onChange={handleInputChange}
                       />
                       <Label check>Date of Birth</Label>
@@ -486,12 +498,13 @@ return isValid;
                     pointerEvents: 'none',
                   }}
                 >
-                  <i className={`flag-icon ${countryData['IND'].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
+                  <i className={`flag-icon ${countryData[formData.country].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
                 </div>
                 <Input
+                name='country'
                   type="select"
-                  value='IND'
-                  // onChange={handleCountryChange}
+                  value={formData.country}
+                  onChange={handleInputChange}
                   style={{
                     height: '3.5rem',
                     paddingLeft: '60px',
@@ -537,12 +550,13 @@ return isValid;
                     pointerEvents: 'none',
                   }}
                 >
-                  <i className={`flag-icon ${countryData['IND'].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
+                  <i className={`flag-icon ${countryData[formData.alternate_country].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
                 </div>
                 <Input
                   type="select"
-                  value='IND'
-                  // onChange={handleCountryChange}
+                name='alternate_country'
+                value={formData.alternate_country}
+                  onChange={handleInputChange}
                   style={{
                     height: '3.5rem',
                     paddingLeft: '60px',
@@ -558,20 +572,20 @@ return isValid;
                   <FormGroup floating className="mb-6 mt-0" style={{ flex: '1 1 100%' }}>
                     <Input
                       type="number"
-                      name="mobile"
+                      name="alternate_mobile"
                       placeholder="Alternate Mobile"
-                      value={formData.mobile}
+                      value={formData.alternate_mobile}
                       onChange={handleInputChange}
-                      style={{
-                        borderColor: errors.mobile ? 'red' : '', // Change border to red if there's an error
-                      }}
+                      // style={{
+                      //   borderColor: errors.mobile ? 'red' : '', // Change border to red if there's an error
+                      // }}
                     />
                     <Label check>Alternate Mobile</Label>
                     {/* {errors.mobile && <p style={{ color: 'red' }}>{errors.mobile}</p>} */}
                   </FormGroup>
                   </div>
                 </Col>
-                {errors.mobile && <p style={{ color: 'red', margin : 0 }}>{errors.mobile}</p>}
+                {/* {errors.mobile && <p style={{ color: 'red', margin : 0 }}>{errors.mobile}</p>} */}
 
                 
                 <Col sm="12" className="mb-6">
@@ -878,9 +892,11 @@ const TableHeadOptions=({profile , setProfile , setStepActive} : any)=> {
         dob: data.dob, // Add appropriate value or logic if needed
         mobile: data.mobile, // Add appropriate value or logic if needed
         // relation: data.relation, // Add appropriate value or logic if needed
-        country_code: data.country_code,
+        country_code: data.country_code ? data.country_code : '+91',
+        country: data.country ? data.country : 'IND',
+        alternate_country: data.alternate_country ? data.alternate_country : 'IND',
     alternate_mobile: data.alternate_mobile,
-    alternate_country_code: data.alternate_country_code,
+    alternate_country_code: data.alternate_country_code ? data.alternate_country_code : '+91',
         gender: data.gender, // Add appropriate value or logic if needed
         email: data.email, // Add appropriate value or logic if needed
         pincode: data.pincode, // Add appropriate value or logic if needed

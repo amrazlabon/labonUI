@@ -909,7 +909,7 @@ const handleSearchInputChange = async (event : any) => {
     else {
       return (
         <div>
-      <LoginModal showModal={showModal} toggleModal={toggleModal}/>
+      <LoginModal showModal={showModal} toggleModal={toggleModal} routePage={'home'}/>
 
           <p style={{ paddingTop: '0', margin: '0'  ,cursor : 'pointer',color:'#1D0F8F'}} onClick={() => handleOptionClick("add")}>
             Add new Address.

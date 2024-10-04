@@ -471,11 +471,16 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
     address : profile.address,
     gender : profile.gender,
     email : profile.email,
-    mobile : '+91' + profile.mobile,
+    mobile :  profile.mobile,
     nick_name :profile.nick_name,
     time_slot :profile.timeslot,
     test_date : formatDateToISO(profile.date),
     co_ordinates : profile.co_ordinates,
+    country_code : profile.country_code,
+        alternate_country_code : profile.alternate_country_code,
+        alternate_mobile : profile.alternate_mobile,
+        country : profile.country,
+        alternate_country : profile.alternate_country,
 
     // dob : formatDateToISO(profile.dob),
     age : profile.age,
@@ -489,9 +494,9 @@ const FullScreenModal = ({isOpen , toggle , selectedTests , profile , setSelecte
       const response = await axios.post('/api/orders',reqBody);
       
       if(response) {
-        console.log("the reposne from the abovd",profile.test_date);
+        console.log("the reposne from the abovd",profile.mobile);
         const reqBody ={
-          mobile : '+91' + profile.mobile,
+          mobile : profile.country_code + profile.mobile,
           var1 : profile.date,
           var2 : profile.timeslot,
           var3 : 'LBNUSR'+ response.data[0].id,

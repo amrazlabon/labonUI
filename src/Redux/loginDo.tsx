@@ -3,12 +3,12 @@ import React, { useRef, useState } from 'react';
 import { Button, Card, Col, Form, FormGroup, Input, Label, Modal, ModalBody, Row, Toast, ToastBody } from 'reactstrap';
 import './homestyle.css'; // Your styles
 import { useModal } from '@/Redux/loginModal';
-import { StaticModalToggleProp } from '@/Types/UikitsType';
+// import { StaticModalToggleProp } from '@/Types/UikitsType';
 import axios from 'axios';
 import { ImagePath } from '@/Constant';
 // import CommonModal from '@/Components/UiKits/Modal/Common/CommonModal';
 
-const LoginModal: any = ({showModal , toggleModal} : any) => {
+const LoginModal: any = ({showModal , toggleModal, routePage} : any) => {
   // const { showModal, toggleModal } = useModal();
   return (
     <Col xl="4" md="6" className="custom-alert text-center">
@@ -22,7 +22,7 @@ const LoginModal: any = ({showModal , toggleModal} : any) => {
             <div className="modal-toggle-wrapper">
               {/* <h3>Sign In / Sign Up with Mobile</h3>
               <p>Fill in your information below to continue.</p> */}
-              <StaticForm staticModalToggle={toggleModal} />
+              <StaticForm staticModalToggle={toggleModal} routePage={routePage}/>
             </div>
           </CommonModal>
         {/* </div> */}
@@ -129,9 +129,13 @@ const countryData: Record<CountryCode, { code: string; flagClass: string; mobile
 
 
 
+export interface StaticModalToggleProp {
+  staticModalToggle: () => void;
+  routePage : any
+}
 
-
-const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
+const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle , routePage } : any) => {
+  
   const [formData, setFormData] = useState<{
     mobile: string;
     otp: string;
@@ -229,6 +233,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
       const reqBody = {
         mobile: formData.mobile,
         country_code: formData.countryCode,
+        // country: formData.country,
       };
       console.log("the request body,",reqBody);
       
@@ -256,7 +261,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
       window.dispatchEvent(event);
 
       staticModalToggle();
-      if (response.data[0].profile_complete === false) {
+      if (routePage === 'home' && (response.data[0].profile_complete) === false) {
         window.location.href = '/labs/profile';
       }
     }
@@ -271,6 +276,7 @@ const StaticForm: React.FC<StaticModalToggleProp> = ({ staticModalToggle }) => {
         const reqBody = {
           mobile: formData.mobile,
           country_code: formData.countryCode,
+          country: formData.country,
         };
         console.log("the request body,",reqBody);
         

@@ -21,6 +21,8 @@ interface FormValue {
     country_code: string;
     alternate_mobile: string;
     alternate_country_code: string;
+    alternate_country: string;
+    country: string;
     pincode: string;
     location: string;
     address: string;
@@ -96,9 +98,11 @@ const Page = () => {
         dob: '',
         city: '',
         mobile: '',
-        country_code: '',
+        country_code: '+91',
     alternate_mobile: '',
-    alternate_country_code: '',
+    alternate_country_code: '+91',
+    alternate_country: 'IND',
+    country: 'IND',
         pincode: '',
         location: '',
         address: '',

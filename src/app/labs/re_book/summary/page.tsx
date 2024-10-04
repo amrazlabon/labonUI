@@ -87,7 +87,7 @@ const Summary = ({profile , setProfile , setStepActive , selectedTests, selected
       if(response) {
         console.log("the reposne from the abovd",profile.test_date);
         const reqBody ={
-          mobile : response.data[0].mobile,
+          mobile : response.data[0].country_code + response.data[0].mobile,
           var1 : profile.date,
           var2 : profile.timeslot,
           var3 : 'LBNUSR'+ response.data[0].id  + '-' + response.data[0].reschedule_count,

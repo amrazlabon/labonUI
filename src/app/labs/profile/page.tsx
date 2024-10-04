@@ -17,6 +17,8 @@ const FloatingForm = () => {
     name: '',
     dob: '',
     mobile: '',
+    country_code: '+91',
+    country: 'IND',
     gender: '',
     email: '',
     pincode: '',
@@ -134,7 +136,7 @@ const FloatingForm = () => {
           console.log("the user id",userId);
           
           const response = await axios.get(`/api/login?endpoint=user&id=${userId}`);
-          setProfileData(response.data);
+          // setProfileData(response.data);
           
 
           const formatDate = (dateString: string) => {
@@ -400,11 +402,11 @@ useEffect(() => {
                     pointerEvents: 'none',
                   }}
                 >
-                  <i className={`flag-icon ${countryData['IND'].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
+                  <i className={`flag-icon ${countryData[formData.country].flagClass}`} style={{ fontSize: '26px', marginRight: '8px' }}></i>
                 </div>
                 <Input disabled
                   type="select"
-                  value='IND'
+                  value={formData.country}
                   // onChange={handleCountryChange}
                   style={{
                     height: '3.5rem',
