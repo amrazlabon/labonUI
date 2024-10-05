@@ -507,14 +507,14 @@ const DefaultChecks = ({ fulldata , data, selectedTests, setSelectedTests, toggl
               <div style={{ display: 'grid' }}>
                 <div className="gap-3" style={{ display: 'flex', padding: '0' }}>
                   <img style={{ height: '1.3rem', margin: '0' }} className="img-fluid table-avatar" src={`${ImagePath}/Thumbnail-2.png`} alt="test image" />
-                  <p style={{ margin: '0', paddingTop: '0', paddingBottom: '0', fontSize: '18px' }}>
+                  <p style={{ margin: '0', paddingTop: '0', paddingBottom: '0', fontSize: '16px' }}>
                     {/* Highlight the search term in the test name */}
                     {highlightSearchTerm(test.test_name, searchTerm)}
                   </p>
                 </div>
                 <div className="gap-3" style={{ display: 'flex' }}>
                   <p style={{ paddingTop: '0', margin: '0' }}>
-                    {test.label}
+                    {test.short_description}
                   </p>
                 </div>
                 <div className="gap-3" style={{ display: 'flex' }}>

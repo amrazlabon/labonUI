@@ -32,11 +32,11 @@ const CommonAccordionItem = ({ item }) => {
                 <div style={{display :'flex' , gap : 12 , paddingBottom : '12px'}}>
                 <div style={{display :'flex' , gap : 8 , alignItems : 'center'}}>
                 <i className='fa fa-male' style={{ marginLeft: '' , padding :0 , fontSize : '28px' , color: 'rgba(101, 196, 102, 1)',}}></i>
-                <p style={{color: 'rgba(101, 196, 102, 1)'}}>{item.level.normallevel_male}</p>
+                <p style={{color: 'rgba(101, 196, 102, 1)'}}>{item.normal_value_after_meal}</p>
                 </div>
                 <div style={{display :'flex' , gap : 8, alignItems : 'center'}}>
                 <i className='fa fa-female' style={{ marginLeft: '' , padding :0 , fontSize : '28px' , color: 'rgba(101, 196, 102, 1)',}}></i>
-                <p style={{color: 'rgba(101, 196, 102, 1)'}}>{item.level.normallevel_female}</p>
+                <p style={{color: 'rgba(101, 196, 102, 1)'}}>{item.normal_value_after_meal}</p>
 
                 </div>
                 </div>
@@ -48,9 +48,9 @@ const CommonAccordionItem = ({ item }) => {
                                 <tr style={{paddingBottom : '16px'}}>
                                     <td></td>
                                     <td></td>
-                                    <td style={{fontSize : '12px'}}>{item.level.levels[0]}</td>
-                                    <td style={{fontSize : '12px'}}>{item.level.levels[1]}</td>
-                                    <td style={{fontSize : '12px'}}>{item.level.levels[2]}</td>
+                                    <td style={{fontSize : '12px'}}>{item.normal_value_after_meal}</td>
+                                    <td style={{fontSize : '12px'}}></td>
+                                    <td style={{fontSize : '12px'}}></td>
 
 
                                 </tr>

@@ -327,7 +327,7 @@ useEffect(() => {
           <div className="">
             <Form className="floating-wrapper" onSubmit={(e) => e.preventDefault()}>
               <Row className="g-3">
-              <Col sm="12">
+              {/* <Col sm="12">
                   <FormGroup  floating className="mb-6 mt-3">
                     <Input disabled type="text" 
                     name="id"
@@ -336,7 +336,7 @@ useEffect(() => {
                     onChange={handleInputChange} />
                     <Label check>User ID</Label>
                   </FormGroup>
-                </Col>
+                </Col> */}
                 <Col sm="12" className="mt-6">
                   <FormGroup floating>
                     <Input
