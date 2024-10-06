@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" href="/assets/images/Logo.png" type="image/x-icon" />
         <link rel="shortcut icon" href="/assets/images/Logo.png" type="image/x-icon" />
-        <title>Labon - Test Booking Online</title>
+        <title>Home Blood Test Booking | Labon.ai | Kerala | India</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />

@@ -10,6 +10,7 @@ import addBanner from '@/assets/banner.png'
 import Steppers from '.';
 import StepperSwitch from './stepperSwitch';
 import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, Label, Row } from "reactstrap";
+// import useBlockNavigation from '@/Redux/routeRestrictHook';
 
 interface FormValue {
     name: string;
@@ -72,6 +73,14 @@ type Test = {
   };
 
 const Page = () => {
+
+  // this is using in the restrict clicks 
+  // const [isTaskIncomplete, setIsTaskIncomplete] = useState(true); // Set to true while task is incomplete
+
+  // // Call the hook to block navigation when task is incomplete
+  // useBlockNavigation(isTaskIncomplete);
+
+  
   const [fullScreen, setFullScreen] = useState(false);
     
     const [stepActive, setStepActive] = useState<number>(0);

@@ -12,9 +12,6 @@ const useBlockNavigation = (isTaskIncomplete : any) => {
       }
     };
 
-    // Attach the event listener for blocking refresh/close
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
     const handleRouteChange = (url : any) => {
       if (isTaskIncomplete) {
         alert('Finish the work first!');
@@ -22,20 +19,28 @@ const useBlockNavigation = (isTaskIncomplete : any) => {
       }
     };
 
-    // Prevent programmatic navigation within the app
+    // Attach the event listener for blocking refresh/close
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Attach a single global event listener for route changes
+    // router.events?.on('routeChangeStart', handleRouteChange);
+
+    // Prevent programmatic navigation within the app (one-time listener)
+    const handleLinkClick = (event : any) => {
+      if (isTaskIncomplete) {
+        event.preventDefault();
+        alert('Finish the work first!');
+      }
+    };
+
+    // Attach link click event listener to all anchor tags
     const links = document.querySelectorAll('a');
-    links.forEach(link => {
-      link.addEventListener('click', (event) => {
-        if (isTaskIncomplete) {
-          event.preventDefault();
-          alert('Finish the work first!');
-        }
-      });
-    });
+    links.forEach(link => link.addEventListener('click', handleLinkClick));
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
-      links.forEach(link => link.removeEventListener('click', handleRouteChange));
+      // router.events?.off('routeChangeStart', handleRouteChange);
+      links.forEach(link => link.removeEventListener('click', handleLinkClick));
     };
   }, [isTaskIncomplete, router]);
 
