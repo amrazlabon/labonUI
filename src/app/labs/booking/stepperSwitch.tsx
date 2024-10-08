@@ -10,10 +10,10 @@ import { useSearchParams } from 'next/navigation';
 // import LastStep from './stepper/lastStep';
 import axios from 'axios';
 import Booking1 from '../booking1/page';
-import Tests from '../booking2/page';
-import TestTime from '../booking3/page';
-import PatientAdd from '../booking4/page';
-import Summary from '../summary/page';
+import Tests from './booking2/page';
+import TestTime from './booking3/page';
+import PatientAdd from './booking4/page';
+import Summary from './summary/page';
 import './bookStyle.css'
 
 

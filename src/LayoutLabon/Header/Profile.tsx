@@ -28,7 +28,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
 
   const LogOutUser = () => {
     // Cookies.remove("mofi_token");
-    router.push("/labs/home");
+    router.push("/home");
     sessionStorage.removeItem('user_id')
     sessionStorage.removeItem('user_data')
   };
@@ -71,7 +71,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
             {
               icon: <FileText />,
               title: "Book a Home Visit",
-              link:"labs/home",
+              link:"home",
             },
             {
               icon: <FileText />,
@@ -104,9 +104,10 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               link:"",
               onClick(evt : any) { 
                 evt.preventDefault();
-                router.push("/labs/home");
-  sessionStorage.removeItem('user_id')
-  sessionStorage.removeItem('user_data')
+                router.push("/home");
+  // sessionStorage.removeItem('user_id')
+  // sessionStorage.removeItem('user_data')
+  sessionStorage.clear();
   const event = new Event('sessionUpdate');
   window.dispatchEvent(event);
   setUserId(null)
@@ -133,7 +134,7 @@ export const Profile = ({isOpen , setIsOpen} : any) => {
               {
                 icon: <FileText />,
                 title: "Book a Home Visit",
-                link:"labs/home",
+                link:"home",
               },
               {
                 icon: <FileText />,

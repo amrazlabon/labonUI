@@ -1,0 +1,186 @@
+
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
+}
+
+.gender-group {
+    /* display: flex; */
+    justify-content: space-between;
+}
+
+.gender-button {
+    flex: 1;
+    padding: 10px;
+    margin: 0 5px;
+    border: 1px solid #B18FCA;
+    border-radius: 4px;
+    background-color: #F2EAF9;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    text-align: center;
+}
+
+.gender-button:focus {
+    background-color: #d0d0d0;
+}
+
+.form-group input[readonly] {
+    background-color: #f0f0f0;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.radio .radio-wrapper li {
+    border: 1px #999999;
+}
+
+.active-label {
+    font-weight: 600;
+    color: #000; /* Change this to the color you want when active */
+  }
+  
+  .inactive-label {
+    color: grey; /* Change this to the color you want when inactive */
+  }
+
+  /* .radio-wrapper li{ 
+    max-width: 50px;
+  } */
+
+  .radio-wrapper li .form-check-input:checked, .checkbox-wrapper li .form-check-input:checked {
+    /* border: 2px solid #B18FCA; */
+    /* background-color: transparent; */
+    border-radius: 4px;
+    /* color : white; */
+    border: 1px solid rgba(174, 127, 209, 1);
+    background: rgba(177, 143, 202, 1);
+
+    /* background-color: #F2EAF9; */
+}
+.radio-wrapper li .form-check-input, .checkbox-wrapper li .form-check-input {
+  border: 1px solid rgba(177, 143, 202, 1);
+  background: transparent;
+  /* background: rgba(242, 234, 249, 1); */
+  border-radius: 4px;
+  background-color: #F2EAF9;
+  
+}
+.radio-wrapper li .form-check-label, .checkbox-wrapper li .form-check-label {
+position: unset;
+padding: 0;
+margin-bottom: 0;
+z-index: 1;
+}
+
+
+
+.radio-wrapper li .form-check-input, .checkbox-wrapper li .form-check-input {
+    border: 1px solid rgba(177, 143, 202, 1);
+    background: transparent;
+    /* background: rgba(242, 234, 249, 1); */
+    }
+            
+            .radio-wrapper li label {
+                /* background: red; Background color */
+                padding: 10px;
+                /* background: rgba(242, 234, 249, 1); */
+    
+                border-radius: 4px;
+                position: absolute;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                color: black; /* Text color */
+              }
+    
+              .boxstyle {
+                background: rgba(242, 234, 249, 1);
+    
+              }
+    
+    
+              .form-control {
+                border: 1px solid #D5D5D5;
+            }
+    
+            .radio-wrapper li label .form-check-input:checked { 
+    color: white;
+            }
+    
+            .radio-wrapper li .form-check-input:checked, .checkbox-wrapper li .form-check-input:checked {
+              /* border: 2px solid #B18FCA; */
+              /* background-color: transparent; */
+              border-radius: 4px;
+              /* color : white; */
+              border: 1px solid rgba(174, 127, 209, 1);
+              background: rgba(177, 143, 202, 1);
+    
+              /* background-color: #F2EAF9; */
+          }
+          .radio-wrapper li .form-check-input, .checkbox-wrapper li .form-check-input {
+            border: 1px solid rgba(177, 143, 202, 1);
+            background: transparent;
+            /* background: rgba(242, 234, 249, 1); */
+            border-radius: 4px;
+            background-color: #F2EAF9;
+            
+        }
+        .radio-wrapper li .form-check-label, .checkbox-wrapper li .form-check-label {
+          position: unset;
+          padding: 0;
+          margin-bottom: 0;
+          z-index: 1;
+      }
+    
+      
+      .bg-danger {
+        background-color: #C46B65 !important;
+        color: #fff;
+    }
+
+    .bg-success {
+        background-color: #65C466 !important;
+        color: #fff;
+    }
+
+    @media (max-width: 420px) {
+      .mobile-restricted-content {
+        width: 100%;
+        margin: 0 auto;
+      }
+    }
+    
+    /* Styles for devices larger than 420px */
+    @media (min-width: 421px) {
+      .mobile-restricted-content {
+        width: 100%;
+        max-width: 430px; /* Restrict the width */
+        margin: 0 auto; /* Center the content */
+      }
+    }

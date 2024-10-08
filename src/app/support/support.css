@@ -1,0 +1,30 @@
+
+.chat-with-us {
+    margin-top: 30px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px;
+}
+.chat-with-us a {
+    color: #1D0F8F;
+; /* WhatsApp color */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Styles for devices smaller than 420px */
+@media (max-width: 420px) {
+    .mobile-restricted-content {
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+  
+  /* Styles for devices larger than 420px */
+  @media (min-width: 421px) {
+    .mobile-restricted-content {
+      width: 100%;
+      max-width: 430px; /* Restrict the width */
+      margin: 0 auto; /* Center the content */
+    }
+  }
+  

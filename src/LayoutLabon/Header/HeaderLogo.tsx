@@ -21,7 +21,7 @@ export const HeaderLogo = () => {
       onClick={()=>dispatch(handleResponsiveToggle())}
       > */}
       <div>
-        <Link href={'/labs/home'}>
+        <Link href={'/home'}>
       <img className="img-fluid" style={{paddingLeft : '12px'}} src={`${ImagePath}/Logo.png`} alt="" />
         </Link>
       {/* <SVG className="stroke-icon sidebar-toggle status_toggle middle" iconId="toggle-icon" /> */}
