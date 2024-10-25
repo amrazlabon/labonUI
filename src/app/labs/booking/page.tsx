@@ -201,7 +201,7 @@ const Page = () => {
 
     return (
         <Col md='' >
-      <div style={{padding : '0', height:'13.5rem', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
+      <div style={{padding : '0', height:'auto', width:'100%',backgroundImage: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)',}}>
         <Col sm='6' md='' lg=''>
 <Steppers stepActive={stepActive} setStepActive={setStepActive} />
         </Col>
@@ -254,7 +254,7 @@ const Page = () => {
 
   </div>
 </div>
-<div style={{marginTop : '16px', height:'24px', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
+<div style={{marginTop : '15px', height:'24px', width:'100%',backgroundColor:'#F5F5F5' , borderTopLeftRadius : '16px' , borderTopRightRadius : '16px'}}>
 </div>
 </div>
         {/* <div className='p-10 '>

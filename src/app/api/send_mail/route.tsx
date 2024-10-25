@@ -43,8 +43,8 @@ export async function POST(request: Request) {
     console.log("Sending email via Mailjet...");
 
     const mailjet = Mailjet.apiConnect(
-      'd73f035ddff496ebbd72e9e337a25e8e', // or use process.env.MAILJET_API_KEY
-      'a9145458bb46276d7e862764b99d3712'  // or use process.env.MAILJET_SECRET_KEY
+      '026221836317883e4b1b856f2150a7d9', // or use process.env.MAILJET_API_KEY
+      '5f498e21883f6f631ad9f50daec7251f'  // or use process.env.MAILJET_SECRET_KEY
     );
 
     const response = await mailjet

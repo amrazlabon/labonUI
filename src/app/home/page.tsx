@@ -392,7 +392,7 @@ const home = () => {
         100k+
     </p>
     <p style={{margin : 0}}>
-        Individuals and families have been using Purple Labs, either for themselves or for their parents and relatives.
+    Individuals and families have been using Labon to book lab tests at home, either for themselves or for their parents, relatives or well-wishers.
     </p>
 </div>
 
@@ -472,7 +472,7 @@ const home = () => {
                 <p style={{color:'#999999',textDecorationLine:'underline'}}>Terms of Service</p>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' , paddingTop : '24px'}}>
-    <img style={{ margin: '0' }} className="img-fluid" src={`${ImagePath}/Logo.png`} alt="user" />
+    <img style={{ margin: '0' }} className="img-fluid" src={`${ImagePath}/Logo.png`} alt="Labon Logo" />
 
     <div style={{ display: 'flex', gap: '10px' }}>
         <img className="img-fluid" src={`${ImagePath}/Icon - Instagram.png`} alt="Instagram" />
@@ -590,6 +590,8 @@ const DefaultChecks = ({ fulldata , data, selectedTests, setSelectedTests, toggl
         ))}
       </div>
       }
+        <div style={{ position: 'sticky', bottom: 0, width: '100%', padding: '0' }}>
+
       <Col sm="12" style={{ padding: '0' }}>
         <Button
           onClick={handleSelectTestsClick}
@@ -607,12 +609,13 @@ const DefaultChecks = ({ fulldata , data, selectedTests, setSelectedTests, toggl
           Select Tests
         </Button>
       </Col>
+      </div>
     </Col>
   );
 };
 
 
-const DefaultRadio = ({ savedAddresses , selectedAddress , setSelectedAddress , toggle}: any) => {
+const DefaultRadio = ({ savedAddresses , selectedAddress , setSelectedAddress , toggle , handleOptionClick}: any) => {
     const [selectedTest, setSelectedTest] = useState<number | null>(null);
   
     const [open,setOpen] = useState(false)
@@ -686,7 +689,8 @@ const DefaultRadio = ({ savedAddresses , selectedAddress , setSelectedAddress , 
             </div>
           ))}
               </div>
-              <Col sm="12" style={{paddingTop : '24px'}}>
+        <div style={{ position: 'sticky', bottom: 0, width: '100%', padding: '0' }}>
+        <Col sm="12" style={{paddingTop : '24px'}}>
         {/* <Link href={'/labs/booking'}> */}
         <Button
           onClick={handleSelectTestsClick}
@@ -706,8 +710,9 @@ const DefaultRadio = ({ savedAddresses , selectedAddress , setSelectedAddress , 
           {/* </Link> */}
         </Col>
         </div>
+        </div>
         ) : (
-              <p>There are no saved address</p>
+              <p onClick={() => handleOptionClick("add")}><span style={{ paddingTop: '0', margin: '0' , color : '#C46B65'}}><strong>Oops!</strong> There are no saved addresses to display.</span> Hence, continue by clicking <span style={{ paddingTop: '0', margin: '0'  ,cursor : 'pointer',color:'#1D0F8F'}}><strong>Add New Address</strong></span>. Once the booking is complete, the address will be listed under ‘My Contacts’.</p>
 
         )
 }
@@ -776,7 +781,7 @@ const handleSearchInputChange = async (event : any) => {
         {/* <Button color="info"  onClick={toggle}>{ExtraLargeModals}</Button> */}
         <CommonModal size="xl" isOpen={isOpen} toggle={toggle} sizeTitle="Select Test" >
 {/* <Input style={{padding:'10px',width:'100%',borderRadius:'15px',marginTop:'1rem' , marginBottom : '2rem'}} name="twitterUrl" value={''} type="url" placeholder={'Search'} /> */}
-<div style={{ position: 'relative', width: '100%' }}>
+<div style={{ position: 'sticky', top : 0 , width: '100%' }}>
   <Input
     style={{ 
       padding: '10px', 
@@ -984,19 +989,19 @@ const handleSearchInputChange = async (event : any) => {
           <div style={{width : '1px' , height : '25px' , backgroundColor : 'black' , margin : '5px 10px'}}></div>
 
           <p style={{ paddingTop: '0', margin: '0', fontWeight:'600'}} >
-            Select from saved Addresses.
+          Select an address from the saved addresses.
           </p>
           <br />
           {!isLoggedIn && (
             <>
-              <p style={{ paddingTop: '0', margin: '0' , color : '#C46B65'}}>You must sign in to display saved addresses.</p>
-              <br />
-              <p style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' , cursor : 'pointer',fontSize:"16px"}} onClick={signInButton}>Click here to <span style={{color : 'blue',fontWeight:'600'}}>Sign in</span></p>
+              {/* <p style={{ paddingTop: '0', margin: '0' , color : '#C46B65'}}>You must sign in to display saved addresses.</p> */}
+              {/* <br /> */}
+              <p style={{ margin: '0', paddingTop: '0', paddingBottom: '10px' , cursor : 'pointer',fontSize:"16px"}} onClick={signInButton}><span style={{color : 'blue',fontWeight:'600'}}>Sign in</span> to list your saved addresses.</p>
             </>
           )}
           {isLoggedIn && (
             <>
-            <DefaultRadio savedAddresses={savedAddresses} selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress} toggle={toggle} />
+            <DefaultRadio savedAddresses={savedAddresses} selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress} toggle={toggle} handleOptionClick={handleOptionClick}/>
             {/* <TableHeadOptions savedAddresses={savedAddresses} /> */}
                    </>
           )}
@@ -1215,12 +1220,17 @@ const handleSearchInputChange = async (event : any) => {
     console.log("the lcoation marked data",clickedLocation);
     
   
+    useEffect(() => {
+      useCurrentLocation();
+    }, []);
+
+    
   
     return (
       <Col lg="" md="">
         <Card style={{ marginBottom: '0', borderBottomLeftRadius: '0', borderBottomRightRadius: '0', boxShadow: 'none' }}>
           <CardBody style={{ padding: '0' }}>
-          <button 
+          {/* <button 
   onClick={useCurrentLocation} 
   style={{
     marginBottom: '10px',
@@ -1235,7 +1245,7 @@ const handleSearchInputChange = async (event : any) => {
   }}
 >
   Use Current Location
-</button>
+</button> */}
 
             <div className="map-js-height overflow-hidden" style={{ borderTopRightRadius: '1rem', borderTopLeftRadius: '1rem' }}>
               <div id="gmap-simple" className="map-block">

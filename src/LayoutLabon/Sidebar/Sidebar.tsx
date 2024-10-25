@@ -25,7 +25,7 @@ export const SideBar = () => {
             <SimpleBar style={{ width: "80px", height: "350px" }}>
               <li className="back-btn">
                 <Link href={`/${i18LangStatus}/dashboard/default_dashboard`}>
-                  <img className="img-fluid" src={`${ImagePath}/Logo.png`} alt="" />
+                  <img className="img-fluid" src={`${ImagePath}/Logo.png`} alt="Labon Logo" />
                 </Link>
                 <div className="mobile-back text-end ">
                   <span>Back </span><i className="fa fa-angle-right ps-2" aria-hidden="true"></i>

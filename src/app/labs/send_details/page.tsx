@@ -45,6 +45,12 @@ const SendDetails = () => {
 
   // think the issue is here, we are facing in the reduce issue and thing will work
   // issue is with some initial value loading, look what the issue is
+
+  function formatDate(dateStr : any) {
+    const [day, month, year] = dateStr.split('/');
+    return `${day}${month}${year}`;
+  }
+
   async function sendEmail() {
     // or we can send the bookingOrder details on the load only, that will solve the issue
     console.log("else we should call the load function from here");
@@ -60,16 +66,16 @@ const SendDetails = () => {
   
   <p><strong>Booking details:</strong></p>
   <ol>
-    <li><strong>Booking ID:</strong> LBNHVB112220241</li>
+    <li><strong>Booking ID:</strong> LBNHVB${formatDate(bookingOrder.date)}</li>
     <li><strong>Scheduled Date & Time:</strong> ${bookingOrder.date} at ${bookingOrder.timeslot}</li>
     <li><strong>Patient Name:</strong> ${bookingOrder.name ? bookingOrder.name : 'NA'}</li>
-    <li><strong>Contact:</strong> +91 ${bookingOrder.mobile ? bookingOrder.mobile : 'NA'}</li>
+    <li><strong>Contact:</strong> ${bookingOrder.country_code ? bookingOrder.country_code : 'NA'} ${bookingOrder.mobile ? bookingOrder.mobile : 'NA'}</li>
     <li><strong>Age:</strong> ${bookingOrder.age ? bookingOrder.age : 'NA'}</li>
     <li><strong>Gender:</strong> ${bookingOrder.gender ? bookingOrder.gender : 'NA'}</li>
     <li><strong>Location:</strong> ${bookingOrder.location ? bookingOrder.location : 'NA'}</li>
     <li><strong>Address:</strong> ${bookingOrder.address ? bookingOrder.address : 'NA'}</li>
     <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'Customer' }</li>
-    <li><strong>Customer Contact:</strong> ${userData.mobile ? userData.mobile : 'NA' }</li>
+    <li><strong>Customer Contact:</strong> ${userData.country_code ? userData.country_code : 'NA' } ${userData.mobile ? userData.mobile : 'NA' }</li>
     <li><strong>Tests Booked:</strong>
       <ul>
         ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${formatPrice(test.price)}</li>`).join('')}
@@ -88,10 +94,10 @@ const emailContentLab = `<p>Dear Lab Admin,</p>
   
   <p><strong>Booking details:</strong></p>
   <ol>
-    <li><strong>Booking ID:</strong> LBNHVB112220241</li>
+    <li><strong>Booking ID:</strong> LBNHVB${formatDate(bookingOrder.date)}</li>
     <li><strong>Scheduled Date & Time:</strong> ${bookingOrder.date} at ${bookingOrder.timeslot}</li>
     <li><strong>Patient Name:</strong> ${bookingOrder.name ? bookingOrder.name : 'NA'}</li>
-    <li><strong>Contact:</strong> +91 ${bookingOrder.mobile ? bookingOrder.mobile : 'NA'}</li>
+    <li><strong>Contact:</strong> ${bookingOrder.country_code ? bookingOrder.country_code : 'NA'} ${bookingOrder.mobile ? bookingOrder.mobile : 'NA'}</li>
     <li><strong>Age:</strong> ${bookingOrder.age ? bookingOrder.age : 'NA'}</li>
     <li><strong>Gender:</strong> ${bookingOrder.gender ? bookingOrder.gender : 'NA'}</li>
     <li><strong>Location:</strong> ${bookingOrder.location ? bookingOrder.location : 'NA'}</li>
@@ -106,7 +112,7 @@ const emailContentLab = `<p>Dear Lab Admin,</p>
   </ol>
 
 
-  <p>For any clarifications, please write to contact@labon.ai or call us at +91 9847012345.</p>
+  <p>For any clarifications, please write to contact@labon.ai or call us at +91 8289861000.</p>
   <p><strong>Team Labon</strong></p>
 `;
 
@@ -114,18 +120,18 @@ const emailContentPatient = `<p>Dear ${bookingOrder.name ? bookingOrder.name.spl
   
   <p>${userData.name ? userData.name.split(' ')[0] : 'Customer' } has made a new home Test booking for you. Our phlebotomist will come to your location on the schedule date & time for blood test.</p>
   
-  <p>Your Booking ID is LBNHVB112220241 </p>
+  <p>Your Booking ID is LBNHVB${formatDate(bookingOrder.date)} </p>
   <p><strong>Below are the booking details:</strong></p>
   <ol>
   <li><strong>Patient Name:</strong> ${bookingOrder.name ? bookingOrder.name : 'NA'}</li>
     <li><strong>Scheduled Date & Time:</strong> ${bookingOrder.date} at ${bookingOrder.timeslot}</li>
-    <li><strong>Contact:</strong> +91 ${bookingOrder.mobile ? bookingOrder.mobile : 'NA'}</li>
+    <li><strong>Contact:</strong> ${bookingOrder.country_code ? bookingOrder.country_code : 'NA'} ${bookingOrder.mobile ? bookingOrder.mobile : 'NA'}</li>
     <li><strong>Age:</strong> ${bookingOrder.age ? bookingOrder.age : 'NA'}</li>
     <li><strong>Gender:</strong> ${bookingOrder.gender ? bookingOrder.gender : 'NA'}</li>
     <li><strong>Location:</strong> ${bookingOrder.location ? bookingOrder.location : 'NA'}</li>
     <li><strong>Address:</strong> ${bookingOrder.address ? bookingOrder.address : 'NA'}</li>
     <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'Customer' }</li>
-    <li><strong>Customer Contact:</strong> ${userData.mobile ? userData.mobile : 'NA' }</li>
+    <li><strong>Customer Contact:</strong>${userData.country_code ? userData.country_code : 'NA' } ${userData.mobile ? userData.mobile : 'NA' }</li>
     <li><strong>Tests Booked:</strong>
       <ul>
         ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${formatPrice(test.price)}</li>`).join('')}
@@ -137,7 +143,7 @@ const emailContentPatient = `<p>Dear ${bookingOrder.name ? bookingOrder.name.spl
     <li><strong>Phlebotomist Name</strong>: NA</li>
   </ol>
 
-  <p>For any clarifications, please write to contact@labon.ai or call us at +91 9847012345.</p>
+  <p>For any clarifications, please write to contact@labon.ai or call us at +91 8289861000.</p>
   <p>Thank you once again for booking home test with Labon!</p>
   <p><strong>Team Labon</strong></p>
 
@@ -147,18 +153,18 @@ const emailContentCustomer = `<p>Dear ${userData.name ? userData.name.split(' ')
   
   <p>Your booking for home sample collection for ${bookingOrder.name ? bookingOrder.name.split(' ')[0] : 'Patient'} is confirmed.</p>
   
-  <p>Your Booking ID is LBNHVB112220241 </p>
+  <p>Your Booking ID is LBNHVB${formatDate(bookingOrder.date)} </p>
   <p><strong>We thank you for booking the service with Labon.ai. Below are the booking details:</strong></p>
   <ol>
   <li><strong>Patient Name:</strong> ${bookingOrder.name ? bookingOrder.name : 'NA'}</li>
     <li><strong>Scheduled Date & Time:</strong> ${bookingOrder.date} at ${bookingOrder.timeslot}</li>
-    <li><strong>Contact:</strong> +91 ${bookingOrder.mobile ? bookingOrder.mobile : 'NA'}</li>
+    <li><strong>Contact:</strong> ${bookingOrder.country_code ? bookingOrder.country_code : 'NA'} ${bookingOrder.mobile ? bookingOrder.mobile : 'NA'}</li>
     <li><strong>Age:</strong> ${bookingOrder.age ? bookingOrder.age : 'NA'}</li>
     <li><strong>Gender:</strong> ${bookingOrder.gender ? bookingOrder.gender : 'NA'}</li>
     <li><strong>Location:</strong> ${bookingOrder.location ? bookingOrder.location : 'NA'}</li>
     <li><strong>Address:</strong> ${bookingOrder.address ? bookingOrder.address : 'NA'}</li>
     <li><strong>Customer Name:</strong> ${userData.name ? userData.name : 'Customer' }</li>
-    <li><strong>Customer Contact:</strong> ${userData.mobile ? userData.mobile : 'NA' }</li>
+    <li><strong>Customer Contact:</strong> ${userData.country_code ? userData.country_code : 'NA' } ${userData.mobile ? userData.mobile : 'NA' }</li>
     <li><strong>Tests Booked:</strong>
       <ul>
         ${bookingOrder.test_data.map((test : any) => `<li>${test.test_name}: ₹${formatPrice(test.price)}</li>`).join('')}
@@ -170,7 +176,7 @@ const emailContentCustomer = `<p>Dear ${userData.name ? userData.name.split(' ')
     <li><strong>Phlebotomist Name</strong>: NA</li>
   </ol>
 
-  <p>For any clarifications, please write to contact@labon.ai or call us at +91 9847012345.</p>
+  <p>For any clarifications, please write to contact@labon.ai or call us at +91 8289861000.</p>
   <p>Thank you once again for booking home test with Labon!</p>
   <p><strong>Team Labon</strong></p>
 `;
@@ -182,27 +188,27 @@ const emailTasks = [];
     // Add the lab admin email
     emailTasks.push({
         email: 'labmanager@medivision.in',
-        subject: 'New Home Blood Test Booking LBNHVB112220241 through Labon',
+        subject: `New Home Blood Test Booking LBNHVB${formatDate(bookingOrder.date)} through Labon`,
         message: emailContentLab,
     });
 
     emailTasks.push({
         email: 'contact@labon.ai',
-        subject: 'New Home Blood Test Booking',
+        subject: `New Home Blood Test Booking LBNHVB${formatDate(bookingOrder.date)}`,
         message: emailContentAdmin,
     });
 
     if (isSelectFromContacts) {
       emailTasks.push({
           email: bookingOrder.email,
-          subject: 'Labon - Home Visit Booking Confirmation LBNHVB112220241',
+          subject: `Labon - Home Visit Booking Confirmation LBNHVB${formatDate(bookingOrder.date)}`,
           message: emailContentPatient,
       });
   }
 
     emailTasks.push({
         email: userData.email,
-        subject: 'Labon - Home Visit Booking Confirmation LBNHVB112220241',
+        subject: `Labon - Home Visit Booking Confirmation LBNHVB${formatDate(bookingOrder.date)}`,
         message: emailContentCustomer,
     });
 

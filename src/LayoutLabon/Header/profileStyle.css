@@ -5,3 +5,21 @@
 .page-wrapper .page-header .header-wrapper .nav-right .profile-dropdown li:last-child {
   padding-top: 20px !important;
 }
+
+@media screen and (max-width: 991px) {
+  .my-element {
+      left: 50% !important;
+      position: absolute !important;
+      max-width: 432px !important;
+      transform: translateX(-50%) !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .my-styles {
+      left: 50% !important;
+      position: absolute !important;
+      max-width: 432px !important;
+      transform: translateX(-50%) !important;
+  }
+}
