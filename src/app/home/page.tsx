@@ -205,8 +205,41 @@ const home = () => {
         <Col md="" style={{ padding: '0' }}>
             <ColorsSchemes open={open} setOpen={setOpen} toasterContent={toasterContent} toasterColorContent={toasterColorContent}/>
 
-            <div style={{ background: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)', height: '21rem', alignContent: 'end' }}>
-                <img className="w-100" style={{verticalAlign : 'bottom'}} src={`${ImagePath}/home.png`} alt="user" />
+            <div style={{ background: 'linear-gradient(180deg, #522F62 0%, #9462B5 100%)', height: 'auto', alignContent: 'end' }}>
+            <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', lineHeight: '29.05px', padding: '24px' , textAlign : 'center' }}>
+            Get home blood test done at the comfort of your home
+                </h2>
+
+                {/* <div className="icon-container">
+  <div className="icon-item">
+    <i className="fa fa-angle-right" aria-hidden="true"></i> 
+    <p>Blood sample home pickup</p>
+  </div>
+
+  <div className="icon-item">
+    <i className="computer" aria-hidden="true"></i> 
+    <p>Online test reports</p>
+  </div>
+
+  <div className="icon-item">
+    <i className="ico ico-safety" aria-hidden="true"></i> 
+    <p>100% safe & hygiene</p>
+  </div>
+</div> */}
+
+
+<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+  <img
+    style={{ flex: '0 0 auto', width: '50%', maxWidth: '300px', height: '15rem' }} // Fixed width for the image
+    src={`${ImagePath}/home.png`}
+    alt="user"
+  />
+  <p style={{ flex: '1', margin: '0', padding: '0 10px'  , color : 'white' , fontWeight : 500 , fontSize : '16px' , textAlign : 'center'}}>
+    Though I’m living abroad, Labon helped me book home blood tests for my father staying in India.
+  </p>
+</div>
+
+
 
             </div>
 
@@ -298,10 +331,10 @@ const home = () => {
     <ExtraLargeModal isOpen={extraLargeScreen} toggle={extraLargeScreenToggle} selectedTests={selectedTests}  setSelectedTests={setSelectedTests}/>
     <ExtraLargeModalLocation isOpen={extraLargeScreenLocation} toggle={extraLargeScreenToggleLocation} selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress}/>
 
-            <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '2fr 3fr',     margin: '2rem 0 0 0' , height : '15.4rem'}}>
+            <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '2fr 3fr',     margin: '2rem 0 0 0' , height : '16.4rem'}}>
                 <div>
 
-                    <img style={{ position: 'absolute', zIndex: 2, height: '13rem' , marginTop : '3rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/mobilehand.png`} alt="user" />
+                    <img style={{ position: 'absolute', zIndex: 2, height: '13rem' , marginTop : '4rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/Hand.png`} alt="user" />
                     <img style={{ position: 'absolute', zIndex: 1 }} className="img-fluid rounded-circle" src={`${ImagePath}/Circles.png`} alt="user" />
 
 
@@ -309,12 +342,15 @@ const home = () => {
                 <div style={{ zIndex: 1  , padding :'18px'}}>
 
                     <p style={{fontSize : '18px' , fontWeight : '600' , color : '#543063'}}>
-                        Conveniently book through our WhatsApp
+                    Conveniently book a lab test from your mobile
                     </p>
                     <p style={{color : '#543063'}}>
-                        Get a smooth and guided booking experience through our WhatsApp
+                    Book a home blood test online for yourself or for your parents and relatives.
                     </p>
-                    <p style={{display: "block" , background: '#AE99C0', color : 'white' , borderRadius : '5px' , padding : '5px' , width: 'fit-content'  , float : 'right' ,marginRight : '0rem' , marginTop : '24px', textAlign : 'center' , fontWeight : 'bold' }}>Book on WhatsApp</p>
+                    <p style={{color : '#543063'}}>
+                    We will collect the samples from your home and send you the test results.
+                    </p>
+                    {/* <p style={{display: "block" , background: '#AE99C0', color : 'white' , borderRadius : '5px' , padding : '5px' , width: 'fit-content'  , float : 'right' ,marginRight : '0rem' , marginTop : '24px', textAlign : 'center' , fontWeight : 'bold' }}>Book on WhatsApp</p> */}
 
 
 
@@ -330,7 +366,7 @@ const home = () => {
                     <div>
                     <p style={{margin : 0 , fontSize : '18px' , fontWeight : '600'}}>For elderly parents</p>
                         <p style={{marginTop : '8px'}}>
-                            Schedule a home sample collection and stop worrying about your parents periodical tests.
+                        Schedule a home sample collection and stop worrying about the periodical tests of your parents.
                         </p>
                     </div>
                 </div>
@@ -343,7 +379,7 @@ const home = () => {
                     <div>
                     <p style={{margin : 0 , fontSize : '18px' , fontWeight : '600'}}>For You</p>
                         <p style={{marginTop : '8px'}}>
-                            It’s important you do not miss a test. We help you repeat your schedule and visit where you are.
+                        It’s important you do not miss a test. We remind and help you repeat your schedule.
                         </p>
                     </div>
                 </div>
@@ -356,31 +392,31 @@ const home = () => {
                     <div>
                         <p style={{margin : 0 , fontSize : '18px' , fontWeight : '600'}}>Anywhere in Kerala</p>
                         <p style={{marginTop : '8px'}}>
-                            No matter where in Kerala, we will visit you and collect the samples. All you need to do is just schedule it.
+                        No matter where you are in Kerala, we will collect your blood samples. All you need to do is just book a test.
                         </p>
                     </div>
                 </div>
             </div>
             <div style={{ background: '#533063', clipPath: 'polygon(0px 60px, 100% 0px, 100% 100%, 0px 100%)', paddingTop: '4rem' }}>
 
-                <p style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', lineHeight: '29.05px', padding: '24px' }}>
-                    The smarter way to manage your home sample collections
-                </p>
-                <img className="img-fluid family" src={`${ImagePath}/family.jpg`} alt="user" />
+                <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', lineHeight: '29.05px', padding: '24px' }}>
+                Labon.ai, the smarter way to do lab tests at home, at our convenience
+                </h2>
+                <img className="img-fluid family" src={`${ImagePath}/family.jpg`} alt="Smarter way to do lab tests at home through Labon" />
 
 
 <div style={{padding: '24px'}}>
 
                 <p style={{ color: '#FFFFFF', fontSize: '16px', fontWeight: 'bold', lineHeight: '24px', }}>
-                    We live abroad and our parents keep visiting us once a while. While they are in Kerala, it was a big worry for us about their periodical tests. With Purple Labs, we were able to schedule tests and they come on time and collect samples, wherever the patient is.
+                We live abroad and our parents live in Kerala, India. Getting them to the lab for periodical tests was a big concern for us due to their health conditions. With Labon, we were able to book blood tests online and they would come home at the scheduled time to collect blood samples. That was a big relief.
                     {/* <br /><br /><br /> */}
                     </p>
                     <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: 'bold', lineHeight: '24px' }}>
                       
-                    Not just that, we are able to live track the phlebotomists coming for sample collection and the current location of the samples been collected. This is really a great information for us. Thanks to Purple Labs.
+                    Not just that, the platform helps us to easily maintain lab test records and also provide health insights that predict measures to keep the health condition levels normal.
                 </p>
 
-                <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: 'bold', lineHeight: '24px' }}>We are able to live track the phlebotomists coming for blood sample collection and the status of the samples collected. This is really a great information for us. Thanks to Labon.</p>
+                <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: 'bold', lineHeight: '24px' }}>Live tracking of phlebotomists coming for blood sample collection helps us know the status of blood samples collected. This is really a great information for us. Thanks to Labon.</p>
 </div>
             </div>
 

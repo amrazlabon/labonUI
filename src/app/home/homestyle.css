@@ -218,4 +218,26 @@
   
 
 
+  .icon-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .icon-item {
+    text-align: center;
+    color: white;
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .icon-item i {
+    font-size: 40px; /* Adjust icon size */
+    margin-bottom: 10px;
+    display: block;
+  }
+
+
     
