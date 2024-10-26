@@ -69,7 +69,8 @@ export async function GET(request: NextRequest) {
         }
     );
       } else {
-        return NextResponse.json({ error: 'Invalid query parameters' });
+        response = await axios.get(`http://43.205.139.219/users`);
+        // return NextResponse.json({ error: 'Invalid query parameters' });
       }
   
       // Await the API response properly before returning

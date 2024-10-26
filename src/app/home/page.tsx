@@ -77,6 +77,28 @@ const home = () => {
       compactSidebar();
     });
   }, [layout]);
+
+  const [userCount, setUserCount] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`/api/login`);        
+        const count = response.data.length || 0; // Get the count from the response
+        setUserCount(count);
+        } catch (err) {
+        console.log(err.message); // Handle any error
+      } 
+    };
+  
+      fetchUserData();
+  }, []);
+
+  const formatUserCount = (count : any) => {
+    if (count === 0) return '100k';
+    const roundedCount = Math.floor(count / 1000) + 100; // Round down and add 100k
+    return `${roundedCount}k+`;
+  };
   
   const settings = {
     dots: true,
@@ -210,31 +232,39 @@ const home = () => {
             Get home blood test done at the comfort of your home
                 </h2>
 
-                {/* <div className="icon-container">
-  <div className="icon-item">
-    <i className="fa fa-angle-right" aria-hidden="true"></i> 
-    <p>Blood sample home pickup</p>
+                <div className="containerstyle">
+    <div className="features-wrapper">
+      <div className="feature">
+        {/* <i className="fas fa-truck"></i> */}
+        <i className="icofont icofont-vehicle-delivery-van"></i>
+        <p>Blood sample<br />home pickup</p>
+      </div>
+
+      <div className="separator" style={{height : '7rem'}}></div>
+
+      <div className="feature">
+        {/* <i className="fas fa-desktop"></i> */}
+        <i className="icofont icofont-computer"></i><p>Online test<br />reports</p>
+      </div>
+
+      <div className="separator" style={{height : '7rem'}}></div>
+
+      <div className="feature">
+        <i className="icofont icofont-safety"></i>
+        <p>100% safe &<br />hygiene</p>
+      </div>
+    </div>
   </div>
 
-  <div className="icon-item">
-    <i className="computer" aria-hidden="true"></i> 
-    <p>Online test reports</p>
-  </div>
-
-  <div className="icon-item">
-    <i className="ico ico-safety" aria-hidden="true"></i> 
-    <p>100% safe & hygiene</p>
-  </div>
-</div> */}
 
 
 <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
   <img
     style={{ flex: '0 0 auto', width: '50%', maxWidth: '300px', height: '15rem' }} // Fixed width for the image
-    src={`${ImagePath}/home.png`}
-    alt="user"
+    src={`${ImagePath}/homeFamily.png`}
+    alt="Book home blood test for your parents in India"
   />
-  <p style={{ flex: '1', margin: '0', padding: '0 10px'  , color : 'white' , fontWeight : 500 , fontSize : '16px' , textAlign : 'center'}}>
+  <p style={{ flex: '1', margin: '0', padding: '0 24px'  , color : 'white' , fontWeight : 500 , fontSize : '16px' , textAlign : 'center' , lineHeight : '1.6'}}>
     Though I’m living abroad, Labon helped me book home blood tests for my father staying in India.
   </p>
 </div>
@@ -334,7 +364,7 @@ const home = () => {
             <div style={{ background: 'linear-gradient(180deg, #CCBBDB 0%, #F4ECFE 100%)', display: 'grid', gridTemplateColumns: '2fr 3fr',     margin: '2rem 0 0 0' , height : '16.4rem'}}>
                 <div>
 
-                    <img style={{ position: 'absolute', zIndex: 2, height: '13rem' , marginTop : '4rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/Hand.png`} alt="user" />
+                    <img style={{ position: 'absolute', zIndex: 2, height: '13rem' , marginTop : '4rem' }} className="img-fluid rounded-circle" src={`${ImagePath}/Hand.png`} alt="Hand holding mobile with Labon.ai platform" />
                     <img style={{ position: 'absolute', zIndex: 1 }} className="img-fluid rounded-circle" src={`${ImagePath}/Circles.png`} alt="user" />
 
 
@@ -360,7 +390,7 @@ const home = () => {
                 <p style={{ fontSize: '24px', fontWeight: '700' }}>Labon for everyone</p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', columnGap: '1rem' }}>
                     <div style={{marginTop : '6px'}}>
-                        <img className="img-fluid thumbnail" src={`${ImagePath}/Thumbnail.jpg`} alt="user" />
+                        <img className="img-fluid thumbnail" src={`${ImagePath}/homeElderly.jpg`} alt="Book a home blood test for your elderly parents through Labon" />
 
                     </div>
                     <div>
@@ -373,7 +403,7 @@ const home = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', columnGap: '1rem' }}>
                     <div style={{marginTop : '6px'}}>
-                        <img className="img-fluid thumbnail" src={`${ImagePath}/Thumbnail.jpg`} alt="user" />
+                        <img className="img-fluid thumbnail" src={`${ImagePath}/homeLady.jpg`} alt="Book a home blood test for yourself through Labon" />
 
                     </div>
                     <div>
@@ -386,7 +416,7 @@ const home = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', columnGap: '1rem' }}>
                     <div style={{marginTop : '6px'}}>
-                        <img className="img-fluid thumbnail" src={`${ImagePath}/Thumbnail.jpg`} alt="user" />
+                        <img className="img-fluid thumbnail" src={`${ImagePath}/homeMaps.jpg`} alt="Book a home blood test anywhere in Kerala through Labon" />
 
                     </div>
                     <div>
@@ -402,21 +432,21 @@ const home = () => {
                 <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', lineHeight: '29.05px', padding: '24px' }}>
                 Labon.ai, the smarter way to do lab tests at home, at our convenience
                 </h2>
-                <img className="img-fluid family" src={`${ImagePath}/family.jpg`} alt="Smarter way to do lab tests at home through Labon" />
+                <img className="img-fluid family" src={`${ImagePath}/homeLast.jpg`} alt="Smarter way to do lab tests at home through Labon" />
 
 
 <div style={{padding: '24px'}}>
 
-                <p style={{ color: '#FFFFFF', fontSize: '16px', fontWeight: 'bold', lineHeight: '24px', }}>
+                <p style={{ color: '#FFFFFF', fontSize: '16px', fontWeight: '', lineHeight: '24px', }}>
                 We live abroad and our parents live in Kerala, India. Getting them to the lab for periodical tests was a big concern for us due to their health conditions. With Labon, we were able to book blood tests online and they would come home at the scheduled time to collect blood samples. That was a big relief.
                     {/* <br /><br /><br /> */}
                     </p>
-                    <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: 'bold', lineHeight: '24px' }}>
+                    <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: '', lineHeight: '24px' }}>
                       
                     Not just that, the platform helps us to easily maintain lab test records and also provide health insights that predict measures to keep the health condition levels normal.
                 </p>
 
-                <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: 'bold', lineHeight: '24px' }}>Live tracking of phlebotomists coming for blood sample collection helps us know the status of blood samples collected. This is really a great information for us. Thanks to Labon.</p>
+                <p style={{ color: '#FFFFFF', fontSize: '16px' ,  fontWeight: '', lineHeight: '24px' }}>Live tracking of phlebotomists coming for blood sample collection helps us know the status of blood samples collected. This is really a great information for us. Thanks to Labon.</p>
 </div>
             </div>
 
@@ -424,9 +454,9 @@ const home = () => {
     <p style={{ fontWeight: 'bold', fontSize: '24px'  , margin : 0}}>
         Making the difference
     </p>
-    <p style={{ fontWeight: 'bold', fontSize: '48px', margin : 0 }}>
-        100k+
-    </p>
+    <p style={{ fontWeight: 'bold', fontSize: '48px', margin: 0 }}>
+        {formatUserCount(userCount)}
+      </p>
     <p style={{margin : 0}}>
     Individuals and families have been using Labon to book lab tests at home, either for themselves or for their parents, relatives or well-wishers.
     </p>
